@@ -20,4 +20,4 @@ Considere a adoção de discriminação positiva aplicada à idade do funcionár
 
 Para facilitar o cálculo assume-se que cada dia inteiro de trabalho tem 8h de trabalho (com direito a subs. de alimentação) e que os dias de trabalho ao fim-de-semana é valorizado em mais 50%.
 
-Mais informações sobre o project aqui
+Mais informações sobre o project [aqui](https://github.com/ESTG-LEI-Workgroup/LP_AC_C_2020/blob/master/Enunciado.pdf)
