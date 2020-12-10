@@ -1,10 +1,13 @@
 #include "util.h"
 #include "table.h"
+#include "strs.h"
 
 #include <stdio.h>
 
 int main()
 {
+	fprintf(stdout, "%s", H_STRS_MENU);
+	fprintf(stdout, "%s", H_STRS_SAVE_MENU);
 
 	int not_married_str_len = 0;
 	char* not_married_str = h_util_file_read("../assets/table_not_married.csv", not_married_str_len);
@@ -15,7 +18,8 @@ int main()
 	if (not_married_table == NULL)
 		return 2;
 
-	h_table_init_from_str(not_married_table, not_married_str);
+	// Print the value
+	//h_table_init_from_str(not_married_table, not_married_str);
 
 	return 0;
 }
