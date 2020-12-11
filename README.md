@@ -1,4 +1,4 @@
-# ESCOLA SUPERIOR DE TECNOLOGIA E GESTAO
+# ESCOLA SUPERIOR DE TECNOLOGIA E GESTÃO
 #### Projeto em grupo — Avaliação Contínua
 #### Licenciatura em Engenharia Informática
 
