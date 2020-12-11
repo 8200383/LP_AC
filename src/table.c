@@ -15,24 +15,23 @@
  */
 s_table* h_table_alloc(int n)
 {
-	s_table* table = malloc(n * sizeof(*table));
+	s_table* table;
+	int i;
+	int j;
+
+	table = malloc(n * sizeof(*table));
 	if (table == NULL)
 		return NULL;
 
-	table->monthly_pay = 0.0f;
-
-	table->percentage_per_dependent = malloc(MAX_DEPENDENT_NUMBER * sizeof(float));
-	if (table->percentage_per_dependent == NULL)
+	for (i = 0; i < n; i++)
 	{
-		free(table);
-		return NULL;
-	}
+		table[i].counter = 0;
+		table[i].monthly_pay = 0.0f;
 
-	int i = 0;
-	while (i < MAX_DEPENDENT_NUMBER)
-	{
-		table->percentage_per_dependent[i] = 0.0f;
-		i++;
+		for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
+		{
+			table[i].percentage_per_dependent[j] = 0.0f;
+		}
 	}
 
 	return table;
@@ -43,25 +42,32 @@ s_table* h_table_alloc(int n)
  * @param table The array of s_table*
  * @param str The array of characters
  */
-void h_table_init_from_str(s_table* table, char* str)
+void h_table_init_from_str(s_table* data, char* str)
 {
-	int offset_value = -1;
+	int offset_value;
+	int i;
 
-	for (int i = 0; str[i] != '\0'; i++)
+	offset_value = -1;
+	for (i = 0; str[i] != '\0'; i++)
 	{
-		char c = str[i];
-
-		if (offset_value == -1 && isalnum(c))
+		if (offset_value == -1 && isalnum(str[i]))
 			offset_value = i;
 
-		if (offset_value != -1 && c == ';')
+		if (offset_value != -1 && str[i] == ';')
 		{
 			str[i] = '\0';
 
-			fprintf(stdout, "%s\n", str + offset_value);
+			// Catch the values without %, that means we catch the monthly_payment
+			if (str[i - 1] != '%')
+			{
+				data[data->counter].monthly_pay = strtof(str + offset_value, NULL);
+				data->counter++;
+			}
 
 			offset_value = -1;
 		}
+	}
+}
 
 	}
 }
