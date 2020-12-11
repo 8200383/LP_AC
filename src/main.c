@@ -24,7 +24,7 @@ int main()
 		return 2;
 
 
-	h_table_init_from_str(not_married_table, not_married_len, not_married_str);
+	h_table_init_from_str(not_married_table, not_married_str);
 
 
 	for (int i = 0; i < not_married_len; i++) {
