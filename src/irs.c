@@ -84,3 +84,22 @@ void h_irs_init_from_str(s_irs* data, char* str)
 		}
 	}
 }
+
+/**
+ * Print an array of s_irs*
+ * @param data The array
+ * @param size The size of the array
+ */
+void h_irs_print(s_irs* data, int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		fprintf(stdout, "\n%.2f€\n", data[i].monthly_pay);
+
+		fprintf(stdout, "1 dependent %f\n", data[i].percentage_per_dependent[0]);
+		fprintf(stdout, "2 dependent %f\n", data[i].percentage_per_dependent[1]);
+		fprintf(stdout, "3 dependent %f\n", data[i].percentage_per_dependent[2]);
+		fprintf(stdout, "4 dependent %f\n", data[i].percentage_per_dependent[3]);
+		fprintf(stdout, "5 dependent %f\n", data[i].percentage_per_dependent[4]);
+	}
+}
