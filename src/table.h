@@ -5,7 +5,7 @@
 #ifndef _TABLE_H_
 #define _TABLE_H_
 
-#define MAX_DEPENDENT_NUMBER 6
+#define MAX_DEPENDENT_NUMBER 5
 
 typedef struct
 {

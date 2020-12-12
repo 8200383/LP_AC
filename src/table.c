@@ -25,8 +25,8 @@ s_table* h_table_alloc(int n)
 
 	for (i = 0; i < n; i++)
 	{
-		table[i].counter = 0;
 		table[i].monthly_pay = 0.0f;
+		table[i].counter = 0;
 
 		for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
 		{
@@ -55,19 +55,25 @@ void h_table_init_from_str(s_table* data, char* str)
 
 		if (offset_value != -1 && str[i] == ';')
 		{
-			str[i] = '\0';
+			str[i] = '\0'; // Remove the ;
 
 			// Catch the values without %, that means we catch the monthly_payment
 			if (str[i - 1] != '%')
-			{
 				data[data->counter].monthly_pay = strtof(str + offset_value, NULL);
-				data->counter++;
+
+			// Catch all values with % sign
+			if (str[i - 1] == '%')
+			{
+				str[i - 1] = '\0'; // Remove the % sign
+
+				fprintf(stdout, "%f\n", strtof(str + offset_value, NULL) / 100.0f);
 			}
 
 			offset_value = -1;
 		}
-	}
-}
 
+		// If new line found move to the next struct
+		if (str[i] == '\n')
+			data->counter++;
 	}
 }
