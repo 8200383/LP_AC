@@ -14,6 +14,8 @@ typedef struct
 	int counter;
 } s_irs;
 
-s_table* h_table_alloc(int n);
+s_irs* h_irs_alloc(int n);
+void h_irs_init_from_str(s_irs* data, char* str);
+void h_irs_print(s_irs* data, int size);
 
 #endif //_IRS_H_

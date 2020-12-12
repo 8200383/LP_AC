@@ -8,34 +8,35 @@
 #include "colors.h"
 
 #define H_STRS_MENU MAGENTA( \
-"******************************\n" \
-"*        -|  MENU  |-        *\n" \
-"*                            *\n" \
-"*    B. Tabelas Retenção     *\n" \
-"*                            *\n" \
-"******************************\n")
+"*******************************\n" \
+"*        -|  MENU  |-         *\n" \
+"*                             *\n" \
+"*   1. Tabelas Retenção IRS   *\n" \
+"*   9. Guardar                *\n" \
+"*   0. Sair                   *\n" \
+"*                             *\n" \
+"*******************************\n")
 
-#define H_STRS_TABLES_MENU MAGENTA( \
-"************************************\n" \
-"* -|  Menu Tabelas de Retenção  |- *\n" \
-"*                                  *\n" \
-"*          1. Visualizar           *\n" \
-"*          2. Editar               *\n" \
-"*                                  *\n" \
-"************************************\n")
+#define H_STRS_IRS_MENU MAGENTA( \
+"*****************************************************\n" \
+"*         -| Menu Tabelas de Retenção IRS |-        *\n" \
+"*                                                   *\n" \
+"*  TABELAS DE RETENÇÃO NA FONTE PARA O CONTINENTE   *\n" \
+"*                                                   *\n" \
+"*                TRABALHO DEPENDENTE                *\n" \
+"*                                                   *\n" \
+"* 1. Visualizar Tabela I - NÃO CASADO               *\n" \
+"* 2. Visualizar Tabela II - CASADO UNICO TITULAR    *\n" \
+"* 3. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
+"*                                                   *\n" \
+"* 0. Voltar ao menu anterior                        *\n" \
+"*                                                   *\n" \
+"*****************************************************\n")
 
-#define H_STRS_VIEW_TABLES_MENU MAGENTA( \
-"****************************************\n" \
-"* -| Visualizar Tabelas de Retenção |- *\n" \
-"*                                      *\n" \
-"*             1. Visualizar            *\n" \
-"*             2. Editar                *\n" \
-"*                                      *\n" \
-"****************************************\n")
 
 #define H_STRS_SAVE_MENU RED( \
-"******************************\n" \
-"*         SAVE (Y/n)         *\n" \
-"******************************\n")
+"******************\n" \
+"*   SAVE (Y/n)   *\n" \
+"******************\n")
 
 #endif //_STRS_H_
