@@ -5,49 +5,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <string.h>
 
-#include "table.h"
+#include "irs.h"
 
 /**
- * Alloc n elements into an array of s_table
+ * Alloc n elements into an array of s_irs
  * @param n The size of the array
- * @return s_table*
+ * @return s_irs*
  */
-s_table* h_table_alloc(int n)
+s_irs* h_irs_alloc(int n)
 {
-	s_table* table;
+	s_irs* irs;
 	int i;
 	int j;
 
-	table = malloc(n * sizeof(*table));
-	if (table == NULL)
+	irs = malloc(n * sizeof(*irs));
+	if (irs == NULL)
 		return NULL;
 
 	for (i = 0; i < n; i++)
 	{
-		table[i].monthly_pay = 0.0f;
-		table[i].counter = 0;
+		irs[i].monthly_pay = 0.0f;
+		irs[i].counter = 0;
 
 		for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
 		{
-			table[i].percentage_per_dependent[j] = 0.0f;
+			irs[i].percentage_per_dependent[j] = 0.0f;
 		}
 	}
 
-	return table;
+	return irs;
 }
 
 /**
- * Initialize an array of s_table from str
- * @param table The array of s_table*
+ * Initialize an array of s_irs from str
+ * @param data The array of s_irs*
  * @param str The array of characters
  */
-void h_table_init_from_str(s_table* data, char* str)
+void h_irs_init_from_str(s_irs* data, char* str)
 {
+	int dependents_counter;
 	int offset_value;
 	int i;
 
 	offset_value = -1;
+	dependents_counter = 0;
 	for (i = 0; str[i] != '\0'; i++)
 	{
 		if (offset_value == -1 && isalnum(str[i]))
@@ -66,7 +69,8 @@ void h_table_init_from_str(s_table* data, char* str)
 			{
 				str[i - 1] = '\0'; // Remove the % sign
 
-				fprintf(stdout, "%f\n", strtof(str + offset_value, NULL) / 100.0f);
+				data[data->counter].percentage_per_dependent[dependents_counter++] =
+					strtof(str + offset_value, NULL) / 100.0f;
 			}
 
 			offset_value = -1;
@@ -74,6 +78,9 @@ void h_table_init_from_str(s_table* data, char* str)
 
 		// If new line found move to the next struct
 		if (str[i] == '\n')
+		{
 			data->counter++;
+			dependents_counter = 0;
+		}
 	}
 }
