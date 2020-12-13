@@ -16,11 +16,14 @@
  * @param n The size of the array
  * @return s_irs*
  */
-s_irs* h_irs_alloc(int n)
+s_irs* h_irs_alloc(unsigned int n)
 {
 	s_irs* irs;
 	int i;
 	int j;
+
+	if (!n)
+		return NULL;
 
 	irs = malloc(n * sizeof(*irs));
 	if (irs == NULL)
