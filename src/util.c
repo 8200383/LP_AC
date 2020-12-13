@@ -21,6 +21,9 @@ char* h_util_file_read(const char* path)
 	unsigned long read_bytes;
 	char* str;
 
+	if (path == NULL)
+		return NULL;
+
 	fp = fopen(path, "r");
 	if (fp == NULL)
 		return NULL;
@@ -49,14 +52,25 @@ char* h_util_file_read(const char* path)
 	return str;
 }
 
-int h_util_get_lines_from_str(const char* str) {
+/**
+ * Get the number of lines from a giver str
+ * @param str The array of char*
+ * @return Return -1 if 'str' if empty and returns 0 if no lines are found
+ */
+int h_util_get_lines_from_str(const char* str)
+{
 	int i;
 	int lines;
 
+	if (str == NULL)
+		return -1;
+
 	i = 0;
 	lines = 0;
-	while (str[i] != '\0') {
-		if (str[i] == '\n') {
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\n')
+		{
 			lines++;
 		}
 		i++;
