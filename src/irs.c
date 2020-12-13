@@ -8,6 +8,8 @@
 #include <string.h>
 
 #include "irs.h"
+#include "colors.h"
+#include "strs.h"
 
 /**
  * Alloc n elements into an array of s_irs
@@ -92,14 +94,22 @@ void h_irs_init_from_str(s_irs* data, char* str)
  */
 void h_irs_print(s_irs* data, int size)
 {
-	for (int i = 0; i < size; i++)
-	{
-		fprintf(stdout, "\n%.2f€\n", data[i].monthly_pay);
+	int dependents;
+	int i;
+	int j;
 
-		fprintf(stdout, "1 dependent %f\n", data[i].percentage_per_dependent[0]);
-		fprintf(stdout, "2 dependent %f\n", data[i].percentage_per_dependent[1]);
-		fprintf(stdout, "3 dependent %f\n", data[i].percentage_per_dependent[2]);
-		fprintf(stdout, "4 dependent %f\n", data[i].percentage_per_dependent[3]);
-		fprintf(stdout, "5 dependent %f\n", data[i].percentage_per_dependent[4]);
+	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
+
+	for (i = 0; i < size; i++)
+	{
+		fprintf(stdout, RED("\n| %d | "), i);
+		fprintf(stdout, YELLOW("%.2f€"), data[i].monthly_pay);
+
+		dependents = sizeof(data[i].percentage_per_dependent) / sizeof(data[i].percentage_per_dependent[0]);
+		for (j = 0; j < dependents; j++)
+		{
+			fprintf(stdout, BLUE(" | "));
+			fprintf(stdout, "%.1f%%", data[i].percentage_per_dependent[j] * 100);
+		}
 	}
 }
