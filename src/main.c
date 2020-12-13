@@ -63,14 +63,14 @@ int irs_preview()
 
 	not_married_str = h_util_file_read("../assets/table_not_married.csv");
 	if (not_married_str == NULL)
-		return 1;
+		return -1;
 
 	not_married_len = h_util_get_lines_from_str(not_married_str);
 	not_married_arr = h_irs_alloc(not_married_len);
 	if (not_married_arr == NULL)
 	{
 		free(not_married_str);
-		return 2;
+		return -2;
 	}
 
 	h_irs_init_from_str(not_married_arr, not_married_str);
