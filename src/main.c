@@ -1,5 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+
 #include "util.h"
 #include "irs.h"
+#include "menu.h"
 #include "strs.h"
 
 #include <stdio.h>
