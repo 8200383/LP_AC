@@ -8,7 +8,7 @@
 #include "colors.h"
 
 #define H_STRS_MENU MAGENTA( \
-"*******************************\n" \
+"\n*******************************\n" \
 "*        -|  MENU  |-         *\n" \
 "*                             *\n" \
 "*   1. Tabelas Retenção IRS   *\n" \
@@ -26,8 +26,10 @@
 "*                TRABALHO DEPENDENTE                *\n" \
 "*                                                   *\n" \
 "* 1. Visualizar Tabela I - NÃO CASADO               *\n" \
-"* 2. Visualizar Tabela II - CASADO UNICO TITULAR    *\n" \
-"* 3. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
+"* 2. Editar                                         *\n" \
+"*                                                   *\n" \
+"* 3. Visualizar Tabela II - CASADO UNICO TITULAR    *\n" \
+"* 4. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
 "*                                                   *\n" \
 "* 0. Voltar ao menu anterior                        *\n" \
 "*                                                   *\n" \
