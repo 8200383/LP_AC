@@ -97,7 +97,6 @@ void h_irs_init_from_str(s_irs* data, char* str)
  */
 void h_irs_print(s_irs* data, int size)
 {
-	int dependents;
 	int i;
 	int j;
 
@@ -108,11 +107,35 @@ void h_irs_print(s_irs* data, int size)
 		fprintf(stdout, RED("\n| %d | "), i);
 		fprintf(stdout, YELLOW("%.2f€"), data[i].monthly_pay);
 
-		dependents = sizeof(data[i].percentage_per_dependent) / sizeof(data[i].percentage_per_dependent[0]);
-		for (j = 0; j < dependents; j++)
+		for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
 		{
 			fprintf(stdout, BLUE(" | "));
 			fprintf(stdout, "%.1f%%", data[i].percentage_per_dependent[j] * 100);
 		}
+	}
+}
+
+/**
+ * Edits a single s_irs* struct
+ * @param data The s_irs* struct
+ */
+void h_irs_edit(s_irs* data)
+{
+	float temp_monthly_pay;
+	float temp_dependent;
+	int i;
+
+	if (data == NULL)
+		return;
+
+	scanf(" %f", &temp_monthly_pay);
+	if (temp_monthly_pay)
+		data->monthly_pay = temp_monthly_pay;
+
+	for (i = 0; i < MAX_DEPENDENT_NUMBER; i++)
+	{
+		scanf(" %f", &temp_dependent);
+		if (temp_dependent)
+			data->percentage_per_dependent[i] = temp_dependent;
 	}
 }

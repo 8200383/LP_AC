@@ -17,5 +17,6 @@ typedef struct
 s_irs* h_irs_alloc(unsigned int n);
 void h_irs_init_from_str(s_irs* data, char* str);
 void h_irs_print(s_irs* data, int size);
+void h_irs_edit(s_irs* data);
 
 #endif //_IRS_H_
