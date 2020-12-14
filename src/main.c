@@ -44,5 +44,25 @@ int main()
 	not_married_table_size = 0;
 	not_married_table = irs_init("../assets/table_not_married.csv", &not_married_table_size);
 
+	do
+	{
+		fprintf(stdout, "%s", H_STRS_MENU);
+		fprintf(stdout, GREEN("> "));
+		scanf(" %c", &op);
+
+		switch (op)
+		{
+		case '1':
+			h_menu_irs(not_married_table, not_married_table_size);
+			break;
+		case '9':
+			fprintf(stdout, H_STRS_SAVE_MENU);
+			break;
+		default:
+			break;
+		}
+	} while (op != '0');
+
+	fprintf(stdout, RED("EXITING"));
 	return 0;
 }
