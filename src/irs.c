@@ -125,23 +125,34 @@ void h_irs_print(s_irs* data, int size)
  * Edits a single s_irs* struct
  * @param data The s_irs* struct
  */
-void h_irs_edit(s_irs* data)
+void h_irs_edit(s_irs* data, unsigned int position)
 {
 	float temp_monthly_pay;
 	float temp_dependent;
 	int i;
 
-	if (data == NULL)
+	// TODO: Check if position exists
+
+	if (data == NULL || !position)
 		return;
 
+	fprintf(stdout, RED("[!] Use pontos para especificar decimas!\n"));
+	fprintf(stdout, YELLOW("> Remuneração Mensal => "));
 	scanf(" %f", &temp_monthly_pay);
+	fprintf(stdout, RED("> %.2f € \n"), temp_monthly_pay);
+
 	if (temp_monthly_pay)
-		data->monthly_pay = temp_monthly_pay;
+		data[position].monthly_pay = temp_monthly_pay;
+
 
 	for (i = 0; i < MAX_DEPENDENT_NUMBER; i++)
 	{
+		fprintf(stdout, YELLOW("> %% para dependente %d =>  "), i);
 		scanf(" %f", &temp_dependent);
+		fprintf(stdout, RED("> %.3f\n"), temp_dependent);
+
 		if (temp_dependent)
-			data->percentage_per_dependent[i] = temp_dependent;
+			data[position].percentage_per_dependent[i] = temp_dependent;
+
 	}
 }
