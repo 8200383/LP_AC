@@ -144,7 +144,6 @@ void h_irs_edit(s_irs* data, unsigned int position)
 	if (temp_monthly_pay)
 		data[position].monthly_pay = temp_monthly_pay;
 
-
 	for (i = 0; i < MAX_DEPENDENT_NUMBER; i++)
 	{
 		fprintf(stdout, YELLOW("> %% para dependente %d =>  "), i);
