@@ -11,11 +11,6 @@
 #include "colors.h"
 #include "strs.h"
 
-/**
- * Alloc n elements into an array of s_irs
- * @param n The size of the array
- * @return s_irs*
- */
 s_irs* h_irs_alloc(unsigned int n)
 {
 	s_irs* irs;
@@ -43,22 +38,37 @@ s_irs* h_irs_alloc(unsigned int n)
 	return irs;
 }
 
-/**
- * Initialize an array of s_irs from str
- * @param data The array of s_irs*
- * @param str The array of characters
- */
-void h_irs_init_from_str(s_irs* data, char* str)
+void h_irs_build(s_irs* data, char key, char* str, int* dependents)
 {
-	int dependents_counter;
+	unsigned long size;
+
+	size = strlen(str) - 1;
+
+	// Catch the values without %, that means we catch the monthly_payment
+	if (key != '%')
+		data[data->counter].monthly_pay = strtof(str, NULL);
+
+	// Catch all values with % sign
+	if (key == '%')
+	{
+		str[size] = '\0'; // Remove the % sign
+
+		data[data->counter].percentage_per_dependent[*dependents] = strtof(str, NULL) / 100.0f;
+		*dependents += 1;
+	}
+}
+
+int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
+{
+	int dependents;
 	int offset_value;
 	int i;
 
 	if (data == NULL || str == NULL)
-		return;
+		return -1;
 
 	offset_value = -1;
-	dependents_counter = 0;
+	dependents = 0;
 	for (i = 0; str[i] != '\0'; i++)
 	{
 		if (offset_value == -1 && isalnum(str[i]))
@@ -68,18 +78,7 @@ void h_irs_init_from_str(s_irs* data, char* str)
 		{
 			str[i] = '\0'; // Remove the ;
 
-			// Catch the values without %, that means we catch the monthly_payment
-			if (str[i - 1] != '%')
-				data[data->counter].monthly_pay = strtof(str + offset_value, NULL);
-
-			// Catch all values with % sign
-			if (str[i - 1] == '%')
-			{
-				str[i - 1] = '\0'; // Remove the % sign
-
-				data[data->counter].percentage_per_dependent[dependents_counter++] =
-					strtof(str + offset_value, NULL) / 100.0f;
-			}
+			pair_func(data, str[i - 1], str + offset_value, &dependents);
 
 			offset_value = -1;
 		}
@@ -88,16 +87,13 @@ void h_irs_init_from_str(s_irs* data, char* str)
 		if (str[i] == '\n')
 		{
 			data->counter++;
-			dependents_counter = 0;
+			dependents = 0;
 		}
 	}
+
+	return 0;
 }
 
-/**
- * Print an array of s_irs*
- * @param data The array
- * @param size The size of the array
- */
 void h_irs_print(s_irs* data, int size)
 {
 	int i;
@@ -107,7 +103,6 @@ void h_irs_print(s_irs* data, int size)
 		return;
 
 	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
-
 	for (i = 0; i < size; i++)
 	{
 		fprintf(stdout, RED("\n| %d | "), i);
@@ -121,10 +116,6 @@ void h_irs_print(s_irs* data, int size)
 	}
 }
 
-/**
- * Edits a single s_irs* struct
- * @param data The s_irs* struct
- */
 void h_irs_edit(s_irs* data, unsigned int position)
 {
 	float temp_monthly_pay;
@@ -132,7 +123,6 @@ void h_irs_edit(s_irs* data, unsigned int position)
 	int i;
 
 	// TODO: Check if position exists
-
 	if (data == NULL || !position)
 		return;
 
@@ -152,6 +142,5 @@ void h_irs_edit(s_irs* data, unsigned int position)
 
 		if (temp_dependent)
 			data[position].percentage_per_dependent[i] = temp_dependent;
-
 	}
 }
