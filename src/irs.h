@@ -5,7 +5,7 @@
 #ifndef _IRS_H_
 #define _IRS_H_
 
-#define MAX_DEPENDENT_NUMBER 5
+#define MAX_DEPENDENT_NUMBER 6
 
 typedef struct
 {
