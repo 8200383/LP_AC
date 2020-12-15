@@ -11,11 +11,6 @@
 #include "colors.h"
 #include "strs.h"
 
-/**
- * Alloc n elements into an array of s_irs
- * @param n The size of the array
- * @return s_irs*
- */
 s_irs* h_irs_alloc(unsigned int n)
 {
 	s_irs* irs;
@@ -93,11 +88,6 @@ void h_irs_init_from_str(s_irs* data, char* str)
 	}
 }
 
-/**
- * Print an array of s_irs*
- * @param data The array
- * @param size The size of the array
- */
 void h_irs_print(s_irs* data, int size)
 {
 	int i;
@@ -121,10 +111,6 @@ void h_irs_print(s_irs* data, int size)
 	}
 }
 
-/**
- * Edits a single s_irs* struct
- * @param data The s_irs* struct
- */
 void h_irs_edit(s_irs* data, unsigned int position)
 {
 	float temp_monthly_pay;
@@ -132,7 +118,6 @@ void h_irs_edit(s_irs* data, unsigned int position)
 	int i;
 
 	// TODO: Check if position exists
-
 	if (data == NULL || !position)
 		return;
 
