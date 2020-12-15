@@ -9,12 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-/**
- * Read a file
- * @param path The filepath
- * @param len Save into a variable the len of the file
- * @return char*
- */
 char* h_util_file_read(const char* path)
 {
 	FILE* fp;
@@ -53,11 +47,6 @@ char* h_util_file_read(const char* path)
 	return str;
 }
 
-/**
- * Get the number of lines from a giver str
- * @param str The array of char*
- * @return Return -1 if 'str' if empty and returns 0 if no lines are found
- */
 int h_util_get_lines_from_str(const char* str)
 {
 	int i;
@@ -71,9 +60,7 @@ int h_util_get_lines_from_str(const char* str)
 	while (str[i] != '\0')
 	{
 		if (str[i] == '\n')
-		{
 			lines++;
-		}
 		i++;
 	}
 
