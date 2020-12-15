@@ -54,6 +54,9 @@ void h_irs_init_from_str(s_irs* data, char* str)
 	int offset_value;
 	int i;
 
+	if (data == NULL || str == NULL)
+		return;
+
 	offset_value = -1;
 	dependents_counter = 0;
 	for (i = 0; str[i] != '\0'; i++)
@@ -99,6 +102,9 @@ void h_irs_print(s_irs* data, int size)
 {
 	int i;
 	int j;
+
+	if (data == NULL || !size)
+		return;
 
 	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
 
