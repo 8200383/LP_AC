@@ -29,7 +29,10 @@
 "* 2. Editar                                         *\n" \
 "*                                                   *\n" \
 "* 3. Visualizar Tabela II - CASADO UNICO TITULAR    *\n" \
-"* 4. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
+"* 4. Editar                                         *\n" \
+"*                                                   *\n" \
+"* 5. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
+"* 6. Editar                                         *\n" \
 "*                                                   *\n" \
 "* 0. Voltar ao menu anterior                        *\n" \
 "*                                                   *\n" \

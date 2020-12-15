@@ -38,11 +38,28 @@ s_irs* irs_init(const char* path, int* size)
 int main()
 {
 	char op;
-	int not_married_table_size;
+	int not_married_size;
+	int married_unique_holder_size;
+	int married_two_holders_size;
 	s_irs* not_married_table;
+	s_irs* married_unique_holder_table;
+	s_irs* married_two_holders_table;
 
-	not_married_table_size = 0;
-	not_married_table = irs_init("../assets/table_not_married.csv", &not_married_table_size);
+	not_married_size = 0;
+	married_unique_holder_size = 0;
+	married_two_holders_size = 0;
+
+	not_married_table = irs_init("../assets/table_not_married.csv", &not_married_size);
+	if (not_married_table == NULL)
+		return -1;
+
+	married_unique_holder_table = irs_init("../assets/table_married_unique_holder.csv", &married_unique_holder_size);
+	if (married_unique_holder_table == NULL)
+		return -1;
+
+	married_two_holders_table = irs_init("../assets/table_married_two_holders.csv", &married_two_holders_size);
+	if (married_unique_holder_table == NULL)
+		return -1;
 
 	do
 	{
@@ -53,7 +70,13 @@ int main()
 		switch (op)
 		{
 		case '1':
-			h_menu_irs(not_married_table, not_married_table_size);
+			h_menu_irs(
+				not_married_table,
+				not_married_size,
+				married_unique_holder_table,
+				married_unique_holder_size,
+				married_two_holders_table,
+				married_two_holders_size);
 			break;
 		case '9':
 			fprintf(stdout, H_STRS_SAVE_MENU);
