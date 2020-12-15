@@ -49,15 +49,15 @@ int main()
 	married_unique_holder_size = 0;
 	married_two_holders_size = 0;
 
-	not_married_table = irs_init("../assets/table_not_married.csv", &not_married_size);
+	not_married_table = irs_init("../data/table_not_married.csv", &not_married_size);
 	if (not_married_table == NULL)
 		return -1;
 
-	married_unique_holder_table = irs_init("../assets/table_married_unique_holder.csv", &married_unique_holder_size);
+	married_unique_holder_table = irs_init("../data/table_married_unique_holder.csv", &married_unique_holder_size);
 	if (married_unique_holder_table == NULL)
 		return -1;
 
-	married_two_holders_table = irs_init("../assets/table_married_two_holders.csv", &married_two_holders_size);
+	married_two_holders_table = irs_init("../data/table_married_two_holders.csv", &married_two_holders_size);
 	if (married_unique_holder_table == NULL)
 		return -1;
 
