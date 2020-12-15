@@ -13,8 +13,9 @@ s_irs* irs_init(const char* path, int* size)
 	s_irs* data;
 	char* str;
 	int n_lines;
+	int err;
 
-	if (path == NULL)
+	if (path == NULL || size == NULL)
 		return NULL;
 
 	str = h_util_file_read(path);
@@ -30,7 +31,12 @@ s_irs* irs_init(const char* path, int* size)
 	}
 
 	*size = n_lines;
-	h_irs_init_from_str(data, str);
+	err = h_irs_parse(data, str, h_irs_build);
+	if (err)
+	{
+		free(str);
+		return NULL;
+	}
 
 	return data;
 }
@@ -85,6 +91,10 @@ int main()
 			break;
 		}
 	} while (op != '0');
+
+	free(not_married_table);
+	free(married_unique_holder_table);
+	free(married_two_holders_table);
 
 	fprintf(stdout, RED("EXITING"));
 	return 0;
