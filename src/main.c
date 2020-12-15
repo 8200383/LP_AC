@@ -1,89 +1,91 @@
-#include "util.h"
-#include "irs.h"
-#include "strs.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 
-void menu();
-void irs_menu();
-int irs_preview();
+#include "util.h"
+#include "irs.h"
+#include "menu.h"
+#include "strs.h"
 
-void menu()
+s_irs* irs_init(const char* path, int* size);
+
+s_irs* irs_init(const char* path, int* size)
 {
-	char op;
+	s_irs* data;
+	char* str;
+	int n_lines;
 
-	fprintf(stdout, "%s", H_STRS_MENU);
-	fprintf(stdout, GREEN("> "));
-	scanf(" %c", &op);
+	if (path == NULL)
+		return NULL;
 
-	switch (op)
+	str = h_util_file_read(path);
+	if (str == NULL)
+		return NULL;
+
+	n_lines = h_util_get_lines_from_str(str);
+	data = h_irs_alloc(n_lines);
+	if (data == NULL)
 	{
-	case '1':
-		irs_menu();
-		break;
-	case '9':
-		fprintf(stdout, H_STRS_SAVE_MENU);
-		break;
-	case '0':
-		fprintf(stdout, RED("EXITING"));
-		exit(0);
-	default:
-		fprintf(stderr, "Invalid Option\n");
-		exit(1);
-	}
-}
-
-void irs_menu()
-{
-	char op;
-
-	fprintf(stdout, "%s", H_STRS_IRS_MENU);
-	fprintf(stdout, GREEN("> "));
-	scanf(" %c", &op);
-
-	switch (op)
-	{
-	case '1':
-		irs_preview();
-		break;
-	case '0':
-		menu();
-	default:
-		fprintf(stderr, "Invalid Option\n");
-		exit(1);
-	}
-}
-
-int irs_preview()
-{
-	s_irs* not_married_arr;
-	char* not_married_str;
-	int not_married_len;
-
-	not_married_str = h_util_file_read("../assets/table_not_married.csv");
-	if (not_married_str == NULL)
-		return -1;
-
-	not_married_len = h_util_get_lines_from_str(not_married_str);
-	not_married_arr = h_irs_alloc(not_married_len);
-	if (not_married_arr == NULL)
-	{
-		free(not_married_str);
-		return -2;
+		free(str);
+		return NULL;
 	}
 
-	h_irs_init_from_str(not_married_arr, not_married_str);
-	h_irs_print(not_married_arr, not_married_len);
+	*size = n_lines;
+	h_irs_init_from_str(data, str);
 
-	free(not_married_arr);
-
-	return 0;
+	return data;
 }
 
 int main()
 {
-	menu();
+	char op;
+	int not_married_size;
+	int married_unique_holder_size;
+	int married_two_holders_size;
+	s_irs* not_married_table;
+	s_irs* married_unique_holder_table;
+	s_irs* married_two_holders_table;
 
+	not_married_size = 0;
+	married_unique_holder_size = 0;
+	married_two_holders_size = 0;
+
+	not_married_table = irs_init("../assets/table_not_married.csv", &not_married_size);
+	if (not_married_table == NULL)
+		return -1;
+
+	married_unique_holder_table = irs_init("../assets/table_married_unique_holder.csv", &married_unique_holder_size);
+	if (married_unique_holder_table == NULL)
+		return -1;
+
+	married_two_holders_table = irs_init("../assets/table_married_two_holders.csv", &married_two_holders_size);
+	if (married_unique_holder_table == NULL)
+		return -1;
+
+	do
+	{
+		fprintf(stdout, "%s", H_STRS_MENU);
+		fprintf(stdout, GREEN("> "));
+		scanf(" %c", &op);
+
+		switch (op)
+		{
+		case '1':
+			h_menu_irs(
+				not_married_table,
+				not_married_size,
+				married_unique_holder_table,
+				married_unique_holder_size,
+				married_two_holders_table,
+				married_two_holders_size);
+			break;
+		case '9':
+			fprintf(stdout, H_STRS_SAVE_MENU);
+			break;
+		default:
+			break;
+		}
+	} while (op != '0');
+
+	fprintf(stdout, RED("EXITING"));
 	return 0;
 }

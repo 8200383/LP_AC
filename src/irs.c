@@ -54,6 +54,9 @@ void h_irs_init_from_str(s_irs* data, char* str)
 	int offset_value;
 	int i;
 
+	if (data == NULL || str == NULL)
+		return;
+
 	offset_value = -1;
 	dependents_counter = 0;
 	for (i = 0; str[i] != '\0'; i++)
@@ -97,9 +100,11 @@ void h_irs_init_from_str(s_irs* data, char* str)
  */
 void h_irs_print(s_irs* data, int size)
 {
-	int dependents;
 	int i;
 	int j;
+
+	if (data == NULL || !size)
+		return;
 
 	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
 
@@ -108,11 +113,45 @@ void h_irs_print(s_irs* data, int size)
 		fprintf(stdout, RED("\n| %d | "), i);
 		fprintf(stdout, YELLOW("%.2f€"), data[i].monthly_pay);
 
-		dependents = sizeof(data[i].percentage_per_dependent) / sizeof(data[i].percentage_per_dependent[0]);
-		for (j = 0; j < dependents; j++)
+		for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
 		{
 			fprintf(stdout, BLUE(" | "));
 			fprintf(stdout, "%.1f%%", data[i].percentage_per_dependent[j] * 100);
 		}
+	}
+}
+
+/**
+ * Edits a single s_irs* struct
+ * @param data The s_irs* struct
+ */
+void h_irs_edit(s_irs* data, unsigned int position)
+{
+	float temp_monthly_pay;
+	float temp_dependent;
+	int i;
+
+	// TODO: Check if position exists
+
+	if (data == NULL || !position)
+		return;
+
+	fprintf(stdout, RED("[!] Use pontos para especificar decimas!\n"));
+	fprintf(stdout, YELLOW("> Remuneração Mensal => "));
+	scanf(" %f", &temp_monthly_pay);
+	fprintf(stdout, RED("> %.2f € \n"), temp_monthly_pay);
+
+	if (temp_monthly_pay)
+		data[position].monthly_pay = temp_monthly_pay;
+
+	for (i = 0; i < MAX_DEPENDENT_NUMBER; i++)
+	{
+		fprintf(stdout, YELLOW("> %% para dependente %d =>  "), i);
+		scanf(" %f", &temp_dependent);
+		fprintf(stdout, RED("> %.3f\n"), temp_dependent);
+
+		if (temp_dependent)
+			data[position].percentage_per_dependent[i] = temp_dependent;
+
 	}
 }

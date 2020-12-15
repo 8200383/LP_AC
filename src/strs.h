@@ -8,7 +8,7 @@
 #include "colors.h"
 
 #define H_STRS_MENU MAGENTA( \
-"*******************************\n" \
+"\n*******************************\n" \
 "*        -|  MENU  |-         *\n" \
 "*                             *\n" \
 "*   1. Tabelas Retenção IRS   *\n" \
@@ -26,8 +26,13 @@
 "*                TRABALHO DEPENDENTE                *\n" \
 "*                                                   *\n" \
 "* 1. Visualizar Tabela I - NÃO CASADO               *\n" \
-"* 2. Visualizar Tabela II - CASADO UNICO TITULAR    *\n" \
-"* 3. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
+"* 2. Editar                                         *\n" \
+"*                                                   *\n" \
+"* 3. Visualizar Tabela II - CASADO UNICO TITULAR    *\n" \
+"* 4. Editar                                         *\n" \
+"*                                                   *\n" \
+"* 5. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
+"* 6. Editar                                         *\n" \
 "*                                                   *\n" \
 "* 0. Voltar ao menu anterior                        *\n" \
 "*                                                   *\n" \
@@ -39,9 +44,14 @@
 "******************\n")
 
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
-"***********************************************\n" \
-"* Remuneração     | Numero de Dependentes     *\n" \
-"* Mensal em Euros | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
-"***********************************************")
+"***************************************************\n" \
+"* Remuneração     | Numero de Dependentes         *\n" \
+"* Mensal em Euros | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
+"***************************************************")
+
+#define H_STRS_IRS_TABLE_EDIT(string) RED( \
+"[!] Editar " string "\n" \
+"> Linha?\n")
+
 
 #endif //_STRS_H_

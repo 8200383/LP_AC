@@ -3,6 +3,7 @@
  */
 
 #include "util.h"
+#include "colors.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -77,4 +78,24 @@ int h_util_get_lines_from_str(const char* str)
 	}
 
 	return lines;
+}
+
+/**
+ * Get a positive integer and return it
+ * @return int
+ */
+int h_util_get_positive_int()
+{
+	int n;
+
+	do
+	{
+		fprintf(stdout, YELLOW("> "));
+		scanf(" %d", &n);
+		if (n < 0) {
+			fprintf(stdout, RED("> Inteiro Inválido\n"));
+		}
+	} while (n < 0);
+
+	return n;
 }

@@ -5,7 +5,7 @@
 #ifndef _IRS_H_
 #define _IRS_H_
 
-#define MAX_DEPENDENT_NUMBER 5
+#define MAX_DEPENDENT_NUMBER 6
 
 typedef struct
 {
@@ -17,5 +17,6 @@ typedef struct
 s_irs* h_irs_alloc(unsigned int n);
 void h_irs_init_from_str(s_irs* data, char* str);
 void h_irs_print(s_irs* data, int size);
+void h_irs_edit(s_irs* data, unsigned int position);
 
 #endif //_IRS_H_
