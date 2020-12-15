@@ -7,15 +7,7 @@
 #include "menu.h"
 #include "colors.h"
 #include "strs.h"
-
-int get_int()
-{
-	int n;
-
-	scanf(" %d", &n);
-
-	return n;
-}
+#include "util.h"
 
 void h_menu_irs(
 	s_irs* not_married_table,
@@ -37,19 +29,22 @@ void h_menu_irs(
 		h_irs_print(not_married_table, not_married_table_size);
 		break;
 	case '2':
-		h_irs_edit(not_married_table, get_int());
+		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela I - NÃO CASADO"));
+		h_irs_edit(not_married_table, h_util_get_positive_int());
 		break;
 	case '3':
 		h_irs_print(married_unique_holder_table, married_unique_holder_table_size);
 		break;
 	case '4':
-		h_irs_edit(married_unique_holder_table, get_int());
+		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela II - CASDO UNICO TITULAR"));
+		h_irs_edit(married_unique_holder_table, h_util_get_positive_int());
 		break;
 	case '5':
 		h_irs_print(married_two_holders_table, married_two_holders_size);
 		break;
 	case '6':
-		h_irs_edit(married_two_holders_table, get_int());
+		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela III - CASDO DOIS TITULARES"));
+		h_irs_edit(married_two_holders_table, h_util_get_positive_int());
 		break;
 	case '0':
 		break;

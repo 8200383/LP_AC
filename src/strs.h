@@ -49,4 +49,9 @@
 "* Mensal em Euros | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
 "***************************************************")
 
+#define H_STRS_IRS_TABLE_EDIT(string) RED( \
+"[!] Editar " string "\n" \
+"> Linha?\n")
+
+
 #endif //_STRS_H_
