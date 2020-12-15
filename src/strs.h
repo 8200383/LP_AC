@@ -44,9 +44,9 @@
 "******************\n")
 
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
-"***********************************************\n" \
-"* Remuneração     | Numero de Dependentes     *\n" \
-"* Mensal em Euros | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
-"***********************************************")
+"***************************************************\n" \
+"* Remuneração     | Numero de Dependentes         *\n" \
+"* Mensal em Euros | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
+"***************************************************")
 
 #endif //_STRS_H_
