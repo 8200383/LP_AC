@@ -4,13 +4,12 @@
 
 #include "seg_social.h"
 #include <stdlib.h>
-#include <stdio.h>
 #include <ctype.h>
 
-s_taxes* h_seg_social_taxes_alloc(int n)
+s_seg_social * h_seg_social_taxes_alloc(int n)
 {
 	int i;
-	s_taxes* taxes;
+	s_seg_social* taxes;
 
 	taxes = malloc(n * sizeof(*taxes));
 	if (taxes == NULL)
@@ -26,7 +25,7 @@ s_taxes* h_seg_social_taxes_alloc(int n)
 	return taxes;
 }
 
-void h_seg_social_init_from_str(s_taxes* data, char* str)
+void h_seg_social_init_from_str(s_seg_social* data, char* str)
 {
 	int i, count = 0, is_employer = 1, offset = -1;
 
