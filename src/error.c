@@ -2,7 +2,7 @@
 // Created by Hugo Carvalho on 12/16/2020.
 //
 
-#include "h_error.h"
+#include "error.h"
 #include <stdlib.h>
 #include <string.h>
 
