@@ -116,14 +116,13 @@ void h_irs_print(s_irs* data, int size)
 	}
 }
 
-void h_irs_edit(s_irs* data, unsigned int position)
+void h_irs_edit(s_irs* data, unsigned int data_len, unsigned int position)
 {
 	float temp_monthly_pay;
 	float temp_dependent;
 	int i;
 
-	// TODO: Check if position exists
-	if (data == NULL || !position)
+	if (data == NULL || data_len < position)
 		return;
 
 	fprintf(stdout, RED("[!] Use pontos para especificar decimas!\n"));
