@@ -5,6 +5,7 @@
 #include "irs.h"
 #include "menu.h"
 #include "strs.h"
+#include "h_error.h"
 
 s_irs* irs_init(const char* path, int* size);
 
@@ -43,6 +44,8 @@ s_irs* irs_init(const char* path, int* size)
 
 int main()
 {
+	s_error* error;
+
 	char op;
 	int not_married_size;
 	int married_unique_holder_size;
@@ -57,15 +60,21 @@ int main()
 
 	not_married_table = irs_init("../data/table_not_married.csv", &not_married_size);
 	if (not_married_table == NULL)
-		return -1;
+		error = h_error_create(H_ERROR_READ, "Can't read file table_not_married.csv");
 
 	married_unique_holder_table = irs_init("../data/table_married_unique_holder.csv", &married_unique_holder_size);
 	if (married_unique_holder_table == NULL)
-		return -1;
+		error = h_error_create(H_ERROR_READ, "Can't read file table_married_unique_holder.csv");
 
 	married_two_holders_table = irs_init("../data/table_married_two_holders.csv", &married_two_holders_size);
 	if (married_unique_holder_table == NULL)
+		error = h_error_create(H_ERROR_READ, "Can't read file table_married_two_holders.csv");
+
+	if (error) {
+		fprintf(stderr, RED("TYPE: %d\t"), error->error_type);
+		fprintf(stderr, RED("MSG: %s\n"), error->msg);
 		return -1;
+	}
 
 	do
 	{
