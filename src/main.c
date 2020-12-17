@@ -44,28 +44,34 @@ s_irs* irs_init(const char* path, int* size)
 int main()
 {
 	char op;
-	int not_married_size;
-	int married_unique_holder_size;
-	int married_two_holders_size;
-	s_irs* not_married_table;
-	s_irs* married_unique_holder_table;
-	s_irs* married_two_holders_table;
+	int single_size;
+	int unique_holder_size;
+	int two_holders_size;
+	s_irs* single_table;
+	s_irs* unique_holder_table;
+	s_irs* two_holders_table;
 
-	not_married_size = 0;
-	married_unique_holder_size = 0;
-	married_two_holders_size = 0;
+	single_size = 0;
+	unique_holder_size = 0;
+	two_holders_size = 0;
 
-	not_married_table = irs_init("../data/table_not_married.csv", &not_married_size);
-	if (not_married_table == NULL)
+	single_table = irs_init("../data/table_not_married.csv", &single_size);
+	if (single_table == NULL)
 		return -1;
 
-	married_unique_holder_table = irs_init("../data/table_married_unique_holder.csv", &married_unique_holder_size);
-	if (married_unique_holder_table == NULL)
+	unique_holder_table = irs_init("../data/table_married_unique_holder.csv", &unique_holder_size);
+	if (unique_holder_table == NULL)
 		return -1;
 
-	married_two_holders_table = irs_init("../data/table_married_two_holders.csv", &married_two_holders_size);
-	if (married_unique_holder_table == NULL)
+	two_holders_table = irs_init("../data/table_married_two_holders.csv", &two_holders_size);
+	if (two_holders_table == NULL)
 		return -1;
+
+	s_irs_tables irs_tables = {
+		single_table,
+		unique_holder_table,
+		two_holders_table
+	};
 
 	do
 	{
@@ -76,13 +82,7 @@ int main()
 		switch (op)
 		{
 		case '1':
-			h_menu_irs(
-				not_married_table,
-				not_married_size,
-				married_unique_holder_table,
-				married_unique_holder_size,
-				married_two_holders_table,
-				married_two_holders_size);
+			h_menu_irs(irs_tables, &single_size, &unique_holder_size, &two_holders_size);
 			break;
 		case '9':
 			fprintf(stdout, H_STRS_SAVE_MENU);
@@ -92,9 +92,9 @@ int main()
 		}
 	} while (op != '0');
 
-	free(not_married_table);
-	free(married_unique_holder_table);
-	free(married_two_holders_table);
+	free(single_table);
+	free(unique_holder_table);
+	free(two_holders_table);
 
 	fprintf(stdout, RED("EXITING"));
 	return 0;
