@@ -39,7 +39,7 @@ s_irs* h_irs_alloc(unsigned int n)
 	return irs;
 }
 
-void h_irs_build(s_irs* data, char key, char* str, int line, int* dependent)
+void h_irs_build(s_irs* data, char* str, int line, int* dependent)
 {
 	unsigned long size;
 	float percentage;
@@ -106,7 +106,7 @@ int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 		{
 			str[i] = '\0'; // Remove the ;
 
-			pair_func(data, str[i - 1], str + offset_value, line, &dependent);
+			pair_func(data, str + offset_value, line, &dependent);
 
 			offset_value = -1;
 		}
@@ -141,12 +141,12 @@ void h_irs_print(s_irs* data, int size)
 			fprintf(stdout, YELLOW("Superior a "));
 
 		fprintf(stdout, YELLOW("%.2f€ | "), data[i].monthly_pay_value);
-		fprintf(stdout, CYAN("%.1f%% | "), data[i].dependent_0);
-		fprintf(stdout, CYAN("%.1f%% | "), data[i].dependent_1);
-		fprintf(stdout, CYAN("%.1f%% | "), data[i].dependent_2);
-		fprintf(stdout, CYAN("%.1f%% | "), data[i].dependent_3);
-		fprintf(stdout, CYAN("%.1f%% | "), data[i].dependent_4);
-		fprintf(stdout, CYAN("%.1f%%"), data[i].dependent_5_or_more);
+		fprintf(stdout, CYAN("%.2f%% | "), data[i].dependent_0 * 100);
+		fprintf(stdout, CYAN("%.2f%% | "), data[i].dependent_1 * 100);
+		fprintf(stdout, CYAN("%.2f%% | "), data[i].dependent_2 * 100);
+		fprintf(stdout, CYAN("%.2f%% | "), data[i].dependent_3 * 100);
+		fprintf(stdout, CYAN("%.2f%% | "), data[i].dependent_4 * 100);
+		fprintf(stdout, CYAN("%.2f%%"), data[i].dependent_5_or_more * 100);
 	}
 }
 
@@ -161,10 +161,10 @@ int h_irs_edit(s_irs* data, unsigned int data_len, unsigned int position)
 
 	scanf(" %c", &op);
 	if (op == 'A' || op == 'a')
-		data->monthly_pay_type = H_IRS_UP_TO;
+		data[position].monthly_pay_type = H_IRS_UP_TO;
 
 	else if (op == 'S' || op == 's')
-		data->monthly_pay_type = H_IRS_BEYOND;
+		data[position].monthly_pay_type = H_IRS_BEYOND;
 
 	else
 	{
@@ -174,25 +174,25 @@ int h_irs_edit(s_irs* data, unsigned int data_len, unsigned int position)
 
 	fprintf(stdout, RED("[!] Use pontos para especificar decimas!\n"));
 	fprintf(stdout, YELLOW("> Remuneração Mensal => "));
-	data->monthly_pay_value = h_util_get_float();
+	data[position].monthly_pay_value = h_util_get_float();
 
 	fprintf(stdout, YELLOW("> Percentagem pelo dependente 0 => "));
-	data->dependent_0 = h_util_get_float();
+	data[position].dependent_0 = h_util_get_float();
 
 	fprintf(stdout, YELLOW("> Percentagem pelo dependente 1 => "));
-	data->dependent_1 = h_util_get_float();
+	data[position].dependent_1 = h_util_get_float();
 
 	fprintf(stdout, YELLOW("> Percentagem pelo dependente 2 => "));
-	data->dependent_2 = h_util_get_float();
+	data[position].dependent_2 = h_util_get_float();
 
 	fprintf(stdout, YELLOW("> Percentagem pelo dependente 3 => "));
-	data->dependent_3 = h_util_get_float();
+	data[position].dependent_3 = h_util_get_float();
 
 	fprintf(stdout, YELLOW("> Percentagem pelo dependente 4 => "));
-	data->dependent_4 = h_util_get_float();
+	data[position].dependent_4 = h_util_get_float();
 
 	fprintf(stdout, YELLOW("> Percentagem pelo dependente 5 ou mais => "));
-	data->dependent_5_or_more = h_util_get_float();
+	data[position].dependent_5_or_more = h_util_get_float();
 
 	return 0;
 }
