@@ -198,24 +198,26 @@ int h_irs_edit(s_irs* data, int size, int position)
 }
 
 
-	return 0;
-}
-
-/*
-int h_irs_save(s_irs* data, int data_len, const char* path) {
+int h_irs_write(s_irs* data, int size, const char* path) {
 	FILE* fp;
-	int i;
 
-	fp = fopen(path, "a");
+	if (data == NULL || !size || path == NULL)
+		return -1;
+
+	fp = fopen(path, "wb");
 	if (fp == NULL) {
 		return -1;
 	}
 
-	for (i = 0; i < data_len; ++i)
-	{
-
+	if (fwrite (data, sizeof(*data), size, fp) < size) {
+		fclose(fp);
+		return -1;
 	}
-} */
+
+	fclose(fp);
+
+	return 0;
+}
 
 int h_irs_free(s_irs* data)
 {
