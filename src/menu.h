@@ -8,11 +8,9 @@
 #include "irs.h"
 
 void h_menu_irs(
-	s_irs* not_married_table,
-	int not_married_table_size,
-	s_irs* married_unique_holder_table,
-	int married_unique_holder_table_size,
-	s_irs* married_two_holders_table,
-	int married_two_holders_size);
+	s_irs_tables tables,
+	int* single_size,
+	int* unique_holder_size,
+	int* two_holders_size);
 
 #endif //_MENU_H_

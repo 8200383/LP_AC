@@ -10,41 +10,59 @@
 #include "util.h"
 
 void h_menu_irs(
-	s_irs* not_married_table,
-	int not_married_table_size,
-	s_irs* married_unique_holder_table,
-	int married_unique_holder_table_size,
-	s_irs* married_two_holders_table,
-	int married_two_holders_size)
+	s_irs_tables tables,
+	int* single_size,
+	int* unique_holder_size,
+	int* two_holders_size)
 {
-	char op;
+	int op;
 
 	fprintf(stdout, "%s", H_STRS_IRS_MENU);
 	fprintf(stdout, GREEN("> "));
-	scanf(" %c", &op);
+	scanf(" %d", &op);
 
 	switch (op)
 	{
-	case '1':
-		h_irs_print(not_married_table, not_married_table_size);
+	case 1:
+		h_irs_print(tables.single, *single_size);
 		break;
-	case '2':
+	case 2:
+		fprintf(stdout, "Adicionar Linha");
+		//h_irs_add(not_married_table);
+		break;
+	case 3:
 		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela I - NÃO CASADO"));
-		h_irs_edit(not_married_table, not_married_table_size, h_util_get_positive_int());
+		h_irs_edit(tables.single, *single_size, h_util_get_positive_int());
 		break;
-	case '3':
-		h_irs_print(married_unique_holder_table, married_unique_holder_table_size);
+	case 4:
+		fprintf(stdout, "Eliminar Linha");
+		h_irs_delete(tables.single, single_size, h_util_get_positive_int());
 		break;
-	case '4':
-		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela II - CASDO UNICO TITULAR"));
-		h_irs_edit(married_unique_holder_table, married_unique_holder_table_size, h_util_get_positive_int());
+	case 5:
+		h_irs_print(tables.unique_holder, *unique_holder_size);
 		break;
-	case '5':
-		h_irs_print(married_two_holders_table, married_two_holders_size);
+	case 6:
+		fprintf(stdout, "Adicionar Linha");
 		break;
-	case '6':
-		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela III - CASDO DOIS TITULARES"));
-		h_irs_edit(married_two_holders_table, married_two_holders_size, h_util_get_positive_int());
+	case 7:
+		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela II - CASADO UNICO TITULAR"));
+		h_irs_edit(tables.unique_holder, *unique_holder_size, h_util_get_positive_int());
+		break;
+	case 8:
+		fprintf(stdout, "Eliminar Linha");
+		break;
+	case 9:
+		h_irs_print(tables.two_holders, *two_holders_size);
+		break;
+	case 10:
+		fprintf(stdout, "Adicionar Linha");
+		break;
+	case 11:
+		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela III - CASADO DOIS TITULARES"));
+		h_irs_edit(tables.two_holders, *two_holders_size, h_util_get_positive_int());
+		break;
+	case 12:
+		fprintf(stdout, "Eliminar Linha");
 		break;
 	case '0':
 		break;
