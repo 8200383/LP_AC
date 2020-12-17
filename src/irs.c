@@ -38,29 +38,55 @@ s_irs* h_irs_alloc(unsigned int n)
 	return irs;
 }
 
-void h_irs_build(s_irs* data, char key, char* str, int* dependents)
+void h_irs_build(s_irs* data, char key, char* str, int line, int* dependent)
 {
 	unsigned long size;
+	float percentage;
 
 	size = strlen(str) - 1;
 
-	// Catch the values without %, that means we catch the monthly_payment
-	if (key != '%')
-		data[data->counter].monthly_pay = strtof(str, NULL);
+	if (m_util_strequal(str, "Até"))
+		data[line].monthly_pay_type = H_IRS_UP_TO;
 
-	// Catch all values with % sign
-	if (key == '%')
+	else if (m_util_strequal(str, "Superior a"))
+		data[line].monthly_pay_type = H_IRS_BEYOND;
+
+	if (m_util_regexcmp(str, "EUR"))
 	{
-		str[size] = '\0'; // Remove the % sign
+		str[size - 2] = '\0';
+		data[line].monthly_pay_value = strtof(str, NULL);
+		str[size - 2] = 'E';
+	}
 
-		data[data->counter].percentage_per_dependent[*dependents] = strtof(str, NULL) / 100.0f;
-		*dependents += 1;
+	if (m_util_regexcmp(str, "%"))
+	{
+		str[size] = '\0';
+
+		percentage = strtof(str, NULL) / 100.0f;
+
+		if (*dependent == 0)
+			data[line].dependent_0 = percentage;
+		else if (*dependent == 1)
+			data[line].dependent_1 = percentage;
+		else if (*dependent == 2)
+			data[line].dependent_2 = percentage;
+		else if (*dependent == 3)
+			data[line].dependent_3 = percentage;
+		else if (*dependent == 4)
+			data[line].dependent_4 = percentage;
+		else if (*dependent == 5)
+			data[line].dependent_5_or_more = percentage;
+
+		*dependent += 1;
+
+		str[size] = '%';
 	}
 }
 
 int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 {
-	int dependents;
+	int line;
+	int dependent;
 	int offset_value;
 	int i;
 
@@ -68,7 +94,8 @@ int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 		return -1;
 
 	offset_value = -1;
-	dependents = 0;
+	line = 0;
+	dependent = 0;
 	for (i = 0; str[i] != '\0'; i++)
 	{
 		if (offset_value == -1 && isalnum(str[i]))
@@ -78,7 +105,7 @@ int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 		{
 			str[i] = '\0'; // Remove the ;
 
-			pair_func(data, str[i - 1], str + offset_value, &dependents);
+			pair_func(data, str[i - 1], str + offset_value, line, &dependent);
 
 			offset_value = -1;
 		}
@@ -86,8 +113,8 @@ int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 		// If new line found move to the next struct
 		if (str[i] == '\n')
 		{
-			data->counter++;
-			dependents = 0;
+			line++;
+			dependent = 0;
 		}
 	}
 
