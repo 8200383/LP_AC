@@ -36,8 +36,10 @@ s_irs* irs_init(const char* path, int* size)
 	return data;
 }
 
-int main()
+s_error* main_menu()
 {
+	s_error* error;
+
 	char op;
 
 	int single_size;
@@ -54,15 +56,26 @@ int main()
 
 	single_table = irs_init(H_PATH_SINGLE, &single_size);
 	if (single_table == NULL)
-		return -1;
+	{
+		error = h_error_create(H_ERROR_READ, H_PATH_SINGLE);
+		return error;
+	}
 
 	unique_holder_table = irs_init(H_PATH_UNIQUE_HOLDER, &unique_holder_size);
-	if (unique_holder_table == NULL)
-		return -1;
+	if (unique_holder_table == NULL) {
+		error = h_error_create(H_ERROR_READ, H_PATH_UNIQUE_HOLDER);
+		free(single_table);
+		return error;
+	}
 
 	two_holders_table = irs_init(H_PATH_TWO_HOLDERS, &two_holders_size);
 	if (two_holders_table == NULL)
-		return -1;
+	{
+		error = h_error_create(H_ERROR_READ, H_PATH_TWO_HOLDERS);
+		free(single_table);
+		free(unique_holder_table);
+		return error;
+	}
 
 	s_irs_tables irs_tables = {
 		single_table,
@@ -95,6 +108,20 @@ int main()
 	free(unique_holder_table);
 	free(two_holders_table);
 
-	fprintf(stdout, RED("EXITING"));
+	return NULL;
+}
+
+int main()
+{
+	s_error* error;
+
+	error = main_menu();
+	if (error)
+	{
+		h_error_print(error);
+		h_error_free(error);
+		return -1;
+	}
+
 	return 0;
 }

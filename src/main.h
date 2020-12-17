@@ -9,9 +9,10 @@
 #include "irs.h"
 #include "menu.h"
 #include "strs.h"
-#include "path.h"
+#include "paths.h"
+#include "error.h"
 
 s_irs* irs_init(const char* path, int* size);
-int irs_save(s_irs_tables tables, int single_size, int unique_holder_size, int two_holders_size);
+s_error* main_menu();
 
 #endif //_MAIN_H_
