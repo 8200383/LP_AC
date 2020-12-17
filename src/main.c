@@ -52,11 +52,6 @@ int main()
 	unique_holder_size = 0;
 	two_holders_size = 0;
 
-	if (m_util_file_exists(H_PATH_SINGLE_BIN))
-	{
-		fprintf(stdout, "File data found");
-	}
-
 	single_table = irs_init(H_PATH_SINGLE, &single_size);
 	if (single_table == NULL)
 		return -1;
