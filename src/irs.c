@@ -124,7 +124,6 @@ int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 void h_irs_print(s_irs* data, int size)
 {
 	int i;
-	int j;
 
 	if (data == NULL || !size)
 		return;
@@ -132,14 +131,21 @@ void h_irs_print(s_irs* data, int size)
 	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
 	for (i = 0; i < size; i++)
 	{
-		fprintf(stdout, RED("\n| %d | "), i);
-		fprintf(stdout, YELLOW("%.2f€"), data[i].monthly_pay);
+		fprintf(stdout, RED("\n%d | "), i);
 
-		for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
-		{
-			fprintf(stdout, BLUE(" | "));
-			fprintf(stdout, "%.1f%%", data[i].percentage_per_dependent[j] * 100);
-		}
+		if (data[i].monthly_pay_type == H_IRS_UP_TO)
+			fprintf(stdout, YELLOW("Até "));
+
+		else if (data[i].monthly_pay_type == H_IRS_BEYOND)
+			fprintf(stdout, YELLOW("Superior a "));
+
+		fprintf(stdout, YELLOW("%.2f€ | "), data[i].monthly_pay_value);
+		fprintf(stdout, CYAN("%.1f%% | "), data[i].dependent_0);
+		fprintf(stdout, CYAN("%.1f%% | "), data[i].dependent_1);
+		fprintf(stdout, CYAN("%.1f%% | "), data[i].dependent_2);
+		fprintf(stdout, CYAN("%.1f%% | "), data[i].dependent_3);
+		fprintf(stdout, CYAN("%.1f%% | "), data[i].dependent_4);
+		fprintf(stdout, CYAN("%.1f%%"), data[i].dependent_5_or_more);
 	}
 }
 
