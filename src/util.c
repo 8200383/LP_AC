@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <regex.h>
 
 char* h_util_file_read(const char* path)
 {
@@ -79,10 +80,33 @@ int h_util_get_positive_int()
 	{
 		fprintf(stdout, YELLOW("> "));
 		scanf(" %d", &n);
-		if (n < 0) {
+		if (n < 0)
+		{
 			fprintf(stdout, RED("> Inteiro Inválido\n"));
 		}
 	} while (n < 0);
+
+	return n;
+}
+
+int h_util_regex_compare(char* str, char* pattern)
+{
+	regex_t regex;
+
+	if (regcomp(&regex, pattern, 0) != 0)
+		return -1;
+
+	if (regexec(&regex, str, 0, NULL, 0) != 0)
+		return -1;
+
+	return 0;
+}
+
+float h_util_get_float()
+{
+	float n;
+
+	scanf(" %f", &n);
 
 	return n;
 }
