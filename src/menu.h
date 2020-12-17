@@ -9,8 +9,8 @@
 
 void h_menu_irs(
 	s_irs_tables tables,
-	int* single_size,
-	int* unique_holder_size,
-	int* two_holders_size);
+	int single_size,
+	int unique_holder_size,
+	int two_holders_size);
 
 #endif //_MENU_H_

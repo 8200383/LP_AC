@@ -34,7 +34,7 @@ typedef void (* h_irs_pair_func)(s_irs*, char*, int, int*);
 s_irs* h_irs_alloc(unsigned int n);
 int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func);
 void h_irs_print(s_irs* data, int size);
-int h_irs_edit(s_irs* data, unsigned int data_len, unsigned int position);
+int h_irs_edit(s_irs* data, int size, int position);
 void h_irs_build(s_irs* data, char* str, int line, int* dependents);
 //void h_irs_add(s_irs* data);
 int h_irs_delete(s_irs* data, int *size, int index);

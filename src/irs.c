@@ -150,11 +150,11 @@ void h_irs_print(s_irs* data, int size)
 	}
 }
 
-int h_irs_edit(s_irs* data, unsigned int data_len, unsigned int position)
+int h_irs_edit(s_irs* data, int size, int position)
 {
 	char op;
 
-	if (data == NULL || data_len < position)
+	if (data == NULL || size < position)
 		return -1;
 
 	fprintf(stdout, YELLOW("[A]té ou [S]uperior a\n"));
@@ -197,37 +197,6 @@ int h_irs_edit(s_irs* data, unsigned int data_len, unsigned int position)
 	return 0;
 }
 
-/*
-void h_irs_add(s_irs* data)
-{
-	int i;
-
-	if (data == NULL)
-		return;
-
-	data = realloc(data, data->counter + 1);
-
-	data[data->counter].monthly_pay = 0.4f;
-
-	for (i = 0; i < MAX_DEPENDENT_NUMBER; i++)
-	{
-		data[data->counter].percentage_per_dependent[i] = 0.3f;
-	}
-} */
-
-int h_irs_delete(s_irs* data, int* size, int index)
-{
-	s_irs* temp;
-
-	temp = realloc(data, (*size - 1) * sizeof(*temp));
-	if (data == NULL)
-		return -1;
-
-	if (index < *size - 1)
-	{
-		memmove(&temp[index], &data[index + 1], (*size - index - 1) * sizeof(*temp));
-		*size -= 1;
-	}
 
 	return 0;
 }

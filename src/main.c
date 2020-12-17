@@ -82,7 +82,11 @@ int main()
 		switch (op)
 		{
 		case '1':
-			h_menu_irs(irs_tables, &single_size, &unique_holder_size, &two_holders_size);
+			h_menu_irs(
+				irs_tables,
+				single_size,
+				unique_holder_size,
+				two_holders_size);
 			break;
 		case '9':
 			fprintf(stdout, H_STRS_SAVE_MENU);

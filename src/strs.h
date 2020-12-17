@@ -26,19 +26,13 @@
 "*                TRABALHO DEPENDENTE                *\n" \
 "*                                                   *\n" \
 "* 1. Visualizar Tabela I - NÃO CASADO               *\n" \
-"* 2. Adicionar Linha                                *\n" \
-"* 3. Editar Linha                                   *\n" \
-"* 4. Eliminar Linha                                 *\n" \
+"* 2. Editar Linha                                   *\n" \
 "*                                                   *\n" \
-"* 5. Visualizar Tabela II - CASADO UNICO TITULAR    *\n" \
-"* 6. Adicionar Linha                                *\n" \
-"* 7. Editar Linha                                   *\n" \
-"* 8. Eliminar Linha                                 *\n" \
+"* 3. Visualizar Tabela II - CASADO UNICO TITULAR    *\n" \
+"* 4. Editar Linha                                   *\n" \
 "*                                                   *\n" \
-"* 9. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
-"* 10. Adicionar Linha                               *\n" \
-"* 11. Editar Linha                                  *\n" \
-"* 12. Eliminar Linha                                *\n" \
+"* 5. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
+"* 6. Editar Linha                                   *\n" \
 "*                                                   *\n" \
 "* 0. Voltar ao menu anterior                        *\n" \
 "*                                                   *\n" \
