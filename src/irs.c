@@ -10,6 +10,7 @@
 #include "irs.h"
 #include "colors.h"
 #include "strs.h"
+#include "util.h"
 
 s_irs* h_irs_alloc(unsigned int n)
 {
