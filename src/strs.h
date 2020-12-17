@@ -38,11 +38,6 @@
 "*                                                   *\n" \
 "*****************************************************\n")
 
-#define H_STRS_SAVE_MENU RED( \
-"******************\n" \
-"*   SAVE (Y/n)   *\n" \
-"******************\n")
-
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
 "***************************************************\n" \
 "* Remuneração     | Numero de Dependentes         *\n" \
@@ -52,6 +47,5 @@
 #define H_STRS_IRS_TABLE_EDIT(string) RED( \
 "[!] Editar " string "\n" \
 "> Linha?\n")
-
 
 #endif //_STRS_H_

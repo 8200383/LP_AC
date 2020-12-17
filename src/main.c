@@ -1,12 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "util.h"
-#include "irs.h"
-#include "menu.h"
-#include "strs.h"
-
-s_irs* irs_init(const char* path, int* size);
+#include "main.h"
 
 s_irs* irs_init(const char* path, int* size)
 {
@@ -44,9 +39,11 @@ s_irs* irs_init(const char* path, int* size)
 int main()
 {
 	char op;
+
 	int single_size;
 	int unique_holder_size;
 	int two_holders_size;
+
 	s_irs* single_table;
 	s_irs* unique_holder_table;
 	s_irs* two_holders_table;
@@ -55,15 +52,20 @@ int main()
 	unique_holder_size = 0;
 	two_holders_size = 0;
 
-	single_table = irs_init("../data/table_not_married.csv", &single_size);
+	if (m_util_file_exists(H_PATH_SINGLE_BIN))
+	{
+		fprintf(stdout, "File data found");
+	}
+
+	single_table = irs_init(H_PATH_SINGLE, &single_size);
 	if (single_table == NULL)
 		return -1;
 
-	unique_holder_table = irs_init("../data/table_married_unique_holder.csv", &unique_holder_size);
+	unique_holder_table = irs_init(H_PATH_UNIQUE_HOLDER, &unique_holder_size);
 	if (unique_holder_table == NULL)
 		return -1;
 
-	two_holders_table = irs_init("../data/table_married_two_holders.csv", &two_holders_size);
+	two_holders_table = irs_init(H_PATH_TWO_HOLDERS, &two_holders_size);
 	if (two_holders_table == NULL)
 		return -1;
 
@@ -82,14 +84,12 @@ int main()
 		switch (op)
 		{
 		case '1':
-			h_menu_irs(
-				irs_tables,
-				single_size,
-				unique_holder_size,
-				two_holders_size);
+			h_menu_irs(irs_tables, single_size, unique_holder_size, two_holders_size);
 			break;
 		case '9':
-			fprintf(stdout, H_STRS_SAVE_MENU);
+			h_irs_write(irs_tables.single, single_size, H_PATH_SINGLE_BIN);
+			h_irs_write(irs_tables.unique_holder, unique_holder_size, H_PATH_UNIQUE_HOLDER_BIN);
+			h_irs_write(irs_tables.two_holders, two_holders_size, H_PATH_TWO_HOLDERS_BIN);
 			break;
 		default:
 			break;
