@@ -194,17 +194,57 @@ int h_irs_edit(s_irs* data, unsigned int data_len, unsigned int position)
 	fprintf(stdout, YELLOW("> Percentagem pelo dependente 5 ou mais => "));
 	data->dependent_5_or_more = h_util_get_float();
 
-	if (temp_monthly_pay)
-		data[position].monthly_pay = temp_monthly_pay;
+	return 0;
+}
+
+/*
+void h_irs_add(s_irs* data)
+{
+	int i;
+
+	if (data == NULL)
+		return;
+
+	data = realloc(data, data->counter + 1);
+
+	data[data->counter].monthly_pay = 0.4f;
 
 	for (i = 0; i < MAX_DEPENDENT_NUMBER; i++)
 	{
-		fprintf(stdout, YELLOW("> %% para dependente %d =>  "), i);
-		scanf(" %f", &temp_dependent);
-		fprintf(stdout, RED("> %.3f\n"), temp_dependent);
+		data[data->counter].percentage_per_dependent[i] = 0.3f;
+	}
+} */
 
-		if (temp_dependent)
-			data[position].percentage_per_dependent[i] = temp_dependent;
+int h_irs_delete(s_irs* data, int* size, int index)
+{
+	s_irs* temp;
+
+	temp = realloc(data, (*size - 1) * sizeof(*temp));
+	if (data == NULL)
+		return -1;
+
+	if (index < *size - 1)
+	{
+		memmove(&temp[index], &data[index + 1], (*size - index - 1) * sizeof(*temp));
+		*size -= 1;
+	}
+
+	return 0;
+}
+
+/*
+int h_irs_save(s_irs* data, int data_len, const char* path) {
+	FILE* fp;
+	int i;
+
+	fp = fopen(path, "a");
+	if (fp == NULL) {
+		return -1;
+	}
+
+	for (i = 0; i < data_len; ++i)
+	{
+
 	}
 } */
 
