@@ -15,7 +15,6 @@ s_irs* h_irs_alloc(unsigned int n)
 {
 	s_irs* irs;
 	int i;
-	int j;
 
 	if (!n)
 		return NULL;
@@ -26,13 +25,14 @@ s_irs* h_irs_alloc(unsigned int n)
 
 	for (i = 0; i < n; i++)
 	{
-		irs[i].monthly_pay = 0.0f;
-		irs[i].counter = 0;
-
-		for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
-		{
-			irs[i].percentage_per_dependent[j] = 0.0f;
-		}
+		irs[i].monthly_pay_type = H_IRS_UP_TO;
+		irs[i].monthly_pay_value = 0.0f;
+		irs[i].dependent_0 = 0.0f;
+		irs[i].dependent_1 = 0.0f;
+		irs[i].dependent_2 = 0.0f;
+		irs[i].dependent_3 = 0.0f;
+		irs[i].dependent_4 = 0.0f;
+		irs[i].dependent_5_or_more = 0.0f;
 	}
 
 	return irs;
