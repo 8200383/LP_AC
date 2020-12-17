@@ -176,4 +176,21 @@ void h_irs_edit(s_irs* data, unsigned int data_len, unsigned int position)
 		if (temp_dependent)
 			data[position].percentage_per_dependent[i] = temp_dependent;
 	}
+} */
+
+int h_irs_free(s_irs* data)
+{
+	if (data == NULL)
+		return -1;
+
+	data->monthly_pay_type = H_IRS_UP_TO;
+	data->monthly_pay_value = 0.0f;
+	data->dependent_0 = 0.0f;
+	data->dependent_1 = 0.0f;
+	data->dependent_2 = 0.0f;
+	data->dependent_3 = 0.0f;
+	data->dependent_4 = 0.0f;
+	data->dependent_5_or_more = 0.0f;
+
+	return 0;
 }
