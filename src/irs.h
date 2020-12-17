@@ -5,16 +5,31 @@
 #ifndef _IRS_H_
 #define _IRS_H_
 
-#define MAX_DEPENDENT_NUMBER 6
+typedef enum {
+	H_IRS_UP_TO,
+	H_IRS_BEYOND
+} e_type;
 
 typedef struct
 {
-	float monthly_pay;
-	float percentage_per_dependent[MAX_DEPENDENT_NUMBER];
-	int counter;
+	e_type monthly_pay_type;
+	float monthly_pay_value;
+	float dependent_0;
+	float dependent_1;
+	float dependent_2;
+	float dependent_3;
+	float dependent_4;
+	float dependent_5_or_more;
 } s_irs;
 
-typedef void (* h_irs_pair_func)(s_irs*, char, char*, int*);
+typedef struct
+{
+	s_irs* single;
+	s_irs* unique_holder;
+	s_irs* two_holders;
+} s_irs_tables;
+
+typedef void (* h_irs_pair_func)(s_irs*, char, char*, int, int*);
 
 s_irs* h_irs_alloc(unsigned int n);
 int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func);
