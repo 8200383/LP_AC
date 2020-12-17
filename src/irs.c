@@ -150,19 +150,49 @@ void h_irs_print(s_irs* data, int size)
 	}
 }
 
-void h_irs_edit(s_irs* data, unsigned int data_len, unsigned int position)
+int h_irs_edit(s_irs* data, unsigned int data_len, unsigned int position)
 {
-	float temp_monthly_pay;
-	float temp_dependent;
-	int i;
+	char op;
 
 	if (data == NULL || data_len < position)
-		return;
+		return -1;
+
+	fprintf(stdout, YELLOW("[A]té ou [S]uperior a\n"));
+
+	scanf(" %c", &op);
+	if (op == 'A' || op == 'a')
+		data->monthly_pay_type = H_IRS_UP_TO;
+
+	else if (op == 'S' || op == 's')
+		data->monthly_pay_type = H_IRS_BEYOND;
+
+	else
+	{
+		fprintf(stdout, RED("[!] Opção Invalida"));
+		return -1;
+	}
 
 	fprintf(stdout, RED("[!] Use pontos para especificar decimas!\n"));
 	fprintf(stdout, YELLOW("> Remuneração Mensal => "));
-	scanf(" %f", &temp_monthly_pay);
-	fprintf(stdout, RED("> %.2f € \n"), temp_monthly_pay);
+	data->monthly_pay_value = h_util_get_float();
+
+	fprintf(stdout, YELLOW("> Percentagem pelo dependente 0 => "));
+	data->dependent_0 = h_util_get_float();
+
+	fprintf(stdout, YELLOW("> Percentagem pelo dependente 1 => "));
+	data->dependent_1 = h_util_get_float();
+
+	fprintf(stdout, YELLOW("> Percentagem pelo dependente 2 => "));
+	data->dependent_2 = h_util_get_float();
+
+	fprintf(stdout, YELLOW("> Percentagem pelo dependente 3 => "));
+	data->dependent_3 = h_util_get_float();
+
+	fprintf(stdout, YELLOW("> Percentagem pelo dependente 4 => "));
+	data->dependent_4 = h_util_get_float();
+
+	fprintf(stdout, YELLOW("> Percentagem pelo dependente 5 ou mais => "));
+	data->dependent_5_or_more = h_util_get_float();
 
 	if (temp_monthly_pay)
 		data[position].monthly_pay = temp_monthly_pay;
