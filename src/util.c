@@ -13,8 +13,8 @@
 char* h_util_file_read(const char* path)
 {
 	FILE* fp;
-	unsigned long total_bytes;
-	unsigned long read_bytes;
+	size_t total_bytes;
+	size_t read_bytes;
 	char* str;
 
 	if (path == NULL)
@@ -68,6 +68,19 @@ int h_util_get_lines_from_str(const char* str)
 	return lines;
 }
 
+int h_util_regex_compare(char* str, char* pattern)
+{
+	regex_t regex;
+
+	if (regcomp(&regex, pattern, 0) != 0)
+		return -1;
+
+	if (regexec(&regex, str, 0, NULL, 0) != 0)
+		return -1;
+
+	return 0;
+}
+
 /**
  * Get a positive integer and return it
  * @return int
@@ -87,19 +100,6 @@ int h_util_get_positive_int()
 	} while (n < 0);
 
 	return n;
-}
-
-int h_util_regex_compare(char* str, char* pattern)
-{
-	regex_t regex;
-
-	if (regcomp(&regex, pattern, 0) != 0)
-		return -1;
-
-	if (regexec(&regex, str, 0, NULL, 0) != 0)
-		return -1;
-
-	return 0;
 }
 
 float h_util_get_float()
