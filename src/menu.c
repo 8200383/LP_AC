@@ -15,11 +15,11 @@ void h_menu_irs(
 	int unique_holder_size,
 	int two_holders_size)
 {
-	int op;
+	unsigned int op;
 
 	fprintf(stdout, "%s", H_STRS_IRS_MENU);
 	fprintf(stdout, GREEN("> "));
-	scanf(" %d", &op);
+	scanf(" %u", &op);
 
 	switch (op)
 	{
@@ -44,10 +44,11 @@ void h_menu_irs(
 		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela III - CASADO DOIS TITULARES"));
 		h_irs_edit(tables.two_holders, two_holders_size, h_util_get_positive_int());
 		break;
-	case '0':
+	case 0:
 		break;
 	default:
-		fprintf(stderr, "Invalid Option\n");
+		fprintf(stdout, RED("Invalid Option"));
 		break;
 	}
+
 }

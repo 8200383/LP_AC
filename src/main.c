@@ -3,44 +3,11 @@
 
 #include "main.h"
 
-s_irs* irs_init(const char* path, int* size)
-{
-	s_irs* data;
-	char* str;
-	int n_lines;
-	int err;
-
-	if (path == NULL || size == NULL)
-		return NULL;
-
-	str = h_util_file_read(path);
-	if (str == NULL)
-		return NULL;
-
-	n_lines = h_util_get_lines_from_str(str);
-	data = h_irs_alloc(n_lines);
-	if (data == NULL)
-	{
-		free(str);
-		return NULL;
-	}
-
-	*size = n_lines;
-	err = h_irs_parse(data, str, h_irs_build);
-	if (err)
-	{
-		free(str);
-		return NULL;
-	}
-
-	return data;
-}
-
 s_error* main_menu()
 {
 	s_error* error;
 
-	char op;
+	unsigned int op;
 
 	int single_size;
 	int unique_holder_size;
@@ -54,21 +21,22 @@ s_error* main_menu()
 	unique_holder_size = 0;
 	two_holders_size = 0;
 
-	single_table = irs_init(H_PATH_SINGLE, &single_size);
+	single_table = h_irs_init(H_PATH_SINGLE, &single_size);
 	if (single_table == NULL)
 	{
 		error = h_error_create(H_ERROR_READ, H_PATH_SINGLE);
 		return error;
 	}
 
-	unique_holder_table = irs_init(H_PATH_UNIQUE_HOLDER, &unique_holder_size);
-	if (unique_holder_table == NULL) {
+	unique_holder_table = h_irs_init(H_PATH_UNIQUE_HOLDER, &unique_holder_size);
+	if (unique_holder_table == NULL)
+	{
 		error = h_error_create(H_ERROR_READ, H_PATH_UNIQUE_HOLDER);
 		free(single_table);
 		return error;
 	}
 
-	two_holders_table = irs_init(H_PATH_TWO_HOLDERS, &two_holders_size);
+	two_holders_table = h_irs_init(H_PATH_TWO_HOLDERS, &two_holders_size);
 	if (two_holders_table == NULL)
 	{
 		error = h_error_create(H_ERROR_READ, H_PATH_TWO_HOLDERS);
@@ -87,22 +55,22 @@ s_error* main_menu()
 	{
 		fprintf(stdout, "%s", H_STRS_MENU);
 		fprintf(stdout, GREEN("> "));
-		scanf(" %c", &op);
+		scanf(" %u", &op);
 
 		switch (op)
 		{
-		case '1':
+		case 1:
 			h_menu_irs(irs_tables, single_size, unique_holder_size, two_holders_size);
 			break;
-		case '9':
-			h_irs_write(irs_tables.single, single_size, H_PATH_SINGLE_BIN);
-			h_irs_write(irs_tables.unique_holder, unique_holder_size, H_PATH_UNIQUE_HOLDER_BIN);
-			h_irs_write(irs_tables.two_holders, two_holders_size, H_PATH_TWO_HOLDERS_BIN);
+		case 9:
+			h_irs_write(irs_tables.single, single_size, H_PATH_SINGLE);
+			h_irs_write(irs_tables.unique_holder, unique_holder_size, H_PATH_UNIQUE_HOLDER);
+			h_irs_write(irs_tables.two_holders, two_holders_size, H_PATH_TWO_HOLDERS);
 			break;
 		default:
 			break;
 		}
-	} while (op != '0');
+	} while (op != 0);
 
 	free(single_table);
 	free(unique_holder_table);
