@@ -7,6 +7,8 @@
 
 #include "colors.h"
 
+#define H_STRS_IRS_TEMPLATE_STRING "%s;%.2fEUR;%.1f%%;%.1f%%;%.1f%%;%.1f%%;%.1f%%;%.1f%%;\n"
+
 #define H_STRS_MENU MAGENTA( \
 "\n*******************************\n" \
 "*        -|  MENU  |-         *\n" \
