@@ -5,7 +5,8 @@
 #ifndef _IRS_H_
 #define _IRS_H_
 
-typedef enum {
+typedef enum
+{
 	H_IRS_UP_TO,
 	H_IRS_BEYOND
 } e_type;
@@ -38,7 +39,5 @@ void h_irs_print(s_irs* data, int size);
 int h_irs_edit(s_irs* data, int size, int position);
 void h_irs_build(s_irs* data, char* str, int line, int* dependents);
 int h_irs_write(s_irs* data, int size, const char* path);
-int h_irs_read(s_irs* data, const char* path);
-int h_irs_free(s_irs* data);
 
 #endif //_IRS_H_

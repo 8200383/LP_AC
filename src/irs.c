@@ -233,65 +233,35 @@ int h_irs_edit(s_irs* data, int size, int position)
 int h_irs_write(s_irs* data, int size, const char* path)
 {
 	FILE* fp;
-
-	if (data == NULL || !size || path == NULL)
-		return -1;
+	char* description;
+	int i;
 
 	fp = fopen(path, "wb");
 	if (fp == NULL)
+		return -1;
+
+	for (i = 0; i < size; i++)
 	{
-		return -1;
-	}
+		if (data[i].monthly_pay_type == H_IRS_UP_TO)
+			description = "Até";
 
-	if (fwrite(data, sizeof(*data), size, fp) < size)
-	{
-		fclose(fp);
-		return -1;
-	}
+		else if (data[i].monthly_pay_type == H_IRS_BEYOND)
+			description = "Superior a";
 
-	fclose(fp);
-
-	return 0;
-}
-
-int h_irs_read(s_irs* data, const char* path)
-{
-	FILE* fp;
-	unsigned long total_bytes;
-
-
-	fp = fopen(path, "rb");
-	if (fp == NULL)
-		return -1;
-
-	fseek(fp, 0L, SEEK_END);
-	total_bytes = ftell(fp) + 1;
-	fseek(fp, 0L, SEEK_SET);
-
-	if (fread(data, sizeof(*data), total_bytes, fp) < total_bytes)
-	{
-		fclose(fp);
-		return -1;
+		fprintf(
+			fp,
+			H_STRS_IRS_TEMPLATE_STRING,
+			description,
+			data[i].monthly_pay_value,
+			data[i].dependent_0 * 100,
+			data[i].dependent_1 * 100,
+			data[i].dependent_2 * 100,
+			data[i].dependent_3 * 100,
+			data[i].dependent_4 * 100,
+			data[i].dependent_5_or_more * 100);
 	}
 
 	fclose(fp);
-
-	return 0;
-}
-
-int h_irs_free(s_irs* data)
-{
-	if (data == NULL)
-		return -1;
-
-	data->monthly_pay_type = H_IRS_UP_TO;
-	data->monthly_pay_value = 0.0f;
-	data->dependent_0 = 0.0f;
-	data->dependent_1 = 0.0f;
-	data->dependent_2 = 0.0f;
-	data->dependent_3 = 0.0f;
-	data->dependent_4 = 0.0f;
-	data->dependent_5_or_more = 0.0f;
 
 	return 0;
 }
