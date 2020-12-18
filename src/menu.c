@@ -10,46 +10,45 @@
 #include "util.h"
 
 void h_menu_irs(
-	s_irs* not_married_table,
-	int not_married_table_size,
-	s_irs* married_unique_holder_table,
-	int married_unique_holder_table_size,
-	s_irs* married_two_holders_table,
-	int married_two_holders_size)
+	s_irs_tables tables,
+	int single_size,
+	int unique_holder_size,
+	int two_holders_size)
 {
-	char op;
+	unsigned int op;
 
 	fprintf(stdout, "%s", H_STRS_IRS_MENU);
 	fprintf(stdout, GREEN("> "));
-	scanf(" %c", &op);
+	scanf(" %u", &op);
 
 	switch (op)
 	{
-	case '1':
-		h_irs_print(not_married_table, not_married_table_size);
+	case 1:
+		h_irs_print(tables.single, single_size);
 		break;
-	case '2':
+	case 2:
 		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela I - NÃO CASADO"));
-		h_irs_edit(not_married_table, not_married_table_size, h_util_get_positive_int());
+		h_irs_edit(tables.single, single_size, h_util_get_positive_int());
 		break;
-	case '3':
-		h_irs_print(married_unique_holder_table, married_unique_holder_table_size);
+	case 3:
+		h_irs_print(tables.unique_holder, unique_holder_size);
 		break;
-	case '4':
-		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela II - CASDO UNICO TITULAR"));
-		h_irs_edit(married_unique_holder_table, married_unique_holder_table_size, h_util_get_positive_int());
+	case 4:
+		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela II - CASADO UNICO TITULAR"));
+		h_irs_edit(tables.unique_holder, unique_holder_size, h_util_get_positive_int());
 		break;
-	case '5':
-		h_irs_print(married_two_holders_table, married_two_holders_size);
+	case 5:
+		h_irs_print(tables.two_holders, two_holders_size);
 		break;
-	case '6':
-		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela III - CASDO DOIS TITULARES"));
-		h_irs_edit(married_two_holders_table, married_two_holders_size, h_util_get_positive_int());
+	case 6:
+		fprintf(stdout, "%s", H_STRS_IRS_TABLE_EDIT("Tabela III - CASADO DOIS TITULARES"));
+		h_irs_edit(tables.two_holders, two_holders_size, h_util_get_positive_int());
 		break;
-	case '0':
+	case 0:
 		break;
 	default:
-		fprintf(stderr, "Invalid Option\n");
+		fprintf(stdout, RED("Invalid Option"));
 		break;
 	}
+
 }

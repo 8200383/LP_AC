@@ -1,9 +1,10 @@
 //
 // Created by Hugo Carvalho on 12/16/2020.
+// Updated by Micael Dias on 17/12/2020
 //
 
-#ifndef _H_ERROR_H_
-#define _H_ERROR_H_
+#ifndef _ERROR_H_
+#define _ERROR_H_
 
 typedef enum
 {
@@ -20,5 +21,7 @@ typedef struct
 } s_error;
 
 s_error* h_error_create(e_error_type type, const char* msg);
+void h_error_print(s_error* error);
+void h_error_free(s_error* error);
 
-#endif //_H_ERROR_H_
+#endif //_ERROR_H_

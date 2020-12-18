@@ -7,6 +7,8 @@
 
 #include "colors.h"
 
+#define H_STRS_IRS_TEMPLATE_STRING "%s;%.2fEUR;%.1f%%;%.1f%%;%.1f%%;%.1f%%;%.1f%%;%.1f%%;\n"
+
 #define H_STRS_MENU MAGENTA( \
 "\n*******************************\n" \
 "*        -|  MENU  |-         *\n" \
@@ -26,22 +28,17 @@
 "*                TRABALHO DEPENDENTE                *\n" \
 "*                                                   *\n" \
 "* 1. Visualizar Tabela I - NÃO CASADO               *\n" \
-"* 2. Editar                                         *\n" \
+"* 2. Editar Linha                                   *\n" \
 "*                                                   *\n" \
 "* 3. Visualizar Tabela II - CASADO UNICO TITULAR    *\n" \
-"* 4. Editar                                         *\n" \
+"* 4. Editar Linha                                   *\n" \
 "*                                                   *\n" \
 "* 5. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
-"* 6. Editar                                         *\n" \
+"* 6. Editar Linha                                   *\n" \
 "*                                                   *\n" \
 "* 0. Voltar ao menu anterior                        *\n" \
 "*                                                   *\n" \
 "*****************************************************\n")
-
-#define H_STRS_SAVE_MENU RED( \
-"******************\n" \
-"*   SAVE (Y/n)   *\n" \
-"******************\n")
 
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
 "***************************************************\n" \
@@ -52,6 +49,5 @@
 #define H_STRS_IRS_TABLE_EDIT(string) RED( \
 "[!] Editar " string "\n" \
 "> Linha?\n")
-
 
 #endif //_STRS_H_
