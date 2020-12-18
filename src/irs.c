@@ -39,6 +39,39 @@ s_irs* h_irs_alloc(unsigned int n)
 	return irs;
 }
 
+s_irs* h_irs_init(const char* path, int* size)
+{
+	s_irs* data;
+	char* str;
+	int n_lines;
+	int err;
+
+	if (path == NULL || size == NULL)
+		return NULL;
+
+	str = h_util_file_read(path);
+	if (str == NULL)
+		return NULL;
+
+	n_lines = h_util_get_lines_from_str(str);
+	data = h_irs_alloc(n_lines);
+	if (data == NULL)
+	{
+		free(str);
+		return NULL;
+	}
+
+	*size = n_lines;
+	err = h_irs_parse(data, str, h_irs_build);
+	if (err)
+	{
+		free(str);
+		return NULL;
+	}
+
+	return data;
+}
+
 void h_irs_build(s_irs* data, char* str, int line, int* dependent)
 {
 	unsigned long size;

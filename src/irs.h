@@ -32,6 +32,7 @@ typedef struct
 typedef void (* h_irs_pair_func)(s_irs*, char*, int, int*);
 
 s_irs* h_irs_alloc(unsigned int n);
+s_irs* h_irs_init(const char* path, int* size);
 int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func);
 void h_irs_print(s_irs* data, int size);
 int h_irs_edit(s_irs* data, int size, int position);
