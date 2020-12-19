@@ -39,39 +39,6 @@ s_irs* h_irs_alloc(unsigned int n)
 	return irs;
 }
 
-s_irs* h_irs_init(const char* path, int* size)
-{
-	s_irs* data;
-	char* str;
-	int n_lines;
-	int err;
-
-	if (path == NULL || size == NULL)
-		return NULL;
-
-	str = h_util_file_read(path);
-	if (str == NULL)
-		return NULL;
-
-	n_lines = h_util_get_lines_from_str(str);
-	data = h_irs_alloc(n_lines);
-	if (data == NULL)
-	{
-		free(str);
-		return NULL;
-	}
-
-	*size = n_lines;
-	err = h_irs_parse(data, str, h_irs_build);
-	if (err)
-	{
-		free(str);
-		return NULL;
-	}
-
-	return data;
-}
-
 void h_irs_build(s_irs* data, char* str, int line, int* dependent)
 {
 	unsigned long size;
@@ -117,7 +84,7 @@ void h_irs_build(s_irs* data, char* str, int line, int* dependent)
 	}
 }
 
-int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
+s_error* h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 {
 	int line;
 	int dependent;
@@ -125,7 +92,7 @@ int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 	int i;
 
 	if (data == NULL || str == NULL)
-		return -1;
+		return h_error_create(H_ERROR_PARSING, NULL);
 
 	offset_value = -1;
 	line = 0;
@@ -152,15 +119,15 @@ int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 		}
 	}
 
-	return 0;
+	return NULL;
 }
 
-void h_irs_print(s_irs* data, int size)
+s_error* h_irs_print(s_irs* data, int size)
 {
 	int i;
 
 	if (data == NULL || !size)
-		return;
+		return h_error_create(H_ERROR_UNKNOWN, NULL);
 
 	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
 	for (i = 0; i < size; i++)
@@ -181,6 +148,8 @@ void h_irs_print(s_irs* data, int size)
 		fprintf(stdout, CYAN("%.2f%% | "), data[i].dependent_4 * 100);
 		fprintf(stdout, CYAN("%.2f%%"), data[i].dependent_5_or_more * 100);
 	}
+
+	return NULL;
 }
 
 int h_irs_edit(s_irs* data, int size, int position)
@@ -230,7 +199,7 @@ int h_irs_edit(s_irs* data, int size, int position)
 	return 0;
 }
 
-int h_irs_write(s_irs* data, int size, const char* path)
+s_error* h_irs_write(s_irs* data, int size, const char* path)
 {
 	FILE* fp;
 	char* description;
@@ -238,7 +207,7 @@ int h_irs_write(s_irs* data, int size, const char* path)
 
 	fp = fopen(path, "wb");
 	if (fp == NULL)
-		return -1;
+		return h_error_create(H_ERROR_WRITE, path);
 
 	for (i = 0; i < size; i++)
 	{
@@ -263,5 +232,5 @@ int h_irs_write(s_irs* data, int size, const char* path)
 
 	fclose(fp);
 
-	return 0;
+	return NULL;
 }

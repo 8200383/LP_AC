@@ -12,7 +12,6 @@
 #include "paths.h"
 #include "error.h"
 
-s_irs* irs_init(const char* path, int* size);
 s_error* main_menu();
 
 #endif //_MAIN_H_
