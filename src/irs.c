@@ -39,9 +39,9 @@ s_irs* h_irs_alloc(unsigned int n)
 	return irs;
 }
 
-void h_irs_build(s_irs* data, char* str, int line, int* dependent)
+void h_irs_build(s_irs* data, char* str, unsigned int line, unsigned int* dependent)
 {
-	unsigned long size;
+	size_t size;
 	float percentage;
 
 	size = strlen(str) - 1;
@@ -86,8 +86,8 @@ void h_irs_build(s_irs* data, char* str, int line, int* dependent)
 
 s_error* h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 {
-	int line;
-	int dependent;
+	unsigned int line;
+	unsigned int dependent;
 	int offset_value;
 	int i;
 

@@ -9,9 +9,9 @@ s_error* main_menu()
 
 	unsigned int op;
 
-	int single_size;
-	int unique_holder_size;
-	int two_holders_size;
+	unsigned int single_size;
+	unsigned int unique_holder_size;
+	unsigned int two_holders_size;
 
 	char* single_str;
 	char* unique_holder_str;
@@ -20,10 +20,6 @@ s_error* main_menu()
 	s_irs* single_table;
 	s_irs* unique_holder_table;
 	s_irs* two_holders_table;
-
-	single_size = 0;
-	unique_holder_size = 0;
-	two_holders_size = 0;
 
 	/*
 	 * IRS: Tabela I - Não Casado
