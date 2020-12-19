@@ -138,9 +138,30 @@ s_error* main_menu()
 			h_menu_irs(irs_tables, single_size, unique_holder_size, two_holders_size);
 			break;
 		case 9:
-			h_irs_write(irs_tables.single, single_size, H_PATH_SINGLE);
-			h_irs_write(irs_tables.unique_holder, unique_holder_size, H_PATH_UNIQUE_HOLDER);
-			h_irs_write(irs_tables.two_holders, two_holders_size, H_PATH_TWO_HOLDERS);
+			error = h_irs_write(irs_tables.single, single_size, H_PATH_SINGLE);
+			if (error)
+			{
+				free(single_table);
+				free(unique_holder_table);
+				free(two_holders_table);
+				return error;
+			}
+			error = h_irs_write(irs_tables.unique_holder, unique_holder_size, H_PATH_UNIQUE_HOLDER);
+			if (error)
+			{
+				free(single_table);
+				free(unique_holder_table);
+				free(two_holders_table);
+				return error;
+			}
+			error = h_irs_write(irs_tables.two_holders, two_holders_size, H_PATH_TWO_HOLDERS);
+			if (error)
+			{
+				free(single_table);
+				free(unique_holder_table);
+				free(two_holders_table);
+				return error;
+			}
 			break;
 		default:
 			break;
