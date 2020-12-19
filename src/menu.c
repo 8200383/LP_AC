@@ -11,9 +11,9 @@
 
 void h_menu_irs(
 	s_irs_tables tables,
-	int single_size,
-	int unique_holder_size,
-	int two_holders_size)
+	unsigned int single_size,
+	unsigned int unique_holder_size,
+	unsigned int two_holders_size)
 {
 	unsigned int op;
 

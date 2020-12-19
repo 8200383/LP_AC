@@ -39,42 +39,9 @@ s_irs* h_irs_alloc(unsigned int n)
 	return irs;
 }
 
-s_irs* h_irs_init(const char* path, int* size)
+void h_irs_build(s_irs* data, char* str, unsigned int line, unsigned int* dependent)
 {
-	s_irs* data;
-	char* str;
-	int n_lines;
-	int err;
-
-	if (path == NULL || size == NULL)
-		return NULL;
-
-	str = h_util_file_read(path);
-	if (str == NULL)
-		return NULL;
-
-	n_lines = h_util_get_lines_from_str(str);
-	data = h_irs_alloc(n_lines);
-	if (data == NULL)
-	{
-		free(str);
-		return NULL;
-	}
-
-	*size = n_lines;
-	err = h_irs_parse(data, str, h_irs_build);
-	if (err)
-	{
-		free(str);
-		return NULL;
-	}
-
-	return data;
-}
-
-void h_irs_build(s_irs* data, char* str, int line, int* dependent)
-{
-	unsigned long size;
+	size_t size;
 	float percentage;
 
 	size = strlen(str) - 1;
@@ -117,15 +84,15 @@ void h_irs_build(s_irs* data, char* str, int line, int* dependent)
 	}
 }
 
-int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
+s_error* h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 {
-	int line;
-	int dependent;
+	unsigned int line;
+	unsigned int dependent;
 	int offset_value;
 	int i;
 
 	if (data == NULL || str == NULL)
-		return -1;
+		return h_error_create(H_ERROR_PARSING, NULL);
 
 	offset_value = -1;
 	line = 0;
@@ -152,15 +119,15 @@ int h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 		}
 	}
 
-	return 0;
+	return NULL;
 }
 
-void h_irs_print(s_irs* data, int size)
+void h_irs_print(s_irs* data, unsigned int size)
 {
 	int i;
 
 	if (data == NULL || !size)
-		return;
+		fprintf(stderr, RED("[!] Nothing to show\n"));
 
 	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
 	for (i = 0; i < size; i++)
@@ -183,12 +150,12 @@ void h_irs_print(s_irs* data, int size)
 	}
 }
 
-int h_irs_edit(s_irs* data, int size, int position)
+void h_irs_edit(s_irs* data, unsigned int size, int position)
 {
 	char op;
 
 	if (data == NULL || size < position)
-		return -1;
+		fprintf(stderr, RED("[!] Nothing to edit\n"));
 
 	fprintf(stdout, YELLOW("[A]té ou [S]uperior a\n"));
 
@@ -201,8 +168,8 @@ int h_irs_edit(s_irs* data, int size, int position)
 
 	else
 	{
-		fprintf(stdout, RED("[!] Opção Invalida"));
-		return -1;
+		fprintf(stderr, RED("[!] Opção Invalida"));
+		return;
 	}
 
 	fprintf(stdout, RED("[!] Use pontos para especificar decimas!\n"));
@@ -226,19 +193,20 @@ int h_irs_edit(s_irs* data, int size, int position)
 
 	fprintf(stdout, YELLOW("> Percentagem pelo dependente 5 ou mais => "));
 	data[position].dependent_5_or_more = h_util_get_float();
-
-	return 0;
 }
 
-int h_irs_write(s_irs* data, int size, const char* path)
+s_error* h_irs_write(s_irs* data, unsigned int size, const char* path)
 {
 	FILE* fp;
 	char* description;
 	int i;
 
+	if (data == NULL && size != 0)
+		return h_error_create(H_ERROR_UNKNOWN, path);
+
 	fp = fopen(path, "wb");
 	if (fp == NULL)
-		return -1;
+		return h_error_create(H_ERROR_WRITE, path);
 
 	for (i = 0; i < size; i++)
 	{
@@ -263,5 +231,5 @@ int h_irs_write(s_irs* data, int size, const char* path)
 
 	fclose(fp);
 
-	return 0;
+	return NULL;
 }
