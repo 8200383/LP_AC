@@ -41,6 +41,8 @@ void h_error_print(s_error* error)
 	case H_ERROR_WRITE:
 		fprintf(stderr, RED("TYPE: File Write"));
 		break;
+	case H_ERROR_PARSING:
+		fprintf(stderr, RED("TYPE: Parsing"));
 	default:
 		fprintf(stderr, RED("TYPE: Unknown"));
 	}

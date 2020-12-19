@@ -11,7 +11,8 @@ typedef enum
 	H_ERROR_UNKNOWN,
 	H_ERROR_ALLOCATION,
 	H_ERROR_READ,
-	H_ERROR_WRITE
+	H_ERROR_WRITE,
+	H_ERROR_PARSING
 } e_error_type;
 
 typedef struct
