@@ -102,9 +102,9 @@ s_error* h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func)
 		if (offset_value == -1 && isalnum(str[i]))
 			offset_value = i;
 
-		if (offset_value != -1 && str[i] == ';')
+		if (offset_value != -1 && str[i] == ',')
 		{
-			str[i] = '\0'; // Remove the ;
+			str[i] = '\0'; // Remove the ,
 
 			pair_func(data, str + offset_value, line, &dependent);
 
