@@ -10,42 +10,54 @@
 #include <string.h>
 #include <regex.h>
 
-char* h_util_file_read(const char* path)
+char* h_util_file_read(const char* path, unsigned int* size)
 {
-	FILE* fp;
-	size_t total_bytes;
-	size_t read_bytes;
-	char* str;
+	FILE* fptr;
+	size_t buffer_size;
+	char* buffer;
+	int counter;
+	int ch;
 
 	if (path == NULL)
 		return NULL;
 
-	fp = fopen(path, "r");
-	if (fp == NULL)
+	fptr = fopen(path, "r");
+	if (fptr == NULL)
 		return NULL;
 
-	fseek(fp, 0L, SEEK_END);
-	total_bytes = ftell(fp) + 1;
-	fseek(fp, 0L, SEEK_SET);
-
-	str = malloc(total_bytes);
-	if (str == NULL)
+	buffer_size = 256;
+	buffer = malloc(buffer_size * sizeof(char));
+	if (buffer == NULL)
 	{
-		fclose(fp);
+		free(fptr);
 		return NULL;
 	}
 
-	read_bytes = fread(str, sizeof(char), total_bytes - 1, fp);
-	if (read_bytes < total_bytes - 1)
+	counter = 0;
+	/* Read a character at a time, resizing the buffer as necessary */
+	while ((ch = fgetc(fptr)) && ch != EOF && !feof(fptr))
 	{
-		free(str);
-		fclose(fp);
-		return NULL;
+		buffer[counter++] = (char)ch;
+
+		if (ch == '\n')
+			(*size)++;
+
+		if (counter == buffer_size)
+		{
+			/* Resize twice the value of the buffer */
+			buffer_size *= 2;
+			buffer = realloc(buffer, buffer_size * sizeof(char));
+			if (buffer == NULL)
+			{
+				free(fptr);
+				free(buffer);
+				return NULL;
+			}
+		}
 	}
 
-	fclose(fp);
-	str[total_bytes - 1] = '\0';
-	return str;
+	buffer[counter - 1] = '\0';
+	return buffer;
 }
 
 int h_util_get_lines_from_str(const char* str)
@@ -81,10 +93,6 @@ int h_util_regex_compare(char* str, char* pattern)
 	return 0;
 }
 
-/**
- * Get a positive integer and return it
- * @return int
- */
 int h_util_get_positive_int()
 {
 	int n;
