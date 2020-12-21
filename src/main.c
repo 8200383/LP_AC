@@ -25,14 +25,14 @@ s_error* main_menu()
 	 * IRS: Tabela I - Não Casado
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
-	single_str = h_util_file_read(H_PATH_SINGLE);
+	single_size = 0;
+	single_str = h_util_file_read(H_PATH_SINGLE, &single_size);
 	if (single_str == NULL)
 	{
 		error = h_error_create(H_ERROR_READ, H_PATH_SINGLE);
 		return error;
 	}
 
-	single_size = h_util_get_lines_from_str(single_str);
 	single_table = h_irs_alloc(single_size);
 	if (single_table == NULL)
 	{
@@ -55,19 +55,19 @@ s_error* main_menu()
 	 * IRS: Tabela II - Casado Unico Titular
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
-	unique_holder_str = h_util_file_read(H_PATH_UNIQUE_HOLDER);
+	unique_holder_size = 0;
+	unique_holder_str = h_util_file_read(H_PATH_UNIQUE_HOLDER, &unique_holder_size);
 	if (unique_holder_str == NULL)
 	{
-		error = h_error_create(H_ERROR_READ, H_PATH_SINGLE);
+		error = h_error_create(H_ERROR_READ, H_PATH_UNIQUE_HOLDER);
 		free(single_table);
 		return error;
 	}
 
-	unique_holder_size = h_util_get_lines_from_str(unique_holder_str);
 	unique_holder_table = h_irs_alloc(unique_holder_size);
 	if (unique_holder_table == NULL)
 	{
-		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_SINGLE);
+		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_UNIQUE_HOLDER);
 		free(single_table);
 		free(unique_holder_str);
 		return error;
@@ -88,20 +88,20 @@ s_error* main_menu()
 	 * IRS: Tabela III - Casado Dois Titulares
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
-	two_holders_str = h_util_file_read(H_PATH_UNIQUE_HOLDER);
+	two_holders_size = 0;
+	two_holders_str = h_util_file_read(H_PATH_UNIQUE_HOLDER, &two_holders_size);
 	if (two_holders_str == NULL)
 	{
-		error = h_error_create(H_ERROR_READ, H_PATH_SINGLE);
+		error = h_error_create(H_ERROR_READ, H_PATH_UNIQUE_HOLDER);
 		free(single_table);
 		free(unique_holder_table);
 		return error;
 	}
 
-	two_holders_size = h_util_get_lines_from_str(two_holders_str);
 	two_holders_table = h_irs_alloc(two_holders_size);
 	if (two_holders_table == NULL)
 	{
-		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_SINGLE);
+		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_UNIQUE_HOLDER);
 		free(single_table);
 		free(unique_holder_table);
 		free(two_holders_str);
