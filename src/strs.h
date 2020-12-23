@@ -7,7 +7,11 @@
 
 #include "colors.h"
 
-#define H_STRS_IRS_TEMPLATE_STRING "%s;%.2fEUR;%.1f%%;%.1f%%;%.1f%%;%.1f%%;%.1f%%;%.1f%%;\n"
+#define H_STRS_PROMPT "> "
+#define H_STRS_PROMPT_NEW_LINE "\n> "
+
+#define H_STRS_EDIT "Editar linha?"
+#define H_STRS_DELETE "Apagar linha?"
 
 #define H_STRS_MENU MAGENTA( \
 "\n*******************************\n" \
@@ -27,27 +31,32 @@
 "*                                                   *\n" \
 "*                TRABALHO DEPENDENTE                *\n" \
 "*                                                   *\n" \
-"* 1. Visualizar Tabela I - NÃO CASADO               *\n" \
-"* 2. Editar Linha                                   *\n" \
+"* -| Tabela I - NÃO CASADO |-                       *\n" \
+"* 1. Visualizar                                     *\n" \
+"* 2. Editar                                         *\n" \
+"* 3. Adicionar                                      *\n" \
+"* 4. Eliminar                                       *\n" \
 "*                                                   *\n" \
-"* 3. Visualizar Tabela II - CASADO UNICO TITULAR    *\n" \
-"* 4. Editar Linha                                   *\n" \
+"* -| Tabela II - CASADO UNICO TITULAR |-            *\n" \
+"* 5. Visualizar                                     *\n" \
+"* 6. Editar                                         *\n" \
+"* 7. Adicionar                                      *\n" \
+"* 8. Eliminar                                       *\n" \
 "*                                                   *\n" \
-"* 5. Visualizar Tabela III - CASADO DOIS TITULAR    *\n" \
-"* 6. Editar Linha                                   *\n" \
+"* -| Tabela III - CASADO DOIS TITULAR |-            *\n" \
+"* 9.  Visualizar                                    *\n" \
+"* 10. Editar                                        *\n" \
+"* 11. Adicionar                                     *\n" \
+"* 12. Eliminar                                      *\n" \
 "*                                                   *\n" \
 "* 0. Voltar ao menu anterior                        *\n" \
 "*                                                   *\n" \
 "*****************************************************\n")
 
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
-"***************************************************\n" \
-"* Remuneração     | Numero de Dependentes         *\n" \
-"* Mensal em Euros | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
-"***************************************************")
-
-#define H_STRS_IRS_TABLE_EDIT(string) RED( \
-"[!] Editar " string "\n" \
-"> Linha?\n")
+"***********************************************************\n" \
+"* Linha | Remuneração     | Numero de Dependentes         *\n" \
+"*       | Mensal em €     | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
+"***********************************************************\n")
 
 #endif //_STRS_H_
