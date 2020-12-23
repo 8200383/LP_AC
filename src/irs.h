@@ -6,6 +6,9 @@
 #define _IRS_H_
 
 #include "error.h"
+#include "memory.h"
+
+#define MAX_DEPENDENT_NUMBER 6
 
 typedef enum
 {
@@ -13,32 +16,30 @@ typedef enum
 	H_IRS_BEYOND
 } e_type;
 
-typedef struct s_irs
+typedef struct
 {
 	e_type monthly_pay_type;
 	float monthly_pay_value;
-	float dependent_0;
-	float dependent_1;
-	float dependent_2;
-	float dependent_3;
-	float dependent_4;
-	float dependent_5_or_more;
+	float* percentage_per_dependent;
 } s_irs;
 
-typedef struct s_irs_tables
+typedef struct
 {
-	s_irs* single;
-	s_irs* unique_holder;
-	s_irs* two_holders;
-} s_irs_tables;
+	s_irs* data;
+	int used;
+	int max_capacity;
+} s_array;
 
-typedef void (* h_irs_pair_func)(s_irs*, char*, unsigned int, unsigned int*);
+typedef void (* h_irs_pair_func)(s_irs*, char*, int*);
 
-s_irs* h_irs_alloc(unsigned int n);
-s_error* h_irs_parse(s_irs* data, char* str, h_irs_pair_func pair_func);
-s_error* h_irs_write(s_irs* data, unsigned int size, const char* path);
-void h_irs_print(s_irs* data, unsigned int size);
-void h_irs_edit(s_irs* data, unsigned int size, int position);
-void h_irs_build(s_irs* data, char* str, unsigned int line, unsigned int* dependents);
+s_array* h_irs_alloc(int initial_capacity);
+s_error* h_irs_parse(s_array* array, char* str, h_irs_pair_func pair_func);
+s_error* h_irs_write(s_array* array, const char* path);
+s_error* h_irs_add(s_array* array);
+void h_irs_delete(s_array* array, int index);
+void h_irs_print_line(s_irs data);
+void h_irs_print(s_array* array);
+void h_irs_edit(s_array* array, int index);
+void h_irs_build(s_irs* data, char* str, int* dependent);
 
 #endif //_IRS_H_
