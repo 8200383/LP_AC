@@ -5,21 +5,22 @@
 
 s_error* main_menu()
 {
+
 	s_error* error;
 
 	unsigned int op;
 
-	unsigned int single_size;
-	unsigned int unique_holder_size;
-	unsigned int two_holders_size;
+	int single_size;
+	int unique_holder_size;
+	int two_holders_size;
 
 	char* single_str;
 	char* unique_holder_str;
 	char* two_holders_str;
 
-	s_irs* single_table;
-	s_irs* unique_holder_table;
-	s_irs* two_holders_table;
+	s_array* single_table;
+	s_array* unique_holder_table;
+	s_array* two_holders_table;
 
 	/*
 	 * IRS: Tabela I - Não Casado
@@ -89,10 +90,10 @@ s_error* main_menu()
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
 	two_holders_size = 0;
-	two_holders_str = h_util_file_read(H_PATH_UNIQUE_HOLDER, &two_holders_size);
+	two_holders_str = h_util_file_read(H_PATH_TWO_HOLDERS, &two_holders_size);
 	if (two_holders_str == NULL)
 	{
-		error = h_error_create(H_ERROR_READ, H_PATH_UNIQUE_HOLDER);
+		error = h_error_create(H_ERROR_READ, H_PATH_TWO_HOLDERS);
 		free(single_table);
 		free(unique_holder_table);
 		return error;
@@ -101,7 +102,7 @@ s_error* main_menu()
 	two_holders_table = h_irs_alloc(two_holders_size);
 	if (two_holders_table == NULL)
 	{
-		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_UNIQUE_HOLDER);
+		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_TWO_HOLDERS);
 		free(single_table);
 		free(unique_holder_table);
 		free(two_holders_str);
@@ -120,25 +121,19 @@ s_error* main_menu()
 
 	free(two_holders_str);
 
-	s_irs_tables irs_tables = {
-		single_table,
-		unique_holder_table,
-		two_holders_table
-	};
-
 	do
 	{
 		fprintf(stdout, "%s", H_STRS_MENU);
-		fprintf(stdout, GREEN("> "));
+		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
 		scanf(" %u", &op);
 
 		switch (op)
 		{
 		case 1:
-			h_menu_irs(irs_tables, single_size, unique_holder_size, two_holders_size);
+			h_menu_irs(single_table, unique_holder_table, two_holders_table);
 			break;
 		case 9:
-			error = h_irs_write(irs_tables.single, single_size, H_PATH_SINGLE);
+			error = h_irs_write(single_table, H_PATH_SINGLE);
 			if (error)
 			{
 				free(single_table);
@@ -146,7 +141,7 @@ s_error* main_menu()
 				free(two_holders_table);
 				return error;
 			}
-			error = h_irs_write(irs_tables.unique_holder, unique_holder_size, H_PATH_UNIQUE_HOLDER);
+			error = h_irs_write(unique_holder_table, H_PATH_UNIQUE_HOLDER);
 			if (error)
 			{
 				free(single_table);
@@ -154,7 +149,7 @@ s_error* main_menu()
 				free(two_holders_table);
 				return error;
 			}
-			error = h_irs_write(irs_tables.two_holders, two_holders_size, H_PATH_TWO_HOLDERS);
+			error = h_irs_write(two_holders_table, H_PATH_TWO_HOLDERS);
 			if (error)
 			{
 				free(single_table);
@@ -162,6 +157,7 @@ s_error* main_menu()
 				free(two_holders_table);
 				return error;
 			}
+			fprintf(stdout, GREEN("[!] Guardado com sucesso"));
 			break;
 		default:
 			break;

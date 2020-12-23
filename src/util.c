@@ -4,13 +4,15 @@
 
 #include "util.h"
 #include "colors.h"
+#include "strs.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <regex.h>
+#include <ctype.h>
 
-char* h_util_file_read(const char* path, unsigned int* size)
+char* h_util_file_read(const char* path, int* size)
 {
 	FILE* fptr;
 	size_t buffer_size;
@@ -60,27 +62,7 @@ char* h_util_file_read(const char* path, unsigned int* size)
 	return buffer;
 }
 
-int h_util_get_lines_from_str(const char* str)
-{
-	int i;
-	int lines;
-
-	if (str == NULL)
-		return -1;
-
-	i = 0;
-	lines = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == '\n')
-			lines++;
-		i++;
-	}
-
-	return lines;
-}
-
-int h_util_regex_compare(char* str, char* pattern)
+int h_util_regex_compare(const char* str, const char* pattern)
 {
 	regex_t regex;
 
@@ -93,27 +75,67 @@ int h_util_regex_compare(char* str, char* pattern)
 	return 0;
 }
 
-int h_util_get_positive_int()
+char* h_util_format_str(const char* msg)
 {
-	int n;
+	int i;
+	char* buffer;
+
+	if (msg == NULL)
+		return H_STRS_PROMPT;
+
+	buffer = malloc(strlen(msg) + strlen(H_STRS_PROMPT_NEW_LINE));
+	if (buffer == NULL)
+		return NULL;
+
+	for (i = 0; i < sizeof(buffer); i++)
+		buffer[i] = '\0';
+
+	strcat(buffer, msg);
+	strcat(buffer, H_STRS_PROMPT_NEW_LINE);
+
+	return buffer;
+}
+
+char h_util_get_option(char param1, char param2, const char* msg)
+{
+	char op;
 
 	do
 	{
-		fprintf(stdout, YELLOW("> "));
-		scanf(" %d", &n);
-		if (n < 0)
-		{
-			fprintf(stdout, RED("> Inteiro Inválido\n"));
-		}
-	} while (n < 0);
+		op = h_util_get_alphabetical_char(msg);
+	} while (op != tolower(param1) && op != tolower(param2));
+
+	return op;
+}
+
+char h_util_get_alphabetical_char(const char* msg)
+{
+	char c;
+
+	do
+	{
+		fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
+		scanf(" %c", &c);
+	} while (!isalpha(c));
+
+	return c;
+}
+
+unsigned int h_util_get_positive_int(const char* msg)
+{
+	unsigned int n;
+
+	fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
+	scanf(" %d", &n);
 
 	return n;
 }
 
-float h_util_get_float()
+float h_util_get_float(const char* msg)
 {
 	float n;
 
+	fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
 	scanf(" %f", &n);
 
 	return n;

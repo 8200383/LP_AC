@@ -8,9 +8,8 @@
 #include "irs.h"
 
 void h_menu_irs(
-	s_irs_tables tables,
-	unsigned int single_size,
-	unsigned int unique_holder_size,
-	unsigned int two_holders_size);
+	s_array* single_table,
+	s_array* unique_holder_table,
+	s_array* two_holders_table);
 
 #endif //_MENU_H_
