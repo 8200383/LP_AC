@@ -7,6 +7,7 @@
 
 #include "util.h"
 #include "irs.h"
+#include "seg_social.h"
 #include "menu.h"
 #include "strs.h"
 #include "paths.h"

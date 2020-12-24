@@ -1,6 +1,6 @@
-//
-// Created by Hugo Carvalho on 12/24/20.
-//
+/*
+ * Created by Hugo Carvalho on 12/24/20.
+ */
 
 #include <ctype.h>
 #include <stdio.h>
@@ -9,23 +9,33 @@
 #include "seg_social.h"
 #include "util.h"
 
-s_social_sec* social_sec_alloc(int n)
+s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 {
-	s_social_sec* social_sec;
-	social_sec = malloc(n * sizeof(s_social_sec));
-	if (social_sec == NULL)
+	int i;
+	s_arr_seg_social* array;
+
+	array = malloc(sizeof(s_arr_seg_social));
+	if (array == NULL)
 		return NULL;
 
-	for (int i = 0; i < n; i++)
+	array->data = malloc(initial_capacity * sizeof(s_seg_social));
+	if (array->data == NULL)
+		return NULL;
+
+	array->used = 0;
+	array->max_capacity = initial_capacity - 1;
+
+	for (i = 0; i < initial_capacity; i++)
 	{
-		social_sec[i].criteria = '\0';
-		social_sec[i].employer = 0.0f;
-		social_sec[i].employee = 0.0f;
+		array->data[i].criteria = '\0';
+		array->data[i].employer = 0.0f;
+		array->data[i].employee = 0.0f;
 	}
 
-	return social_sec;
+	return array;
 }
 
+/*
 void social_sec_init(s_social_sec* data, char* str)
 {
 	int count = 0, is_employer = 1, offset = -1;
@@ -172,3 +182,4 @@ void social_sec_save(s_social_sec* data, int len, const char* path)
 	printf("O ficheiro foi guardado com sucesso.\n");
 	fclose(fp);
 }
+*/

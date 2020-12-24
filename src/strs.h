@@ -54,6 +54,18 @@
 "*                                                   *\n" \
 "*****************************************************\n")
 
+#define H_STRS_SEG_SOCIAL_MENU "\n" \
+"**********************\n" \
+"*                    *\n" \
+"*   1. Visualizar    *\n" \
+"*   2. Adicionar     *\n" \
+"*   3. Remover       *\n" \
+"*   4. Editar        *\n" \
+"*   5. Guardar       *\n" \
+"*   0. Sair          *\n" \
+"*                    *\n" \
+"**********************\n"
+
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
 "***********************************************************\n" \
 "* Linha | Remuneração     | Numero de Dependentes         *\n" \

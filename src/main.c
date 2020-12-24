@@ -12,14 +12,18 @@ s_error* main_menu()
 	int single_size;
 	int unique_holder_size;
 	int two_holders_size;
+	int seg_social_size;
 
 	char* single_str;
 	char* unique_holder_str;
 	char* two_holders_str;
+	char* seg_social_str;
 
-	s_array* single_table;
-	s_array* unique_holder_table;
-	s_array* two_holders_table;
+	s_arr_irs* single_table;
+	s_arr_irs* unique_holder_table;
+	s_arr_irs* two_holders_table;
+	s_arr_seg_social* seg_social_table;
+
 
 	/*
 	 * IRS: Tabela I - Não Casado
@@ -120,6 +124,35 @@ s_error* main_menu()
 
 	free(two_holders_str);
 
+	/*
+	 * Segurança Social
+	 * ---------------------------------------------------------------------------------------------------------
+	 */
+	seg_social_str = h_util_file_read(H_PATH_SEG_SOCIAL, &seg_social_size);
+	if (seg_social_str == NULL)
+	{
+		error = h_error_create(H_ERROR_READ, H_PATH_SEG_SOCIAL);
+		free(single_table);
+		free(unique_holder_table);
+		free(two_holders_table);
+		return error;
+	}
+
+	seg_social_table = h_seg_social_alloc(seg_social_size);
+	if (seg_social_table == NULL)
+	{
+		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_TWO_HOLDERS);
+		free(single_table);
+		free(unique_holder_table);
+		free(two_holders_table);
+		free(seg_social_str);
+		return error;
+	}
+
+	// social_sec_init here
+
+	free(seg_social_str);
+
 	do
 	{
 		fprintf(stdout, "%s", H_STRS_MENU);
@@ -130,6 +163,9 @@ s_error* main_menu()
 		{
 		case 1:
 			h_menu_irs(single_table, unique_holder_table, two_holders_table);
+			break;
+		case 2:
+			h_menu_seg_social(seg_social_table);
 			break;
 		case 9:
 			error = h_irs_write(single_table, H_PATH_SINGLE);
