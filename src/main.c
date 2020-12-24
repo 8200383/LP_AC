@@ -191,6 +191,7 @@ s_error* main_menu()
 				free(single_table);
 				free(unique_holder_table);
 				free(two_holders_table);
+				free(seg_social_table);
 				return error;
 			}
 			error = h_irs_write(two_holders_table, H_PATH_TWO_HOLDERS);
@@ -199,9 +200,19 @@ s_error* main_menu()
 				free(single_table);
 				free(unique_holder_table);
 				free(two_holders_table);
+				free(seg_social_table);
 				return error;
 			}
-			fprintf(stdout, GREEN("[!] Guardado com sucesso"));
+			error = h_seg_social_write(seg_social_table, H_PATH_SEG_SOCIAL);
+			if (error)
+			{
+				free(single_table);
+				free(unique_holder_table);
+				free(two_holders_table);
+				free(seg_social_table);
+				return error;
+			}
+			fprintf(stdout, GREEN("[!] Guardado com sucesso\n"));
 			break;
 		default:
 			break;

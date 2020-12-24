@@ -168,24 +168,29 @@ s_social_sec* social_sec_edit(s_social_sec* data, int len)
 
 	return data;
 }
+*/
 
-void social_sec_save(s_social_sec* data, int len, const char* path)
+s_error* h_seg_social_write(s_arr_seg_social* array, const char* path)
 {
 	FILE* fp;
+	int i;
+
+	if (path == NULL)
+		h_error_create(H_ERROR_UNKNOWN, "h_seg_social_write()");
+
 	fp = fopen(path, "w");
-
 	if (fp == NULL)
+		h_error_create(H_ERROR_WRITE, "h_seg_social_write()");
+
+	for (i = 0; i <= array->used; i++)
 	{
-		printf("Erro ao abrir o ficheiro.");
-		return;
+		fprintf(fp, "%c;%.2f%%;%.2f%%;\n",
+			array->data[i].criteria,
+			array->data[i].employer,
+			array->data[i].employee);
 	}
 
-	for (int i = 0; i < len; i++)
-	{
-		fprintf(fp, "%c;%.2f%%;%.2f%%;\n", data[i].criteria, data[i].employer, data[i].employee);
-	}
-
-	printf("O ficheiro foi guardado com sucesso.\n");
 	fclose(fp);
+
+	return NULL;
 }
-*/

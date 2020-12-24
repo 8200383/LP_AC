@@ -27,18 +27,14 @@ s_error* h_seg_social_parse(s_arr_seg_social* array, char* str);
 
 void h_seg_social_print(s_arr_seg_social* array);
 
+s_error* h_seg_social_write(s_arr_seg_social* array, const char* path);
+
 /*
-void social_sec_init(s_arr_seg_social* data, char* str);
-
-void social_sec_print(s_arr_seg_social* data, int len);
-
 s_arr_seg_social* social_sec_add(s_arr_seg_social* data, int* len);
 
 s_arr_seg_social* social_sec_del(s_arr_seg_social* data, int* len);
 
 s_arr_seg_social* social_sec_edit(s_arr_seg_social* data, int len);
-
-void social_sec_save(s_arr_seg_social* data, int len, const char* path);
 */
 
 #endif //_SEG_SOCIAL_H_
