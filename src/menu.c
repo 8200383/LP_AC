@@ -83,6 +83,7 @@ void h_menu_seg_social(s_arr_seg_social* seg_social_table) {
 	case 3:
 		break;
 	case 4:
+		h_seg_social_edit(seg_social_table);
 		break;
 	case 0:
 		break;

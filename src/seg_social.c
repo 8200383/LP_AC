@@ -136,38 +136,6 @@ s_social_sec* social_sec_del(s_social_sec* data, int* len)
 	return data;
 }
 
-s_social_sec* social_sec_edit(s_social_sec* data, int len)
-{
-	int num = h_util_get_int(0, 100, "\nLinha a editar: ");
-
-	if (num < 0 || num >= len)
-	{
-		printf("A linha escolhida não existe.\n");
-		return data;
-	}
-
-	char new_criteria;
-	printf("Critério - Valor atual: %c | ", data[num].criteria);
-	printf("Novo valor: ");
-	scanf(" %c", &new_criteria);
-
-	for (int i = 0; i < (len); i++)
-	{
-		if (new_criteria == data[i].criteria && i != num)
-		{
-			printf("O critério já existe.\n");
-			return data;
-		}
-	}
-
-	data[num].criteria = new_criteria;
-	printf("Empregador - Valor atual: %.2f | ", data[num].employer);
-	data[num].employer = h_util_get_float(0.0f, 100.0f, "Novo valor: ");
-	printf("Empregado - Valor atual: %.2f | ", data[num].employee);
-	data[num].employee = h_util_get_float(0.0f, 100.0f, "Novo valor: ");
-
-	return data;
-}
 */
 
 s_error* h_seg_social_write(s_arr_seg_social* array, const char* path)
@@ -193,4 +161,35 @@ s_error* h_seg_social_write(s_arr_seg_social* array, const char* path)
 	fclose(fp);
 
 	return NULL;
+}
+
+void h_seg_social_edit(s_arr_seg_social* array)
+{
+	int num = h_util_get_int(0, 100, "\nLinha a editar: ");
+
+	if (num < 0 || num >= array->used)
+	{
+		printf("A linha escolhida não existe.\n");
+		return;
+	}
+
+	char new_criteria;
+	printf("Critério - Valor atual: %c | ", array->data[num].criteria);
+	printf("Novo valor: ");
+	scanf(" %c", &new_criteria);
+
+	for (int i = 0; i <= array->used; i++)
+	{
+		if (new_criteria == array->data[i].criteria && i != num)
+		{
+			printf("O critério já existe.\n");
+			return;
+		}
+	}
+
+	array->data[num].criteria = new_criteria;
+	printf("Empregador - Valor atual: %.2f | ", array->data[num].employer);
+	array->data[num].employer = h_util_get_float(0.0f, 100.0f, "Novo valor: ");
+	printf("Empregado - Valor atual: %.2f | ", array->data[num].employee);
+	array->data[num].employee = h_util_get_float(0.0f, 100.0f, "Novo valor: ");
 }
