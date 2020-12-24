@@ -25,6 +25,8 @@ s_arr_seg_social* h_seg_social_alloc(int initial_capacity);
 
 s_error* h_seg_social_parse(s_arr_seg_social* array, char* str);
 
+void h_seg_social_print(s_arr_seg_social* array);
+
 /*
 void social_sec_init(s_arr_seg_social* data, char* str);
 

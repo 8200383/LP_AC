@@ -79,17 +79,18 @@ s_error* h_seg_social_parse(s_arr_seg_social* array, char* str)
 	return NULL;
 }
 
-/*
-void social_sec_print(s_social_sec* data, int len)
+void h_seg_social_print(s_arr_seg_social* array)
 {
-	printf("\n");
-	for (int i = 0; i < len; i++)
+	for (int i = 0; i <= array->used; i++)
 	{
-		printf("%d. Criterio: %c ### Empregador: %.2f%% ### Empregado: %.2f%%\n", i, data[i].criteria, data[i].employer,
-			data[i].employee);
+		printf("%d. Criterio: %c ### Empregador: %.2f%% ### Empregado: %.2f%%\n",
+			i,
+			array->data[i].criteria,
+			array->data[i].employer,
+			array->data[i].employee);
 	}
 }
-
+/*
 s_social_sec* social_sec_add(s_social_sec* data, int* len)
 {
 	char new_criteria;

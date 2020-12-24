@@ -76,6 +76,7 @@ void h_menu_seg_social(s_arr_seg_social* seg_social_table) {
 	switch (op)
 	{
 	case 1:
+		h_seg_social_print(seg_social_table);
 		break;
 	case 2:
 		break;
