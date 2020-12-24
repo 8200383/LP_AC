@@ -61,11 +61,32 @@ void h_menu_irs(
 	case 0:
 		break;
 	default:
-		fprintf(stdout, RED("Invalid Option"));
+		fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
 		break;
 	}
 }
 
 void h_menu_seg_social(s_arr_seg_social* seg_social_table) {
-	// menu goes here
+	unsigned int op;
+
+	fprintf(stdout, "%s", H_STRS_SEG_SOCIAL_MENU);
+	fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
+	scanf(" %u", &op);
+
+	switch (op)
+	{
+	case 1:
+		break;
+	case 2:
+		break;
+	case 3:
+		break;
+	case 4:
+		break;
+	case 0:
+		break;
+	default:
+		fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
+		break;
+	}
 }

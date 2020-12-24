@@ -35,10 +35,12 @@ s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 	return array;
 }
 
-/*
-void social_sec_init(s_social_sec* data, char* str)
+s_error* h_seg_social_parse(s_arr_seg_social* array, char* str)
 {
-	int count = 0, is_employer = 1, offset = -1;
+	if (array == NULL || str == NULL)
+		return h_error_create(H_ERROR_PARSING, "h_irs_parse()");
+
+	int is_employer = 1, offset = -1;
 
 	for (int i = 0; str[i] != '\0'; i++)
 	{
@@ -53,28 +55,31 @@ void social_sec_init(s_social_sec* data, char* str)
 				str[i - 1] = '\0';
 				if (is_employer == 1)
 				{
-					data[count].employer = strtof(str + offset, NULL);
+					array->data[array->used].employer = strtof(str + offset, NULL);
 					is_employer = 0;
 				}
 				else
 				{
-					data[count].employee = strtof(str + offset, NULL);
+					array->data[array->used].employee = strtof(str + offset, NULL);
 					is_employer = 1;
 				}
 				offset = -1;
 			}
 			else
 			{
-				data[count].criteria = str[offset];
+				array->data[array->used].criteria = str[offset];
 				offset = -1;
 			}
 		}
 
 		if (str[i] == '\n')
-			count++;
+			array->used++;
 	}
+
+	return NULL;
 }
 
+/*
 void social_sec_print(s_social_sec* data, int len)
 {
 	printf("\n");

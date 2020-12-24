@@ -149,7 +149,16 @@ s_error* main_menu()
 		return error;
 	}
 
-	// social_sec_init here
+	error = h_seg_social_parse(seg_social_table, seg_social_str);
+	if (error)
+	{
+		free(single_table);
+		free(unique_holder_table);
+		free(two_holders_table);
+		free(seg_social_str);
+		free(seg_social_table);
+		return error;
+	}
 
 	free(seg_social_str);
 

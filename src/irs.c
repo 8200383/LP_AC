@@ -148,12 +148,12 @@ void h_irs_scan_fields(s_irs* data)
 	data->monthly_pay_type = (h_util_get_option('A', 'S', "[A]té\n[S]uperior a") == 'A')
 							 ? H_IRS_UP_TO : H_IRS_BEYOND;
 
-	data->monthly_pay_value = h_util_get_float("Remuneração Mensal");
+	data->monthly_pay_value = h_util_get_float(0.0f, 100.0f, "Remuneração Mensal");
 
 	for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
 	{
 		fprintf(stdout, YELLOW("Percentagem para o dependente %d\n"), j);
-		data->percentage_per_dependent[j] = h_util_get_float(NULL);
+		data->percentage_per_dependent[j] = h_util_get_float(0.0f, 100.0f, NULL);
 	}
 }
 

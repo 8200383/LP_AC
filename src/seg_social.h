@@ -5,6 +5,8 @@
 #ifndef _SEG_SOCIAL_H_
 #define _SEG_SOCIAL_H_
 
+#include "error.h"
+
 typedef struct
 {
 	char criteria;
@@ -20,6 +22,8 @@ typedef struct
 } s_arr_seg_social;
 
 s_arr_seg_social* h_seg_social_alloc(int initial_capacity);
+
+s_error* h_seg_social_parse(s_arr_seg_social* array, char* str);
 
 /*
 void social_sec_init(s_arr_seg_social* data, char* str);
