@@ -5,7 +5,6 @@
 
 s_error* main_menu()
 {
-
 	s_error* error;
 
 	unsigned int op;

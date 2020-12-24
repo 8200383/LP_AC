@@ -28,12 +28,15 @@ char* h_util_format_str(const char* msg);
 char h_util_get_alphabetical_char(const char* msg);
 
 /** Gets an int from stdin */
-unsigned int h_util_get_positive_int(const char* msg);
+int h_util_get_int(int min, int max, const char* msg);
 
 /** Gets a float from stdin */
-float h_util_get_float(const char* msg);
+float h_util_get_float(float min, float max, const char* msg);
 
 /** Compare a string to a regular expression */
 int h_util_regex_compare(const char* str, const char* pattern);
+
+/** Cleans buffer from stdin */
+void h_util_clean_buffer();
 
 #endif //_UTIL_H
