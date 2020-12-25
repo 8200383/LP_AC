@@ -14,6 +14,7 @@ void h_menu_irs(
 	s_arr_irs* unique_holder_table,
 	s_arr_irs* two_holders_table)
 {
+	s_error* error = NULL;
 	unsigned int op;
 
 	fprintf(stdout, "%s", H_STRS_IRS_MENU);
@@ -23,40 +24,64 @@ void h_menu_irs(
 	switch (op)
 	{
 	case 1:
-		h_irs_print(single_table);
+		error = h_irs_print(single_table);
+		if (error)
+			h_error_print(error);
 		break;
 	case 2:
-		h_irs_edit(single_table, h_util_get_int(0, 100, H_STRS_EDIT));
+		error = h_irs_edit(single_table, h_util_get_int(0, 100, H_STRS_EDIT));
+		if (error)
+			h_error_print(error);
 		break;
 	case 3:
-		h_irs_add(single_table);
+		error = h_irs_add(single_table);
+		if (error)
+			h_error_print(error);
 		break;
 	case 4:
-		h_irs_delete(single_table, h_util_get_int(0, 100, H_STRS_DELETE));
+		error = h_irs_delete(single_table, h_util_get_int(0, 100, H_STRS_DELETE));
+		if (error)
+			h_error_print(error);
 		break;
 	case 5:
-		h_irs_print(unique_holder_table);
+		error = h_irs_print(unique_holder_table);
+		if (error)
+			h_error_print(error);
 		break;
 	case 6:
-		h_irs_edit(unique_holder_table, h_util_get_int(0, 100, H_STRS_EDIT));
+		error = h_irs_edit(unique_holder_table, h_util_get_int(0, 100, H_STRS_EDIT));
+		if (error)
+			h_error_print(error);
 		break;
 	case 7:
-		h_irs_add(unique_holder_table);
+		error = h_irs_add(unique_holder_table);
+		if (error)
+			h_error_print(error);
 		break;
 	case 8:
-		h_irs_delete(unique_holder_table, h_util_get_int(0, 100, H_STRS_DELETE));
+		error = h_irs_delete(unique_holder_table, h_util_get_int(0, 100, H_STRS_DELETE));
+		if (error)
+			h_error_print(error);
 		break;
 	case 9:
-		h_irs_print(two_holders_table);
+		error = h_irs_print(two_holders_table);
+		if (error)
+			h_error_print(error);
 		break;
 	case 10:
-		h_irs_edit(two_holders_table, h_util_get_int(0, 100, H_STRS_EDIT));
+		error = h_irs_edit(two_holders_table, h_util_get_int(0, 100, H_STRS_EDIT));
+		if (error)
+			h_error_print(error);
 		break;
 	case 11:
-		h_irs_add(two_holders_table);
+		error = h_irs_add(two_holders_table);
+		if (error)
+			h_error_print(error);
 		break;
 	case 12:
-		h_irs_delete(two_holders_table, h_util_get_int(0, 100, H_STRS_DELETE));
+		error = h_irs_delete(two_holders_table, h_util_get_int(0, 100, H_STRS_DELETE));
+		if (error)
+			h_error_print(error);
 		break;
 	case 0:
 		break;
@@ -64,6 +89,8 @@ void h_menu_irs(
 		fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
 		break;
 	}
+
+	h_error_free(error);
 }
 
 void h_menu_seg_social(s_arr_seg_social* seg_social_table)

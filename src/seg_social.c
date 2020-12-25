@@ -129,12 +129,12 @@ s_error* h_seg_social_add(s_arr_seg_social* array)
 s_error* h_seg_social_delete(s_arr_seg_social* array)
 {
 	if (array == NULL)
-		return h_error_create(H_ERROR_READ, "Tabela Vazia");
+		return h_error_create(H_ERROR_DELETE, "Tabela Vazia");
 
 	int num = h_util_get_int(0, 100, "Linha a eliminar: ");
 
 	if (num < 0 || num >= array->used)
-		return h_error_create(H_ERROR_READ, "A linha escolhida não existe");
+		return h_error_create(H_ERROR_DELETE, "A linha escolhida não existe");
 
 	for (int i = num; i <= array->used - 1; i++)
 		array->data[i] = array->data[i + 1];
@@ -172,12 +172,12 @@ s_error* h_seg_social_write(s_arr_seg_social* array, const char* path)
 s_error* h_seg_social_edit(s_arr_seg_social* array)
 {
 	if (array == NULL)
-		return h_error_create(H_ERROR_READ, "Tabela Vazia");
+		return h_error_create(H_ERROR_EDIT, "Tabela Vazia");
 
 	int num = h_util_get_int(0, 100, "\nLinha a editar: ");
 
 	if (num < 0 || num >= array->used)
-		return h_error_create(H_ERROR_READ, "A linha escolhida não existe");
+		return h_error_create(H_ERROR_EDIT, "A linha escolhida não existe");
 
 	char new_criteria;
 	printf("Critério - Valor atual: %c | ", array->data[num].criteria);
@@ -187,7 +187,7 @@ s_error* h_seg_social_edit(s_arr_seg_social* array)
 	for (int i = 0; i <= array->used; i++)
 	{
 		if (new_criteria == array->data[i].criteria && i != num)
-			return h_error_create(H_ERROR_READ, "O critério já existe");
+			return h_error_create(H_ERROR_EDIT, "O critério já existe");
 	}
 
 	array->data[num].criteria = new_criteria;

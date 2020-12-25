@@ -1,6 +1,6 @@
-//
-// Created by Hugo Carvalho on 12/24/20.
-//
+/*
+ * Created by Hugo Carvalho on 12/24/20.
+ */
 
 #ifndef _SEG_SOCIAL_H_
 #define _SEG_SOCIAL_H_
