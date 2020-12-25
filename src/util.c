@@ -96,6 +96,12 @@ char* h_util_format_str(const char* msg)
 	return buffer;
 }
 
+void h_util_clean_buffer()
+{
+	int ch;
+	while ((ch = getchar()) != '\n' && ch != EOF);
+}
+
 char h_util_get_option(char param1, char param2, const char* msg)
 {
 	char op;
@@ -112,31 +118,46 @@ char h_util_get_alphabetical_char(const char* msg)
 {
 	char c;
 
-	do
+	fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
+
+	while (scanf("%c", &c) != 1 || !isalpha(c))
 	{
+		puts(H_STRS_INVALID_IMPUT);
+		h_util_clean_buffer();
 		fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
-		scanf(" %c", &c);
-	} while (!isalpha(c));
+	}
 
 	return c;
 }
 
-unsigned int h_util_get_positive_int(const char* msg)
+int h_util_get_int(int min, int max, const char* msg)
 {
-	unsigned int n;
+	int num;
 
 	fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
-	scanf(" %d", &n);
 
-	return n;
+	while (scanf("%d", &num) != 1 || num < min || num > max)
+	{
+		puts(H_STRS_INVALID_IMPUT);
+		h_util_clean_buffer();
+		fprintf(stdout, RED("%s"), h_util_format_str(msg));
+	}
+	h_util_clean_buffer();
+	return num;
 }
 
-float h_util_get_float(const char* msg)
+float h_util_get_float(float min, float max, const char* msg)
 {
-	float n;
+	float num;
 
 	fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
-	scanf(" %f", &n);
 
-	return n;
+	while (scanf("%f", &num) != 1 || num < min || num > max)
+	{
+		puts(H_STRS_INVALID_IMPUT);
+		h_util_clean_buffer();
+		fprintf(stdout, RED("%s"), h_util_format_str(msg));
+	}
+	h_util_clean_buffer();
+	return num;
 }

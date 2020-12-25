@@ -7,6 +7,7 @@
 
 #include "colors.h"
 
+#define H_STRS_INVALID_IMPUT "Input Inválido\n"
 #define H_STRS_PROMPT "> "
 #define H_STRS_PROMPT_NEW_LINE "\n> "
 
@@ -14,12 +15,13 @@
 #define H_STRS_DELETE "Apagar linha?"
 
 #define H_STRS_MENU MAGENTA( \
-"\n*******************************\n" \
-"*        -|  MENU  |-         *\n" \
+"*******************************\n" \
+"*         -|  MENU  |-        *\n" \
 "*                             *\n" \
-"*   1. Tabelas Retenção IRS   *\n" \
-"*   9. Guardar                *\n" \
-"*   0. Sair                   *\n" \
+"* 1. Tabelas Retenção IRS     *\n" \
+"* 2. Tabelas Segurança Social *\n" \
+"* 9. Guardar                  *\n" \
+"* 0. Sair                     *\n" \
 "*                             *\n" \
 "*******************************\n")
 
@@ -52,6 +54,18 @@
 "* 0. Voltar ao menu anterior                        *\n" \
 "*                                                   *\n" \
 "*****************************************************\n")
+
+#define H_STRS_SEG_SOCIAL_MENU MAGENTA( \
+"**************************************\n" \
+"* -| Menu Tabela Segurança Social |- *\n" \
+"*                                    *\n" \
+"* 1. Visualizar                      *\n" \
+"* 2. Adicionar                       *\n" \
+"* 3. Remover                         *\n" \
+"* 4. Editar                          *\n" \
+"* 0. Voltar ao menu anterior         *\n" \
+"*                                    *\n" \
+"**************************************\n")
 
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
 "***********************************************************\n" \
