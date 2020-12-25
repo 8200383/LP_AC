@@ -123,15 +123,12 @@ void h_irs_print_line(s_irs data)
 	fprintf(stdout, "\n");
 }
 
-void h_irs_print(s_arr_irs* array)
+s_error* h_irs_print(s_arr_irs* array)
 {
 	int i;
 
 	if (array == NULL)
-	{
-		fprintf(stderr, RED("[!] Nothing to show\n"));
-		return;
-	}
+		return h_error_create(H_ERROR_READ, "[!] Nothing to show\n");
 
 	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
 	for (i = 0; i <= array->used; i++)
@@ -186,13 +183,10 @@ s_error* h_irs_add(s_arr_irs* array)
 	return NULL;
 }
 
-void h_irs_edit(s_arr_irs* array, int index)
+s_error* h_irs_edit(s_arr_irs* array, int index)
 {
 	if (array == NULL || array->used < index)
-	{
-		fprintf(stderr, RED("[!] Nothing to edit\n"));
-		return;
-	}
+		return h_error_create(H_ERROR_EDIT, "[!] Nothing to edit\n");
 
 	fprintf(stdout, H_STRS_IRS_TABLE_HEADER);
 	h_irs_print_line(array->data[index]);
@@ -200,20 +194,19 @@ void h_irs_edit(s_arr_irs* array, int index)
 	h_irs_scan_fields(&array->data[index]);
 }
 
-void h_irs_delete(s_arr_irs* array, int index)
+s_error* h_irs_delete(s_arr_irs* array, int index)
 {
 	int i;
 
 	if (array == NULL || array->used < index)
-	{
-		fprintf(stderr, RED("Nothing to delete"));
-		return;
-	}
+		return h_error_create(H_ERROR_DELETE, "[!] Empty Table\n");
 
 	for (i = index; i <= array->used - 1; i++)
 		array->data[i] = array->data[i + 1];
 
 	array->used--;
+
+	return NULL;
 }
 
 s_error* h_irs_write(s_arr_irs* array, const char* path)
