@@ -9,6 +9,6 @@
 #define H_PATH_UNIQUE_HOLDER "../data/table_married_unique_holder.csv"
 #define H_PATH_TWO_HOLDERS "../data/table_married_two_holders.csv"
 
-#define H_PATH_SEG_SOCIAL "../data/seg_social_table.csv"
+#define H_PATH_SEG_SOCIAL "../data/table_seg_social.csv"
 
 #endif //_PATHS_H_

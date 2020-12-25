@@ -66,7 +66,9 @@ void h_menu_irs(
 	}
 }
 
-void h_menu_seg_social(s_arr_seg_social* seg_social_table) {
+void h_menu_seg_social(s_arr_seg_social* seg_social_table)
+{
+	s_error* error = NULL;
 	unsigned int op;
 
 	fprintf(stdout, "%s", H_STRS_SEG_SOCIAL_MENU);
@@ -76,14 +78,24 @@ void h_menu_seg_social(s_arr_seg_social* seg_social_table) {
 	switch (op)
 	{
 	case 1:
-		h_seg_social_print(seg_social_table);
+		error = h_seg_social_print(seg_social_table);
+		if (error)
+			h_error_print(error);
 		break;
 	case 2:
+		error = h_seg_social_add(seg_social_table);
+		if (error)
+			h_error_print(error);
 		break;
 	case 3:
+		error = h_seg_social_delete(seg_social_table);
+		if (error)
+			h_error_print(error);
 		break;
 	case 4:
-		h_seg_social_edit(seg_social_table);
+		error = h_seg_social_edit(seg_social_table);
+		if (error)
+			h_error_print(error);
 		break;
 	case 0:
 		break;
@@ -91,4 +103,6 @@ void h_menu_seg_social(s_arr_seg_social* seg_social_table) {
 		fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
 		break;
 	}
+
+	h_error_free(error);
 }

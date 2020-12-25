@@ -7,7 +7,7 @@
 
 #include "colors.h"
 
-#define H_STRS_INVALID_IMPUT "Input Inválido"
+#define H_STRS_INVALID_IMPUT "Input Inválido\n"
 #define H_STRS_PROMPT "> "
 #define H_STRS_PROMPT_NEW_LINE "\n> "
 

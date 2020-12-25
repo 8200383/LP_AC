@@ -33,18 +33,18 @@ void h_error_print(s_error* error)
 	switch (error->error_type)
 	{
 	case H_ERROR_ALLOCATION:
-		fprintf(stderr, RED("TYPE: Alloc"));
+		fprintf(stderr, RED("ERROR: Alloc"));
 		break;
 	case H_ERROR_READ:
-		fprintf(stderr, RED("TYPE: File Read"));
+		fprintf(stderr, RED("ERROR: Read"));
 		break;
 	case H_ERROR_WRITE:
-		fprintf(stderr, RED("TYPE: File Write"));
+		fprintf(stderr, RED("ERROR: Write"));
 		break;
 	case H_ERROR_PARSING:
-		fprintf(stderr, RED("TYPE: Parsing"));
+		fprintf(stderr, RED("ERROR: Parsing"));
 	default:
-		fprintf(stderr, RED("TYPE: Unknown"));
+		fprintf(stderr, RED("ERROR: Unknown"));
 	}
 
 	fprintf(stderr, CYAN(" | MSG: %s\n"), error->msg);
