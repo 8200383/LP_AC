@@ -37,12 +37,12 @@ s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 
 s_error* h_seg_social_parse(s_arr_seg_social* array, char* str)
 {
+	int is_employer = 1, offset = -1, i;
+
 	if (array == NULL || str == NULL)
 		return h_error_create(H_ERROR_PARSING, "h_irs_parse()");
 
-	int is_employer = 1, offset = -1;
-
-	for (int i = 0; str[i] != '\0'; i++)
+	for (i = 0; str[i] != '\0'; i++)
 	{
 		if (offset == -1 && isalnum(str[i]))
 			offset = i;
@@ -100,6 +100,9 @@ s_error* h_seg_social_print(s_arr_seg_social* array)
 
 s_error* h_seg_social_add(s_arr_seg_social* array)
 {
+	char new_criteria;
+	int i;
+
 	if (array->used == array->max_capacity)
 	{
 		array->max_capacity *= 2;
@@ -108,11 +111,10 @@ s_error* h_seg_social_add(s_arr_seg_social* array)
 			return h_error_create(H_ERROR_ALLOCATION, "h_irs_add(): array->data");
 	}
 
-	char new_criteria;
 	printf("\nNovo critério: ");
 	scanf(" %c", &new_criteria);
 
-	for (int i = 0; i <= array->used; i++)
+	for (i = 0; i <= array->used; i++)
 	{
 		if (new_criteria == array->data[i].criteria)
 			return h_error_create(H_ERROR_READ, "O critério já existe");
@@ -128,15 +130,15 @@ s_error* h_seg_social_add(s_arr_seg_social* array)
 
 s_error* h_seg_social_delete(s_arr_seg_social* array)
 {
+	int num = h_util_get_int(0, 100, "Linha a eliminar: "), i;
+
 	if (array == NULL)
 		return h_error_create(H_ERROR_DELETE, "Tabela Vazia");
-
-	int num = h_util_get_int(0, 100, "Linha a eliminar: ");
 
 	if (num < 0 || num >= array->used)
 		return h_error_create(H_ERROR_DELETE, "A linha escolhida não existe");
 
-	for (int i = num; i <= array->used - 1; i++)
+	for (i = num; i <= array->used - 1; i++)
 		array->data[i] = array->data[i + 1];
 
 	array->used--;
@@ -171,20 +173,20 @@ s_error* h_seg_social_write(s_arr_seg_social* array, const char* path)
 
 s_error* h_seg_social_edit(s_arr_seg_social* array)
 {
+	char new_criteria;
+	int num = h_util_get_int(0, 100, "\nLinha a editar: "), i;
+
 	if (array == NULL)
 		return h_error_create(H_ERROR_EDIT, "Tabela Vazia");
-
-	int num = h_util_get_int(0, 100, "\nLinha a editar: ");
 
 	if (num < 0 || num >= array->used)
 		return h_error_create(H_ERROR_EDIT, "A linha escolhida não existe");
 
-	char new_criteria;
 	printf("Critério - Valor atual: %c | ", array->data[num].criteria);
 	printf("Novo valor: ");
 	scanf(" %c", &new_criteria);
 
-	for (int i = 0; i <= array->used; i++)
+	for (i = 0; i <= array->used; i++)
 	{
 		if (new_criteria == array->data[i].criteria && i != num)
 			return h_error_create(H_ERROR_EDIT, "O critério já existe");
