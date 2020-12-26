@@ -37,7 +37,7 @@ s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 
 s_error* h_seg_social_parse(s_arr_seg_social* array, char* str)
 {
-	int is_employer = 1, offset = -1, i;
+	int i, is_employer = 1, offset = -1;
 
 	if (array == NULL || str == NULL)
 		return h_error_create(H_ERROR_PARSING, "h_irs_parse()");
@@ -130,11 +130,12 @@ s_error* h_seg_social_add(s_arr_seg_social* array)
 
 s_error* h_seg_social_delete(s_arr_seg_social* array)
 {
-	int num = h_util_get_int(0, 100, "Linha a eliminar: "), i;
+	int num, i;
 
 	if (array == NULL)
 		return h_error_create(H_ERROR_DELETE, "Tabela Vazia");
 
+	num = h_util_get_int(0, 100, "Linha a eliminar: ");
 	if (num < 0 || num >= array->used)
 		return h_error_create(H_ERROR_DELETE, "A linha escolhida não existe");
 
@@ -174,11 +175,13 @@ s_error* h_seg_social_write(s_arr_seg_social* array, const char* path)
 s_error* h_seg_social_edit(s_arr_seg_social* array)
 {
 	char new_criteria;
-	int num = h_util_get_int(0, 100, "\nLinha a editar: "), i;
+	int num, i;
 
 	if (array == NULL)
 		return h_error_create(H_ERROR_EDIT, "Tabela Vazia");
 
+	num = h_util_get_int(0, 100, "\nLinha a editar: ");
+		
 	if (num < 0 || num >= array->used)
 		return h_error_create(H_ERROR_EDIT, "A linha escolhida não existe");
 
