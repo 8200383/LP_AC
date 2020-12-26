@@ -3,6 +3,9 @@
 
 #include "main.h"
 
+#include "processing.h"
+#include "file.h"
+
 s_error* main_menu()
 {
 	s_error* error;
@@ -228,6 +231,24 @@ s_error* main_menu()
 
 int main()
 {
+	/*
+	 * Example
+	int i;
+	int n_files;
+	s_sheet_file* files;
+
+	files = h_file_allocate();
+	if (files == NULL)
+		return -1;
+
+	h_file_ls(files, &n_files, "../data", "spreadsheet_");
+
+	for (i = 0; i < n_files; i++)
+		fprintf(stdout, RED("%s/%s"), files[i].parent_dir, files[i].filename);
+
+	return 0; */
+
+
 	s_error* error;
 
 	error = main_menu();

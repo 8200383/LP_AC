@@ -7,8 +7,6 @@
 #ifndef _UTIL_H
 #define _UTIL_H
 
-#include <unistd.h>
-
 /** Compares the string pointed to X to the string pointed to Y */
 #define h_util_strequal(x, y) (strcmp(x, y) == 0)
 
