@@ -9,17 +9,17 @@
 #include "file.h"
 #include "util.h"
 
-s_sheet_file* h_file_allocate()
+s_files* h_file_alloc()
 {
-	s_sheet_file* array_files;
+	s_files* array_files;
 	int i;
 	int j;
 
-	array_files = malloc(12 * sizeof(s_sheet_file));
+	array_files = malloc((N_MONTHS * 2) * sizeof(s_files));
 	if (array_files == NULL)
 		return NULL;
 
-	for (i = 0; i < 12; i++)
+	for (i = 0; i < (N_MONTHS * 2); i++)
 	{
 		for (j = 0; j < MAX_BUFFER; j++)
 		{
@@ -31,7 +31,7 @@ s_sheet_file* h_file_allocate()
 	return array_files;
 }
 
-s_error* h_file_ls(s_sheet_file* array_files, int* n_elem, const char* path, char* pattern)
+s_error* h_file_ls(s_files* array_files, int* n_elem, const char* path, char* pattern)
 {
 	DIR* dp;
 	struct dirent* dir;

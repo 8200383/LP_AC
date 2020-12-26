@@ -4,7 +4,6 @@
 #include "main.h"
 
 #include "processing.h"
-#include "file.h"
 
 s_error* main_menu()
 {
@@ -26,7 +25,6 @@ s_error* main_menu()
 	s_arr_irs* unique_holder_table;
 	s_arr_irs* two_holders_table;
 	s_arr_seg_social* seg_social_table;
-
 
 	/*
 	 * IRS: Tabela I - Não Casado
@@ -179,6 +177,9 @@ s_error* main_menu()
 		case 2:
 			h_menu_seg_social(seg_social_table);
 			break;
+		case 3:
+			h_menu_processing(single_table, unique_holder_table, two_holders_table, seg_social_table);
+			break;
 		case 9:
 			error = h_irs_write(single_table, H_PATH_SINGLE);
 			if (error)
@@ -231,24 +232,6 @@ s_error* main_menu()
 
 int main()
 {
-	/*
-	 * Example
-	int i;
-	int n_files;
-	s_sheet_file* files;
-
-	files = h_file_allocate();
-	if (files == NULL)
-		return -1;
-
-	h_file_ls(files, &n_files, "../data", "spreadsheet_");
-
-	for (i = 0; i < n_files; i++)
-		fprintf(stdout, RED("%s/%s"), files[i].parent_dir, files[i].filename);
-
-	return 0; */
-
-
 	s_error* error;
 
 	error = main_menu();

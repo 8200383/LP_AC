@@ -8,6 +8,7 @@
 #include "colors.h"
 #include "strs.h"
 #include "util.h"
+#include "file.h"
 
 void h_menu_irs(
 	s_arr_irs* single_table,
@@ -130,6 +131,36 @@ void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 		fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
 		break;
 	}
+
+	h_error_free(error);
+}
+
+void h_menu_processing(
+	s_arr_irs* single_table,
+	s_arr_irs* unique_holder_table,
+	s_arr_irs* two_holders_table,
+	s_arr_seg_social* seg_social_table
+	) {
+	int i;
+	int n_files;
+
+	s_files* files;
+	s_error* error;
+
+	files = h_file_alloc();
+	if (files == NULL)
+	{
+		error = h_error_create(H_ERROR_ALLOCATION, "Cannot Alloc");
+		h_error_print(error);
+	}
+
+	n_files = 0;
+	error = h_file_ls(files, &n_files, "../data", "spreadsheet_");
+	if (error)
+		h_error_print(error);
+
+	for (i = 0; i < n_files; i++)
+		fprintf(stdout, RED("%s/%s\n"), files[i].parent_dir, files[i].filename);
 
 	h_error_free(error);
 }
