@@ -87,3 +87,15 @@ s_arr_files* h_file_ls(const char* path, char* pattern)
 
 	return array_files;
 }
+
+void h_file_free(s_arr_files* array_files) {
+	int i;
+
+	for (i = 0; i <= array_files->used; i++) {
+		free(array_files->files[i].filename);
+		free(array_files->files[i].parent_dir);
+	}
+
+	free(array_files->files);
+	free(array_files);
+}

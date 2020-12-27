@@ -3,6 +3,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "menu.h"
 #include "colors.h"
@@ -155,6 +156,8 @@ void h_menu_processing(
 
 	for (i = 0; i <= array_files->used; i++)
 		fprintf(stdout, RED("%s/%s\n"), array_files->files[i].parent_dir, array_files->files[i].filename);
+
+	h_file_free(array_files);
 
 	h_error_free(error);
 }

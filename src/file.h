@@ -27,4 +27,6 @@ s_arr_files* h_file_alloc();
 /** Lists files who match pattern from give path (POSIX) */
 s_arr_files* h_file_ls(const char* path, char* pattern);
 
+void h_file_free(s_arr_files* array_files);
+
 #endif //_FILE_H_
