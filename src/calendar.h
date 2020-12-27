@@ -1,6 +1,7 @@
-//
-// Created by Rui Gonçalves on 27/12/2020.
-//
+/*
+ * Created by Rui Gonçalves on 27/12/2020.
+ * Edited by Micael Dias on 27/12/2020
+ */
 
 #ifndef _CALENDAR_H_
 #define _CALENDAR_H_
@@ -26,9 +27,11 @@ typedef enum
 	DEC = 12
 } e_month;
 
-s_date* get_date();
-int verify_date(int day, int month, int year);
-int verify_leap_year(int year);
+s_date* h_calendar_alloc();
+s_date* h_calendar_get_date();
+int h_calendar_check_date(int day, int month, int year);
+int h_calendar_check_leap_year(int year);
+const char* h_calendar_str_from_month(e_month month);
 
 
 #endif //_CALENDAR_H_
