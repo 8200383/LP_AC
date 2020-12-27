@@ -133,3 +133,34 @@ void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 
 	h_error_free(error);
 }
+
+void h_menu_employees_manag(s_employee_record* employee)
+{
+	unsigned int op;
+
+	fprintf(stdout, "%s", H_STRS_EMPLOYEES_MANAG_MENU);
+	fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
+
+	scanf(" %u", &op);
+
+	switch (op)
+	{
+	case 1:
+		printf("View employees");
+		break;
+	case 2:
+		printf("Add employee");
+		break;
+	case 3:
+		printf("Remove employee");
+		break;
+	case 4:
+		printf("Edit employee");
+		break;
+	case 0:
+		break;
+	default:
+		fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
+		break;
+	}
+}

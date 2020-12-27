@@ -7,6 +7,7 @@
 
 #include "irs.h"
 #include "seg_social.h"
+#include "employees.h"
 
 void h_menu_irs(
 	s_arr_irs* single_table,
@@ -14,5 +15,7 @@ void h_menu_irs(
 	s_arr_irs* two_holders_table);
 
 void h_menu_seg_social(s_arr_seg_social* seg_social_table);
+
+void h_menu_employees_manag(s_employee_record* employee);
 
 #endif //_MENU_H_

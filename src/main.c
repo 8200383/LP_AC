@@ -23,6 +23,7 @@ s_error* main_menu()
 	s_arr_irs* unique_holder_table;
 	s_arr_irs* two_holders_table;
 	s_arr_seg_social* seg_social_table;
+	s_employee_record* employee;
 
 
 	/*
@@ -175,6 +176,9 @@ s_error* main_menu()
 			break;
 		case 2:
 			h_menu_seg_social(seg_social_table);
+			break;
+		case 3:
+			h_menu_employees_manag(employee);
 			break;
 		case 9:
 			error = h_irs_write(single_table, H_PATH_SINGLE);

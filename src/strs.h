@@ -20,6 +20,7 @@
 "*                             *\n" \
 "* 1. Tabelas Retenção IRS     *\n" \
 "* 2. Tabelas Segurança Social *\n" \
+"* 3. Gestão de Funcionários   *\n" \
 "* 9. Guardar                  *\n" \
 "* 0. Sair                     *\n" \
 "*                             *\n" \
@@ -72,5 +73,17 @@
 "* Linha | Remuneração     | Numero de Dependentes         *\n" \
 "*       | Mensal em €     | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
 "***********************************************************\n")
+
+#define H_STRS_EMPLOYEES_MANAG_MENU CYAN ( \
+"************************************ *\n" \
+"* -| Menu Gestão de Funcionários |-  *\n" \
+"*                                    *\n" \
+"* 1. Visualizar                      *\n" \
+"* 2. Adicionar                       *\n" \
+"* 3. Remover                         *\n" \
+"* 4. Editar                          *\n" \
+"* 0. Voltar ao menu anterior         *\n" \
+"*                                    *\n" \
+"************************************* \n")
 
 #endif //_STRS_H_
