@@ -7,18 +7,24 @@
 
 #include "error.h"
 
-#define MAX_BUFFER 256
 #define N_MONTHS 12
 
 typedef struct
 {
-	char parent_dir[MAX_BUFFER];
-	char filename[MAX_BUFFER];
+	char* parent_dir;
+	char* filename;
 } s_files;
 
-s_files* h_file_alloc();
+typedef struct
+{
+	s_files* files;
+	int used;
+	int max_capacity;
+} s_arr_files;
+
+s_arr_files* h_file_alloc();
 
 /** Lists files who match pattern from give path (POSIX) */
-s_error* h_file_ls(s_files* array_files, int* n_elem, const char* path, char* pattern);
+s_arr_files* h_file_ls(const char* path, char* pattern);
 
 #endif //_FILE_H_

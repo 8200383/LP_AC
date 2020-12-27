@@ -9,55 +9,81 @@
 #include "file.h"
 #include "util.h"
 
-s_files* h_file_alloc()
+s_arr_files* h_file_alloc()
 {
-	s_files* array_files;
+	s_arr_files* array_files;
 	int i;
-	int j;
 
-	array_files = malloc((N_MONTHS * 2) * sizeof(s_files));
+	array_files = malloc(sizeof(s_arr_files));
 	if (array_files == NULL)
 		return NULL;
 
-	for (i = 0; i < (N_MONTHS * 2); i++)
+	array_files->max_capacity = N_MONTHS * 2;
+	array_files->used = 0;
+
+	array_files->files = malloc(array_files->max_capacity * sizeof(s_files));
+	if (array_files->files == NULL)
+		return NULL;
+
+	for (i = 0; i < array_files->max_capacity; i++)
 	{
-		for (j = 0; j < MAX_BUFFER; j++)
-		{
-			array_files[i].parent_dir[j] = '\0';
-			array_files[i].filename[j] = '\0';
-		}
+		array_files->files[i].parent_dir = NULL;
+		array_files->files[i].filename = NULL;
 	}
 
 	return array_files;
 }
 
-s_error* h_file_ls(s_files* array_files, int* n_elem, const char* path, char* pattern)
+s_arr_files* h_file_ls(const char* path, char* pattern)
 {
 	DIR* dp;
 	struct dirent* dir;
+	s_arr_files* array_files;
 	int i;
-	int j;
 
 	dp = opendir(path);
 	if (dp == NULL)
-		return h_error_create(H_ERROR_READ, path);
+		return NULL;
 
+	array_files = h_file_alloc();
+	if (array_files == NULL)
+		return NULL;
+
+	i = 0;
 	while ((dir = readdir(dp)) != NULL)
 	{
-		if (h_util_regexcmp(dir->d_name, pattern))
+		if (array_files->used == array_files->max_capacity)
 		{
-			for (i = 0; i < strlen(path); i++)
-				array_files[*n_elem].parent_dir[i] = path[i];
+			array_files->files = realloc(array_files->files, array_files->max_capacity * 2);
+			if (array_files == NULL)
+				return NULL;
 
-			for (j = 0; j < strlen(dir->d_name); j++)
-				array_files[*n_elem].filename[j] = dir->d_name[j];
+			array_files->max_capacity *= 2;
+		}
 
-			(*n_elem)++;
+		if (h_util_strequal(dir->d_name, ".") || h_util_strequal(dir->d_name, ".."))
+			continue;
+
+		if (h_util_regexcmp(dir->d_name, pattern) && dir->d_type == DT_REG)
+		{
+			array_files->files[i].parent_dir = malloc(sizeof(char) * strlen(path));
+			if (array_files->files[i].parent_dir == NULL)
+				return NULL;
+
+			array_files->files[i].filename = malloc(sizeof(char) * strlen(dir->d_name));
+			if (array_files->files[i].filename == NULL)
+				return NULL;
+
+			strcpy(array_files->files[i].parent_dir, path);
+			strcpy(array_files->files[i].filename, dir->d_name);
+			array_files->used = i;
+
+			i++;
 		}
 	}
 
 	if (closedir(dp) == -1)
-		return h_error_create(H_ERROR_UNKNOWN, "Cannot close");
+		return NULL;
 
-	return NULL;
+	return array_files;
 }
