@@ -29,4 +29,7 @@ s_arr_files* h_file_ls(const char* path, char* pattern);
 
 void h_file_free(s_arr_files* array_files);
 
+/** Check if a file exists */
+s_error* h_file_exists(const char* path);
+
 #endif //_FILE_H_

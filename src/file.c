@@ -1,10 +1,12 @@
 /*
- * Created by Micael Dias on 12/26/20.
+ * Created by Micael Dias on 26/12/20.
+ * Edited by Hugo Carvalho on 27/12/20.
  */
 
 #include <stdlib.h>
 #include <dirent.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "file.h"
 #include "util.h"
@@ -88,14 +90,24 @@ s_arr_files* h_file_ls(const char* path, char* pattern)
 	return array_files;
 }
 
-void h_file_free(s_arr_files* array_files) {
+void h_file_free(s_arr_files* array_files)
+{
 	int i;
 
-	for (i = 0; i <= array_files->used; i++) {
+	for (i = 0; i <= array_files->used; i++)
+	{
 		free(array_files->files[i].filename);
 		free(array_files->files[i].parent_dir);
 	}
 
 	free(array_files->files);
 	free(array_files);
+}
+
+s_error* h_file_exists(const char* path)
+{
+	if (access(path, F_OK) != 0)
+		return h_error_create(H_ERROR_READ, path);
+
+	return NULL;
 }
