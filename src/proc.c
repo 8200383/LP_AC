@@ -4,10 +4,12 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "processing.h"
-#include "util.h"
+#include <string.h>
 
-s_sheet* h_processing_alloc()
+#include "proc.h"
+#include "calendar.h"
+
+s_sheet* h_proc_alloc()
 {
 	s_sheet* sheet;
 	int i;
@@ -35,7 +37,7 @@ s_sheet* h_processing_alloc()
 	return sheet;
 }
 
-s_error* h_processing_import(s_sheet* sheet, const char* path)
+s_error* h_proc_import(s_sheet* sheet, const char* path)
 {
 	FILE* fp;
 
@@ -52,7 +54,7 @@ s_error* h_processing_import(s_sheet* sheet, const char* path)
 	return NULL;
 }
 
-s_error* h_processing_export(s_sheet* sheet, const char* path)
+s_error* h_proc_export(s_sheet* sheet, const char* path)
 {
 	FILE* fp;
 
@@ -66,7 +68,7 @@ s_error* h_processing_export(s_sheet* sheet, const char* path)
 	return NULL;
 }
 
-s_error* h_processing_export_csv(s_sheet* sheet, const char* path)
+s_error* h_proc_export_csv(s_sheet* sheet, const char* path)
 {
 	int i;
 	FILE* fp;
@@ -87,4 +89,30 @@ s_error* h_processing_export_csv(s_sheet* sheet, const char* path)
 
 	fclose(fp);
 	return NULL;
+}
+
+char* h_proc_generate_filename(e_month month, const char* extension)
+{
+	const char* month_str;
+	char* filename;
+
+	month_str = h_calendar_str_from_month(month);
+	if (month_str == NULL)
+		return NULL;
+
+	filename = malloc(MAX_FILENAME * sizeof(char));
+	if (filename == NULL)
+		return NULL;
+
+	if (memset(filename, '\0', MAX_FILENAME) == NULL)
+		return NULL;
+
+	if (strcat(filename, "spreadsheet_") == NULL)
+		return NULL;
+
+	if (strcat(filename, month_str) == NULL)
+		return NULL;
+
+	if (strcat(filename, extension) == NULL)
+		return NULL;
 }
