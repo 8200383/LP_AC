@@ -3,13 +3,13 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "menu.h"
 #include "colors.h"
 #include "strs.h"
 #include "util.h"
 #include "file.h"
+#include "proc.h"
 
 void h_menu_irs(
 	s_arr_irs* single_table,
@@ -145,6 +145,8 @@ void h_menu_processing(
 {
 	int i;
 
+	char* filename;
+
 	s_arr_files* array_files;
 	s_error* error;
 
@@ -158,6 +160,12 @@ void h_menu_processing(
 		fprintf(stdout, RED("%s/%s\n"), array_files->files[i].parent_dir, array_files->files[i].filename);
 
 	h_file_free(array_files);
+
+	/*
+	 * Generate file name
+	 */
+	filename = h_proc_generate_filename(JAN, ".bin");
+	fprintf(stdout, YELLOW("filename -> %s\n"), filename);
 
 	h_error_free(error);
 }
