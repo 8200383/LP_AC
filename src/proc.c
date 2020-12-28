@@ -116,3 +116,42 @@ char* h_proc_generate_filename(e_month month, const char* extension)
 	if (strcat(filename, extension) == NULL)
 		return NULL;
 }
+
+s_error* h_processing(s_sheet* sheet, s_arr_irs irs_array, s_arr_seg_social ss_array)
+{
+	int i, j, k;
+	float base_salary, food_allowance, irs_retention, ss_retention_employer, ss_retention_employee;
+	float irs_retention_percentage = 0, ss_retention_employer_percentage, ss_retention_employee_percentage;
+
+	for (i = 0; i <= sheet->used; i++)
+	{
+		//Falta definir as constantes do sálario de acordo com o cargo do trabalhador.
+		base_salary = sheet->paysheet[i].full_days * 40 + (sheet->paysheet[i].half_days * 40) / 2
+					  + (sheet->paysheet[i].weekend_days * 40) * 1.5;
+		//Falta definir as constantes do subsídio da alimentação de acordo com o cargo do trabalhador.
+		food_allowance = sheet->paysheet[i].full_days * 5 + sheet->paysheet[i].weekend_days * 5;
+
+		//Falta aceder aos dados dos trabalhadores para determinar o escalão de IRS.
+		irs_retention_percentage = irs_array.data[i].monthly_pay_value / 100;
+		irs_retention = (base_salary + food_allowance) * irs_retention_percentage;
+
+		//Falta aceder aos dados dos trabalhadores para determinar as percentagens de descontos da SS.
+		ss_retention_employer_percentage = ss_array.data[i].employer / 100;
+		ss_retention_employee_percentage = ss_array.data[i].employee / 100;
+
+		ss_retention_employer = (base_salary + food_allowance) * ss_retention_employer_percentage;
+		ss_retention_employee = (base_salary + food_allowance) * ss_retention_employee_percentage;
+	}
+
+	printf("\nSalário Ilíquido: %.2f€\n", base_salary);
+	printf("Subsídio da Alimentação: %.2f€\n", food_allowance);
+
+	printf("\nRetenção IRS: %.2f€\n", irs_retention);
+	printf("Retenção SS (Empregador): %.2f€\n", ss_retention_employer);
+	printf("Retenção SS (Empregado): %.2f€\n", ss_retention_employee);
+
+	printf("\nSalário Líquido: %.2f€\n", (base_salary + food_allowance) - irs_retention - ss_retention_employee);
+	printf("Encargo Total (Empregador): %.2f€\n",
+		(base_salary + food_allowance) + irs_retention + ss_retention_employee + ss_retention_employer);
+	return NULL;
+}
