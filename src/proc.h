@@ -115,6 +115,19 @@ typedef struct {
  */
 char* h_proc_generate_filename(e_month month, const char* extension);
 
-//s_arr_spreadsheet* h_proc_perform(s_arr_irs irs_array, s_arr_seg_social ss_array);
+/**
+ * TODO: s_error* h_proc_perform(s_arr_employee* empl_arr, s_arr_irs* irs_arr, s_arr_seg_social* segs_arr, s_arr_spreadsheet* ss_arr, e_month month);
+ * NOTA:
+ * A informação referente ao processamento do salário deverá ficar armazenada
+ * em memória/disco e adicionalmente guardada como relatório o num  ficheiro de texto (ex: CSV)
+ * Após processamento: call h_proc_export_bin(), h_proc_export_csv() em h_menu_processing() [perguntar sempre]
+ *
+ * @param empl_arr Array of Employees
+ * @param irs_arr Array of IRS
+ * @param segs_arr Array of Social Secutiry
+ * @param ss_arr Array of Spreadshhets
+ * @param month The month to process, if NULL process all months
+ * @return s_error Indicates what went wrong or NULL returned
+ */
 
 #endif //PROC_H
