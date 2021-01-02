@@ -2,7 +2,7 @@
  * @file proc.h
  * @author Micael Dias, Hugo Carvalho
  * @date 26/12/20
- * @brief Helper functions to handle Dates
+ * @brief Salary Processing
  */
 
 #ifndef PROC_H
