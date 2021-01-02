@@ -1,7 +1,3 @@
-/*
- * Created by Micael Dias on 12/26/20.
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -9,6 +5,7 @@
 #include "proc.h"
 #include "calendar.h"
 
+/*
 s_sheet* h_proc_alloc()
 {
 	s_sheet* sheet;
@@ -89,7 +86,7 @@ s_error* h_proc_export_csv(s_sheet* sheet, const char* path)
 
 	fclose(fp);
 	return NULL;
-}
+}*/
 
 char* h_proc_generate_filename(e_month month, const char* extension)
 {
@@ -116,7 +113,7 @@ char* h_proc_generate_filename(e_month month, const char* extension)
 	if (strcat(filename, extension) == NULL)
 		return NULL;
 }
-
+/*
 s_error* h_processing(s_sheet* sheet, s_arr_irs irs_array, s_arr_seg_social ss_array)
 {
 	int i, j, k;
@@ -154,4 +151,4 @@ s_error* h_processing(s_sheet* sheet, s_arr_irs irs_array, s_arr_seg_social ss_a
 	printf("Encargo Total (Empregador): %.2f€\n",
 		(base_salary + food_allowance) + irs_retention + ss_retention_employee + ss_retention_employer);
 	return NULL;
-}
+}*/
