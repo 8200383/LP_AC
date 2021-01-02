@@ -3,8 +3,8 @@
  * Edited by Hugo Carvalho on 27/12/20.
  */
 
-#ifndef _PROC_H_
-#define _PROC_H_
+#ifndef PROC_H
+#define PROC_H
 
 #include "irs.h"
 #include "seg_social.h"
@@ -45,4 +45,4 @@ char* h_proc_generate_filename(e_month month, const char* extension);
 /** Comment */
 s_error* h_processing(s_sheet* sheet, s_arr_irs irs_array, s_arr_seg_social ss_array);
 
-#endif //_proc_H_
+#endif //PROC_H

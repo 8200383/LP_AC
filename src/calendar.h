@@ -1,12 +1,12 @@
 /**
- * @file calendar.c
+ * @file calendar.h
  * @author Rui Gonçalves, Micael Dias
  * @date 27/12/2020
  * @brief Helper functions to handle Dates
  */
 
-#ifndef _CALENDAR_H_
-#define _CALENDAR_H_
+#ifndef CALENDAR_H
+#define CALENDAR_H
 
 /**
  * @struct s_date
@@ -41,4 +41,4 @@ int h_calendar_check_date(int day, int month, int year);
 int h_calendar_check_leap_year(int year);
 const char* h_calendar_str_from_month(e_month month);
 
-#endif //_CALENDAR_H_
+#endif //CALENDAR_H
