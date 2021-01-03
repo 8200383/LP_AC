@@ -13,17 +13,19 @@ s_error* main_menu()
 	int unique_holder_size;
 	int two_holders_size;
 	int seg_social_size;
+	int employees_size;
 
 	char* single_str;
 	char* unique_holder_str;
 	char* two_holders_str;
 	char* seg_social_str;
+	char* employees_str;
 
 	s_arr_irs* single_table;
 	s_arr_irs* unique_holder_table;
 	s_arr_irs* two_holders_table;
 	s_arr_seg_social* seg_social_table;
-	s_employee_record* employee;
+	s_arr_employees* employees_table;
 
 
 	/*
@@ -163,6 +165,39 @@ s_error* main_menu()
 
 	free(seg_social_str);
 
+	/*
+	 * Gestão de Funcionários
+	 * ---------------------------------------------------------------------------------------------------------
+	 */
+
+	employees_size = 0;
+	employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
+	if (employees_str == NULL)
+	{
+		error = h_error_create(H_ERROR_READ, H_PATH_EMPLOYEES);
+		free(single_table);
+		free(unique_holder_table);
+		free(two_holders_table);
+		free(seg_social_table);
+		free(employees_table);
+		return error;
+	}
+
+	employees_table = h_employees_alloc(employees_size);
+	if (employees_table == NULL)
+	{
+		error = h_error_create(H_ERROR_READ, H_PATH_EMPLOYEES);
+		free(single_table);
+		free(unique_holder_table);
+		free(two_holders_table);
+		free(seg_social_table);
+		free(employees_table);
+		return error;
+	}
+
+	error = h_employees_parse(employees_table, employees_str);
+
+
 	do
 	{
 		fprintf(stdout, "%s", H_STRS_MENU);
@@ -178,7 +213,7 @@ s_error* main_menu()
 			h_menu_seg_social(seg_social_table);
 			break;
 		case 3:
-			h_menu_employees_manag(employee);
+			h_menu_employees_manag(employees_table);
 			break;
 		case 9:
 			error = h_irs_write(single_table, H_PATH_SINGLE);

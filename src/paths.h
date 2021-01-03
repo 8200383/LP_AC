@@ -11,4 +11,7 @@
 
 #define H_PATH_SEG_SOCIAL "../data/table_seg_social.csv"
 
+#define H_PATH_EMPLOYEES "../data/table_employees.csv"
+
+
 #endif //_PATHS_H_
