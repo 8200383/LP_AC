@@ -179,7 +179,6 @@ s_error* main_menu()
 		free(unique_holder_table);
 		free(two_holders_table);
 		free(seg_social_table);
-		free(employees_table);
 		return error;
 	}
 
@@ -191,12 +190,23 @@ s_error* main_menu()
 		free(unique_holder_table);
 		free(two_holders_table);
 		free(seg_social_table);
-		free(employees_table);
+		free(employees_str);
 		return error;
 	}
 
 	error = h_employees_parse(employees_table, employees_str);
+	if (error)
+	{
+		free(single_table);
+		free(unique_holder_table);
+		free(two_holders_table);
+		free(seg_social_table);
+		free(employees_table);
+		free(employees_str);
+		return error;
+	}
 
+	free(employees_str);
 
 	do
 	{
@@ -213,7 +223,7 @@ s_error* main_menu()
 			h_menu_seg_social(seg_social_table);
 			break;
 		case 3:
-			h_menu_employees_manag(employees_table);
+			h_menu_employees(employees_table);
 			break;
 		case 9:
 			error = h_irs_write(single_table, H_PATH_SINGLE);
