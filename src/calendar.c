@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "calendar.h"
-#include "util.h"
 
 s_date* h_calendar_alloc()
 {
@@ -46,6 +46,15 @@ int h_calendar_leap_year(int year)
 	return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
 }
 
+// usado no proc.c
+int h_calendar_days_in_month(e_month month)
+{
+	if (month == FEB || month == APR || month == JUN || month == SEP || month == NOV)
+		return 30;
+
+	return 31;
+}
+
 int h_calendar_check_date(int day, int month, int year)
 {
 	if (year < 1000 || year > 9999)
@@ -66,13 +75,7 @@ int h_calendar_check_date(int day, int month, int year)
 			return 0;
 	}
 
-	if ((month == JAN || month == MAR || month == MAY ||
-		 month == JUL || month == AUG || month == OCT ||
-		 month == DEC) && (day < 1 || day > 31))
-		return 0;
-
-	if ((month == FEB || month == APR || month == JUN ||
-		 month == SEP || month == NOV) && (day < 1 || day > 30))
+	if (day < 1 || day > h_calendar_days_in_month(month))
 		return 0;
 
 	return 1;
