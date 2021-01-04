@@ -2,8 +2,8 @@
  * Created by Micael Dias on 10/12/20.
  */
 
-#ifndef _STRS_H_
-#define _STRS_H_
+#ifndef STRS_H
+#define STRS_H
 
 #include "colors.h"
 
