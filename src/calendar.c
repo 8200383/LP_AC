@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "calendar.h"
 
@@ -48,6 +49,16 @@ s_date* h_calendar_get_date()
 int h_calendar_check_leap_year(int year)
 {
 	return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
+}
+
+int h_calendar_check_str(const char* str)
+{
+	int day, month, year;
+
+	if (sscanf(str, "%d/%d/%d", &day, &month, &year) != 3)
+		return -1;
+
+	return h_calendar_check_date(day, month, year);
 }
 
 int h_calendar_check_date(int day, int month, int year)

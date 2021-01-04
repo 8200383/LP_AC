@@ -29,6 +29,7 @@ typedef enum
 
 s_date* h_calendar_alloc();
 s_date* h_calendar_get_date();
+int h_calendar_check_str(const char* str);
 int h_calendar_check_date(int day, int month, int year);
 int h_calendar_check_leap_year(int year);
 const char* h_calendar_str_from_month(e_month month);
