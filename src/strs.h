@@ -68,10 +68,24 @@
 "*                                    *\n" \
 "**************************************\n")
 
+#define H_STRS_PROC MAGENTA( \
+"********************************\n" \
+"*     -| Processamento |-      *\n" \
+"*                              *\n" \
+"* 1. Adicionar detalhes no mês *\n" \
+"* 2. Editar detalhes no mês    *\n" \
+"* 3. Eliminar detalhes no mês  *\n" \
+"* 4. Processar detalhes no mês *\n" \
+"* 6. Exportar Mês para CSV     *\n" \
+"* 7. Importar Mês              *\n" \
+"* 0. Sair                      *\n" \
+"*                              *\n" \
+"********************************\n")
+
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
 "***********************************************************\n" \
 "* Linha | Remuneração     | Numero de Dependentes         *\n" \
 "*       | Mensal em €     | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
 "***********************************************************\n")
 
-#endif //_STRS_H_
+#endif //STRS_H

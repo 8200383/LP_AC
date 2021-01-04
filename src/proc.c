@@ -4,67 +4,127 @@
 
 #include "proc.h"
 #include "calendar.h"
+#include "util.h"
+#include "colors.h"
 
-/*
-s_sheet* h_proc_alloc()
+s_arr_spreadsheets* h_proc_alloc(int initial_capacity)
 {
-	s_sheet* sheet;
+	s_arr_spreadsheets* arr_spreadsheets;
 	int i;
 
-	sheet = malloc(sizeof(s_sheet));
-	if (sheet == NULL)
+	arr_spreadsheets = malloc(sizeof(s_spreadsheet));
+	if (arr_spreadsheets == NULL)
 		return NULL;
 
-	sheet->max_capacity = 50;
-	sheet->month = 0;
-	sheet->used = 0;
-
-	sheet->paysheet = malloc(sizeof(s_paysheet) * sheet->max_capacity);
-	if (sheet->paysheet == NULL)
+	arr_spreadsheets->spreadsheets = malloc(initial_capacity * sizeof(s_spreadsheet));
+	if (arr_spreadsheets->spreadsheets == NULL)
 		return NULL;
 
-	for (i = 0; i < sheet->max_capacity; i++)
+	arr_spreadsheets->used = 0;
+	arr_spreadsheets->max_capacity = initial_capacity;
+
+	for (i = 0; i <= arr_spreadsheets->max_capacity; i++)
 	{
-		sheet->paysheet[i].func_code = NULL;
-		sheet->paysheet[i].full_days = 0;
-		sheet->paysheet[i].half_days = 0;
-		sheet->paysheet[i].weekend_days = 0;
+		arr_spreadsheets->spreadsheets[i].weekend_days = 0;
+		arr_spreadsheets->spreadsheets[i].half_days = 0;
+		arr_spreadsheets->spreadsheets[i].full_days = 0;
+		arr_spreadsheets->spreadsheets[i].absent_days = 0;
 	}
 
-	return sheet;
+	return arr_spreadsheets;
 }
 
-s_error* h_proc_import(s_sheet* sheet, const char* path)
+s_arr_spreadsheets* h_proc_open(const char* filename)
 {
 	FILE* fp;
+	s_arr_spreadsheets* array;
+	int file_size;
 
-	if (sheet == NULL)
-		return h_error_create(H_ERROR_ALLOCATION, path);
+	fprintf(stdout, YELLOW("[!] Importing: %s\n"), filename);
 
-	fp = fopen(path, "rb");
+	fp = fopen(filename, "rb");
 	if (fp == NULL)
-		return h_error_create(H_ERROR_READ, path);
+		return NULL;
 
-	if (fread(sheet, sizeof(s_sheet), 1, fp) == 0)
-		return h_error_create(H_ERROR_READ, path);
+	file_size = 0;
+	while (!feof(fp))
+		file_size++;
+
+	array = h_proc_alloc(file_size);
+	if (array == NULL)
+		return NULL;
+
+	for (int i = 0; !feof(fp); i++)
+	{
+		if (array->used == array->max_capacity)
+		{
+			array = realloc(array->spreadsheets, array->max_capacity * 2);
+			if (array == NULL)
+				return NULL;
+
+			array->max_capacity *= 2;
+		}
+
+		if (fread(&array->spreadsheets[i], sizeof(s_spreadsheet), 1, fp) != 1)
+			return NULL;
+
+		array->used++;
+	}
+
+	return array;
+}
+
+s_error* h_proc_add(s_arr_spreadsheets* array, e_month month)
+{
+	if (array == NULL)
+		return h_error_create(H_ERROR_READ, "h_proc_add()");
+
+	if (array->used == array->max_capacity)
+	{
+		array->spreadsheets = realloc(array->spreadsheets, (array->max_capacity * 2) * sizeof(s_spreadsheet));
+		if (array->spreadsheets == NULL)
+			return h_error_create(H_ERROR_ALLOCATION, "h_irs_add(): array->data");
+
+		array->max_capacity *= 2;
+	}
+
+	array->used++;
+	array->spreadsheets[array->used].full_days = h_util_get_int(1, h_calendar_days_in_month(month), "Dias completos");
+	array->spreadsheets[array->used].half_days = h_util_get_int(1, h_calendar_days_in_month(month), "Meios dias");
+	// TODO: Um mês tem 4 fins de semana mais o menos
+	array->spreadsheets[array->used].weekend_days = h_util_get_int(1, h_calendar_days_in_month(month), "Fins de semana");
+	array->spreadsheets[array->used].absent_days = h_util_get_int(1, h_calendar_days_in_month(month), "Faltas");
 
 	return NULL;
 }
 
-s_error* h_proc_export(s_sheet* sheet, const char* path)
+char* h_proc_generate_filename(e_month month, const char* extension)
 {
-	FILE* fp;
+	const char* month_str;
+	char* filename;
 
-	fp = fopen(path, "wb");
-	if (fp == NULL)
-		return h_error_create(H_ERROR_WRITE, path);
+	month_str = h_calendar_str_from_month(month);
+	if (month_str == NULL)
+		return NULL;
 
-	if (fwrite(sheet, sizeof(s_sheet), 1, fp) == 0)
-		return h_error_create(H_ERROR_WRITE, path);
+	filename = malloc(MAX_FILENAME * sizeof(char));
+	if (filename == NULL)
+		return NULL;
 
-	return NULL;
+	if (memset(filename, '\0', MAX_FILENAME) == NULL)
+		return NULL;
+
+	if (strcat(filename, "../data/spreadsheet_") == NULL)
+		return NULL;
+
+	if (strcat(filename, month_str) == NULL)
+		return NULL;
+
+	if (strcat(filename, extension) == NULL)
+		return NULL;
 }
 
+/*
 s_error* h_proc_export_csv(s_sheet* sheet, const char* path)
 {
 	int i;
@@ -88,31 +148,6 @@ s_error* h_proc_export_csv(s_sheet* sheet, const char* path)
 	return NULL;
 }*/
 
-char* h_proc_generate_filename(e_month month, const char* extension)
-{
-	const char* month_str;
-	char* filename;
-
-	month_str = h_calendar_str_from_month(month);
-	if (month_str == NULL)
-		return NULL;
-
-	filename = malloc(MAX_FILENAME * sizeof(char));
-	if (filename == NULL)
-		return NULL;
-
-	if (memset(filename, '\0', MAX_FILENAME) == NULL)
-		return NULL;
-
-	if (strcat(filename, "spreadsheet_") == NULL)
-		return NULL;
-
-	if (strcat(filename, month_str) == NULL)
-		return NULL;
-
-	if (strcat(filename, extension) == NULL)
-		return NULL;
-}
 /*
 s_error* h_processing(s_sheet* sheet, s_arr_irs irs_array, s_arr_seg_social ss_array)
 {

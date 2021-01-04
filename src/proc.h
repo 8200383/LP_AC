@@ -24,27 +24,18 @@ typedef struct {
 	int half_days; /**< Represents the number of half days worked */
 	int weekend_days; /**< Represents number of the weekends worked */
 	int absent_days; /**< Represents the number of days missed */
-} s_details;
-
-/**
- * @struct s_spreadsheet
- * A structure that represents the details of the workers per month
- */
-typedef struct {
-	s_details* details; /**< Stores information about each worker */
-	e_month month; /**< Identify the month of the spreadsheet */
-	char* filename; /**< Indentify the name of the spreadsheet */
+	/* TODO: missing processing vars */
 } s_spreadsheet;
 
-/**
- * @struct s_arr_spreadsheet
- * A struct to handle many spreadsheets
- */
 typedef struct {
-	s_spreadsheet* spreadsheets; /**< This stores an array of spreadsheets */
-	int used; /**< This keeps tracking of used elements in the array */
-	int max_capacity; /**< This keeps tracking of max_capcity in array */
-} s_arr_spreadsheet;
+	s_spreadsheet* spreadsheets;
+	int used;
+	int max_capacity;
+} s_arr_spreadsheets;
+
+s_arr_spreadsheets* h_proc_alloc(int initial_capacity);
+s_arr_spreadsheets* h_proc_open(const char* filename);
+s_error* h_proc_add(s_arr_spreadsheets* array, e_month month);
 
 /**
  * TODO: s_error* h_proc_alloc();
