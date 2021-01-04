@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "seg_social.h"
+#include "iss.h"
 #include "util.h"
 
 s_arr_seg_social* h_seg_social_alloc(int initial_capacity)

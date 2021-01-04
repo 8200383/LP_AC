@@ -2,8 +2,8 @@
  * Created by Hugo Carvalho on 12/24/20.
  */
 
-#ifndef _SEG_SOCIAL_H_
-#define _SEG_SOCIAL_H_
+#ifndef ISS_H
+#define ISS_H
 
 #include "error.h"
 
@@ -35,4 +35,4 @@ s_error* h_seg_social_delete(s_arr_seg_social* array);
 
 s_error* h_seg_social_add(s_arr_seg_social* array);
 
-#endif //_SEG_SOCIAL_H_
+#endif //ISS_H

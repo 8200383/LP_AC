@@ -9,7 +9,7 @@
 #define PROC_H
 
 #include "irs.h"
-#include "seg_social.h"
+#include "iss.h"
 #include "error.h"
 #include "calendar.h"
 

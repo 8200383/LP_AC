@@ -2,8 +2,8 @@
  * Created by Micael Dias on 10/12/20.
  */
 
-#ifndef _IRS_H_
-#define _IRS_H_
+#ifndef IRS_H
+#define IRS_H
 
 #include "error.h"
 #include "memory.h"
@@ -42,4 +42,4 @@ s_error* h_irs_print(s_arr_irs* array);
 s_error* h_irs_edit(s_arr_irs* array, int index);
 void h_irs_build(s_irs* data, char* str, int* dependent);
 
-#endif //_IRS_H_
+#endif //IRS_H
