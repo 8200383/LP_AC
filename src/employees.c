@@ -1,7 +1,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <ctype.h>
 #include <string.h>
 
@@ -58,9 +57,7 @@ char* get_phone_number()
 
 int random_number()
 {
-	time_t t;
-
-	srand((unsigned)time(&t));
+	srand(1);
 
 	return rand() % MAX_VALUE;
 }
