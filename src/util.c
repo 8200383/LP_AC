@@ -75,27 +75,6 @@ int h_util_regex_compare(const char* str, const char* pattern)
 	return 0;
 }
 
-char* h_util_format_str(const char* msg)
-{
-	int i;
-	char* buffer;
-
-	if (msg == NULL)
-		return H_STRS_PROMPT;
-
-	buffer = malloc(strlen(msg) + strlen(H_STRS_PROMPT_NEW_LINE));
-	if (buffer == NULL)
-		return NULL;
-
-	for (i = 0; i < sizeof(buffer); i++)
-		buffer[i] = '\0';
-
-	strcat(buffer, msg);
-	strcat(buffer, H_STRS_PROMPT_NEW_LINE);
-
-	return buffer;
-}
-
 void h_util_clean_buffer()
 {
 	int ch;
@@ -118,13 +97,13 @@ char h_util_get_alphabetical_char(const char* msg)
 {
 	char c;
 
-	fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
+	fprintf(stdout, YELLOW("%s"), msg);
 
 	while (scanf("%c", &c) != 1 || !isalpha(c))
 	{
 		puts(H_STRS_INVALID_IMPUT);
 		h_util_clean_buffer();
-		fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
+		fprintf(stdout, YELLOW("%s"), msg);
 	}
 
 	return c;
@@ -134,13 +113,14 @@ int h_util_get_int(int min, int max, const char* msg)
 {
 	int num;
 
-	fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
+	fprintf(stdout, YELLOW("%s"), msg);
+	fprintf(stdout, H_STRS_PROMPT_NEW_LINE);
 
 	while (scanf("%d", &num) != 1 || num < min || num > max)
 	{
 		puts(H_STRS_INVALID_IMPUT);
 		h_util_clean_buffer();
-		fprintf(stdout, RED("%s"), h_util_format_str(msg));
+		fprintf(stdout, RED("%s"), msg);
 	}
 	h_util_clean_buffer();
 	return num;
@@ -150,13 +130,13 @@ float h_util_get_float(float min, float max, const char* msg)
 {
 	float num;
 
-	fprintf(stdout, YELLOW("%s"), h_util_format_str(msg));
+	fprintf(stdout, YELLOW("%s"), msg);
 
 	while (scanf("%f", &num) != 1 || num < min || num > max)
 	{
 		puts(H_STRS_INVALID_IMPUT);
 		h_util_clean_buffer();
-		fprintf(stdout, RED("%s"), h_util_format_str(msg));
+		fprintf(stdout, RED("%s"), msg);
 	}
 	h_util_clean_buffer();
 	return num;
