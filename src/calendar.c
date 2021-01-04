@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "calendar.h"
+#include "util.h"
 
 s_date* h_calendar_alloc()
 {
@@ -40,7 +41,7 @@ s_date* h_calendar_get_date()
 	return date;
 }
 
-int h_calendar_check_leap_year(int year)
+int h_calendar_leap_year(int year)
 {
 	return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
 }
@@ -53,13 +54,13 @@ int h_calendar_check_date(int day, int month, int year)
 	if (month < JAN || month > DEC)
 		return 0;
 
-	if (month == FEB && h_calendar_check_leap_year(year) == 1)
+	if (month == FEB && h_calendar_leap_year(year) == 1)
 	{ // days 29
 		if (day < 1 || day > 29)
 			return 0;
 	}
 
-	if (month == FEB && h_calendar_check_leap_year(year) == 0)
+	if (month == FEB && h_calendar_leap_year(year) == 0)
 	{ // days 28
 		if (day < 1 || day > 28)
 			return 0;
