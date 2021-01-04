@@ -16,6 +16,6 @@ void h_menu_irs(
 
 void h_menu_seg_social(s_arr_seg_social* seg_social_table);
 
-void h_menu_employees_manag(s_employee_record* employee);
+void h_menu_employees(s_arr_employees* employees);
 
 #endif //_MENU_H_

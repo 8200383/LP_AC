@@ -134,7 +134,7 @@ void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 	h_error_free(error);
 }
 
-void h_menu_employees_manag(s_employee_record* employee)
+void h_menu_employees(s_arr_employees* employees)
 {
 	unsigned int op;
 
