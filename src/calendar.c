@@ -99,3 +99,19 @@ const char* h_calendar_str_from_month(e_month month)
 
 	return strings[month];
 }
+
+s_date* h_calendar_init(const char* str)
+{
+	s_date* date;
+	int day, month, year;
+
+	date = h_calendar_alloc();
+	if (date == NULL)
+		return NULL;
+
+	sscanf(str, "%d/%d/%d", &day, &month, &year);
+
+	date->day = day;
+	date->month = month;
+	date->year = year;
+}
