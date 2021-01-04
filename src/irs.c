@@ -159,6 +159,9 @@ s_error* h_irs_add(s_arr_irs* array)
 	int i;
 	int j;
 
+	if (array == NULL)
+		return h_error_create(H_ERROR_READ, "h_irs_add()");
+
 	if (array->used == array->max_capacity)
 	{
 		array->max_capacity *= 2;
