@@ -161,3 +161,34 @@ float h_util_get_float(float min, float max, const char* msg)
 	h_util_clean_buffer();
 	return num;
 }
+
+int h_util_str_is_digit(const char* str)
+{
+	int num;
+	int i;
+
+	num = 0;
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		// check for decimal digits
+		if (isdigit(str[i]) != 0)
+			num++;
+	}
+	return num;
+}
+
+int h_util_is_name(const char* str)
+{
+	int i;
+
+	if (isupper(str[0]) == 0)
+		return -1;
+
+	for (i = 1; str[i] != '\0'; i++)
+	{
+		if (islower(str[i]) == 0)
+			return -1;
+	}
+
+	return 0;
+}

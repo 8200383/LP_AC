@@ -39,4 +39,8 @@ int h_util_regex_compare(const char* str, const char* pattern);
 /** Cleans buffer from stdin */
 void h_util_clean_buffer();
 
+int h_util_str_is_digit(const char* str);
+
+int h_util_is_name(const char* str);
+
 #endif //_UTIL_H
