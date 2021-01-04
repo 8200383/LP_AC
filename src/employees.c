@@ -1,45 +1,58 @@
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
 
 #include "employees.h"
+#include "util.h"
+
+int first_name_buffer_size = 64;
+int last_name_buffer_size = 64;
 
 s_arr_employees* h_employees_alloc(int initial_capacity)
 {
-	s_arr_employees* array_employees;
-	int i;
+	s_arr_employees* array;
+	int i, j;
 
 	if (!initial_capacity)
 		return NULL;
 
-	array_employees = malloc(sizeof(s_arr_employees));
-	if (array_employees == NULL)
+	array = malloc(sizeof(s_arr_employees));
+	if (array == NULL)
 		return NULL;
 
-	array_employees->employees = malloc(sizeof(s_employee_record) * initial_capacity);
-	if (array_employees->employees == NULL)
+	array->employees = malloc(initial_capacity * sizeof(s_employee_record));
+	if (array->employees == NULL)
 		return NULL;
 
-	array_employees->used = 0;
-	array_employees->max_capacity = initial_capacity;
+	array->used = 0;
+	array->max_capacity = initial_capacity;
 
-	for (i = 0; i <= array_employees->max_capacity; i++)
+	for (i = 0; i <= array->max_capacity; i++)
 	{
-		array_employees->employees[i].code = 0;
-		array_employees->employees[i].number_dependents = 0;
-		array_employees->employees[i].role = '\0';
-		array_employees->employees[i].first_name = NULL;
-		array_employees->employees[i].last_name = NULL;
-		array_employees->employees[i].phone = NULL;
-		array_employees->employees[i].marital_status = SINGLE;
-		array_employees->employees[i].birthday = NULL;
-		array_employees->employees[i].entry_date = NULL;
-		array_employees->employees[i].leaving_date = NULL;
+		array->employees[i].code = 0;
+		array->employees[i].number_dependents = 0;
+		array->employees[i].role = '\0';
+		array->employees[i].marital_status = SINGLE;
+
+		array->employees[i].first_name = malloc(first_name_buffer_size * sizeof(char));
+		if (array->employees[array->used].first_name == NULL)
+			return NULL;
+
+		memset(array->employees[i].first_name, '\0', first_name_buffer_size);
+
+		array->employees[i].last_name = malloc(last_name_buffer_size * sizeof(char));
+		if (array->employees[array->used].last_name == NULL)
+			return NULL;
+
+		memset(array->employees[i].last_name, '\0', last_name_buffer_size);
+
+
+		for (j = 0; j < 10; j++)
+			array->employees[i].phone[j] = '\0';
 	}
 
-	return array_employees;
+	return array;
 }
 
 char* get_phone_number()
@@ -84,11 +97,15 @@ int ask_status()
 
 s_error* h_employees_parse(s_arr_employees* array, char* str)
 {
-	int i, column = 0, offset = -1;
+	int i;
+	int offset;
+	int column;
 
 	if (array == NULL || str == NULL)
 		return h_error_create(H_ERROR_PARSING, "h_employees_parse()");
 
+	offset = -1;
+	column = 0;
 	for (i = 0; str[i] != '\0'; i++)
 	{
 		if (offset == -1 && isalnum(str[i]))
@@ -97,58 +114,87 @@ s_error* h_employees_parse(s_arr_employees* array, char* str)
 		if (offset != -1 && str[i] == ',')
 		{
 			str[i] = '\0';
-			printf("%s - %lu\n", str + offset, strlen(str + offset));
 
-			if (isdigit(atoi(str + offset)) != 0)
-				puts("É um nr");
+			// Code func 4 digits
+			if (h_util_str_is_digit(str + offset) == 4 && column == COL_CODE_FUNC)
+				array->employees[array->used].code = atoi(str + offset);
 
-			/* switch (column)
-			{
-			case 0:
-				array->employees[array->used].code = atoi(str + offset); // atoi converte strings para inteiros
-				column++;
-				break;
-			case 1:
+			if (h_util_str_is_digit(str + offset) == 1 && column == COL_NUM_DEPENDENTS)
 				array->employees[array->used].number_dependents = atoi(str + offset);
-				column++;
-				break;
-			case 2:
-				// array->employees[array->used].role = str[offset];
-				column++;
-				break;
-			case 3:
-				// array->employees[array->used].first_name = str[offset];
-				column++;
-				break;
-			case 4:
-				// array->employees[array->used].last_name = str[offset];
-				column++;
-				break;
-			case 5:
-				// array->employees[array->used].phone = str[offset];
-				column++;
-				break;
-			case 6:
-				// array->employees[array->used].marital_status = str[offset];
-				column++;
-				break;
-			case 7:
-				sscanf(str + offset, "%d/%d/%d", &array->employees[array->used].birthday->day, &array->employees[array
-					->used].birthday->month, &array->employees[array->used].birthday->year);
-				column++;
-				break;
-			case 8:
-				sscanf(str + offset, "%d/%d/%d", &array->employees[array->used].entry_date->day, &array->employees[array
-					->used].entry_date->month, &array->employees[array->used].entry_date->year);
-				column++;
-				break;
-			case 9:
-				sscanf(
-					str + offset, "%d/%d/%d", &array->employees[array->used].leaving_date->day, &array->employees[array
-						->used].leaving_date->month, &array->employees[array->used].leaving_date->year);
-				column = 0;
-				break;
-			} */
+
+
+			if (column == COL_ROLE) // TODO: check if is upper
+				strcpy(&array->employees[array->used].role, str + offset);
+
+			// Phone number 9 digits
+			if (h_util_str_is_digit(str + offset) == 9 && column == COL_PHONE_NUMBER)
+				strcpy(array->employees[array->used].phone, str + offset);
+
+			if (h_util_strequal(str + offset, "MARRIED") && column == COL_MARITAL_STATUS)
+				array->employees[array->used].marital_status = MARRIED;
+
+			if (h_util_strequal(str + offset, "SINGLE") && column == COL_MARITAL_STATUS)
+				array->employees[array->used].marital_status = SINGLE;
+
+			if (h_util_strequal(str + offset, "DIVORCED") && column == COL_MARITAL_STATUS)
+				array->employees[array->used].marital_status = DIVORCED;
+
+			if (h_util_is_name(str + offset) == 0 && column == COL_FIRST_NAME)
+			{
+				if (strlen(str + offset) >= first_name_buffer_size)
+				{
+					array->employees[array->used].first_name =
+						realloc(array->employees[array->used].first_name, first_name_buffer_size * 2);
+
+					if (array->employees[array->used].first_name == NULL)
+						return h_error_create(H_ERROR_ALLOCATION, "Cannot reallocate first_name");
+
+					first_name_buffer_size *= 2;
+				}
+
+				strcpy(array->employees[array->used].first_name, str + offset);
+			}
+
+			if (h_util_is_name(str + offset) == 0 && column == COL_LAST_NAME)
+			{
+				if (strlen(str + offset) >= last_name_buffer_size)
+				{
+					array->employees[array->used].last_name =
+						realloc(array->employees[array->used].last_name, last_name_buffer_size * 2);
+
+					if (array->employees[array->used].last_name == NULL)
+						return h_error_create(H_ERROR_ALLOCATION, "Cannot reallocate first_name");
+
+					last_name_buffer_size *= 2;
+				}
+				strcpy(array->employees[array->used].last_name, str + offset);
+			}
+
+			if (h_calendar_check_str(str + offset) == 1 && column == COL_BIRTHDAY)
+			{
+				array->employees[array->used].birthday = h_calendar_init(str + offset);
+
+				if (array->employees[array->used].birthday == NULL)
+					return h_error_create(H_ERROR_ALLOCATION, "Cannot initialize birthday");
+			}
+
+			if (h_calendar_check_str(str + offset) == 1 && column == COL_ENTRY_DATE)
+			{
+				array->employees[array->used].entry_date = h_calendar_init(str + offset);
+
+				if (array->employees[array->used].entry_date == NULL)
+					return h_error_create(H_ERROR_ALLOCATION, "Cannot initialize entry_date");
+			}
+
+			if (h_calendar_check_str(str + offset) == 1 && column == COL_LEAVING_DATE)
+			{
+				array->employees[array->used].leaving_date = h_calendar_init(str + offset);
+
+				if (array->employees[array->used].leaving_date == NULL)
+					return h_error_create(H_ERROR_ALLOCATION, "Cannot initialize leaving_date");
+			}
+
+			column++;
 			offset = -1;
 		}
 
@@ -157,5 +203,4 @@ s_error* h_employees_parse(s_arr_employees* array, char* str)
 	}
 
 	return NULL;
-
 }
