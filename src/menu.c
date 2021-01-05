@@ -225,36 +225,37 @@ void h_menu_processing(
 	}
 	 */
 
-	fprintf(stdout, H_STRS_PROC);
-	fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
-
-	scanf(" %u", &op);
-
-	switch (op)
+	do
 	{
-	case 1:
-		h_proc_print(arr_spreadsheets);
-		break;
-	case 2:
-		h_proc_add(arr_spreadsheets, month);
-		break;
-	case 3:
-		h_proc_edit(arr_spreadsheets, month);
-		break;
-	case 4:
-		break;
-	case 5:
-		break;
-	case 6:
-		break;
-	case 7:
-		break;
-	case 0:
-		break;
-	default:
-		fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
-		break;
-	}
+		fprintf(stdout, H_STRS_PROC);
+		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
+		scanf(" %u", &op);
+
+		switch (op)
+		{
+		case 1:
+			h_proc_print(arr_spreadsheets);
+			break;
+		case 2:
+			h_proc_add(arr_spreadsheets, month);
+			break;
+		case 3:
+			h_proc_edit(arr_spreadsheets, month);
+			break;
+		case 4:
+			h_proc_delete(arr_spreadsheets);
+			break;
+		case 5:
+			break;
+		case 6:
+			break;
+		case 7:
+			break;
+		default:
+			fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
+			break;
+		}
+	} while (op != 0);
 
 	h_proc_free(arr_spreadsheets);
 }

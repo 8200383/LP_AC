@@ -86,11 +86,11 @@ s_arr_spreadsheets* h_proc_open(const char* filename)
 
 void h_proc_scan_fields(s_spreadsheet* spreadsheet, e_month month)
 {
-	spreadsheet->full_days = h_util_get_int(1, h_calendar_days_in_month(month), "Dias completos");
-	spreadsheet->half_days = h_util_get_int(1, h_calendar_days_in_month(month), "Meios dias");
+	spreadsheet->full_days = h_util_get_int(0, h_calendar_days_in_month(month), "Dias completos");
+	spreadsheet->half_days = h_util_get_int(0, h_calendar_days_in_month(month), "Meios dias");
 	// TODO: Um mês tem 4 fins de semana mais o menos
-	spreadsheet->weekend_days = h_util_get_int(1, h_calendar_days_in_month(month), "Fins de semana");
-	spreadsheet->absent_days = h_util_get_int(1, h_calendar_days_in_month(month), "Faltas");
+	spreadsheet->weekend_days = h_util_get_int(0, h_calendar_days_in_month(month), "Fins de semana");
+	spreadsheet->absent_days = h_util_get_int(0, h_calendar_days_in_month(month), "Faltas");
 }
 
 void h_proc_add(s_arr_spreadsheets* array, e_month month)
@@ -107,7 +107,7 @@ void h_proc_add(s_arr_spreadsheets* array, e_month month)
 		array->max_capacity *= 2;
 	}
 
-	h_proc_scan_fields(&array->spreadsheets[array->used++], month);
+	h_proc_scan_fields(&array->spreadsheets[++array->used], month);
 }
 
 void h_proc_print(s_arr_spreadsheets* array)
@@ -140,16 +140,23 @@ void h_proc_edit(s_arr_spreadsheets* array, e_month month)
 {
 	int index;
 
-	if (array->used == 0)
+	index = h_util_get_int(0, array->used, H_STRS_EDIT);
+
+	if (array->used == 0 || array->used < index)
 	{
 		puts("[!] Nada para editar");
 		return;
 	}
 
-	index = h_util_get_int(0, array->used, H_STRS_EDIT);
-
 	fprintf(stdout, H_STRS_PROC_TABLE_HEADER);
-	// TODO: Mostrar linha antiga
+	fprintf(stdout, "%d | %d | %d | %d | %d | %d\n",
+		index,
+		1,
+		array->spreadsheets[index].full_days,
+		array->spreadsheets[index].half_days,
+		array->spreadsheets[index].weekend_days,
+		array->spreadsheets[index].absent_days
+	);
 
 	h_proc_scan_fields(&array->spreadsheets[index], month);
 }
