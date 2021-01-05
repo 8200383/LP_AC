@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 #include "menu.h"
@@ -184,7 +185,6 @@ void h_menu_processing(
 )
 {
 	s_arr_spreadsheets* arr_spreadsheets;
-	s_error* error;
 	char* filename;
 	int op;
 	int month;
@@ -213,6 +213,8 @@ void h_menu_processing(
 		}
 	}
 
+	free(filename);
+
 	/*
 	 *
 	if (fwrite(spreadsheet, sizeof(s_spreadsheet), 1, fp) != 1)
@@ -231,27 +233,21 @@ void h_menu_processing(
 	switch (op)
 	{
 	case 1:
-		error = h_proc_add(arr_spreadsheets, month);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_proc_print(arr_spreadsheets);
 		break;
 	case 2:
-		puts("Editar");
+		h_proc_add(arr_spreadsheets, month);
 		break;
 	case 3:
-		puts("Eliminar");
+		h_proc_edit(arr_spreadsheets, month);
 		break;
 	case 4:
-		puts("Processar");
 		break;
 	case 5:
-		puts("Exportar");
 		break;
 	case 6:
-		puts("Exportar CSV");
+		break;
+	case 7:
 		break;
 	case 0:
 		break;
@@ -259,4 +255,6 @@ void h_menu_processing(
 		fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
 		break;
 	}
+
+	h_proc_free(arr_spreadsheets);
 }

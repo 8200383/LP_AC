@@ -72,10 +72,11 @@
 "********************************\n" \
 "*     -| Processamento |-      *\n" \
 "*                              *\n" \
-"* 1. Adicionar detalhes do mês *\n" \
-"* 2. Editar detalhes do mês    *\n" \
-"* 3. Eliminar detalhes do mês  *\n" \
-"* 4. Processar detalhes do mês *\n" \
+"* 1. Ver detalhes do mês       *\n" \
+"* 2. Adicionar detalhes do mês *\n" \
+"* 3. Editar detalhes do mês    *\n" \
+"* 4. Eliminar detalhes do mês  *\n" \
+"* 5. Processar detalhes do mês *\n" \
 "* 6. Exportar mês para CSV     *\n" \
 "* 7. Guardar                   *\n" \
 "* 0. Sair                      *\n" \
@@ -87,5 +88,12 @@
 "* Linha | Remuneração     | Numero de Dependentes         *\n" \
 "*       | Mensal em €     | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
 "***********************************************************\n")
+
+
+#define H_STRS_PROC_TABLE_HEADER BLUE( \
+"********************************************************\n" \
+"* Linha | Codigo | Dias      | Meios | Fins   | Faltas *\n" \
+"*       | Func   | Completos | Dias  | Semana |        *\n" \
+"********************************************************\n")
 
 #endif //STRS_H
