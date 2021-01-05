@@ -101,46 +101,8 @@ void h_menu_processing(
 	s_arr_seg_social* seg_social_table
 )
 {
-	s_arr_spreadsheets* arr_spreadsheets;
-	char* filename;
 	int op;
-	int month;
-
-	month = h_util_get_int(1, 12, "Importar Mês? (1-12)") - 1;
-	filename = h_proc_generate_filename(month, ".bin");
-
-	// TODO: Beautify
-	if (access(filename, F_OK) == -1)
-	{
-		puts("[!] Nenhum ficheiro encontrado, criar novo...");
-		arr_spreadsheets = h_proc_alloc(64); // TODO: Alloc com o num de func que existe
-		if (arr_spreadsheets == NULL)
-		{
-			puts("[!] Allocation failed");
-			return;
-		}
-	}
-	else
-	{
-		arr_spreadsheets = h_proc_open(filename);
-		if (arr_spreadsheets == NULL)
-		{
-			puts("[!] Import failed");
-			return;
-		}
-	}
-
-	free(filename);
-
-	/*
-	 *
-	if (fwrite(spreadsheet, sizeof(s_spreadsheet), 1, fp) != 1)
-	{
-		free(spreadsheet);
-		fclose(fp);
-		return h_error_create(H_ERROR_WRITE, "Cannot write spreadsheet");
-	}
-	 */
+	s_arr_spreadsheets* arr_spreadsheets = NULL;
 
 	do
 	{
@@ -151,23 +113,31 @@ void h_menu_processing(
 		switch (op)
 		{
 		case 1:
-			h_proc_print(arr_spreadsheets);
+			arr_spreadsheets = h_proc_alloc(64); // TODO: alloc com a qte de func
+			if (arr_spreadsheets == NULL)
+				return;
+
+			arr_spreadsheets->month = h_util_get_int(1, 12, "Mês: (1-12)") - 1;
+			fprintf(stdout, GREEN("[!] Mês criado\n"));
 			break;
 		case 2:
-			h_proc_add(arr_spreadsheets, month);
+			h_proc_print(arr_spreadsheets);
 			break;
 		case 3:
-			h_proc_edit(arr_spreadsheets, month);
+			h_proc_add(arr_spreadsheets);
 			break;
 		case 4:
-			h_proc_delete(arr_spreadsheets);
+			h_proc_edit(arr_spreadsheets);
 			break;
 		case 5:
+			h_proc_delete(arr_spreadsheets);
 			break;
 		case 6:
-			h_proc_export_csv(arr_spreadsheets, month);
+			h_proc_export_csv(arr_spreadsheets);
 			break;
 		case 7:
+			break;
+		case 8:
 			break;
 		case 0:
 			break;

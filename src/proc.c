@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "proc.h"
 #include "calendar.h"
@@ -20,7 +21,7 @@ s_arr_spreadsheets* h_proc_alloc(int initial_capacity)
 	if (arr_spreadsheets->spreadsheets == NULL)
 		return NULL;
 
-	arr_spreadsheets->used = 0;
+	arr_spreadsheets->used = -1;
 	arr_spreadsheets->max_capacity = initial_capacity;
 
 	return arr_spreadsheets;
@@ -33,6 +34,35 @@ void h_proc_free(s_arr_spreadsheets* array)
 
 	free(array->spreadsheets);
 	free(array);
+}
+
+s_arr_spreadsheets* h_proc_import()
+{
+	int month;
+	char* filename;
+	s_arr_spreadsheets* arr_spreadsheets;
+
+	month = h_util_get_int(1, 12, "Importar Mês? (1-12)") - 1;
+	filename = h_proc_generate_filename(month, ".bin");
+	if (filename == NULL)
+		return NULL;
+
+	if (access(filename, F_OK) == -1)
+	{
+		puts("[!] Nenhum ficheiro encontrado, nada importado");
+		free(filename);
+		return NULL;
+	}
+
+	arr_spreadsheets = h_proc_open(filename);
+	if (arr_spreadsheets == NULL)
+	{
+		free(filename);
+		return NULL;
+	}
+
+	free(filename);
+	return arr_spreadsheets;
 }
 
 s_arr_spreadsheets* h_proc_open(const char* filename)
@@ -75,46 +105,72 @@ s_arr_spreadsheets* h_proc_open(const char* filename)
 	return array;
 }
 
-void h_proc_scan_fields(s_spreadsheet* spreadsheet, e_month month)
-{
-	spreadsheet->full_days = h_util_get_int(0, h_calendar_days_in_month(month), "Dias completos");
-	spreadsheet->half_days = h_util_get_int(0, h_calendar_days_in_month(month), "Meios dias");
-	// TODO: Um mês tem 4 fins de semana mais o menos
-	spreadsheet->weekend_days = h_util_get_int(0, h_calendar_days_in_month(month), "Fins de semana");
-	spreadsheet->absent_days = h_util_get_int(0, h_calendar_days_in_month(month), "Faltas");
-}
+/*
+ * 	if (arr_spreadsheets->used == arr_spreadsheets->max_capacity)
+	{
+		arr_spreadsheets->spreadsheets = realloc(arr_spreadsheets->spreadsheets, (arr_spreadsheets->max_capacity * 2) * sizeof(s_spreadsheet));
+		if (arr_spreadsheets->spreadsheets == NULL)
+		{
+			puts("Alloc spreadshhets falhou");
+			return NULL;
+		}
 
-void h_proc_add(s_arr_spreadsheets* array, e_month month)
+		arr_spreadsheets->max_capacity *= 2;
+	}
+
+	max_days = h_calendar_days_in_month(array->month);
+
+	 */
+
+void h_proc_add(s_arr_spreadsheets* array)
 {
+	int max_days;
+
+	if (array == NULL)
+	{
+		fprintf(stdout, RED("[!] Mẽs não criado\n"));
+		return;
+	}
+
 	if (array->used == array->max_capacity)
 	{
 		array->spreadsheets = realloc(array->spreadsheets, (array->max_capacity * 2) * sizeof(s_spreadsheet));
 		if (array->spreadsheets == NULL)
 		{
-			puts("Alloc spreadshhets falhou");
+			puts("[!] Realloc spreadshhets falhou");
 			return;
 		}
 
 		array->max_capacity *= 2;
 	}
 
-	h_proc_scan_fields(&array->spreadsheets[++array->used], month);
+	max_days = h_calendar_days_in_month(array->month);
+
+	array->used++;
+
+	// TODO: a soma dos numeros nao pode exeder o max_days, quer dizer que poz mais dias do que o mês tem
+	array->spreadsheets[array->used].full_days = h_util_get_int(0, max_days, "Dias completos");
+	array->spreadsheets[array->used].half_days = h_util_get_int(0, max_days, "Meios dias");
+	// TODO: Um mês tem 4 fins de semana mais o menos
+	array->spreadsheets[array->used].weekend_days = h_util_get_int(0, max_days, "Fins de semana");
+	array->spreadsheets[array->used].absent_days = h_util_get_int(0, max_days, "Faltas");
+
 }
 
 void h_proc_print(s_arr_spreadsheets* array)
 {
 	int i;
 
-	if (array->used == 0)
+	if (array == NULL || array->used == -1)
 	{
-		puts("[!] Nada a mostrar");
+		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
 		return;
 	}
 
 	fprintf(stdout, YELLOW("N Registos encontrados: %d\n"), array->used);
 	fprintf(stdout, H_STRS_PROC_TABLE_HEADER);
 
-	for (i = 0; i < array->used; i++)
+	for (i = 0; i <= array->used; i++)
 	{
 		fprintf(stdout, "%d | %d | %d | %d | %d | %d\n",
 			i,
@@ -127,15 +183,22 @@ void h_proc_print(s_arr_spreadsheets* array)
 	}
 }
 
-void h_proc_edit(s_arr_spreadsheets* array, e_month month)
+void h_proc_edit(s_arr_spreadsheets* array)
 {
 	int index;
+	int max_days;
 
-	index = h_util_get_int(0, array->used, H_STRS_EDIT);
-
-	if (array->used == 0 || array->used < index)
+	if (array == NULL || array->used == -1)
 	{
-		puts("[!] Nada para editar");
+		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
+		return;
+	}
+
+	// TODO: Editar por cod employee, fzr pesquisa para encontrar o index
+	index = h_util_get_int(0, array->used, H_STRS_EDIT);
+	if (array->used < index)
+	{
+		fprintf(stdout, RED("[!] Nada para editar\n"));
 		return;
 	}
 
@@ -149,7 +212,13 @@ void h_proc_edit(s_arr_spreadsheets* array, e_month month)
 		array->spreadsheets[index].absent_days
 	);
 
-	h_proc_scan_fields(&array->spreadsheets[index], month);
+	max_days = h_calendar_days_in_month(array->month);
+	// TODO: dar possiblidade editar mes tbm
+	array->spreadsheets[index].full_days = h_util_get_int(0, max_days, "Dias completos");
+	array->spreadsheets[index].half_days = h_util_get_int(0, max_days, "Meios dias");
+	// TODO: Um mês tem 4 fins de semana mais o menos
+	array->spreadsheets[index].weekend_days = h_util_get_int(0, max_days, "Fins de semana");
+	array->spreadsheets[index].absent_days = h_util_get_int(0, max_days, "Faltas");
 }
 
 void h_proc_delete(s_arr_spreadsheets* array)
@@ -157,11 +226,17 @@ void h_proc_delete(s_arr_spreadsheets* array)
 	int index;
 	int i;
 
-	index = h_util_get_int(0, array->used, H_STRS_DELETE);
-
-	if (array->used == 0 || array->used < index)
+	if (array == NULL || array->used == -1)
 	{
-		puts("[!] Nada para eliminar");
+		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
+		return;
+	}
+
+	// TODO: Eliminar por cod employee, fzr pesquisa para encontrar o index
+	index = h_util_get_int(0, array->used, H_STRS_DELETE);
+	if (array->used < index)
+	{
+		fprintf(stdout, RED("[!] Nada para eliminar\n"));
 		return;
 	}
 
@@ -199,19 +274,19 @@ char* h_proc_generate_filename(e_month month, const char* extension)
 	return filename;
 }
 
-void h_proc_export_csv(s_arr_spreadsheets* array, e_month month)
+void h_proc_export_csv(s_arr_spreadsheets* array)
 {
 	int i;
 	FILE* fp;
 	char* filename;
 
-	if (array->used == 0)
+	if (array->used == -1)
 	{
 		fprintf(stdout, "[!] Nada a exportar\n");
 		return;
 	}
 
-	filename = h_proc_generate_filename(month, ".csv");
+	filename = h_proc_generate_filename(array->month, ".csv");
 	if (filename == NULL)
 		return;
 

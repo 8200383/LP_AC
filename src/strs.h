@@ -72,13 +72,15 @@
 "********************************\n" \
 "*     -| Processamento |-      *\n" \
 "*                              *\n" \
-"* 1. Ver detalhes do mês       *\n" \
-"* 2. Adicionar detalhes do mês *\n" \
-"* 3. Editar detalhes do mês    *\n" \
-"* 4. Eliminar detalhes do mês  *\n" \
-"* 5. Processar detalhes do mês *\n" \
-"* 6. Exportar mês para CSV     *\n" \
-"* 7. Guardar                   *\n" \
+"* 1. Criar mês                 *\n" \
+"* 2. Visualizar                *\n" \
+"* 3. Adicionar detalhes        *\n" \
+"* 4. Editar detalhes           *\n" \
+"* 5. Eliminar detalhes         *\n" \
+"* 6. Processar mês             *\n" \
+"* 7. Exportar mês para CSV     *\n" \
+"* 8. Guardar                   *\n" \
+"* 9. Importar mês              *\n" \
 "* 0. Sair                      *\n" \
 "*                              *\n" \
 "********************************\n")
