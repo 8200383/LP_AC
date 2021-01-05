@@ -11,7 +11,6 @@
 s_arr_spreadsheets* h_proc_alloc(int initial_capacity)
 {
 	s_arr_spreadsheets* arr_spreadsheets;
-	int i;
 
 	arr_spreadsheets = malloc(sizeof(s_spreadsheet));
 	if (arr_spreadsheets == NULL)

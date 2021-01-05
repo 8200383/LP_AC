@@ -22,7 +22,7 @@ typedef struct
 } s_arr_seg_social;
 
 s_arr_seg_social* h_seg_social_alloc(int initial_capacity);
-
+void h_seg_social_free(s_arr_seg_social* array);
 void h_seg_social_parse(s_arr_seg_social* array, char* str);
 void h_seg_social_write(s_arr_seg_social* array, const char* path);
 void h_seg_social_print(s_arr_seg_social* array);

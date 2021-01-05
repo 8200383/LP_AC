@@ -100,8 +100,9 @@ void main_menu()
 	} while (op != 0);
 
 	h_irs_free(single_table);
-	free(unique_holder_table);
-	free(two_holders_table);
+	h_irs_free(unique_holder_table);
+	h_irs_free(two_holders_table);
+	h_seg_social_free(seg_social_table);
 }
 
 int main()
