@@ -6,6 +6,7 @@
 #include "calendar.h"
 #include "util.h"
 #include "colors.h"
+#include "strs.h"
 
 s_arr_spreadsheets* h_proc_alloc(int initial_capacity)
 {
@@ -32,6 +33,15 @@ s_arr_spreadsheets* h_proc_alloc(int initial_capacity)
 	}
 
 	return arr_spreadsheets;
+}
+
+void h_proc_free(s_arr_spreadsheets* array)
+{
+	if (array == NULL)
+		return;
+
+	free(array->spreadsheets);
+	free(array);
 }
 
 s_arr_spreadsheets* h_proc_open(const char* filename)
@@ -74,28 +84,74 @@ s_arr_spreadsheets* h_proc_open(const char* filename)
 	return array;
 }
 
-s_error* h_proc_add(s_arr_spreadsheets* array, e_month month)
+void h_proc_scan_fields(s_spreadsheet* spreadsheet, e_month month)
 {
-	if (array == NULL)
-		return h_error_create(H_ERROR_READ, "h_proc_add()");
+	spreadsheet->full_days = h_util_get_int(1, h_calendar_days_in_month(month), "Dias completos");
+	spreadsheet->half_days = h_util_get_int(1, h_calendar_days_in_month(month), "Meios dias");
+	// TODO: Um mês tem 4 fins de semana mais o menos
+	spreadsheet->weekend_days = h_util_get_int(1, h_calendar_days_in_month(month), "Fins de semana");
+	spreadsheet->absent_days = h_util_get_int(1, h_calendar_days_in_month(month), "Faltas");
+}
 
+void h_proc_add(s_arr_spreadsheets* array, e_month month)
+{
 	if (array->used == array->max_capacity)
 	{
 		array->spreadsheets = realloc(array->spreadsheets, (array->max_capacity * 2) * sizeof(s_spreadsheet));
 		if (array->spreadsheets == NULL)
-			return h_error_create(H_ERROR_ALLOCATION, "h_irs_add(): array->data");
+		{
+			puts("Alloc spreadshhets falhou");
+			return;
+		}
 
 		array->max_capacity *= 2;
 	}
 
-	array->used++;
-	array->spreadsheets[array->used].full_days = h_util_get_int(1, h_calendar_days_in_month(month), "Dias completos");
-	array->spreadsheets[array->used].half_days = h_util_get_int(1, h_calendar_days_in_month(month), "Meios dias");
-	// TODO: Um mês tem 4 fins de semana mais o menos
-	array->spreadsheets[array->used].weekend_days = h_util_get_int(1, h_calendar_days_in_month(month), "Fins de semana");
-	array->spreadsheets[array->used].absent_days = h_util_get_int(1, h_calendar_days_in_month(month), "Faltas");
+	h_proc_scan_fields(&array->spreadsheets[array->used++], month);
+}
 
-	return NULL;
+void h_proc_print(s_arr_spreadsheets* array)
+{
+	int i;
+
+	if (array->used == 0)
+	{
+		puts("Nothing to print");
+		return;
+	}
+
+	fprintf(stdout, YELLOW("N Registos encontrados: %d\n"), array->used);
+	fprintf(stdout, H_STRS_PROC_TABLE_HEADER);
+
+	for (i = 0; i < array->used; i++)
+	{
+		fprintf(stdout, "%d | %d | %d | %d | %d | %d\n",
+			i,
+			1,
+			array->spreadsheets[i].full_days,
+			array->spreadsheets[i].half_days,
+			array->spreadsheets[i].weekend_days,
+			array->spreadsheets[i].absent_days
+		);
+	}
+}
+
+void h_proc_edit(s_arr_spreadsheets* array, e_month month)
+{
+	int index;
+
+	if (array->used == 0)
+	{
+		puts("[!] Nada para editar");
+		return;
+	}
+
+	index = h_util_get_int(0, array->used, H_STRS_EDIT);
+
+	fprintf(stdout, H_STRS_PROC_TABLE_HEADER);
+	// TODO: Mostrar linha antiga
+
+	h_proc_scan_fields(&array->spreadsheets[index], month);
 }
 
 char* h_proc_generate_filename(e_month month, const char* extension)

@@ -35,7 +35,11 @@ typedef struct {
 
 s_arr_spreadsheets* h_proc_alloc(int initial_capacity);
 s_arr_spreadsheets* h_proc_open(const char* filename);
-s_error* h_proc_add(s_arr_spreadsheets* array, e_month month);
+void h_proc_scan_fields(s_spreadsheet* spreadsheet, e_month month);
+void h_proc_edit(s_arr_spreadsheets* array, e_month month);
+void h_proc_add(s_arr_spreadsheets* array, e_month month);
+void h_proc_print(s_arr_spreadsheets* array);
+void h_proc_free(s_arr_spreadsheets* array);
 
 /**
  * TODO: s_error* h_proc_alloc();
