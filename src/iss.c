@@ -35,12 +35,9 @@ s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 	return array;
 }
 
-s_error* h_seg_social_parse(s_arr_seg_social* array, char* str)
+void h_seg_social_parse(s_arr_seg_social* array, char* str)
 {
 	int i, is_employer = 1, offset = -1;
-
-	if (array == NULL || str == NULL)
-		return h_error_create(H_ERROR_PARSING, "h_irs_parse()");
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
@@ -75,16 +72,11 @@ s_error* h_seg_social_parse(s_arr_seg_social* array, char* str)
 		if (str[i] == '\n')
 			array->used++;
 	}
-
-	return NULL;
 }
 
-s_error* h_seg_social_print(s_arr_seg_social* array)
+void h_seg_social_print(s_arr_seg_social* array)
 {
 	int i;
-
-	if (array == NULL)
-		return h_error_create(H_ERROR_READ, "Tabela Vazia");
 
 	for (i = 0; i <= array->used; i++)
 	{
@@ -94,11 +86,9 @@ s_error* h_seg_social_print(s_arr_seg_social* array)
 			array->data[i].employer,
 			array->data[i].employee);
 	}
-
-	return NULL;
 }
 
-s_error* h_seg_social_add(s_arr_seg_social* array)
+void h_seg_social_add(s_arr_seg_social* array)
 {
 	char new_criteria;
 	int i;
@@ -108,7 +98,7 @@ s_error* h_seg_social_add(s_arr_seg_social* array)
 		array->max_capacity *= 2;
 		array->data = realloc(array->data, array->max_capacity * sizeof(s_seg_social));
 		if (array->data == NULL)
-			return h_error_create(H_ERROR_ALLOCATION, "h_irs_add(): array->data");
+			return;
 	}
 
 	printf("\nNovo critério: ");
@@ -117,47 +107,43 @@ s_error* h_seg_social_add(s_arr_seg_social* array)
 	for (i = 0; i <= array->used; i++)
 	{
 		if (new_criteria == array->data[i].criteria)
-			return h_error_create(H_ERROR_READ, "O critério já existe");
+			return;
 	}
 
 	array->used++;
 	array->data[array->used].criteria = new_criteria;
 	array->data[array->used].employer = h_util_get_float(0.0f, 100.0f, "Empregador: ");
 	array->data[array->used].employee = h_util_get_float(0.0f, 100.0f, "Empregado: ");
-
-	return NULL;
 }
 
-s_error* h_seg_social_delete(s_arr_seg_social* array)
+void h_seg_social_delete(s_arr_seg_social* array)
 {
 	int num, i;
 
 	if (array == NULL)
-		return h_error_create(H_ERROR_DELETE, "Tabela Vazia");
+		return;
 
 	num = h_util_get_int(0, 100, "Linha a eliminar: ");
 	if (num < 0 || num >= array->used)
-		return h_error_create(H_ERROR_DELETE, "A linha escolhida não existe");
+		return;
 
 	for (i = num; i <= array->used - 1; i++)
 		array->data[i] = array->data[i + 1];
 
 	array->used--;
-
-	return NULL;
 }
 
-s_error* h_seg_social_write(s_arr_seg_social* array, const char* path)
+void h_seg_social_write(s_arr_seg_social* array, const char* path)
 {
 	FILE* fp;
 	int i;
 
 	if (path == NULL)
-		h_error_create(H_ERROR_UNKNOWN, "h_seg_social_write()");
+		return;
 
 	fp = fopen(path, "w");
 	if (fp == NULL)
-		h_error_create(H_ERROR_WRITE, "h_seg_social_write()");
+		return;
 
 	for (i = 0; i <= array->used; i++)
 	{
@@ -168,22 +154,17 @@ s_error* h_seg_social_write(s_arr_seg_social* array, const char* path)
 	}
 
 	fclose(fp);
-
-	return NULL;
 }
 
-s_error* h_seg_social_edit(s_arr_seg_social* array)
+void h_seg_social_edit(s_arr_seg_social* array)
 {
 	char new_criteria;
 	int num, i;
 
-	if (array == NULL)
-		return h_error_create(H_ERROR_EDIT, "Tabela Vazia");
-
 	num = h_util_get_int(0, 100, "\nLinha a editar: ");
-		
+
 	if (num < 0 || num >= array->used)
-		return h_error_create(H_ERROR_EDIT, "A linha escolhida não existe");
+		return;
 
 	printf("Critério - Valor atual: %c | ", array->data[num].criteria);
 	printf("Novo valor: ");
@@ -192,7 +173,7 @@ s_error* h_seg_social_edit(s_arr_seg_social* array)
 	for (i = 0; i <= array->used; i++)
 	{
 		if (new_criteria == array->data[i].criteria && i != num)
-			return h_error_create(H_ERROR_EDIT, "O critério já existe");
+			return;
 	}
 
 	array->data[num].criteria = new_criteria;

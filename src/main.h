@@ -13,6 +13,6 @@
 #include "paths.h"
 #include "error.h"
 
-s_error* main_menu();
+void main_menu();
 
 #endif //MAIN_H

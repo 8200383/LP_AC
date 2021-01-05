@@ -54,6 +54,8 @@ void h_irs_build(s_irs* data, char* str, int* dependent)
 
 	size = strlen(str) - 1;
 
+	fprintf(stdout, "WORD: %s\n", str);
+
 	if (h_util_strequal(str, "Até"))
 		data->monthly_pay_type = H_IRS_UP_TO;
 
@@ -75,14 +77,14 @@ void h_irs_build(s_irs* data, char* str, int* dependent)
 	}
 }
 
-s_error* h_irs_parse(s_arr_irs* array, char* str, h_irs_pair_func pair_func)
+void h_irs_parse(s_arr_irs* array, char* str, h_irs_pair_func pair_func)
 {
 	int dependent;
 	int offset_value;
 	int i;
 
 	if (array == NULL || str == NULL)
-		return h_error_create(H_ERROR_PARSING, "h_irs_parse()");
+		return;
 
 	offset_value = -1;
 	dependent = 0;
@@ -93,7 +95,7 @@ s_error* h_irs_parse(s_arr_irs* array, char* str, h_irs_pair_func pair_func)
 
 		if (offset_value != -1 && str[i] == ',')
 		{
-			str[i] = '\0'; // Remove the ,
+			str[i] = '\0';
 			pair_func(&array->data[array->used], str + offset_value, &dependent);
 			offset_value = -1;
 		}
@@ -105,8 +107,6 @@ s_error* h_irs_parse(s_arr_irs* array, char* str, h_irs_pair_func pair_func)
 			dependent = 0;
 		}
 	}
-
-	return NULL;
 }
 
 void h_irs_print_line(s_irs data)
@@ -123,12 +123,9 @@ void h_irs_print_line(s_irs data)
 	fprintf(stdout, "\n");
 }
 
-s_error* h_irs_print(s_arr_irs* array)
+void h_irs_print(s_arr_irs* array)
 {
 	int i;
-
-	if (array == NULL)
-		return h_error_create(H_ERROR_READ, "[!] Nothing to show\n");
 
 	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
 	for (i = 0; i <= array->used; i++)
@@ -154,13 +151,10 @@ void h_irs_scan_fields(s_irs* data)
 	}
 }
 
-s_error* h_irs_add(s_arr_irs* array)
+void h_irs_add(s_arr_irs* array)
 {
 	int i;
 	int j;
-
-	if (array == NULL)
-		return h_error_create(H_ERROR_READ, "h_irs_add()");
 
 	if (array->used == array->max_capacity)
 	{
@@ -168,13 +162,13 @@ s_error* h_irs_add(s_arr_irs* array)
 
 		array->data = realloc(array->data, array->max_capacity * sizeof(s_irs));
 		if (array->data == NULL)
-			return h_error_create(H_ERROR_ALLOCATION, "h_irs_add(): array->data");
+			return;
 
 		for (i = array->used + 1; i <= array->max_capacity; i++)
 		{
 			array->data[i].percentage_per_dependent = malloc(MAX_DEPENDENT_NUMBER * sizeof(float));
 			if (array->data[i].percentage_per_dependent == NULL)
-				return h_error_create(H_ERROR_ALLOCATION, "h_irs_add(): percentage_per_dependent");
+				return;
 
 			for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
 				array->data[i].percentage_per_dependent[j] = 0.0f;
@@ -182,14 +176,12 @@ s_error* h_irs_add(s_arr_irs* array)
 	}
 
 	h_irs_scan_fields(&array->data[++array->used]);
-
-	return NULL;
 }
 
-s_error* h_irs_edit(s_arr_irs* array, int index)
+void h_irs_edit(s_arr_irs* array, int index)
 {
 	if (array == NULL || array->used < index)
-		return h_error_create(H_ERROR_EDIT, "[!] Nothing to edit\n");
+		return;
 
 	fprintf(stdout, H_STRS_IRS_TABLE_HEADER);
 	h_irs_print_line(array->data[index]);
@@ -197,33 +189,28 @@ s_error* h_irs_edit(s_arr_irs* array, int index)
 	h_irs_scan_fields(&array->data[index]);
 }
 
-s_error* h_irs_delete(s_arr_irs* array, int index)
+void h_irs_delete(s_arr_irs* array, int index)
 {
 	int i;
 
 	if (array == NULL || array->used < index)
-		return h_error_create(H_ERROR_DELETE, "[!] Empty Table\n");
+		return;
 
 	for (i = index; i <= array->used - 1; i++)
 		array->data[i] = array->data[i + 1];
 
 	array->used--;
-
-	return NULL;
 }
 
-s_error* h_irs_write(s_arr_irs* array, const char* path)
+void h_irs_write(s_arr_irs* array, const char* path)
 {
 	FILE* fp;
 	int i;
 	int j;
 
-	if (array == NULL)
-		return h_error_create(H_ERROR_UNKNOWN, path);
-
 	fp = fopen(path, "wb");
 	if (fp == NULL)
-		return h_error_create(H_ERROR_WRITE, path);
+		return;
 
 	for (i = 0; i <= array->used; i++)
 	{
@@ -238,6 +225,4 @@ s_error* h_irs_write(s_arr_irs* array, const char* path)
 	}
 
 	fclose(fp);
-
-	return NULL;
 }

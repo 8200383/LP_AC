@@ -13,7 +13,6 @@ void h_menu_irs(
 	s_arr_irs* unique_holder_table,
 	s_arr_irs* two_holders_table)
 {
-	s_error* error;
 	unsigned int op;
 
 	fprintf(stdout, H_STRS_IRS_MENU);
@@ -23,100 +22,40 @@ void h_menu_irs(
 	switch (op)
 	{
 	case 1:
-		error = h_irs_print(single_table);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_print(single_table);
 		break;
 	case 2:
-		error = h_irs_edit(single_table, h_util_get_int(0, 100, H_STRS_EDIT));
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_edit(single_table, h_util_get_int(0, 100, H_STRS_EDIT));
 		break;
 	case 3:
-		error = h_irs_add(single_table);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_add(single_table);
 		break;
 	case 4:
-		error = h_irs_delete(single_table, h_util_get_int(0, 100, H_STRS_DELETE));
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_delete(single_table, h_util_get_int(0, 100, H_STRS_DELETE));
 		break;
 	case 5:
-		error = h_irs_print(unique_holder_table);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_print(unique_holder_table);
 		break;
 	case 6:
-		error = h_irs_edit(unique_holder_table, h_util_get_int(0, 100, H_STRS_EDIT));
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_edit(unique_holder_table, h_util_get_int(0, 100, H_STRS_EDIT));
 		break;
 	case 7:
-		error = h_irs_add(unique_holder_table);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_add(unique_holder_table);
 		break;
 	case 8:
-		error = h_irs_delete(unique_holder_table, h_util_get_int(0, 100, H_STRS_DELETE));
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_delete(unique_holder_table, h_util_get_int(0, 100, H_STRS_DELETE));
 		break;
 	case 9:
-		error = h_irs_print(two_holders_table);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_print(two_holders_table);
 		break;
 	case 10:
-		error = h_irs_edit(two_holders_table, h_util_get_int(0, 100, H_STRS_EDIT));
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_edit(two_holders_table, h_util_get_int(0, 100, H_STRS_EDIT));
 		break;
 	case 11:
-		error = h_irs_add(two_holders_table);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_add(two_holders_table);
 		break;
 	case 12:
-		error = h_irs_delete(two_holders_table, h_util_get_int(0, 100, H_STRS_DELETE));
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_irs_delete(two_holders_table, h_util_get_int(0, 100, H_STRS_DELETE));
 		break;
 	case 0:
 		break;
@@ -128,7 +67,6 @@ void h_menu_irs(
 
 void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 {
-	s_error* error;
 	unsigned int op;
 
 	fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
@@ -138,36 +76,16 @@ void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 	switch (op)
 	{
 	case 1:
-		error = h_seg_social_print(seg_social_table);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_seg_social_print(seg_social_table);
 		break;
 	case 2:
-		error = h_seg_social_add(seg_social_table);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_seg_social_add(seg_social_table);
 		break;
 	case 3:
-		error = h_seg_social_delete(seg_social_table);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_seg_social_delete(seg_social_table);
 		break;
 	case 4:
-		error = h_seg_social_edit(seg_social_table);
-		if (error)
-		{
-			h_error_print(error);
-			h_error_free(error);
-		}
+		h_seg_social_edit(seg_social_table);
 		break;
 	case 0:
 		break;
