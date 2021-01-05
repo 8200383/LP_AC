@@ -28,6 +28,15 @@ s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 	return array;
 }
 
+void h_seg_social_free(s_arr_seg_social* array)
+{
+	if (array == NULL)
+		return;
+
+	free(array->data);
+	free(array);
+}
+
 void h_seg_social_parse(s_arr_seg_social* array, char* str)
 {
 	int i, is_employer = 1, offset = -1;
