@@ -154,6 +154,25 @@ void h_proc_edit(s_arr_spreadsheets* array, e_month month)
 	h_proc_scan_fields(&array->spreadsheets[index], month);
 }
 
+void h_proc_delete(s_arr_spreadsheets* array)
+{
+	int index;
+	int i;
+
+	index = h_util_get_int(0, array->used, H_STRS_DELETE);
+
+	if (array->used == 0 || array->used < index)
+	{
+		puts("[!] Nada para eliminar");
+		return;
+	}
+
+	for (i = index; i <= array->used - 1; i++)
+		array->spreadsheets[i] = array->spreadsheets[i + 1];
+
+	array->used--;
+}
+
 char* h_proc_generate_filename(e_month month, const char* extension)
 {
 	const char* month_str;
