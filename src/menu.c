@@ -166,8 +166,11 @@ void h_menu_processing(
 		case 5:
 			break;
 		case 6:
+			h_proc_export_csv(arr_spreadsheets, month);
 			break;
 		case 7:
+			break;
+		case 0:
 			break;
 		default:
 			fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);

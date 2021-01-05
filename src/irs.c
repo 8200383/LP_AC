@@ -30,22 +30,26 @@ s_arr_irs* h_irs_alloc(int initial_capacity)
 		return NULL;
 
 	array->used = 0;
-	array->max_capacity = initial_capacity - 1;
+	array->max_capacity = initial_capacity;
 
-	for (i = 0; i < initial_capacity; i++)
+	for (i = 0; i <= array->max_capacity; i++)
 	{
-		array->data[i].monthly_pay_type = H_IRS_UP_TO;
-		array->data[i].monthly_pay_value = 0.0f;
-
 		array->data[i].percentage_per_dependent = malloc(MAX_DEPENDENT_NUMBER * sizeof(float));
 		if (array->data[i].percentage_per_dependent == NULL)
 			return NULL;
-
-		for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
-			array->data[i].percentage_per_dependent[j] = 0.0f;
 	}
 
 	return array;
+}
+
+void h_irs_free(s_arr_irs* array)
+{
+	if (array == NULL)
+		return;
+
+	free(array->data->percentage_per_dependent);
+	free(array->data);
+	free(array);
 }
 
 void h_irs_build(s_irs* data, char* str, int* dependent)
@@ -53,8 +57,6 @@ void h_irs_build(s_irs* data, char* str, int* dependent)
 	size_t size;
 
 	size = strlen(str) - 1;
-
-	fprintf(stdout, "WORD: %s\n", str);
 
 	if (h_util_strequal(str, "Até"))
 		data->monthly_pay_type = H_IRS_UP_TO;
@@ -135,26 +137,11 @@ void h_irs_print(s_arr_irs* array)
 	}
 }
 
-void h_irs_scan_fields(s_irs* data)
-{
-	int j;
-
-	data->monthly_pay_type = (h_util_get_option('A', 'S', "[A]té\n[S]uperior a") == 'A')
-							 ? H_IRS_UP_TO : H_IRS_BEYOND;
-
-	data->monthly_pay_value = h_util_get_float(0.0f, 100.0f, "Remuneração Mensal");
-
-	for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
-	{
-		fprintf(stdout, YELLOW("Percentagem para o dependente %d\n"), j);
-		data->percentage_per_dependent[j] = h_util_get_float(0.0f, 100.0f, NULL);
-	}
-}
-
 void h_irs_add(s_arr_irs* array)
 {
 	int i;
 	int j;
+	int k;
 
 	if (array->used == array->max_capacity)
 	{
@@ -175,18 +162,64 @@ void h_irs_add(s_arr_irs* array)
 		}
 	}
 
-	h_irs_scan_fields(&array->data[++array->used]);
+	array->used++;
+
+	do
+	{
+		char op = h_util_get_alphabetical_char("[A]té [S]uperior a: ");
+		if (op == 'A' || op == 'a')
+		{
+			array->data[array->used].monthly_pay_type = H_IRS_UP_TO;
+			break;
+		}
+		else if (op == 'S' || op == 's')
+		{
+			array->data[array->used].monthly_pay_type = H_IRS_BEYOND;
+			break;
+		}
+	} while (1);
+
+	array->data[array->used].monthly_pay_value = h_util_get_float(0.0f, 10000.0f, "Remuneração Mensal: ");
+
+	fprintf(stdout, YELLOW("[!] Inserir percentagem para os dependentes de 0 a 5 ou mais\n"));
+	for (k = 0; k < MAX_DEPENDENT_NUMBER; k++)
+	{
+		array->data[array->used].percentage_per_dependent[k] = h_util_get_float(0.0f, 100.0f, "Percentagem: ");
+	}
 }
 
 void h_irs_edit(s_arr_irs* array, int index)
 {
-	if (array == NULL || array->used < index)
+	int j;
+
+	if (array->used < index)
 		return;
 
 	fprintf(stdout, H_STRS_IRS_TABLE_HEADER);
 	h_irs_print_line(array->data[index]);
 
-	h_irs_scan_fields(&array->data[index]);
+	do
+	{
+		char op = h_util_get_alphabetical_char("[A]té [S]uperior a: ");
+		if (op == 'A' || op == 'a')
+		{
+			array->data[index].monthly_pay_type = H_IRS_UP_TO;
+			break;
+		}
+		else if (op == 'S' || op == 's')
+		{
+			array->data[index].monthly_pay_type = H_IRS_BEYOND;
+			break;
+		}
+	} while (1);
+
+	array->data[index].monthly_pay_value = h_util_get_float(0.0f, 10000.0f, "Remuneração Mensal: ");
+
+	fprintf(stdout, YELLOW("[!] Inserir percentagem para os dependentes de 0 a 5 ou mais\n"));
+	for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
+	{
+		array->data[index].percentage_per_dependent[j] = h_util_get_float(0.0f, 100.0f, "Percentagem: ");
+	}
 }
 
 void h_irs_delete(s_arr_irs* array, int index)

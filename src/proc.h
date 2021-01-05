@@ -19,7 +19,8 @@
  * @struct s_details
  * A structure that represents working days per worker
  */
-typedef struct {
+typedef struct
+{
 	int full_days; /**< Represents the number of full days worked */
 	int half_days; /**< Represents the number of half days worked */
 	int weekend_days; /**< Represents number of the weekends worked */
@@ -27,7 +28,8 @@ typedef struct {
 	/* TODO: missing processing vars */
 } s_spreadsheet;
 
-typedef struct {
+typedef struct
+{
 	s_spreadsheet* spreadsheets;
 	int used;
 	int max_capacity;
@@ -41,6 +43,7 @@ void h_proc_add(s_arr_spreadsheets* array, e_month month);
 void h_proc_print(s_arr_spreadsheets* array);
 void h_proc_delete(s_arr_spreadsheets* array);
 void h_proc_free(s_arr_spreadsheets* array);
+void h_proc_export_csv(s_arr_spreadsheets* array, e_month month);
 
 /**
  * TODO: s_error* h_proc_alloc();

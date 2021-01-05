@@ -25,13 +25,6 @@ s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 	array->used = 0;
 	array->max_capacity = initial_capacity - 1;
 
-	for (i = 0; i < initial_capacity; i++)
-	{
-		array->data[i].criteria = '\0';
-		array->data[i].employer = 0.0f;
-		array->data[i].employee = 0.0f;
-	}
-
 	return array;
 }
 

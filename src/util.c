@@ -81,22 +81,11 @@ void h_util_clean_buffer()
 	while ((ch = getchar()) != '\n' && ch != EOF);
 }
 
-char h_util_get_option(char param1, char param2, const char* msg)
-{
-	char op;
-
-	do
-	{
-		op = h_util_get_alphabetical_char(msg);
-	} while (op != tolower(param1) && op != tolower(param2));
-
-	return op;
-}
-
 char h_util_get_alphabetical_char(const char* msg)
 {
 	char c;
 
+	h_util_clean_buffer();
 	fprintf(stdout, YELLOW("%s"), msg);
 
 	while (scanf("%c", &c) != 1 || !isalpha(c))
@@ -115,6 +104,7 @@ int h_util_get_int(int min, int max, const char* msg)
 
 	fprintf(stdout, YELLOW("%s"), msg);
 	fprintf(stdout, H_STRS_PROMPT_NEW_LINE);
+	h_util_clean_buffer();
 
 	while (scanf("%d", &num) != 1 || num < min || num > max)
 	{
@@ -131,6 +121,7 @@ float h_util_get_float(float min, float max, const char* msg)
 	float num;
 
 	fprintf(stdout, YELLOW("%s"), msg);
+	h_util_clean_buffer();
 
 	while (scanf("%f", &num) != 1 || num < min || num > max)
 	{
@@ -138,6 +129,6 @@ float h_util_get_float(float min, float max, const char* msg)
 		h_util_clean_buffer();
 		fprintf(stdout, RED("%s"), msg);
 	}
-	h_util_clean_buffer();
+
 	return num;
 }

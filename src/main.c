@@ -62,8 +62,10 @@ void main_menu()
 	 * Segurança Social
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
+	seg_social_size = 0;
 	seg_social_str = h_util_file_read(H_PATH_SEG_SOCIAL, &seg_social_size);
 	seg_social_table = h_seg_social_alloc(seg_social_size);
+
 	h_seg_social_parse(seg_social_table, seg_social_str);
 
 	free(seg_social_str);
@@ -97,7 +99,7 @@ void main_menu()
 		}
 	} while (op != 0);
 
-	free(single_table);
+	h_irs_free(single_table);
 	free(unique_holder_table);
 	free(two_holders_table);
 }

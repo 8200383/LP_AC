@@ -24,14 +24,6 @@ s_arr_spreadsheets* h_proc_alloc(int initial_capacity)
 	arr_spreadsheets->used = 0;
 	arr_spreadsheets->max_capacity = initial_capacity;
 
-	for (i = 0; i <= arr_spreadsheets->max_capacity; i++)
-	{
-		arr_spreadsheets->spreadsheets[i].weekend_days = 0;
-		arr_spreadsheets->spreadsheets[i].half_days = 0;
-		arr_spreadsheets->spreadsheets[i].full_days = 0;
-		arr_spreadsheets->spreadsheets[i].absent_days = 0;
-	}
-
 	return arr_spreadsheets;
 }
 
@@ -116,7 +108,7 @@ void h_proc_print(s_arr_spreadsheets* array)
 
 	if (array->used == 0)
 	{
-		puts("Nothing to print");
+		puts("[!] Nada a mostrar");
 		return;
 	}
 
@@ -204,31 +196,45 @@ char* h_proc_generate_filename(e_month month, const char* extension)
 
 	if (strcat(filename, extension) == NULL)
 		return NULL;
+
+	return filename;
 }
 
-/*
-s_error* h_proc_export_csv(s_sheet* sheet, const char* path)
+void h_proc_export_csv(s_arr_spreadsheets* array, e_month month)
 {
 	int i;
 	FILE* fp;
+	char* filename;
 
-	fp = fopen(path, "w");
-	if (fp == NULL)
-		return h_error_create(H_ERROR_WRITE, path);
-
-	for (i = 0; i <= sheet->used; i++)
+	if (array->used == 0)
 	{
-		fprintf(fp, "%s;%d;%d;%d;%d;\n",
-			sheet->paysheet[i].func_code,
-			sheet->paysheet[i].full_days,
-			sheet->paysheet[i].half_days,
-			sheet->paysheet[i].weekend_days,
-			sheet->paysheet[i].absent_days);
+		fprintf(stdout, "[!] Nada a exportar\n");
+		return;
+	}
+
+	filename = h_proc_generate_filename(month, ".csv");
+	if (filename == NULL)
+		return;
+
+	fp = fopen(filename, "w");
+	if (fp == NULL)
+		return;
+
+	free(filename);
+
+	for (i = 0; i <= array->used; i++)
+	{
+		fprintf(fp, "%d;%d;%d;%d\n",
+			array->spreadsheets[i].full_days,
+			array->spreadsheets[i].half_days,
+			array->spreadsheets[i].weekend_days,
+			array->spreadsheets[i].absent_days);
 	}
 
 	fclose(fp);
-	return NULL;
-}*/
+
+	fprintf(stdout, YELLOW("[!] Ficheiro exportado com sucesso\n"));
+}
 
 /*
 s_error* h_processing(s_sheet* sheet, s_arr_irs irs_array, s_arr_seg_social ss_array)

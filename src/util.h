@@ -16,9 +16,6 @@
 /** Reads a file from given path */
 char* h_util_file_read(const char* path, int* size);
 
-/** Gets an option corresponding to param1 or param2 from stdin */
-char h_util_get_option(char param1, char param2, const char* msg);
-
 /** Gets an alphabetical letter from stdin */
 char h_util_get_alphabetical_char(const char* msg);
 
