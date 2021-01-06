@@ -34,6 +34,8 @@ s_date* h_calendar_init(const char* str)
 	date->day = day;
 	date->month = month;
 	date->year = year;
+
+	return date;
 }
 
 s_date* h_calendar_get_date(const char* msg)
