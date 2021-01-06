@@ -5,8 +5,6 @@
 #ifndef ISS_H
 #define ISS_H
 
-#include "error.h"
-
 typedef struct
 {
 	char criteria;

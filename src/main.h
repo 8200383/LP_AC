@@ -11,7 +11,6 @@
 #include "menu.h"
 #include "strs.h"
 #include "paths.h"
-#include "error.h"
 
 void main_menu();
 
