@@ -112,8 +112,8 @@
 
 #define H_STRS_PROC_TABLE_HEADER BLUE( \
 "*********************************************\n" \
-"* [Linha] Cod | Dias      | Meios | Fins   | Faltas *\n" \
-"*             | Completos | Dias  | Semana |        *\n" \
+"* [Linha] | Cod | Dias      | Meios | Fins   | Faltas *\n" \
+"*               | Completos | Dias  | Semana |        *\n" \
 "*********************************************\n")
 
 #endif //STRS_H
