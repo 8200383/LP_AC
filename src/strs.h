@@ -94,7 +94,7 @@
 
 #define H_STRS_EMPLOYEES_TABLE_HEADER GREEN( \
 "*****************************************************************************************************\n" \
-"* [Linha] |Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  *\n" \
+"* [Linha] | Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  *\n" \
 "*         | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída *\n" \
 "*****************************************************************************************************\n")
 
