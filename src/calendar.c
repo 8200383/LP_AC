@@ -5,27 +5,12 @@
 #include "calendar.h"
 #include "colors.h"
 
-s_date* h_calendar_alloc()
-{
-	s_date* date;
-
-	date = malloc(sizeof(s_date));
-	if (date == NULL)
-		return NULL;
-
-	date->day = 0;
-	date->month = 0;
-	date->year = 0;
-
-	return date;
-}
-
 s_date* h_calendar_init(const char* str)
 {
 	s_date* date;
 	int day, month, year;
 
-	date = h_calendar_alloc();
+	date = calloc(1, sizeof(s_date));
 	if (date == NULL)
 		return NULL;
 
@@ -38,17 +23,13 @@ s_date* h_calendar_init(const char* str)
 	return date;
 }
 
-s_date* h_calendar_get_date(const char* msg)
+void h_calendar_get_date(s_date* date, const char* msg)
 {
 	int day, month, year, error;
-	s_date* date;
-
-	date = h_calendar_alloc();
-	if (date == NULL)
-		return NULL;
 
 	error = 0;
-	do {
+	do
+	{
 		printf("%s (DD/MM/YYYY)\n", msg);
 		scanf("%d/%d/%d", &day, &month, &year);
 
@@ -63,8 +44,6 @@ s_date* h_calendar_get_date(const char* msg)
 	date->year = year;
 	date->month = month;
 	date->day = day;
-
-	return date;
 }
 
 int h_calendar_leap_year(int year)

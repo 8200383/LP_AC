@@ -35,9 +35,8 @@ typedef enum
 	DEC = 12
 } e_month;
 
-s_date* h_calendar_alloc();
 s_date* h_calendar_init(const char* str);
-s_date* h_calendar_get_date(const char* str);
+void h_calendar_get_date(s_date* date, const char* msg);
 int h_calendar_days_in_month(e_month month);
 int h_calendar_check_date(int day, int month, int year);
 int h_calendar_leap_year(int year);
