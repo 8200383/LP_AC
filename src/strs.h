@@ -20,7 +20,7 @@
 "*                             *\n" \
 "* 1. Tabelas Retenção IRS     *\n" \
 "* 2. Tabelas Segurança Social *\n" \
-"* 3. Processar Salarios       *\n" \
+"* 4. Processar Salarios       *\n" \
 "* 9. Guardar Tudo             *\n" \
 "* 0. Sair                     *\n" \
 "*                             *\n" \

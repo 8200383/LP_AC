@@ -78,7 +78,7 @@ void main_menu()
 		case 2:
 			h_menu_seg_social(seg_social_table);
 			break;
-		case 3:
+		case 4:
 			h_menu_processing(single_table, unique_holder_table, two_holders_table, seg_social_table);
 			break;
 		case 9:
