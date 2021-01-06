@@ -92,6 +92,9 @@ void main_menu()
 			h_menu_seg_social(seg_social_table);
 			break;
 		case 3:
+			h_menu_employees(employees_table);
+			break;
+		case 4:
 			h_menu_processing(single_table, unique_holder_table, two_holders_table, seg_social_table);
 			break;
 		case 9:
