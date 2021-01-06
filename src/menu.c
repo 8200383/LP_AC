@@ -114,12 +114,22 @@ void h_menu_processing(
 		switch (op)
 		{
 		case 1:
+			if (arr_spreadsheets)
+			{ // TODO: Adicionar opção para apagar mês
+				fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(arr_spreadsheets->month));
+				break;
+			}
+
 			arr_spreadsheets = h_proc_alloc(64); // TODO: alloc com a qte de func
 			if (arr_spreadsheets == NULL)
+			{
+				fprintf(stdout, RED("[!] Memória insuficiente\n"));
 				return;
+			}
 
 			arr_spreadsheets->month = h_util_get_int(1, 12, "Mês: (1-12)") - 1;
-			fprintf(stdout, GREEN("[!] Mês criado\n"));
+			fprintf(stdout, GREEN("[!] Mês de %s criado com sucesso\n"),
+				h_calendar_str_from_month(arr_spreadsheets->month));
 			break;
 		case 2:
 			h_proc_print(arr_spreadsheets);
