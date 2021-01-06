@@ -194,17 +194,7 @@ s_error* main_menu()
 		return error;
 	}
 
-	error = h_employees_parse(employees_table, employees_str);
-	if (error)
-	{
-		free(single_table);
-		free(unique_holder_table);
-		free(two_holders_table);
-		free(seg_social_table);
-		free(employees_table);
-		free(employees_str);
-		return error;
-	}
+	h_employees_parse(employees_table, employees_str);
 
 	free(employees_str);
 
