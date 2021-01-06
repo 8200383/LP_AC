@@ -8,6 +8,9 @@
 #include "error.h"
 #include "memory.h"
 
+#define CSV_COLUMN_DELIMITER ','
+#define CSV_NEW_LINE_DELIMITER '\n'
+#define CSV_BUFFER 50
 #define MAX_DEPENDENT_NUMBER 6
 
 typedef enum
@@ -34,7 +37,7 @@ typedef void (* h_irs_pair_func)(s_irs*, char*, int*);
 
 s_arr_irs* h_irs_alloc(int initial_capacity);
 void h_irs_free(s_arr_irs* array);
-void h_irs_parse(s_arr_irs* array, char* str, h_irs_pair_func pair_func);
+void h_irs_parse(s_arr_irs* array, const char* str, h_irs_pair_func pair_func);
 void h_irs_write(s_arr_irs* array, const char* path);
 void h_irs_add(s_arr_irs* array);
 void h_irs_delete(s_arr_irs* array, int index);

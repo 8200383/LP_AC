@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <regex.h>
 #include <ctype.h>
 
 char* h_util_file_read(const char* path, int* size)
@@ -60,19 +59,6 @@ char* h_util_file_read(const char* path, int* size)
 
 	buffer[counter - 1] = '\0';
 	return buffer;
-}
-
-int h_util_regex_compare(const char* str, const char* pattern)
-{
-	regex_t regex;
-
-	if (regcomp(&regex, pattern, 0) != 0)
-		return -1;
-
-	if (regexec(&regex, str, 0, NULL, 0) != 0)
-		return -1;
-
-	return 0;
 }
 
 void h_util_clean_buffer()
