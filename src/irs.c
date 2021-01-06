@@ -64,10 +64,13 @@ void h_irs_build(s_irs* data, char* str, int* dependent)
 		data->monthly_pay_type = H_IRS_BEYOND;
 	}
 
-	if (str[length - 1] == '%') {
+	if (str[length - 1] == '%')
+	{
 		data->percentage_per_dependent[*dependent] = strtof(str, NULL) / 100.0f;
 		(*dependent)++;
-	} else {
+	}
+	else
+	{
 		data->monthly_pay_value = strtof(str, NULL);
 	}
 }
@@ -162,20 +165,15 @@ void h_irs_add(s_arr_irs* array)
 
 	array->used++;
 
-	do
+	char op = h_util_get_alphabetical_char("[A]té [S]uperior a: ");
+	if (op == 'A' || op == 'a')
 	{
-		char op = h_util_get_alphabetical_char("[A]té [S]uperior a: ");
-		if (op == 'A' || op == 'a')
-		{
-			array->data[array->used].monthly_pay_type = H_IRS_UP_TO;
-			break;
-		}
-		else if (op == 'S' || op == 's')
-		{
-			array->data[array->used].monthly_pay_type = H_IRS_BEYOND;
-			break;
-		}
-	} while (1);
+		array->data[array->used].monthly_pay_type = H_IRS_UP_TO;
+	}
+	else if (op == 'S' || op == 's')
+	{
+		array->data[array->used].monthly_pay_type = H_IRS_BEYOND;
+	}
 
 	array->data[array->used].monthly_pay_value = h_util_get_float(0.0f, 10000.0f, "Remuneração Mensal: ");
 
@@ -191,7 +189,10 @@ void h_irs_edit(s_arr_irs* array, int index)
 	int j;
 
 	if (array->used < index)
+	{
+		puts(RED("[!] Linha não existe"));
 		return;
+	}
 
 	fprintf(stdout, H_STRS_IRS_TABLE_HEADER);
 	h_irs_print_line(array->data[index]);
