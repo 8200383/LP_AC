@@ -16,7 +16,7 @@
 
 /**
  * @struct s_details
- * A structure that represents working days per worker
+ * A struct that represents working days per worker
  */
 typedef struct
 {
@@ -25,92 +25,80 @@ typedef struct
 	int weekend_days; /**< Represents number of the weekends worked */
 	int absent_days; /**< Represents the number of days missed */
 	/* TODO: missing processing vars */
-} s_spreadsheet;
+} s_details;
 
+/**
+ * @struct s_spreadsheet
+ * A struct that represents a spreadsheet for a given month
+ */
 typedef struct
 {
-	s_spreadsheet* spreadsheets; /**< Array of spreadsheets **/
+	s_details* details; /**< Array of details **/
 	e_month month; /**< Represent the month of the spreadsheet **/
 	int used; /**< Tracks used capacity of the array **/
 	int max_capacity; /**< Tracks max capacity of the array **/
-} s_arr_spreadsheets;
+} s_spreadsheet;
 
-s_arr_spreadsheets* h_proc_alloc(int initial_capacity);
-s_arr_spreadsheets* h_proc_open(const char* filename, e_month month);
-s_arr_spreadsheets* h_proc_import();
-void h_proc_add(s_arr_spreadsheets* array);
-void h_proc_edit(s_arr_spreadsheets* array);
-void h_proc_print(s_arr_spreadsheets* array);
-void h_proc_delete(s_arr_spreadsheets* array);
-void h_proc_free(s_arr_spreadsheets* array);
-void h_proc_export_csv(s_arr_spreadsheets* array);
+// TODO: void h_proc_export_bin(s_spreadsheet* spreadsheet);
 
 /**
- * TODO: s_error* h_proc_alloc();
- * @brief Allocs an array type of s_arr_spreadsheets
- * This functions allocs an array of structs (s_arr_spreadsheet),
- * the variable spreadsheets is set to NULL at first
- * @return s_arr_spreadsheet Returns an array of spreadsheets
+ * Allocs an array of structs (s_arr_spreadsheet),
+ * containing the month (enum) and details (s_details) for the month
+ * @return s_spreadsheet Returns a ptr to an struct of s_spreadsheet returns NULL if failure
  */
+s_spreadsheet* h_proc_alloc(int initial_capacity);
 
 /**
- * TODO: s_arr_spreadsheet* h_proc_import_bin(const char* path);
- * Import a spreadsheet and malloc s_arr_spreadsheet as needed
- * @param path The path of the spreadsheet file
- * @return s_arr_spreadsheet Returns an array of spreadsheets, NULL if nothing found
+ * Opens a binary file in read mode onto a spreadsheet
+ * @param filename Path of the file
+ * @param month Month to import
+ * @return s_spreadsheet Returns a ptr to an struct of s_spreadsheet returns NULL if failure
  */
+s_spreadsheet* h_proc_open(const char* filename, e_month month);
+
+s_spreadsheet* h_proc_import();
 
 /**
- * TODO: s_error* h_proc_export_bin(s_arr_spreadsheet* arr, const char* path, e_month month);
- * Export all spreadsheets or a single month
- * @param arr The array of spreadsheets
- * @param path The path of the spreadsheet file
- * @param month The month to export, if NULL all months will be exported
- * @return s_error Indicates what went wrong or NULL returned
+ * Add details to an existing month
+ * @param spreadsheet Ptr to a spreadsheet
  */
+void h_proc_add(s_spreadsheet* spreadsheet);
 
 /**
- * TODO: s_error* h_proc_export_csv(s_arr_spreadsheet* arr, const char* path, e_month month);
- * Export all spreadsheets or a single month to CSV
- * @param arr The array of spreadsheets
- * @param path The path of the spreadsheet file
- * @param month The month to export, if NULL all months will be exported
- * @return s_error Indicates what went wrong or NULL returned
+ * Edit details from an existing month
+ * @param spreadsheet Ptr to a spreadsheet
  */
+void h_proc_edit(s_spreadsheet* spreadsheet);
 
 /**
- * TODO: s_error* h_proc_print(s_arr_spreadsheet* arr);
- * Prints worker details by month
- * @param arr An array of spreadsheets
- * @return s_error Indicates what went wrong or NULL returned
+ * Prints a spreadsheet
+ * @param spreadsheet Ptr of spreadsheet
  */
+void h_proc_print(s_spreadsheet* spreadsheet);
 
 /**
- * TODO: s_error* h_proc_add(s_arr_spreadsheet* arr);
- * Add new month or add month details
- * @param arr An array of spreadsheets (must be malloc first)
- * @return s_error Indicates what went wrong or NULL returned
+ * Deletes details in a spreadsheet
+ * @param spreadsheet Ptr of spreadsheet
  */
+void h_proc_delete(s_spreadsheet* spreadsheet);
 
 /**
- * TODO: s_error* h_proc_edit(s_arr_spreadsheet* arr);
- * Edit month or edit month details
- * @param arr An array of spreadsheets (must be malloc first)
- * @return s_error Indicates what went wrong or NULL returned
+ * Free a spreadsheet
+ * @param spreadsheet Ptr of spreadsheet
  */
+void h_proc_free(s_spreadsheet* spreadsheet);
 
 /**
- * TODO: s_error* h_proc_delete(s_arr_spreadsheet* arr)
- * Delete a month or delete month details
- * @param arr An array of spreadsheets (must be malloc first)
- * @return s_error Indicates what went wrong or NULL returned
+ * Exports a spreadsheet to CSV
+ * @param spreadsheet Ptr of spreadsheet
  */
+void h_proc_export_csv(s_spreadsheet* spreadsheet);
 
 /**
  * Generate a filename from a given month and an extension
- * @param month give it a month
- * @param extension file extension like .dat, .bin
- * @return char* the generated filename
+ * @param month Month to generate
+ * @param extension The file extension
+ * @return char* Return the generated filename
  */
 char* h_proc_generate_filename(e_month month, const char* extension);
 

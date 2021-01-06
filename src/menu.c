@@ -102,7 +102,7 @@ void h_menu_processing(
 )
 {
 	int op;
-	s_arr_spreadsheets* arr_spreadsheets = NULL;
+	s_spreadsheet* arr_spreadsheets = NULL;
 
 	do
 	{
