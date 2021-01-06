@@ -1,44 +1,29 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "calendar.h"
+#include "colors.h"
 
-s_date* h_calendar_alloc()
+void h_calendar_get_date(s_date* date, const char* msg)
 {
-	s_date* date;
+	int day, month, year, error;
 
-	date = malloc(sizeof(s_date));
-	if (date == NULL)
-		return NULL;
+	error = 0;
+	do
+	{
+		printf("%s (DD/MM/YYYY)\n", msg);
+		scanf("%d/%d/%d", &day, &month, &year);
 
-	date->day = 0;
-	date->month = 0;
-	date->year = 0;
+		if (h_calendar_check_date(day, month, year) == 0)
+			error = 1;
 
-	return date;
-}
+		if (error == 1)
+			puts(RED("Data incorreta"));
 
-s_date* h_calendar_get_date()
-{
-	int day, month, year;
-	s_date* date;
-
-	date = h_calendar_alloc();
-	if (date == NULL)
-		return NULL;
-
-	printf("Date: DD/MM/YYYY\n");
-	scanf("%d/%d/%d", &day, &month, &year);
-
-	if (h_calendar_check_date(day, month, year) == 0)
-		return NULL;
+	} while (error == 1);
 
 	date->year = year;
 	date->month = month;
 	date->day = day;
-
-	return date;
 }
 
 int h_calendar_leap_year(int year)
@@ -46,7 +31,6 @@ int h_calendar_leap_year(int year)
 	return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
 }
 
-// usado no proc.c
 int h_calendar_days_in_month(e_month month)
 {
 	if (month == FEB || month == APR || month == JUN || month == SEP || month == NOV)

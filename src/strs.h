@@ -20,6 +20,7 @@
 "*                             *\n" \
 "* 1. Tabelas Retenção IRS     *\n" \
 "* 2. Tabelas Segurança Social *\n" \
+"* 3. Gestão de Funcionários   *\n" \
 "* 4. Processar Salarios       *\n" \
 "* 9. Guardar Tudo             *\n" \
 "* 0. Sair                     *\n" \
@@ -91,11 +92,28 @@
 "*       | Mensal em €     | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
 "***********************************************************\n")
 
+#define H_STRS_EMPLOYEES_TABLE_HEADER GREEN( \
+"*****************************************************************************************************\n" \
+"* Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  *\n" \
+"*     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída *\n" \
+"*****************************************************************************************************\n")
+
+#define H_STRS_EMPLOYEES_MENU CYAN ( \
+"************************************ *\n" \
+"* -| Menu Gestão de Funcionários |-  *\n" \
+"*                                    *\n" \
+"* 1. Visualizar                      *\n" \
+"* 2. Adicionar                       *\n" \
+"* 3. Remover                         *\n" \
+"* 4. Editar                          *\n" \
+"* 0. Voltar ao menu anterior         *\n" \
+"*                                    *\n" \
+"************************************* \n")
 
 #define H_STRS_PROC_TABLE_HEADER BLUE( \
-"********************************************************\n" \
-"* Linha | Codigo | Dias      | Meios | Fins   | Faltas *\n" \
-"*       | Func   | Completos | Dias  | Semana |        *\n" \
-"********************************************************\n")
+"*********************************************\n" \
+"* Cod | Dias      | Meios | Fins   | Faltas *\n" \
+"*     | Completos | Dias  | Semana |        *\n" \
+"*********************************************\n")
 
 #endif //STRS_H

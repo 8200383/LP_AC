@@ -5,7 +5,6 @@
 #ifndef IRS_H
 #define IRS_H
 
-#include "error.h"
 #include "memory.h"
 
 #define CSV_COLUMN_DELIMITER ','

@@ -46,7 +46,7 @@ void h_seg_social_parse(s_arr_seg_social* array, char* str)
 		if (offset == -1 && isalnum(str[i]))
 			offset = i;
 
-		if (offset != -1 && str[i] == ';')
+		if (offset != -1 && str[i] == ',')
 		{
 			str[i] = '\0';
 			if (str[i - 1] == '%')
@@ -149,7 +149,7 @@ void h_seg_social_write(s_arr_seg_social* array, const char* path)
 
 	for (i = 0; i <= array->used; i++)
 	{
-		fprintf(fp, "%c;%.2f%%;%.2f%%;\n",
+		fprintf(fp, "%c,%.2f%%,%.2f%%,\n",
 			array->data[i].criteria,
 			array->data[i].employer,
 			array->data[i].employee);

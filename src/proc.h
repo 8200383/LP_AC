@@ -10,7 +10,6 @@
 
 #include "irs.h"
 #include "iss.h"
-#include "error.h"
 #include "calendar.h"
 
 #define MAX_FILENAME 256

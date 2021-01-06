@@ -12,16 +12,19 @@ void main_menu()
 	int unique_holder_size;
 	int two_holders_size;
 	int seg_social_size;
+	int employees_size;
 
 	char* single_str;
 	char* unique_holder_str;
 	char* two_holders_str;
 	char* seg_social_str;
+	char* employees_str;
 
 	s_arr_irs* single_table;
 	s_arr_irs* unique_holder_table;
 	s_arr_irs* two_holders_table;
 	s_arr_seg_social* seg_social_table;
+	s_arr_employees* employees_table;
 
 	/*
 	 * IRS: Tabela I - Não Casado
@@ -63,6 +66,16 @@ void main_menu()
 
 	h_seg_social_parse(seg_social_table, seg_social_str);
 
+	/*
+	 * Gestão de Funcionários
+	 * ---------------------------------------------------------------------------------------------------------
+	 */
+	employees_size = 0;
+	employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
+
+	employees_table = h_employees_alloc(employees_size);
+
+	h_employees_parse(employees_table, employees_str);
 
 	do
 	{
@@ -78,7 +91,7 @@ void main_menu()
 		case 2:
 			h_menu_seg_social(seg_social_table);
 			break;
-		case 4:
+		case 3:
 			h_menu_processing(single_table, unique_holder_table, two_holders_table, seg_social_table);
 			break;
 		case 9:
@@ -93,10 +106,11 @@ void main_menu()
 		}
 	} while (op != 0);
 
-	free(single_str);
+	//free(single_str);
 	//free(unique_holder_str);
 	//free(two_holders_str);
 	//free(seg_social_str);
+	//free(employees_str);
 	h_irs_free(single_table);
 	h_irs_free(unique_holder_table);
 	h_irs_free(two_holders_table);

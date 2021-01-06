@@ -149,3 +149,33 @@ void h_menu_processing(
 
 	h_proc_free(arr_spreadsheets);
 }
+
+void h_menu_employees(s_arr_employees* employees)
+{
+	int op;
+
+	fprintf(stdout, H_STRS_EMPLOYEES_MENU);
+	fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
+	scanf(" %u", &op);
+
+	switch (op)
+	{
+	case 1:
+		h_employees_print(employees);
+		break;
+	case 2:
+		h_employees_add(employees);
+		break;
+	case 3:
+		printf("Remove employee");
+		break;
+	case 4:
+		printf("Edit employee");
+		break;
+	case 0:
+		break;
+	default:
+		fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
+		break;
+	}
+}

@@ -118,3 +118,18 @@ float h_util_get_float(float min, float max, const char* msg)
 
 	return num;
 }
+
+int h_util_str_is_digit(const char* str)
+{
+	int num;
+	int i;
+
+	num = 0;
+	for (i = 0; str[i] != '\0'; i++)
+	{
+		// check for decimal digits
+		if (isdigit(str[i]) != 0)
+			num++;
+	}
+	return num;
+}
