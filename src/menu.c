@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 
 #include "menu.h"
 #include "colors.h"
@@ -152,7 +151,11 @@ void h_menu_processing(
 			break;
 		case 9:
 			if (arr_spreadsheets)
+			{
+				fprintf(stdout, RED("[!] Já existia %s, este sera eliminado\n"),
+					h_calendar_str_from_month(arr_spreadsheets->month));
 				free(arr_spreadsheets);
+			}
 
 			arr_spreadsheets = h_proc_import();
 			break;
