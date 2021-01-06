@@ -2,6 +2,7 @@
 #include <stdlib.h>
 
 #include "main.h"
+#include "proc.h"
 
 void main_menu()
 {
@@ -32,8 +33,6 @@ void main_menu()
 
 	h_irs_parse(single_table, single_str, h_irs_build);
 
-	free(single_str);
-
 	/*
 	 * IRS: Tabela II - Casado Unico Titular
 	 * ---------------------------------------------------------------------------------------------------------
@@ -43,8 +42,6 @@ void main_menu()
 	unique_holder_table = h_irs_alloc(unique_holder_size);
 
 	h_irs_parse(unique_holder_table, unique_holder_str, h_irs_build);
-
-	free(unique_holder_str);
 
 	/*
 	 * IRS: Tabela III - Casado Dois Titulares
@@ -56,8 +53,6 @@ void main_menu()
 
 	h_irs_parse(two_holders_table, two_holders_str, h_irs_build);
 
-	free(two_holders_str);
-
 	/*
 	 * Segurança Social
 	 * ---------------------------------------------------------------------------------------------------------
@@ -68,7 +63,6 @@ void main_menu()
 
 	h_seg_social_parse(seg_social_table, seg_social_str);
 
-	free(seg_social_str);
 
 	do
 	{
@@ -99,6 +93,10 @@ void main_menu()
 		}
 	} while (op != 0);
 
+	free(single_str);
+	//free(unique_holder_str);
+	//free(two_holders_str);
+	//free(seg_social_str);
 	h_irs_free(single_table);
 	h_irs_free(unique_holder_table);
 	h_irs_free(two_holders_table);
