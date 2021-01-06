@@ -56,6 +56,7 @@ s_spreadsheet* h_proc_alloc(int initial_capacity);
  */
 s_spreadsheet* h_proc_open(const char* filename, e_month month);
 
+// TODO: is it really necessary?
 s_spreadsheet* h_proc_import();
 
 /**

@@ -102,7 +102,7 @@ void h_menu_processing(
 )
 {
 	int op;
-	s_spreadsheet* arr_spreadsheets = NULL;
+	s_spreadsheet* spreadsheet = NULL;
 
 	do
 	{
@@ -113,51 +113,54 @@ void h_menu_processing(
 		switch (op)
 		{
 		case 1:
-			if (arr_spreadsheets)
+			if (spreadsheet)
 			{ // TODO: Adicionar opção para apagar mês
-				fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(arr_spreadsheets->month));
+				fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(spreadsheet->month));
 				break;
 			}
 
-			arr_spreadsheets = h_proc_alloc(64); // TODO: alloc com a qte de func
-			if (arr_spreadsheets == NULL)
+			spreadsheet = h_proc_alloc(64); // TODO: alloc com a qte de func
+			if (spreadsheet == NULL)
 			{
 				fprintf(stdout, RED("[!] Memória insuficiente\n"));
 				return;
 			}
 
-			arr_spreadsheets->month = h_util_get_int(1, 12, "Mês: (1-12)") - 1;
+			spreadsheet->month = h_util_get_int(1, 12, "Mês: (1-12)") - 1;
 			fprintf(stdout, GREEN("[!] Mês de %s criado com sucesso\n"),
-				h_calendar_str_from_month(arr_spreadsheets->month));
+				h_calendar_str_from_month(spreadsheet->month));
 			break;
 		case 2:
-			h_proc_print(arr_spreadsheets);
+			h_proc_print(spreadsheet);
 			break;
 		case 3:
-			h_proc_add(arr_spreadsheets);
+			h_proc_add(spreadsheet);
 			break;
 		case 4:
-			h_proc_edit(arr_spreadsheets);
+			h_proc_edit(spreadsheet);
 			break;
 		case 5:
-			h_proc_delete(arr_spreadsheets);
+			h_proc_delete(spreadsheet);
 			break;
 		case 6:
 			break;
 		case 7:
-			h_proc_export_csv(arr_spreadsheets);
+			h_proc_export_csv(spreadsheet);
 			break;
 		case 8:
 			break;
 		case 9:
-			if (arr_spreadsheets)
+			if (spreadsheet)
 			{
 				fprintf(stdout, RED("[!] Já existia %s, este sera eliminado\n"),
-					h_calendar_str_from_month(arr_spreadsheets->month));
-				free(arr_spreadsheets);
+					h_calendar_str_from_month(spreadsheet->month));
+				free(spreadsheet);
 			}
 
-			arr_spreadsheets = h_proc_import();
+			spreadsheet = h_proc_import();
+			break;
+		case 10:
+			h_proc_free(spreadsheet);
 			break;
 		case 0:
 			break;
@@ -167,7 +170,8 @@ void h_menu_processing(
 		}
 	} while (op != 0);
 
-	h_proc_free(arr_spreadsheets);
+	if (spreadsheet)
+		h_proc_free(spreadsheet);
 }
 
 void h_menu_employees(s_arr_employees* employees)

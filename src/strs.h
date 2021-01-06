@@ -70,21 +70,22 @@
 "**************************************\n")
 
 #define H_STRS_PROC MAGENTA( \
-"********************************\n" \
-"*     -| Processamento |-      *\n" \
-"*                              *\n" \
-"* 1. Criar mês                 *\n" \
-"* 2. Visualizar                *\n" \
-"* 3. Adicionar detalhes        *\n" \
-"* 4. Editar detalhes           *\n" \
-"* 5. Eliminar detalhes         *\n" \
-"* 6. Processar mês             *\n" \
-"* 7. Exportar mês para CSV     *\n" \
-"* 8. Guardar                   *\n" \
-"* 9. Importar mês              *\n" \
-"* 0. Sair                      *\n" \
-"*                              *\n" \
-"********************************\n")
+"*********************************\n" \
+"*  -| Processamento Salarios |- *\n" \
+"*                               *\n" \
+"*  1. Criar mês                 *\n" \
+"*  2. Visualizar                *\n" \
+"*  3. Adicionar detalhes        *\n" \
+"*  4. Editar detalhes           *\n" \
+"*  5. Eliminar detalhes         *\n" \
+"*  6. Processar mês             *\n" \
+"*  7. Exportar mês para CSV     *\n" \
+"*  8. Guardar                   *\n" \
+"*  9. Importar mês              *\n" \
+"* 10. Desfazer todas alterações *\n" \
+"* 0. Sair                       *\n" \
+"*                               *\n" \
+"*********************************\n")
 
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
 "***********************************************************\n" \
