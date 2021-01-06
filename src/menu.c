@@ -146,10 +146,10 @@ void h_menu_employees(s_arr_employees* employees)
 	switch (op)
 	{
 	case 1:
-		printf("View employees");
+		h_employees_print(employees);
 		break;
 	case 2:
-		printf("Add employee");
+		h_employees_add(employees);
 		break;
 	case 3:
 		printf("Remove employee");

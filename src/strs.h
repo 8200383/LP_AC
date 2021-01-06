@@ -74,6 +74,12 @@
 "*       | Mensal em €     | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
 "***********************************************************\n")
 
+#define H_STRS_EMPLOYEES_TABLE_HEADER GREEN( \
+"***********************************************************\n" \
+"* Linha | Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data    *\n" \
+"*       |     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída   *\n" \
+"***********************************************************\n")
+
 #define H_STRS_EMPLOYEES_MANAG_MENU CYAN ( \
 "************************************ *\n" \
 "* -| Menu Gestão de Funcionários |-  *\n" \
