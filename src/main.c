@@ -74,27 +74,8 @@ void main_menu()
 
 	employees_size = 0;
 	employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
-	if (employees_str == NULL)
-	{
-		error = h_error_create(H_ERROR_READ, H_PATH_EMPLOYEES);
-		free(single_table);
-		free(unique_holder_table);
-		free(two_holders_table);
-		free(seg_social_table);
-		return error;
-	}
 
 	employees_table = h_employees_alloc(employees_size);
-	if (employees_table == NULL)
-	{
-		error = h_error_create(H_ERROR_READ, H_PATH_EMPLOYEES);
-		free(single_table);
-		free(unique_holder_table);
-		free(two_holders_table);
-		free(seg_social_table);
-		free(employees_str);
-		return error;
-	}
 
 	h_employees_parse(employees_table, employees_str);
 

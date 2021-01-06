@@ -4,9 +4,9 @@
 #include <string.h>
 
 #include "employees.h"
-#include "util.h"
 #include "colors.h"
 #include "strs.h"
+#include "util.h"
 
 int first_name_buffer_size = 64;
 int last_name_buffer_size = 64;
@@ -14,7 +14,7 @@ int last_name_buffer_size = 64;
 s_arr_employees* h_employees_alloc(int initial_capacity)
 {
 	s_arr_employees* array;
-	int i, j;
+	int i;
 
 	if (!initial_capacity)
 		return NULL;
@@ -105,6 +105,7 @@ void h_employees_add(s_arr_employees* array)
 	array->employees[array->used].number_dependents = h_util_get_int(0, 5, "Numero dependentes: ");
 	array->employees[array->used].phone_number = h_util_get_int(1, 9, "Numero Telefone: s");
 }
+
 void h_employees_print(s_arr_employees* array)
 {
 	int i;
@@ -163,13 +164,13 @@ void h_employees_parse(s_arr_employees* array, char* str)
 			if (h_util_str_is_digit(str + offset) == 9 && column == COL_PHONE_NUMBER)
 				array->employees[array->used].phone_number = atoi(str + offset);
 
-			if (h_util_strequal(str + offset, "MARRIED") && column == COL_MARITAL_STATUS)
+			if (strcmp(str + offset, "MARRIED") == 0 && column == COL_MARITAL_STATUS)
 				array->employees[array->used].marital_status = MARRIED;
 
-			if (h_util_strequal(str + offset, "SINGLE") && column == COL_MARITAL_STATUS)
+			if (strcmp(str + offset, "SINGLE") == 0 && column == COL_MARITAL_STATUS)
 				array->employees[array->used].marital_status = SINGLE;
 
-			if (h_util_strequal(str + offset, "DIVORCED") && column == COL_MARITAL_STATUS)
+			if (strcmp(str + offset, "DIVORCED") == 0&& column == COL_MARITAL_STATUS)
 				array->employees[array->used].marital_status = DIVORCED;
 
 			if (h_util_is_name(str + offset) == 0 && column == COL_FIRST_NAME)

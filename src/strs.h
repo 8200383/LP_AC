@@ -97,7 +97,7 @@
 "*       |     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída   *\n" \
 "***********************************************************\n")
 
-#define H_STRS_EMPLOYEES_MANAG_MENU CYAN ( \
+#define H_STRS_EMPLOYEES_MENU CYAN ( \
 "************************************ *\n" \
 "* -| Menu Gestão de Funcionários |-  *\n" \
 "*                                    *\n" \

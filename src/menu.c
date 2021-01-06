@@ -148,6 +148,16 @@ void h_menu_processing(
 	} while (op != 0);
 
 	h_proc_free(arr_spreadsheets);
+}
+
+void h_menu_employees(s_arr_employees* employees)
+{
+	int op;
+
+	fprintf(stdout, H_STRS_EMPLOYEES_MENU);
+	fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
+	scanf(" %u", &op);
+
 	switch (op)
 	{
 	case 1:
