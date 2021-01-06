@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
 
 #include "menu.h"
@@ -133,11 +134,17 @@ void h_menu_processing(
 			h_proc_delete(arr_spreadsheets);
 			break;
 		case 6:
-			h_proc_export_csv(arr_spreadsheets);
 			break;
 		case 7:
+			h_proc_export_csv(arr_spreadsheets);
 			break;
 		case 8:
+			break;
+		case 9:
+			if (arr_spreadsheets)
+				free(arr_spreadsheets);
+
+			arr_spreadsheets = h_proc_import();
 			break;
 		case 0:
 			break;

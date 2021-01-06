@@ -29,14 +29,14 @@ typedef struct
 
 typedef struct
 {
-	s_spreadsheet* spreadsheets;
-	e_month month;
-	int used;
-	int max_capacity;
+	s_spreadsheet* spreadsheets; /**< Array of spreadsheets **/
+	e_month month; /**< Represent the month of the spreadsheet **/
+	int used; /**< Tracks used capacity of the array **/
+	int max_capacity; /**< Tracks max capacity of the array **/
 } s_arr_spreadsheets;
 
 s_arr_spreadsheets* h_proc_alloc(int initial_capacity);
-s_arr_spreadsheets* h_proc_open(const char* filename);
+s_arr_spreadsheets* h_proc_open(const char* filename, e_month month);
 s_arr_spreadsheets* h_proc_import();
 void h_proc_add(s_arr_spreadsheets* array);
 void h_proc_edit(s_arr_spreadsheets* array);

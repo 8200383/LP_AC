@@ -49,12 +49,12 @@ s_arr_spreadsheets* h_proc_import()
 
 	if (access(filename, F_OK) == -1)
 	{
-		puts("[!] Nenhum ficheiro encontrado, nada importado");
+		puts(RED("[!] Nenhum ficheiro encontrado, nada importado"));
 		free(filename);
 		return NULL;
 	}
 
-	arr_spreadsheets = h_proc_open(filename);
+	arr_spreadsheets = h_proc_open(filename, month);
 	if (arr_spreadsheets == NULL)
 	{
 		free(filename);
@@ -65,7 +65,7 @@ s_arr_spreadsheets* h_proc_import()
 	return arr_spreadsheets;
 }
 
-s_arr_spreadsheets* h_proc_open(const char* filename)
+s_arr_spreadsheets* h_proc_open(const char* filename, e_month month)
 {
 	FILE* fp;
 	s_arr_spreadsheets* array;
@@ -85,6 +85,7 @@ s_arr_spreadsheets* h_proc_open(const char* filename)
 	if (array == NULL)
 		return NULL;
 
+	array->month = month;
 	for (int i = 0; !feof(fp); i++)
 	{
 		if (array->used == array->max_capacity)
@@ -104,23 +105,6 @@ s_arr_spreadsheets* h_proc_open(const char* filename)
 
 	return array;
 }
-
-/*
- * 	if (arr_spreadsheets->used == arr_spreadsheets->max_capacity)
-	{
-		arr_spreadsheets->spreadsheets = realloc(arr_spreadsheets->spreadsheets, (arr_spreadsheets->max_capacity * 2) * sizeof(s_spreadsheet));
-		if (arr_spreadsheets->spreadsheets == NULL)
-		{
-			puts("Alloc spreadshhets falhou");
-			return NULL;
-		}
-
-		arr_spreadsheets->max_capacity *= 2;
-	}
-
-	max_days = h_calendar_days_in_month(array->month);
-
-	 */
 
 void h_proc_add(s_arr_spreadsheets* array)
 {
@@ -282,7 +266,7 @@ void h_proc_export_csv(s_arr_spreadsheets* array)
 
 	if (array->used == -1)
 	{
-		fprintf(stdout, "[!] Nada a exportar\n");
+		puts(RED("[!] Nada a exportar"));
 		return;
 	}
 
@@ -291,8 +275,10 @@ void h_proc_export_csv(s_arr_spreadsheets* array)
 		return;
 
 	fp = fopen(filename, "w");
-	if (fp == NULL)
+	if (fp == NULL) {
+		puts(RED("[!] Impossivel exportar"));
 		return;
+	}
 
 	free(filename);
 
