@@ -92,10 +92,10 @@
 "***********************************************************\n")
 
 #define H_STRS_EMPLOYEES_TABLE_HEADER GREEN( \
-"***********************************************************\n" \
-"* Linha | Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data    *\n" \
-"*       |     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída   *\n" \
-"***********************************************************\n")
+"*****************************************************************************************************\n" \
+"* Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  *\n" \
+"*     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída *\n" \
+"*****************************************************************************************************\n")
 
 #define H_STRS_EMPLOYEES_MENU CYAN ( \
 "************************************ *\n" \
@@ -110,9 +110,9 @@
 "************************************* \n")
 
 #define H_STRS_PROC_TABLE_HEADER BLUE( \
-"********************************************************\n" \
-"* Linha | Codigo | Dias      | Meios | Fins   | Faltas *\n" \
-"*       | Func   | Completos | Dias  | Semana |        *\n" \
-"********************************************************\n")
+"*********************************************\n" \
+"* Cod | Dias      | Meios | Fins   | Faltas *\n" \
+"*     | Completos | Dias  | Semana |        *\n" \
+"*********************************************\n")
 
 #endif //STRS_H
