@@ -114,7 +114,7 @@ void h_menu_processing(
 		{
 		case 1:
 			if (spreadsheet)
-			{ // TODO: Adicionar opção para apagar mês
+			{
 				fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(spreadsheet->month));
 				break;
 			}
@@ -160,6 +160,7 @@ void h_menu_processing(
 			spreadsheet = h_proc_import();
 			break;
 		case 10:
+			fprintf(stdout, RED("[!] Apagar mês de %s...\n"), h_calendar_str_from_month(spreadsheet->month));
 			h_proc_free(spreadsheet);
 			break;
 		case 0:
