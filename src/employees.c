@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
 
 #include "employees.h"
@@ -32,16 +31,24 @@ s_arr_employees* h_employees_alloc(int initial_capacity)
 
 	for (i = 0; i <= array->max_capacity; i++)
 	{
-		array->employees[i].role = calloc(1, sizeof(char));
-		if (array->employees[i].role == NULL)
-			return NULL;
-
 		array->employees[i].first_name = calloc(first_name_buffer_size, sizeof(char));
 		if (array->employees[array->used].first_name == NULL)
 			return NULL;
 
 		array->employees[i].last_name = calloc(last_name_buffer_size, sizeof(char));
 		if (array->employees[array->used].last_name == NULL)
+			return NULL;
+
+		array->employees[i].birthday = malloc(sizeof(s_date));
+		if (array->employees[array->used].birthday == NULL)
+			return NULL;
+
+		array->employees[i].entry_date = malloc(sizeof(s_date));
+		if (array->employees[array->used].entry_date == NULL)
+			return NULL;
+
+		array->employees[i].leaving_date = malloc(sizeof(s_date));
+		if (array->employees[array->used].leaving_date == NULL)
 			return NULL;
 	}
 
@@ -77,6 +84,12 @@ int h_employees_ask_status()
 
 void h_employees_add(s_arr_employees* array)
 {
+	if (array == NULL)
+	{
+		puts(RED("[!] Employees não alocado"));
+		return;
+	}
+
 	if (array->used == array->max_capacity)
 	{
 		array->max_capacity *= 2;
@@ -88,151 +101,161 @@ void h_employees_add(s_arr_employees* array)
 	array->used++;
 	array->employees[array->used].code = h_employees_randomize();
 
-	array->employees[array->used].entry_date = h_calendar_get_date("Data de entrada? ");
-
-	array->employees[array->used].birthday = h_calendar_get_date("Data de nascimento? ");
-
-	array->employees[array->used].leaving_date = NULL;
-	array->employees[array->used].marital_status = h_employees_ask_status();
-
 	printf("Primeiro nome: \n");
 	scanf("%s", array->employees[array->used].first_name);
 	printf("Último nome: \n");
 	scanf("%s", array->employees[array->used].last_name);
 	printf("Cargo: \n");
-	scanf("%s", array->employees[array->used].role);
+	scanf("%d", &array->employees[array->used].role);
 
+	h_calendar_get_date(array->employees[array->used].birthday, "Data de nascimento? ");
+	h_calendar_get_date(array->employees[array->used].entry_date, "Data de entrada? ");
+	h_calendar_get_date(array->employees[array->used].leaving_date, "Data de saida? ");
+
+	array->employees[array->used].marital_status = h_employees_ask_status();
 	array->employees[array->used].number_dependents = h_util_get_int(0, 5, "Numero dependentes: ");
-	array->employees[array->used].phone_number = h_util_get_int(1, 9, "Numero Telefone: s");
+	array->employees[array->used].phone_number = h_util_get_int(1, 9, "Numero Telefone: ");
 }
 
 void h_employees_print(s_arr_employees* array)
 {
-	int i;
-
-	if (array->used == 0)
+	if (array == NULL || array->used == 0)
 	{
-		puts(RED("Tabela vazia"));
+		puts(RED("[!] Employees não alocado ou vazio"));
 		return;
 	}
 
 	printf(H_STRS_EMPLOYEES_TABLE_HEADER);
+
+	int i;
 	for (i = 0; i <= array->used; i++)
 	{
-		printf("[%d] %d | %s | %s | %s | %d \n",
+		printf("[%d] %d | %s | %s | %d | %d | %d | %d/%d/%d | %d/%d/%d | %d/%d/%d\n",
 			i,
 			array->employees[i].code,
 			array->employees[i].first_name,
 			array->employees[i].last_name,
+			array->employees[i].phone_number,
+			array->employees[i].number_dependents,
 			array->employees[i].role,
-			array->employees[i].phone_number
+			array->employees[i].birthday->day,
+			array->employees[i].birthday->month,
+			array->employees[i].birthday->year,
+			array->employees[i].entry_date->day,
+			array->employees[i].entry_date->month,
+			array->employees[i].entry_date->year,
+			array->employees[i].leaving_date->day,
+			array->employees[i].leaving_date->month,
+			array->employees[i].leaving_date->year
 		);
 	}
 }
 
-void h_employees_parse(s_arr_employees* array, char* str)
+void h_employees_pair(s_employee_record* employee, char* str, int column)
 {
-	int i;
-	int offset;
-	int column;
+	if (h_util_str_is_digit(str) == 4 && column == COL_CODE_FUNC)
+		employee->code = atoi(str);
 
+	if (h_util_str_is_digit(str) == 1 && column == COL_NUM_DEPENDENTS)
+		employee->number_dependents = atoi(str);
+
+	if (h_util_str_is_digit(str) == 1 && column == COL_ROLE)
+		employee->role = atoi(str);
+
+	if (h_util_str_is_digit(str) == 9 && column == COL_PHONE_NUMBER)
+		employee->phone_number = atoi(str);
+
+	if (strcmp(str, "MARRIED") == 0 && column == COL_MARITAL_STATUS)
+		employee->marital_status = MARRIED;
+
+	else if (strcmp(str, "SINGLE") == 0 && column == COL_MARITAL_STATUS)
+		employee->marital_status = SINGLE;
+
+	else if (strcmp(str, "DIVORCED") == 0 && column == COL_MARITAL_STATUS)
+		employee->marital_status = DIVORCED;
+
+	if (column == COL_FIRST_NAME)
+	{
+		if (strlen(str) >= first_name_buffer_size)
+		{
+			employee->first_name = realloc(employee->first_name, first_name_buffer_size * 2);
+			if (employee->first_name == NULL)
+				return;
+
+			first_name_buffer_size *= 2;
+		}
+
+		strcpy(employee->first_name, str);
+	}
+
+	if (column == COL_LAST_NAME)
+	{
+		if (strlen(str) >= last_name_buffer_size)
+		{
+			employee->last_name = realloc(employee->last_name, last_name_buffer_size * 2);
+			if (employee->last_name == NULL)
+				return;
+
+			last_name_buffer_size *= 2;
+		}
+		strcpy(employee->last_name, str);
+	}
+
+	if (column == COL_BIRTHDAY)
+	{
+		sscanf(str, "%d/%d/%d",
+			&employee->birthday->day,
+			&employee->birthday->month,
+			&employee->birthday->year);
+	}
+
+	if (column == COL_ENTRY_DATE)
+	{
+		sscanf(str, "%d/%d/%d",
+			&employee->entry_date->day,
+			&employee->entry_date->month,
+			&employee->entry_date->year);
+	}
+
+	if (column == COL_LEAVING_DATE)
+	{
+		sscanf(str, "%d/%d/%d",
+			&employee->leaving_date->day,
+			&employee->leaving_date->month,
+			&employee->leaving_date->year);
+	}
+}
+
+void h_employees_parse(s_arr_employees* array, const char* str)
+{
 	if (array == NULL || str == NULL)
 		return;
 
-	offset = -1;
-	column = 0;
+	int i;
+	int j;
+	int k;
+	int delimiter = -1;
+	int column = 1;
+	char buffer[CSV_BUFFER];
 	for (i = 0; str[i] != '\0'; i++)
 	{
-		if (offset == -1 && isalnum(str[i]))
-			offset = i;
-
-		if (offset != -1 && str[i] == ',')
+		if (str[i] == CSV_COLUMN_DELIMITER || str[i] == CSV_NEW_LINE_DELIMITER)
 		{
-			str[i] = '\0';
-
-			// Code func 4 digits
-			if (h_util_str_is_digit(str + offset) == 4 && column == COL_CODE_FUNC)
-				array->employees[array->used].code = atoi(str + offset);
-
-			if (h_util_str_is_digit(str + offset) == 1 && column == COL_NUM_DEPENDENTS)
-				array->employees[array->used].number_dependents = atoi(str + offset);
-
-			if (column == COL_ROLE) // TODO: check if is upper
-				strcpy(array->employees[array->used].role, str + offset);
-
-			// Phone number 9 digits
-			if (h_util_str_is_digit(str + offset) == 9 && column == COL_PHONE_NUMBER)
-				array->employees[array->used].phone_number = atoi(str + offset);
-
-			if (strcmp(str + offset, "MARRIED") == 0 && column == COL_MARITAL_STATUS)
-				array->employees[array->used].marital_status = MARRIED;
-
-			if (strcmp(str + offset, "SINGLE") == 0 && column == COL_MARITAL_STATUS)
-				array->employees[array->used].marital_status = SINGLE;
-
-			if (strcmp(str + offset, "DIVORCED") == 0&& column == COL_MARITAL_STATUS)
-				array->employees[array->used].marital_status = DIVORCED;
-
-			if (h_util_is_name(str + offset) == 0 && column == COL_FIRST_NAME)
+			for (j = delimiter + 1, k = 0; j < i; j++, k++)
 			{
-				if (strlen(str + offset) >= first_name_buffer_size)
-				{
-					array->employees[array->used].first_name =
-						realloc(array->employees[array->used].first_name, first_name_buffer_size * 2);
-
-					if (array->employees[array->used].first_name == NULL)
-						return;
-
-					first_name_buffer_size *= 2;
-				}
-
-				strcpy(array->employees[array->used].first_name, str + offset);
+				buffer[k] = str[j];
 			}
 
-			if (h_util_is_name(str + offset) == 0 && column == COL_LAST_NAME)
-			{
-				if (strlen(str + offset) >= last_name_buffer_size)
-				{
-					array->employees[array->used].last_name =
-						realloc(array->employees[array->used].last_name, last_name_buffer_size * 2);
-
-					if (array->employees[array->used].last_name == NULL)
-						return;
-
-					last_name_buffer_size *= 2;
-				}
-				strcpy(array->employees[array->used].last_name, str + offset);
-			}
-
-			if (column == COL_BIRTHDAY)
-			{
-				array->employees[array->used].birthday = h_calendar_init(str + offset);
-
-				if (array->employees[array->used].birthday == NULL)
-					return;
-			}
-
-			if (column == COL_ENTRY_DATE)
-			{
-				array->employees[array->used].entry_date = h_calendar_init(str + offset);
-
-				if (array->employees[array->used].entry_date == NULL)
-					return;
-			}
-
-			if (column == COL_LEAVING_DATE)
-			{
-				array->employees[array->used].leaving_date = h_calendar_init(str + offset);
-
-				if (array->employees[array->used].leaving_date == NULL)
-					return;
-			}
-
+			h_employees_pair(&array->employees[array->used], buffer, column);
+			memset(buffer, 0, CSV_BUFFER);
+			delimiter = i;
 			column++;
-			offset = -1;
 		}
 
-		if (str[i] == '\n')
+		if (str[i] == CSV_NEW_LINE_DELIMITER)
+		{
+			column = 1;
 			array->used++;
+		}
 	}
 }

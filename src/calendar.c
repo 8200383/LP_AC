@@ -1,27 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
 #include "calendar.h"
 #include "colors.h"
-
-s_date* h_calendar_init(const char* str)
-{
-	s_date* date;
-	int day, month, year;
-
-	date = calloc(1, sizeof(s_date));
-	if (date == NULL)
-		return NULL;
-
-	sscanf(str, "%d/%d/%d", &day, &month, &year);
-
-	date->day = day;
-	date->month = month;
-	date->year = year;
-
-	return date;
-}
 
 void h_calendar_get_date(s_date* date, const char* msg)
 {
@@ -51,7 +31,6 @@ int h_calendar_leap_year(int year)
 	return (year % 400 == 0) || (year % 4 == 0 && year % 100 != 0);
 }
 
-// usado no proc.c
 int h_calendar_days_in_month(e_month month)
 {
 	if (month == FEB || month == APR || month == JUN || month == SEP || month == NOV)

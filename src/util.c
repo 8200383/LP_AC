@@ -133,19 +133,3 @@ int h_util_str_is_digit(const char* str)
 	}
 	return num;
 }
-
-int h_util_is_name(const char* str)
-{
-	int i;
-
-	if (isupper(str[0]) == 0)
-		return -1;
-
-	for (i = 1; str[i] != '\0'; i++)
-	{
-		if (islower(str[i]) == 0)
-			return -1;
-	}
-
-	return 0;
-}

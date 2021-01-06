@@ -26,7 +26,6 @@ void main_menu()
 	s_arr_seg_social* seg_social_table;
 	s_arr_employees* employees_table;
 
-
 	/*
 	 * IRS: Tabela I - Não Casado
 	 * ---------------------------------------------------------------------------------------------------------
@@ -71,15 +70,12 @@ void main_menu()
 	 * Gestão de Funcionários
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
-
 	employees_size = 0;
 	employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
 
 	employees_table = h_employees_alloc(employees_size);
 
 	h_employees_parse(employees_table, employees_str);
-
-	free(employees_str);
 
 	do
 	{
@@ -110,10 +106,11 @@ void main_menu()
 		}
 	} while (op != 0);
 
-	free(single_str);
+	//free(single_str);
 	//free(unique_holder_str);
 	//free(two_holders_str);
 	//free(seg_social_str);
+	//free(employees_str);
 	h_irs_free(single_table);
 	h_irs_free(unique_holder_table);
 	h_irs_free(two_holders_table);

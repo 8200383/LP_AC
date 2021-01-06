@@ -9,19 +9,22 @@
 #include "util.h"
 
 #define MAX_VALUE 9999
+#define CSV_COLUMN_DELIMITER ','
+#define CSV_NEW_LINE_DELIMITER '\n'
+#define CSV_BUFFER 50
 
 typedef enum
 {
-	COL_CODE_FUNC,
-	COL_NUM_DEPENDENTS,
-	COL_ROLE,
-	COL_FIRST_NAME,
-	COL_LAST_NAME,
-	COL_PHONE_NUMBER,
-	COL_MARITAL_STATUS,
-	COL_BIRTHDAY,
-	COL_ENTRY_DATE,
-	COL_LEAVING_DATE
+	COL_CODE_FUNC = 1,
+	COL_FIRST_NAME = 2,
+	COL_LAST_NAME = 3,
+	COL_PHONE_NUMBER = 4,
+	COL_MARITAL_STATUS = 5,
+	COL_ROLE = 6,
+	COL_NUM_DEPENDENTS = 7,
+	COL_BIRTHDAY = 8,
+	COL_ENTRY_DATE = 9,
+	COL_LEAVING_DATE = 10
 } e_columns;
 
 typedef enum
@@ -36,7 +39,7 @@ typedef struct
 {
 	int code;
 	int number_dependents;
-	char* role;
+	int role;
 	char* first_name;
 	char* last_name;
 	int phone_number;
@@ -51,16 +54,12 @@ typedef struct
 	int max_capacity;
 } s_arr_employees;
 
-int h_employees_randomize();
-
-int h_employees_ask_status();
-
-void h_employees_add(s_arr_employees* array);
-
 s_arr_employees* h_employees_alloc(int initial_capacity);
-
-void h_employees_parse(s_arr_employees* array, char* str);
-
+int h_employees_randomize();
+int h_employees_ask_status();
+void h_employees_add(s_arr_employees* array);
+void h_employees_pair(s_employee_record* employee, char* str, int column);
+void h_employees_parse(s_arr_employees* array, const char* str);
 void h_employees_print(s_arr_employees* array);
 
 #endif //EMPLOYEES_H
