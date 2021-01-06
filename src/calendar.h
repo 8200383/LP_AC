@@ -1,14 +1,22 @@
-/*
- * Created by Rui Gonçalves on 27/12/2020.
- * Edited by Micael Dias on 27/12/2020
+/**
+ * @file calendar.h
+ * @author Rui Gonçalves, Micael Dias
+ * @date 27/12/2020
+ * @brief Helper functions to handle Dates
  */
 
 #ifndef CALENDAR_H
 #define CALENDAR_H
 
+/**
+ * @struct s_date
+ * A structure to represent dates
+ */
 typedef struct
 {
-	int day, month, year;
+	int day;
+	int month;
+	int year;
 } s_date;
 
 typedef enum
@@ -31,8 +39,10 @@ s_date* h_calendar_alloc();
 s_date* h_calendar_init(const char* str);
 s_date* h_calendar_get_date(const char* str);
 int h_calendar_check_str(const char* str);
+s_date* h_calendar_get_date();
+int h_calendar_days_in_month(e_month month);
 int h_calendar_check_date(int day, int month, int year);
-int h_calendar_check_leap_year(int year);
+int h_calendar_leap_year(int year);
 const char* h_calendar_str_from_month(e_month month);
 
 

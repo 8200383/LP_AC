@@ -2,11 +2,10 @@
 #include <stdlib.h>
 
 #include "main.h"
+#include "proc.h"
 
-s_error* main_menu()
+void main_menu()
 {
-	s_error* error;
-
 	unsigned int op;
 
 	int single_size;
@@ -34,29 +33,9 @@ s_error* main_menu()
 	 */
 	single_size = 0;
 	single_str = h_util_file_read(H_PATH_SINGLE, &single_size);
-	if (single_str == NULL)
-	{
-		error = h_error_create(H_ERROR_READ, H_PATH_SINGLE);
-		return error;
-	}
-
 	single_table = h_irs_alloc(single_size);
-	if (single_table == NULL)
-	{
-		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_SINGLE);
-		free(single_str);
-		return error;
-	}
 
-	error = h_irs_parse(single_table, single_str, h_irs_build);
-	if (error)
-	{
-		free(single_str);
-		free(single_table);
-		return error;
-	}
-
-	free(single_str);
+	h_irs_parse(single_table, single_str, h_irs_build);
 
 	/*
 	 * IRS: Tabela II - Casado Unico Titular
@@ -64,32 +43,9 @@ s_error* main_menu()
 	 */
 	unique_holder_size = 0;
 	unique_holder_str = h_util_file_read(H_PATH_UNIQUE_HOLDER, &unique_holder_size);
-	if (unique_holder_str == NULL)
-	{
-		error = h_error_create(H_ERROR_READ, H_PATH_UNIQUE_HOLDER);
-		free(single_table);
-		return error;
-	}
-
 	unique_holder_table = h_irs_alloc(unique_holder_size);
-	if (unique_holder_table == NULL)
-	{
-		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_UNIQUE_HOLDER);
-		free(single_table);
-		free(unique_holder_str);
-		return error;
-	}
 
-	error = h_irs_parse(unique_holder_table, unique_holder_str, h_irs_build);
-	if (error)
-	{
-		free(single_table);
-		free(unique_holder_str);
-		free(unique_holder_table);
-		return error;
-	}
-
-	free(unique_holder_str);
+	h_irs_parse(unique_holder_table, unique_holder_str, h_irs_build);
 
 	/*
 	 * IRS: Tabela III - Casado Dois Titulares
@@ -97,73 +53,19 @@ s_error* main_menu()
 	 */
 	two_holders_size = 0;
 	two_holders_str = h_util_file_read(H_PATH_TWO_HOLDERS, &two_holders_size);
-	if (two_holders_str == NULL)
-	{
-		error = h_error_create(H_ERROR_READ, H_PATH_TWO_HOLDERS);
-		free(single_table);
-		free(unique_holder_table);
-		return error;
-	}
-
 	two_holders_table = h_irs_alloc(two_holders_size);
-	if (two_holders_table == NULL)
-	{
-		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_TWO_HOLDERS);
-		free(single_table);
-		free(unique_holder_table);
-		free(two_holders_str);
-		return error;
-	}
 
-	error = h_irs_parse(two_holders_table, two_holders_str, h_irs_build);
-	if (error)
-	{
-		free(single_table);
-		free(unique_holder_table);
-		free(two_holders_str);
-		free(two_holders_table);
-		return error;
-	}
-
-	free(two_holders_str);
+	h_irs_parse(two_holders_table, two_holders_str, h_irs_build);
 
 	/*
 	 * Segurança Social
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
+	seg_social_size = 0;
 	seg_social_str = h_util_file_read(H_PATH_SEG_SOCIAL, &seg_social_size);
-	if (seg_social_str == NULL)
-	{
-		error = h_error_create(H_ERROR_READ, H_PATH_SEG_SOCIAL);
-		free(single_table);
-		free(unique_holder_table);
-		free(two_holders_table);
-		return error;
-	}
-
 	seg_social_table = h_seg_social_alloc(seg_social_size);
-	if (seg_social_table == NULL)
-	{
-		error = h_error_create(H_ERROR_ALLOCATION, H_PATH_TWO_HOLDERS);
-		free(single_table);
-		free(unique_holder_table);
-		free(two_holders_table);
-		free(seg_social_str);
-		return error;
-	}
 
-	error = h_seg_social_parse(seg_social_table, seg_social_str);
-	if (error)
-	{
-		free(single_table);
-		free(unique_holder_table);
-		free(two_holders_table);
-		free(seg_social_str);
-		free(seg_social_table);
-		return error;
-	}
-
-	free(seg_social_str);
+	h_seg_social_parse(seg_social_table, seg_social_str);
 
 	/*
 	 * Gestão de Funcionários
@@ -216,41 +118,10 @@ s_error* main_menu()
 			h_menu_employees(employees_table);
 			break;
 		case 9:
-			error = h_irs_write(single_table, H_PATH_SINGLE);
-			if (error)
-			{
-				free(single_table);
-				free(unique_holder_table);
-				free(two_holders_table);
-				return error;
-			}
-			error = h_irs_write(unique_holder_table, H_PATH_UNIQUE_HOLDER);
-			if (error)
-			{
-				free(single_table);
-				free(unique_holder_table);
-				free(two_holders_table);
-				free(seg_social_table);
-				return error;
-			}
-			error = h_irs_write(two_holders_table, H_PATH_TWO_HOLDERS);
-			if (error)
-			{
-				free(single_table);
-				free(unique_holder_table);
-				free(two_holders_table);
-				free(seg_social_table);
-				return error;
-			}
-			error = h_seg_social_write(seg_social_table, H_PATH_SEG_SOCIAL);
-			if (error)
-			{
-				free(single_table);
-				free(unique_holder_table);
-				free(two_holders_table);
-				free(seg_social_table);
-				return error;
-			}
+			h_irs_write(single_table, H_PATH_SINGLE);
+			h_irs_write(unique_holder_table, H_PATH_UNIQUE_HOLDER);
+			h_irs_write(two_holders_table, H_PATH_TWO_HOLDERS);
+			h_seg_social_write(seg_social_table, H_PATH_SEG_SOCIAL);
 			fprintf(stdout, GREEN("[!] Guardado com sucesso\n"));
 			break;
 		default:
@@ -258,24 +129,19 @@ s_error* main_menu()
 		}
 	} while (op != 0);
 
-	free(single_table);
-	free(unique_holder_table);
-	free(two_holders_table);
-
-	return NULL;
+	free(single_str);
+	//free(unique_holder_str);
+	//free(two_holders_str);
+	//free(seg_social_str);
+	h_irs_free(single_table);
+	h_irs_free(unique_holder_table);
+	h_irs_free(two_holders_table);
+	h_seg_social_free(seg_social_table);
 }
 
 int main()
 {
-	s_error* error;
-
-	error = main_menu();
-	if (error)
-	{
-		h_error_print(error);
-		h_error_free(error);
-		return -1;
-	}
+	main_menu();
 
 	return 0;
 }

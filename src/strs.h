@@ -2,8 +2,8 @@
  * Created by Micael Dias on 10/12/20.
  */
 
-#ifndef _STRS_H_
-#define _STRS_H_
+#ifndef STRS_H
+#define STRS_H
 
 #include "colors.h"
 
@@ -68,6 +68,23 @@
 "*                                    *\n" \
 "**************************************\n")
 
+#define H_STRS_PROC MAGENTA( \
+"********************************\n" \
+"*     -| Processamento |-      *\n" \
+"*                              *\n" \
+"* 1. Criar mês                 *\n" \
+"* 2. Visualizar                *\n" \
+"* 3. Adicionar detalhes        *\n" \
+"* 4. Editar detalhes           *\n" \
+"* 5. Eliminar detalhes         *\n" \
+"* 6. Processar mês             *\n" \
+"* 7. Exportar mês para CSV     *\n" \
+"* 8. Guardar                   *\n" \
+"* 9. Importar mês              *\n" \
+"* 0. Sair                      *\n" \
+"*                              *\n" \
+"********************************\n")
+
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
 "***********************************************************\n" \
 "* Linha | Remuneração     | Numero de Dependentes         *\n" \
@@ -92,4 +109,10 @@
 "*                                    *\n" \
 "************************************* \n")
 
-#endif //_STRS_H_
+#define H_STRS_PROC_TABLE_HEADER BLUE( \
+"********************************************************\n" \
+"* Linha | Codigo | Dias      | Meios | Fins   | Faltas *\n" \
+"*       | Func   | Completos | Dias  | Semana |        *\n" \
+"********************************************************\n")
+
+#endif //STRS_H

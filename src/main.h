@@ -2,18 +2,17 @@
  * Created by Micael Dias on 17/12/20.
  */
 
-#ifndef _MAIN_H_
-#define _MAIN_H_
+#ifndef MAIN_H
+#define MAIN_H
 
 #include "util.h"
 #include "irs.h"
-#include "seg_social.h"
-#include "employees.h"
+#include "iss.h"
 #include "menu.h"
 #include "strs.h"
 #include "paths.h"
 #include "error.h"
 
-s_error* main_menu();
+void main_menu();
 
-#endif //_MAIN_H_
+#endif //MAIN_H
