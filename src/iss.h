@@ -9,7 +9,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "iss.h"
 #include "util.h"
 
 typedef struct
