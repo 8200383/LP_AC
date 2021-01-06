@@ -88,15 +88,13 @@ int h_util_get_int(int min, int max, const char* msg)
 {
 	int num;
 
-	fprintf(stdout, YELLOW("%s"), msg);
-	fprintf(stdout, H_STRS_PROMPT_NEW_LINE);
-	h_util_clean_buffer();
+	fprintf(stdout, YELLOW("%s "), msg);
 
 	while (scanf("%d", &num) != 1 || num < min || num > max)
 	{
-		puts(H_STRS_INVALID_IMPUT);
+		fprintf(stdout, H_STRS_INVALID_IMPUT);
 		h_util_clean_buffer();
-		fprintf(stdout, RED("%s"), msg);
+		fprintf(stdout, RED("%s "), msg);
 	}
 	h_util_clean_buffer();
 	return num;

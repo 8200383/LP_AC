@@ -5,7 +5,7 @@
 
 void main_menu()
 {
-	unsigned int op;
+	int op;
 
 	int single_size;
 	int unique_holder_size;
@@ -79,8 +79,7 @@ void main_menu()
 	do
 	{
 		fprintf(stdout, "%s", H_STRS_MENU);
-		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
-		scanf(" %u", &op);
+		op = h_util_get_int(0, 9, "Opção?");
 
 		switch (op)
 		{
