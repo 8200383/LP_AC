@@ -44,7 +44,7 @@ typedef struct
 /**
  * Allocs an array of structs (s_arr_spreadsheet),
  * containing the month (enum) and details (s_details) for the month
- * @return s_spreadsheet Returns a ptr to an struct of s_spreadsheet returns NULL if failure
+ * @return s_spreadsheet Returns a ptr to a malloced struct of s_spreadsheet returns NULL if failure
  */
 s_spreadsheet* h_proc_alloc(int initial_capacity);
 
@@ -52,7 +52,7 @@ s_spreadsheet* h_proc_alloc(int initial_capacity);
  * Opens a binary file in read mode onto a spreadsheet
  * @param filename Path of the file
  * @param month Month to import
- * @return s_spreadsheet Returns a ptr to an struct of s_spreadsheet returns NULL if failure
+ * @return s_spreadsheet Returns a ptr to a malloced struct of s_spreadsheet returns NULL if failure
  */
 s_spreadsheet* h_proc_open(const char* filename, e_month month);
 
