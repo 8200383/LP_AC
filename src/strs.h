@@ -2,8 +2,8 @@
  * Created by Micael Dias on 10/12/20.
  */
 
-#ifndef _STRS_H_
-#define _STRS_H_
+#ifndef STRS_H
+#define STRS_H
 
 #include "colors.h"
 
@@ -20,6 +20,7 @@
 "*                             *\n" \
 "* 1. Tabelas Retenção IRS     *\n" \
 "* 2. Tabelas Segurança Social *\n" \
+"* 3. Gestão de Funcionários   *\n" \
 "* 9. Guardar                  *\n" \
 "* 0. Sair                     *\n" \
 "*                             *\n" \
@@ -67,10 +68,51 @@
 "*                                    *\n" \
 "**************************************\n")
 
+#define H_STRS_PROC MAGENTA( \
+"********************************\n" \
+"*     -| Processamento |-      *\n" \
+"*                              *\n" \
+"* 1. Criar mês                 *\n" \
+"* 2. Visualizar                *\n" \
+"* 3. Adicionar detalhes        *\n" \
+"* 4. Editar detalhes           *\n" \
+"* 5. Eliminar detalhes         *\n" \
+"* 6. Processar mês             *\n" \
+"* 7. Exportar mês para CSV     *\n" \
+"* 8. Guardar                   *\n" \
+"* 9. Importar mês              *\n" \
+"* 0. Sair                      *\n" \
+"*                              *\n" \
+"********************************\n")
+
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
 "***********************************************************\n" \
 "* Linha | Remuneração     | Numero de Dependentes         *\n" \
 "*       | Mensal em €     | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
 "***********************************************************\n")
 
-#endif //_STRS_H_
+#define H_STRS_EMPLOYEES_TABLE_HEADER GREEN( \
+"*****************************************************************************************************\n" \
+"* Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  *\n" \
+"*     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída *\n" \
+"*****************************************************************************************************\n")
+
+#define H_STRS_EMPLOYEES_MENU CYAN ( \
+"************************************ *\n" \
+"* -| Menu Gestão de Funcionários |-  *\n" \
+"*                                    *\n" \
+"* 1. Visualizar                      *\n" \
+"* 2. Adicionar                       *\n" \
+"* 3. Remover                         *\n" \
+"* 4. Editar                          *\n" \
+"* 0. Voltar ao menu anterior         *\n" \
+"*                                    *\n" \
+"************************************* \n")
+
+#define H_STRS_PROC_TABLE_HEADER BLUE( \
+"*********************************************\n" \
+"* Cod | Dias      | Meios | Fins   | Faltas *\n" \
+"*     | Completos | Dias  | Semana |        *\n" \
+"*********************************************\n")
+
+#endif //STRS_H
