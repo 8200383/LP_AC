@@ -204,7 +204,7 @@ void h_employees_parse(s_arr_employees* array, char* str)
 				strcpy(array->employees[array->used].last_name, str + offset);
 			}
 
-			if (h_calendar_check_str(str + offset) == 1 && column == COL_BIRTHDAY)
+			if (column == COL_BIRTHDAY)
 			{
 				array->employees[array->used].birthday = h_calendar_init(str + offset);
 
@@ -212,7 +212,7 @@ void h_employees_parse(s_arr_employees* array, char* str)
 					return;
 			}
 
-			if (h_calendar_check_str(str + offset) == 1 && column == COL_ENTRY_DATE)
+			if (column == COL_ENTRY_DATE)
 			{
 				array->employees[array->used].entry_date = h_calendar_init(str + offset);
 
@@ -220,7 +220,7 @@ void h_employees_parse(s_arr_employees* array, char* str)
 					return;
 			}
 
-			if (h_calendar_check_str(str + offset) == 1 && column == COL_LEAVING_DATE)
+			if (column == COL_LEAVING_DATE)
 			{
 				array->employees[array->used].leaving_date = h_calendar_init(str + offset);
 
