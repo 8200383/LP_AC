@@ -94,6 +94,9 @@ void main_menu()
 		case 3:
 			h_menu_employees(employees_table);
 			break;
+		case 4:
+			h_menu_processing(single_table, unique_holder_table, two_holders_table, seg_social_table);
+			break;
 		case 9:
 			h_irs_write(single_table, H_PATH_SINGLE);
 			h_irs_write(unique_holder_table, H_PATH_UNIQUE_HOLDER);
