@@ -9,7 +9,6 @@
 #include "error.h"
 #include "util.h"
 
-#define PHONE_NUMBER_SIZE 9
 #define MAX_VALUE 9999
 
 typedef enum
@@ -38,12 +37,12 @@ typedef struct
 {
 	int code;
 	int number_dependents;
-	char role;
+	char* role;
 	char* first_name;
 	char* last_name;
-	char phone[10];
+	int phone_number;
 	e_marital_status marital_status;
-	s_date *birthday, *entry_date, *leaving_date;
+	s_date* birthday, * entry_date, * leaving_date;
 } s_employee_record;
 
 typedef struct
@@ -53,16 +52,16 @@ typedef struct
 	int max_capacity;
 } s_arr_employees;
 
-char* get_phone_number();
+int h_employees_randomize();
 
-int random_number();
+int h_employees_ask_status();
 
-int ask_status();
-
-void register_employee(s_employee_record* employee);
+void h_employees_add(s_arr_employees* array);
 
 s_arr_employees* h_employees_alloc(int initial_capacity);
 
-s_error* h_employees_parse(s_arr_employees* array, char* str);
+void h_employees_parse(s_arr_employees* array, char* str);
+
+void h_employees_print(s_arr_employees* array);
 
 #endif //EMPLOYEES_H

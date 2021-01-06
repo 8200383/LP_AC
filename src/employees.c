@@ -5,6 +5,8 @@
 
 #include "employees.h"
 #include "util.h"
+#include "colors.h"
+#include "strs.h"
 
 int first_name_buffer_size = 64;
 int last_name_buffer_size = 64;
@@ -30,55 +32,33 @@ s_arr_employees* h_employees_alloc(int initial_capacity)
 
 	for (i = 0; i <= array->max_capacity; i++)
 	{
-		array->employees[i].code = 0;
-		array->employees[i].number_dependents = 0;
-		array->employees[i].role = '\0';
-		array->employees[i].marital_status = SINGLE;
+		array->employees[i].role = calloc(1, sizeof(char));
+		if (array->employees[i].role == NULL)
+			return NULL;
 
-		array->employees[i].first_name = malloc(first_name_buffer_size * sizeof(char));
+		array->employees[i].first_name = calloc(first_name_buffer_size, sizeof(char));
 		if (array->employees[array->used].first_name == NULL)
 			return NULL;
 
-		memset(array->employees[i].first_name, '\0', first_name_buffer_size);
-
-		array->employees[i].last_name = malloc(last_name_buffer_size * sizeof(char));
+		array->employees[i].last_name = calloc(last_name_buffer_size, sizeof(char));
 		if (array->employees[array->used].last_name == NULL)
 			return NULL;
-
-		memset(array->employees[i].last_name, '\0', last_name_buffer_size);
-
-
-		for (j = 0; j < 10; j++)
-			array->employees[i].phone[j] = '\0';
 	}
 
 	return array;
 }
 
-char* get_phone_number()
-{
-	char* phone_number;
-
-	phone_number = malloc(PHONE_NUMBER_SIZE + 1);
-	if (phone_number == NULL)
-		return NULL;
-
-	fgets(phone_number, PHONE_NUMBER_SIZE + 1, stdin);
-
-	return phone_number;
-}
-
-int random_number()
+int h_employees_randomize()
 {
 	srand(1);
 
 	return rand() % MAX_VALUE;
 }
 
-int ask_status()
+int h_employees_ask_status()
 {
 
-	switch (h_util_get_int(0, 3, "Civil Status:"))
+	switch (h_util_get_int(0, 3, "Estado Civil: (0-3)\n0 - Solteiro\n1 - Casado\n2 - Divorciado\n3 - Viuvo"))
 	{
 	case 0:
 		return SINGLE;
@@ -95,14 +75,68 @@ int ask_status()
 	return SINGLE;
 }
 
-s_error* h_employees_parse(s_arr_employees* array, char* str)
+void h_employees_add(s_arr_employees* array)
+{
+	if (array->used == array->max_capacity)
+	{
+		array->max_capacity *= 2;
+		array->employees = realloc(array->employees, array->max_capacity * sizeof(s_employee_record));
+		if (array->employees == NULL)
+			return;
+	}
+
+	array->used++;
+	array->employees[array->used].code = h_employees_randomize();
+
+	array->employees[array->used].entry_date = h_calendar_get_date("Data de entrada? ");
+
+	array->employees[array->used].birthday = h_calendar_get_date("Data de nascimento? ");
+
+	array->employees[array->used].leaving_date = NULL;
+	array->employees[array->used].marital_status = h_employees_ask_status();
+
+	printf("Primeiro nome: \n");
+	scanf("%s", array->employees[array->used].first_name);
+	printf("Último nome: \n");
+	scanf("%s", array->employees[array->used].last_name);
+	printf("Cargo: \n");
+	scanf("%s", array->employees[array->used].role);
+
+	array->employees[array->used].number_dependents = h_util_get_int(0, 5, "Numero dependentes: ");
+	array->employees[array->used].phone_number = h_util_get_int(1, 9, "Numero Telefone: s");
+}
+void h_employees_print(s_arr_employees* array)
+{
+	int i;
+
+	if (array->used == 0)
+	{
+		puts(RED("Tabela vazia"));
+		return;
+	}
+
+	printf(H_STRS_EMPLOYEES_TABLE_HEADER);
+	for (i = 0; i <= array->used; i++)
+	{
+		printf("[%d] %d | %s | %s | %s | %d \n",
+			i,
+			array->employees[i].code,
+			array->employees[i].first_name,
+			array->employees[i].last_name,
+			array->employees[i].role,
+			array->employees[i].phone_number
+		);
+	}
+}
+
+void h_employees_parse(s_arr_employees* array, char* str)
 {
 	int i;
 	int offset;
 	int column;
 
 	if (array == NULL || str == NULL)
-		return h_error_create(H_ERROR_PARSING, "h_employees_parse()");
+		return;
 
 	offset = -1;
 	column = 0;
@@ -122,13 +156,12 @@ s_error* h_employees_parse(s_arr_employees* array, char* str)
 			if (h_util_str_is_digit(str + offset) == 1 && column == COL_NUM_DEPENDENTS)
 				array->employees[array->used].number_dependents = atoi(str + offset);
 
-
 			if (column == COL_ROLE) // TODO: check if is upper
-				strcpy(&array->employees[array->used].role, str + offset);
+				strcpy(array->employees[array->used].role, str + offset);
 
 			// Phone number 9 digits
 			if (h_util_str_is_digit(str + offset) == 9 && column == COL_PHONE_NUMBER)
-				strcpy(array->employees[array->used].phone, str + offset);
+				array->employees[array->used].phone_number = atoi(str + offset);
 
 			if (h_util_strequal(str + offset, "MARRIED") && column == COL_MARITAL_STATUS)
 				array->employees[array->used].marital_status = MARRIED;
@@ -147,7 +180,7 @@ s_error* h_employees_parse(s_arr_employees* array, char* str)
 						realloc(array->employees[array->used].first_name, first_name_buffer_size * 2);
 
 					if (array->employees[array->used].first_name == NULL)
-						return h_error_create(H_ERROR_ALLOCATION, "Cannot reallocate first_name");
+						return;
 
 					first_name_buffer_size *= 2;
 				}
@@ -163,7 +196,7 @@ s_error* h_employees_parse(s_arr_employees* array, char* str)
 						realloc(array->employees[array->used].last_name, last_name_buffer_size * 2);
 
 					if (array->employees[array->used].last_name == NULL)
-						return h_error_create(H_ERROR_ALLOCATION, "Cannot reallocate first_name");
+						return;
 
 					last_name_buffer_size *= 2;
 				}
@@ -175,7 +208,7 @@ s_error* h_employees_parse(s_arr_employees* array, char* str)
 				array->employees[array->used].birthday = h_calendar_init(str + offset);
 
 				if (array->employees[array->used].birthday == NULL)
-					return h_error_create(H_ERROR_ALLOCATION, "Cannot initialize birthday");
+					return;
 			}
 
 			if (h_calendar_check_str(str + offset) == 1 && column == COL_ENTRY_DATE)
@@ -183,7 +216,7 @@ s_error* h_employees_parse(s_arr_employees* array, char* str)
 				array->employees[array->used].entry_date = h_calendar_init(str + offset);
 
 				if (array->employees[array->used].entry_date == NULL)
-					return h_error_create(H_ERROR_ALLOCATION, "Cannot initialize entry_date");
+					return;
 			}
 
 			if (h_calendar_check_str(str + offset) == 1 && column == COL_LEAVING_DATE)
@@ -191,7 +224,7 @@ s_error* h_employees_parse(s_arr_employees* array, char* str)
 				array->employees[array->used].leaving_date = h_calendar_init(str + offset);
 
 				if (array->employees[array->used].leaving_date == NULL)
-					return h_error_create(H_ERROR_ALLOCATION, "Cannot initialize leaving_date");
+					return;
 			}
 
 			column++;
@@ -201,6 +234,4 @@ s_error* h_employees_parse(s_arr_employees* array, char* str)
 		if (str[i] == '\n')
 			array->used++;
 	}
-
-	return NULL;
 }
