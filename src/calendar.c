@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include "calendar.h"
+#include "colors.h"
 
 s_date* h_calendar_alloc()
 {
@@ -24,20 +25,27 @@ s_date* h_calendar_alloc()
 	return date;
 }
 
-s_date* h_calendar_get_date()
+s_date* h_calendar_get_date(const char* msg)
 {
-	int day, month, year;
+	int day, month, year, error;
 	s_date* date;
 
 	date = h_calendar_alloc();
 	if (date == NULL)
 		return NULL;
 
-	printf("Date: DD/MM/YYYY\n");
-	scanf("%d/%d/%d", &day, &month, &year);
+	error = 0;
+	do {
+		printf("%s (DD/MM/YYYY)\n", msg);
+		scanf("%d/%d/%d", &day, &month, &year);
 
-	if (h_calendar_check_date(day, month, year) == 0)
-		return NULL;
+		if (h_calendar_check_date(day, month, year) == 0)
+			error = 1;
+
+		if (error == 1)
+			puts(RED("Data incorreta"));
+
+	} while (error == 1);
 
 	date->year = year;
 	date->month = month;

@@ -3,8 +3,8 @@
  * Edited by Micael Dias on 27/12/2020
  */
 
-#ifndef CALENDAR_H_
-#define CALENDAR_H_
+#ifndef CALENDAR_H
+#define CALENDAR_H
 
 typedef struct
 {
@@ -29,11 +29,11 @@ typedef enum
 
 s_date* h_calendar_alloc();
 s_date* h_calendar_init(const char* str);
-s_date* h_calendar_get_date();
+s_date* h_calendar_get_date(const char* str);
 int h_calendar_check_str(const char* str);
 int h_calendar_check_date(int day, int month, int year);
 int h_calendar_check_leap_year(int year);
 const char* h_calendar_str_from_month(e_month month);
 
 
-#endif //_ALENDAR_H_
+#endif //CALENDAR_H
