@@ -311,8 +311,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 	fprintf(stdout, YELLOW("[!] Ficheiro exportado com sucesso\n"));
 }
 
-void
-h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_seg_social* ss_array, s_arr_employees* employees_array)
+void h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_seg_social* ss_array, s_arr_employees* employees_array)
 {
 	int i;
 
@@ -330,7 +329,7 @@ h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_seg_socia
 	if (irs_array->used == 0 || ss_array->used == 0 || employees_array->used == 0)
 		return;
 
-	for (i = 0; i <= spreadsheet->used; i++)
+	for (i = 0; i < spreadsheet->used; i++)
 	{
 		//Falta definir as constantes do sálario de acordo com o cargo do trabalhador.
 		base_salary = (float)spreadsheet->details[i].full_days * 40 +
