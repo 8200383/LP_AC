@@ -219,6 +219,7 @@ void h_employees_pair(s_employee_record* employee, char* str, int column)
 
 	if (column == COL_LEAVING_DATE)
 	{
+		printf("%s", str);
 		sscanf(str, "%d/%d/%d",
 			&employee->leaving_date->day,
 			&employee->leaving_date->month,
@@ -246,6 +247,7 @@ void h_employees_parse(s_arr_employees* array, const char* str)
 				buffer[k] = str[j];
 			}
 
+			printf("%s", buffer);
 			h_employees_pair(&array->employees[array->used], buffer, column);
 			memset(buffer, 0, CSV_BUFFER);
 			delimiter = i;
