@@ -6,56 +6,106 @@
 #include "strs.h"
 #include "util.h"
 #include "proc.h"
+#include "paths.h"
 
 void h_menu_irs(
 	s_arr_irs* single_table,
 	s_arr_irs* unique_holder_table,
 	s_arr_irs* two_holders_table)
 {
-	unsigned int op;
+	int op;
 
-	do {
+	int single_size = 0;
+	char* single_str;
+
+	int unique_holder_size = 0;
+	char* unique_holder_str;
+
+	int two_holders_size = 0;
+	char* two_holders_str;
+
+	do
+	{
 		fprintf(stdout, H_STRS_IRS_MENU);
 		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
-		scanf(" %u", &op);
+		op = h_util_get_int(0, 18, "Opção?");
 
 		switch (op)
 		{
 		case 1:
-			h_irs_print(single_table);
+			single_str = h_util_file_read(H_PATH_SINGLE, &single_size);
+			if (single_str == NULL)
+			{
+				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_SINGLE);
+				return;
+			}
+			h_irs_parse(single_table, single_str, h_irs_build);
+			free(single_str);
 			break;
 		case 2:
-			h_irs_edit(single_table, h_util_get_int(0, 100, H_STRS_EDIT));
+			h_irs_print(single_table);
 			break;
 		case 3:
-			h_irs_add(single_table);
+			h_irs_edit(single_table);
 			break;
 		case 4:
-			h_irs_delete(single_table, h_util_get_int(0, 100, H_STRS_DELETE));
+			h_irs_add(single_table);
 			break;
 		case 5:
-			h_irs_print(unique_holder_table);
+			h_irs_delete(single_table);
 			break;
 		case 6:
-			h_irs_edit(unique_holder_table, h_util_get_int(0, 100, H_STRS_EDIT));
+			h_irs_write(single_table, H_PATH_SINGLE);
 			break;
 		case 7:
-			h_irs_add(unique_holder_table);
+			unique_holder_str = h_util_file_read(H_PATH_UNIQUE_HOLDER, &unique_holder_size);
+			if (unique_holder_str == NULL)
+			{
+				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_UNIQUE_HOLDER);
+				return;
+			}
+			h_irs_parse(unique_holder_table, unique_holder_str, h_irs_build);
+			free(unique_holder_str);
 			break;
 		case 8:
-			h_irs_delete(unique_holder_table, h_util_get_int(0, 100, H_STRS_DELETE));
+			h_irs_print(single_table);
 			break;
 		case 9:
-			h_irs_print(two_holders_table);
+			h_irs_edit(single_table);
 			break;
 		case 10:
-			h_irs_edit(two_holders_table, h_util_get_int(0, 100, H_STRS_EDIT));
+			h_irs_add(single_table);
 			break;
 		case 11:
-			h_irs_add(two_holders_table);
+			h_irs_delete(single_table);
 			break;
 		case 12:
-			h_irs_delete(two_holders_table, h_util_get_int(0, 100, H_STRS_DELETE));
+			h_irs_write(unique_holder_table, H_PATH_UNIQUE_HOLDER);
+			break;
+		case 13:
+			two_holders_str = h_util_file_read(H_PATH_TWO_HOLDERS, &two_holders_size);
+			if (unique_holder_str == NULL)
+			{
+				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_TWO_HOLDERS);
+				return;
+			}
+			h_irs_parse(two_holders_table, two_holders_str, h_irs_build);
+			free(two_holders_str);
+			break;
+		case 14:
+			h_irs_print(single_table);
+			break;
+		case 15:
+			h_irs_edit(single_table);
+			break;
+		case 16:
+			h_irs_add(single_table);
+			break;
+		case 17:
+			h_irs_delete(single_table);
+			break;
+		case 18:
+			h_irs_write(two_holders_table, H_PATH_TWO_HOLDERS);
 			break;
 		case 0:
 			break;
@@ -70,7 +120,8 @@ void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 {
 	unsigned int op;
 
-	do {
+	do
+	{
 		fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
 		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
 		scanf(" %u", &op);
@@ -183,7 +234,8 @@ void h_menu_employees(s_arr_employees* employees)
 {
 	int op;
 
-	do {
+	do
+	{
 		fprintf(stdout, H_STRS_EMPLOYEES_MENU);
 		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
 		scanf(" %u", &op);

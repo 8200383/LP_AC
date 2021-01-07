@@ -11,6 +11,8 @@
 #define CSV_NEW_LINE_DELIMITER '\n'
 #define CSV_BUFFER 50
 #define MAX_DEPENDENT_NUMBER 6
+#define MAX_REMUNERATION 10000.0f
+#define MAX_PERCENTAGE 100.0f
 
 typedef enum
 {
@@ -39,10 +41,10 @@ void h_irs_free(s_arr_irs* array);
 void h_irs_parse(s_arr_irs* array, const char* str, h_irs_pair_func pair_func);
 void h_irs_write(s_arr_irs* array, const char* path);
 void h_irs_add(s_arr_irs* array);
-void h_irs_delete(s_arr_irs* array, int index);
+void h_irs_delete(s_arr_irs* array);
 void h_irs_print_line(s_irs data);
 void h_irs_print(s_arr_irs* array);
-void h_irs_edit(s_arr_irs* array, int index);
+void h_irs_edit(s_arr_irs* array);
 void h_irs_build(s_irs* data, char* str, int* dependent);
 
 #endif //IRS_H
