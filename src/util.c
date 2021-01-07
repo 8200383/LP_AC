@@ -57,7 +57,7 @@ char* h_util_file_read(const char* path, int* size)
 		}
 	}
 
-	buffer[counter - 1] = '\0';
+	buffer[counter] = '\0';
 	return buffer;
 }
 
