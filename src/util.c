@@ -57,7 +57,7 @@ char* h_util_file_read(const char* path, int* size)
 		}
 	}
 
-	buffer[counter - 1] = '\0';
+	buffer[counter] = '\0';
 	return buffer;
 }
 
@@ -71,14 +71,13 @@ char h_util_get_alphabetical_char(const char* msg)
 {
 	char c;
 
-	h_util_clean_buffer();
-	fprintf(stdout, YELLOW("%s"), msg);
+	fprintf(stdout, YELLOW("%s "), msg);
 
 	while (scanf("%c", &c) != 1 || !isalpha(c))
 	{
-		puts(H_STRS_INVALID_IMPUT);
+		fprintf(stdout, H_STRS_INVALID_IMPUT);
 		h_util_clean_buffer();
-		fprintf(stdout, YELLOW("%s"), msg);
+		fprintf(stdout, RED("%s "), msg);
 	}
 
 	return c;
