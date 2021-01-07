@@ -134,13 +134,12 @@ void h_menu_irs(
 
 void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 {
-	unsigned int op;
+	int op;
 
 	do
 	{
 		fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
-		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
-		scanf(" %u", &op);
+		op = h_util_get_int(0, 4, "Opção?");
 
 		switch (op)
 		{
@@ -169,17 +168,18 @@ void h_menu_processing(
 	s_arr_irs* single_table,
 	s_arr_irs* unique_holder_table,
 	s_arr_irs* two_holders_table,
-	s_arr_seg_social* seg_social_table
+	s_arr_seg_social* seg_social_table,
+	s_arr_employees* employees
 )
 {
 	int op;
 	s_spreadsheet* spreadsheet = NULL;
 
+
+	fprintf(stdout, H_STRS_PROC);
 	do
 	{
-		fprintf(stdout, H_STRS_PROC);
-		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
-		scanf(" %u", &op);
+		op = h_util_get_int(0, 10, "Opção?");
 
 		switch (op)
 		{
@@ -205,7 +205,7 @@ void h_menu_processing(
 			h_proc_print(spreadsheet);
 			break;
 		case 3:
-			h_proc_add(spreadsheet);
+			h_proc_add(spreadsheet, employees);
 			break;
 		case 4:
 			h_proc_edit(spreadsheet);
@@ -249,11 +249,10 @@ void h_menu_employees(s_arr_employees* employees)
 {
 	int op;
 
+	fprintf(stdout, H_STRS_EMPLOYEES_MENU);
 	do
 	{
-		fprintf(stdout, H_STRS_EMPLOYEES_MENU);
-		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
-		scanf(" %u", &op);
+		op = h_util_get_int(0, 5, "Opção?");
 
 		switch (op)
 		{
