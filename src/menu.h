@@ -1,7 +1,3 @@
-/* 
- * Created by Micael Dias on 14/12/20.
- */
-
 #ifndef MENU_H
 #define MENU_H
 
