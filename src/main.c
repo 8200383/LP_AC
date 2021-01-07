@@ -1,21 +1,22 @@
 #include <stdio.h>
 
-#include "main.h"
+#include "util.h"
+#include "irs.h"
+#include "iss.h"
+#include "menu.h"
+#include "strs.h"
+#include "paths.h"
 #include "proc.h"
 
-void main_menu()
+#define INITIAL_CAPACITY 50
+
+int main_menu()
 {
 	int op;
 
-	int single_size;
-	int unique_holder_size;
-	int two_holders_size;
 	int seg_social_size;
 	int employees_size;
 
-	char* single_str;
-	char* unique_holder_str;
-	char* two_holders_str;
 	char* seg_social_str;
 	char* employees_str;
 
@@ -26,34 +27,27 @@ void main_menu()
 	s_arr_employees* employees_table;
 
 	/*
-	 * IRS: Tabela I - Não Casado
+	 * IRS
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
-	single_size = 0;
-	single_str = h_util_file_read(H_PATH_SINGLE, &single_size);
-	single_table = h_irs_alloc(single_size);
+	single_table = h_irs_alloc(INITIAL_CAPACITY);
+	if (single_table == NULL)
+		return -1;
 
-	h_irs_parse(single_table, single_str, h_irs_build);
+	unique_holder_table = h_irs_alloc(INITIAL_CAPACITY);
+	if (unique_holder_table == NULL)
+	{
+		free(single_table);
+		return -1;
+	}
 
-	/*
-	 * IRS: Tabela II - Casado Unico Titular
-	 * ---------------------------------------------------------------------------------------------------------
-	 */
-	unique_holder_size = 0;
-	unique_holder_str = h_util_file_read(H_PATH_UNIQUE_HOLDER, &unique_holder_size);
-	unique_holder_table = h_irs_alloc(unique_holder_size);
-
-	h_irs_parse(unique_holder_table, unique_holder_str, h_irs_build);
-
-	/*
-	 * IRS: Tabela III - Casado Dois Titulares
-	 * ---------------------------------------------------------------------------------------------------------
-	 */
-	two_holders_size = 0;
-	two_holders_str = h_util_file_read(H_PATH_TWO_HOLDERS, &two_holders_size);
-	two_holders_table = h_irs_alloc(two_holders_size);
-
-	h_irs_parse(two_holders_table, two_holders_str, h_irs_build);
+	two_holders_table = h_irs_alloc(INITIAL_CAPACITY);
+	if (two_holders_table == NULL)
+	{
+		free(single_table);
+		free(unique_holder_table);
+		return -1;
+	}
 
 	/*
 	 * Segurança Social
@@ -96,9 +90,7 @@ void main_menu()
 			h_menu_processing(single_table, unique_holder_table, two_holders_table, seg_social_table);
 			break;
 		case 9:
-			h_irs_write(single_table, H_PATH_SINGLE);
-			h_irs_write(unique_holder_table, H_PATH_UNIQUE_HOLDER);
-			h_irs_write(two_holders_table, H_PATH_TWO_HOLDERS);
+			// TODO: tem de ir pra tabela da iss
 			h_seg_social_write(seg_social_table, H_PATH_SEG_SOCIAL);
 			fprintf(stdout, GREEN("[!] Guardado com sucesso\n"));
 			break;
@@ -107,20 +99,15 @@ void main_menu()
 		}
 	} while (op != 0);
 
-	//free(single_str);
-	//free(unique_holder_str);
-	//free(two_holders_str);
-	//free(seg_social_str);
-	//free(employees_str);
 	h_irs_free(single_table);
 	h_irs_free(unique_holder_table);
 	h_irs_free(two_holders_table);
 	h_seg_social_free(seg_social_table);
+
+	return 0;
 }
 
 int main()
 {
-	main_menu();
-
-	return 0;
+	return main_menu();
 }

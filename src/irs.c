@@ -128,6 +128,12 @@ void h_irs_print(s_arr_irs* array)
 {
 	int i;
 
+	if (array->used == 0)
+	{
+		puts(RED("[!] Tabela vazia"));
+		return;
+	}
+
 	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
 	for (i = 0; i < array->used; i++)
 	{
@@ -182,49 +188,50 @@ void h_irs_add(s_arr_irs* array)
 	}
 }
 
-void h_irs_edit(s_arr_irs* array, int index)
+void h_irs_edit(s_arr_irs* array)
 {
-	int j;
+	int index;
+	int i;
+	char op;
 
-	if (array->used < index)
+	if (array->used == 0)
 	{
-		puts(RED("[!] Linha não existe"));
+		puts(RED("[!] Tabela Vazia"));
 		return;
 	}
 
+	index = h_util_get_int(0, array->used, H_STRS_EDIT);
 	fprintf(stdout, H_STRS_IRS_TABLE_HEADER);
 	h_irs_print_line(array->data[index]);
 
-	do
-	{
-		char op = h_util_get_alphabetical_char("[A]té [S]uperior a: ");
-		if (op == 'A' || op == 'a')
-		{
-			array->data[index].monthly_pay_type = H_IRS_UP_TO;
-			break;
-		}
-		else if (op == 'S' || op == 's')
-		{
-			array->data[index].monthly_pay_type = H_IRS_BEYOND;
-			break;
-		}
-	} while (1);
+	op = h_util_get_alphabetical_char("[A]té [S]uperior a: ");
+	if (op == 'A' || op == 'a')
+		array->data[index].monthly_pay_type = H_IRS_UP_TO;
 
-	array->data[index].monthly_pay_value = h_util_get_float(0.0f, 10000.0f, "Remuneração Mensal: ");
+	else if (op == 'S' || op == 's')
+		array->data[index].monthly_pay_type = H_IRS_BEYOND;
+
+	array->data[index].monthly_pay_value = h_util_get_float(0.0f, MAX_REMUNERATION, "Remuneração Mensal: ");
 
 	fprintf(stdout, YELLOW("[!] Inserir percentagem para os dependentes de 0 a 5 ou mais\n"));
-	for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
+	for (i = 0; i < MAX_DEPENDENT_NUMBER; i++)
 	{
-		array->data[index].percentage_per_dependent[j] = h_util_get_float(0.0f, 100.0f, "Percentagem: ");
+		array->data[index].percentage_per_dependent[i] = h_util_get_float(0.0f, MAX_PERCENTAGE, "Percentagem: ");
 	}
 }
 
-void h_irs_delete(s_arr_irs* array, int index)
+void h_irs_delete(s_arr_irs* array)
 {
 	int i;
+	int index;
 
-	if (array == NULL || array->used < index)
+	if (array->used == 0)
+	{
+		puts(RED("[!] Tabela vazia"));
 		return;
+	}
+
+	index = h_util_get_int(0, array->used, H_STRS_DELETE);
 
 	for (i = index; i <= array->used - 1; i++)
 		array->data[i] = array->data[i + 1];
@@ -238,11 +245,20 @@ void h_irs_write(s_arr_irs* array, const char* path)
 	int i;
 	int j;
 
-	fp = fopen(path, "wb");
-	if (fp == NULL)
+	if (array->used == 0)
+	{
+		puts(RED("[!] Tabela vazia"));
 		return;
+	}
 
-	for (i = 0; i <= array->used; i++)
+	fp = fopen(path, "w");
+	if (fp == NULL)
+	{
+		fprintf(stdout, RED("[!] Impossivel guardar em %s"), path);
+		return;
+	}
+
+	for (i = 0; i < array->used; i++)
 	{
 		fprintf(fp, "%s,%.2fEUR,",
 			array->data[i].monthly_pay_type == H_IRS_UP_TO ? "Até" : "Superior a",
