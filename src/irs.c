@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
 
 #include "irs.h"
@@ -16,7 +15,6 @@ s_arr_irs* h_irs_alloc(int initial_capacity)
 {
 	s_arr_irs* array;
 	int i;
-	int j;
 
 	if (!initial_capacity)
 		return NULL;
@@ -131,7 +129,7 @@ void h_irs_print(s_arr_irs* array)
 	int i;
 
 	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
-	for (i = 0; i <= array->used; i++)
+	for (i = 0; i < array->used; i++)
 	{
 		fprintf(stdout, RED("[%d] "), i);
 		h_irs_print_line(array->data[i]);
