@@ -39,40 +39,39 @@ void h_seg_social_free(s_arr_seg_social* array)
 
 void h_seg_social_parse(s_arr_seg_social* array, char* str)
 {
-	int i, is_employer = 1, offset = -1;
+	int i, offset = -1;
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
 		if (offset == -1 && isalnum(str[i]))
-			offset = i;
-
-		if (offset != -1 && str[i] == ',')
 		{
-			str[i] = '\0';
-			if (str[i - 1] == '%')
+			offset = i;
+		}
+
+		if (offset != -1)
+		{
+			if (str[i] == ',')
 			{
-				str[i - 1] = '\0';
-				if (is_employer == 1)
+				str[i] = '\0';
+				if (str[i - 1] == '%')
 				{
+					str[i - 1] = '\0';
 					array->data[array->used].employer = strtof(str + offset, NULL);
-					is_employer = 0;
 				}
 				else
 				{
-					array->data[array->used].employee = strtof(str + offset, NULL);
-					is_employer = 1;
+					array->data[array->used].criteria = str[offset];
 				}
 				offset = -1;
 			}
-			else
+			else if (str[i] == '\n')
 			{
-				array->data[array->used].criteria = str[offset];
+				str[i - 1] = '\0';
+				array->data[array->used].employee = strtof(str + offset, NULL);
+				array->used++;
 				offset = -1;
 			}
 		}
-
-		if (str[i] == '\n')
-			array->used++;
 	}
 }
 

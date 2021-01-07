@@ -8,6 +8,7 @@
 #include "util.h"
 #include "colors.h"
 #include "strs.h"
+#include "employees.h"
 
 s_spreadsheet* h_proc_alloc(int initial_capacity)
 {
@@ -275,7 +276,8 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 		return;
 
 	fp = fopen(filename, "w");
-	if (fp == NULL) {
+	if (fp == NULL)
+	{
 		puts(RED("[!] Impossivel exportar"));
 		return;
 	}
@@ -296,10 +298,17 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 	fprintf(stdout, YELLOW("[!] Ficheiro exportado com sucesso\n"));
 }
 
-/*
-void h_processing(s_arr_spreadsheets spreadsheets_array, s_arr_irs irs_array, s_arr_seg_social ss_array, s_arr_proc proc_array)
+void h_processing(s_spreadsheet spreadsheets_array, s_arr_irs irs_array, s_arr_seg_social ss_array, s_arr_employees employees_array)
 {
 	int i;
+
+	float base_salary;
+	float food_allowance;
+
+	float irs_retention;
+	float ss_retention_employer;
+	float ss_retention_employee;
+
 	float ss_retention_employer_percentage; //
 	float ss_retention_employee_percentage; //
 	float irs_retention_percentage; //
@@ -310,32 +319,27 @@ void h_processing(s_arr_spreadsheets spreadsheets_array, s_arr_irs irs_array, s_
 	for (i = 0; i <= spreadsheets_array.used; i++)
 	{
 		//Falta definir as constantes do sálario de acordo com o cargo do trabalhador.
-		proc_array.proc[i].base_salary = (float)spreadsheets_array.spreadsheets[i].full_days * 40 +
-										 (float)spreadsheets_array.spreadsheets[i].half_days * 40 / 2.0f +
-										 (float)spreadsheets_array.spreadsheets[i].weekend_days * 40 * 1.5f;
+		base_salary = (float)spreadsheets_array.details[i].full_days * 40 +
+					  (float)spreadsheets_array.details[i].half_days * 40 / 2.0f +
+					  (float)spreadsheets_array.details[i].weekend_days * 40 * 1.5f;
 
 		//Falta definir as constantes do subsídio da alimentação de acordo com o cargo do trabalhador.
-		proc_array.proc[i].food_allowance = (float)spreadsheets_array.spreadsheets[i].full_days * 5 +
-											(float)spreadsheets_array.spreadsheets[i].weekend_days * 5;
+		food_allowance = (float)spreadsheets_array.details[i].full_days * 5 +
+						 (float)spreadsheets_array.details[i].weekend_days * 5;
 
 		//Falta aceder aos dados dos trabalhadores para determinar o escalão de IRS.
 		irs_retention_percentage = irs_array.data[i].monthly_pay_value / 100.0f;
-		proc_array.proc[i].irs_retention =
-			(proc_array.proc[i].base_salary + proc_array.proc[i].food_allowance) * irs_retention_percentage;
+		irs_retention = (base_salary + food_allowance) * irs_retention_percentage;
 
 		//Falta aceder aos dados dos trabalhadores para determinar as percentagens de descontos da SS.
 		ss_retention_employer_percentage = ss_array.data[i].employer / 100.0f;
 		ss_retention_employee_percentage = ss_array.data[i].employee / 100.0f;
 
-		proc_array.proc[i].ss_retention_employer = (proc_array.proc[i].base_salary +
-													proc_array.proc[i].food_allowance)
-												   * ss_retention_employer_percentage;
-		proc_array.proc[i].ss_retention_employee = (proc_array.proc[i].base_salary +
-													proc_array.proc[i].food_allowance)
-												   * ss_retention_employee_percentage;
+		ss_retention_employer = (base_salary + food_allowance) * ss_retention_employer_percentage;
+		ss_retention_employee = (base_salary + food_allowance) * ss_retention_employee_percentage;
 
 		printf("\nSalário Líquido: %.2f€\n", (base_salary + food_allowance) - irs_retention - ss_retention_employee);
 		printf("Encargo Total (Empregador): %.2f€\n",
 			(base_salary + food_allowance) + irs_retention + ss_retention_employee + ss_retention_employer);
 	}
-}*/
+}
