@@ -172,19 +172,19 @@ void h_irs_add(s_arr_irs* array)
 	char op = h_util_get_alphabetical_char("[A]té [S]uperior a: ");
 	if (op == 'A' || op == 'a')
 	{
-		array->data[array->used].monthly_pay_type = H_IRS_UP_TO;
+		array->data[array->used - 1].monthly_pay_type = H_IRS_UP_TO;
 	}
 	else if (op == 'S' || op == 's')
 	{
-		array->data[array->used].monthly_pay_type = H_IRS_BEYOND;
+		array->data[array->used - 1].monthly_pay_type = H_IRS_BEYOND;
 	}
 
-	array->data[array->used].monthly_pay_value = h_util_get_float(0.0f, 10000.0f, "Remuneração Mensal: ");
+	array->data[array->used - 1].monthly_pay_value = h_util_get_float(0.0f, 10000.0f, "Remuneração Mensal: ");
 
 	fprintf(stdout, YELLOW("[!] Inserir percentagem para os dependentes de 0 a 5 ou mais\n"));
 	for (k = 0; k < MAX_DEPENDENT_NUMBER; k++)
 	{
-		array->data[array->used].percentage_per_dependent[k] = h_util_get_float(0.0f, 100.0f, "Percentagem: ");
+		array->data[array->used - 1].percentage_per_dependent[k] = h_util_get_float(0.0f, 100.0f, "Percentagem: ");
 	}
 }
 
@@ -222,7 +222,6 @@ void h_irs_edit(s_arr_irs* array)
 
 void h_irs_delete(s_arr_irs* array)
 {
-	int i;
 	int index;
 
 	if (array->used == 0)
@@ -233,8 +232,33 @@ void h_irs_delete(s_arr_irs* array)
 
 	index = h_util_get_int(0, array->used, H_STRS_DELETE);
 
-	for (i = index; i <= array->used - 1; i++)
+	h_irs_delete_element(array, index);
+}
+
+void h_irs_delete_all(s_arr_irs* array)
+{
+	int i;
+
+	if (array->used == 0)
+	{
+		puts(RED("[!] Tabela vazia"));
+		return;
+	}
+
+	for (i = 0; i < array->used; i++)
+	{
+		h_irs_delete_element(array, i);
+	}
+}
+
+void h_irs_delete_element(s_arr_irs* array, int index)
+{
+	int i;
+
+	for (i = index; i < array->used - 1; i++)
+	{
 		array->data[i] = array->data[i + 1];
+	}
 
 	array->used--;
 }

@@ -24,9 +24,10 @@ void h_menu_irs(
 	int two_holders_size = 0;
 	char* two_holders_str;
 
+	fprintf(stdout, H_STRS_IRS_MENU);
+
 	do
 	{
-		fprintf(stdout, H_STRS_IRS_MENU);
 		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
 		op = h_util_get_int(0, 18, "Opção?");
 
@@ -38,6 +39,11 @@ void h_menu_irs(
 			{
 				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_SINGLE);
 				return;
+			}
+			if (single_table->used > 0)
+			{
+				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
+				h_irs_delete_all(single_table);
 			}
 			h_irs_parse(single_table, single_str, h_irs_build);
 			free(single_str);
@@ -64,20 +70,25 @@ void h_menu_irs(
 				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_UNIQUE_HOLDER);
 				return;
 			}
+			if (single_table->used > 0)
+			{
+				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
+				h_irs_delete_all(single_table);
+			}
 			h_irs_parse(unique_holder_table, unique_holder_str, h_irs_build);
 			free(unique_holder_str);
 			break;
 		case 8:
-			h_irs_print(single_table);
+			h_irs_print(unique_holder_table);
 			break;
 		case 9:
-			h_irs_edit(single_table);
+			h_irs_edit(unique_holder_table);
 			break;
 		case 10:
-			h_irs_add(single_table);
+			h_irs_add(unique_holder_table);
 			break;
 		case 11:
-			h_irs_delete(single_table);
+			h_irs_delete(unique_holder_table);
 			break;
 		case 12:
 			h_irs_write(unique_holder_table, H_PATH_UNIQUE_HOLDER);
@@ -89,20 +100,25 @@ void h_menu_irs(
 				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_TWO_HOLDERS);
 				return;
 			}
+			if (single_table->used > 0)
+			{
+				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
+				h_irs_delete_all(single_table);
+			}
 			h_irs_parse(two_holders_table, two_holders_str, h_irs_build);
 			free(two_holders_str);
 			break;
 		case 14:
-			h_irs_print(single_table);
+			h_irs_print(two_holders_table);
 			break;
 		case 15:
-			h_irs_edit(single_table);
+			h_irs_edit(two_holders_table);
 			break;
 		case 16:
-			h_irs_add(single_table);
+			h_irs_add(two_holders_table);
 			break;
 		case 17:
-			h_irs_delete(single_table);
+			h_irs_delete(two_holders_table);
 			break;
 		case 18:
 			h_irs_write(two_holders_table, H_PATH_TWO_HOLDERS);
