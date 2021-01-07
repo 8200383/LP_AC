@@ -21,6 +21,7 @@
  */
 typedef struct
 {
+	int cod_employee; /**< Reprents the employee code */
 	int full_days; /**< Represents the number of full days worked */
 	int half_days; /**< Represents the number of half days worked */
 	int weekend_days; /**< Represents number of the weekends worked */
@@ -66,8 +67,9 @@ s_spreadsheet* h_proc_import();
 /**
  * Add details to an existing month
  * @param spreadsheet Ptr to a spreadsheet
+ * @param arr_employees An array of employees
  */
-void h_proc_add(s_spreadsheet* spreadsheet);
+void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees);
 
 /**
  * Edit details from an existing month

@@ -22,7 +22,7 @@ s_spreadsheet* h_proc_alloc(int initial_capacity)
 	if (spreadsheet->details == NULL)
 		return NULL;
 
-	spreadsheet->used = -1;
+	spreadsheet->used = 0;
 	spreadsheet->max_capacity = initial_capacity;
 
 	return spreadsheet;
@@ -48,7 +48,7 @@ s_spreadsheet* h_proc_import()
 	if (filename == NULL)
 		return NULL;
 
-	if (access(filename, F_OK) == -1)
+	if (access(filename, F_OK) == 0)
 	{
 		puts(RED("[!] Nenhum ficheiro encontrado, nada importado"));
 		free(filename);
@@ -107,13 +107,22 @@ s_spreadsheet* h_proc_open(const char* filename, e_month month)
 	return spreadsheet;
 }
 
-void h_proc_add(s_spreadsheet* spreadsheet)
+void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 {
+	int i;
+	int j;
 	int max_days;
+	int employee_index;
 
 	if (spreadsheet == NULL)
 	{
 		fprintf(stdout, RED("[!] Mẽs não criado\n"));
+		return;
+	}
+
+	if (arr_employees == NULL || arr_employees->used == 0)
+	{
+		fprintf(stdout, RED("[!] Nenhum funcionário encontrado\n"));
 		return;
 	}
 
@@ -133,12 +142,22 @@ void h_proc_add(s_spreadsheet* spreadsheet)
 
 	spreadsheet->used++;
 
-	// TODO: a soma dos numeros nao pode exeder o max_days, quer dizer que poz mais dias do que o mês tem
-	spreadsheet->details[spreadsheet->used].full_days = h_util_get_int(0, max_days, "Dias completos");
-	spreadsheet->details[spreadsheet->used].half_days = h_util_get_int(0, max_days, "Meios dias");
-	// TODO: Um mês tem 4 fins de semana mais o menos
-	spreadsheet->details[spreadsheet->used].weekend_days = h_util_get_int(0, max_days, "Fins de semana");
-	spreadsheet->details[spreadsheet->used].absent_days = h_util_get_int(0, max_days, "Faltas");
+	for (i = 0; i < arr_employees->used; i++)
+	{
+		fprintf(stdout, "[%d] %d | %s %s\n",
+			i,
+			arr_employees->employees[i].code,
+			arr_employees->employees[i].first_name,
+			arr_employees->employees[i].last_name);
+	}
+
+	employee_index = h_util_get_int(0, arr_employees->used, "Adicionar funcionário?");
+
+	spreadsheet->details[spreadsheet->used - 1].cod_employee = arr_employees->employees[employee_index].code;
+	spreadsheet->details[spreadsheet->used - 1].full_days = h_util_get_int(0, max_days, "Dias completos?");
+	spreadsheet->details[spreadsheet->used - 1].half_days = h_util_get_int(0, max_days, "Meios dias?");
+	spreadsheet->details[spreadsheet->used - 1].weekend_days = h_util_get_int(0, 5, "Fins de semana? (0-5)");
+	spreadsheet->details[spreadsheet->used - 1].absent_days = h_util_get_int(0, max_days, "Faltas?");
 
 }
 
@@ -146,7 +165,7 @@ void h_proc_print(s_spreadsheet* spreadsheet)
 {
 	int i;
 
-	if (spreadsheet == NULL || spreadsheet->used == -1)
+	if (spreadsheet == NULL || spreadsheet->used == 0)
 	{
 		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
 		return;
@@ -155,11 +174,11 @@ void h_proc_print(s_spreadsheet* spreadsheet)
 	fprintf(stdout, YELLOW("N Registos encontrados: %d\n"), spreadsheet->used);
 	fprintf(stdout, H_STRS_PROC_TABLE_HEADER);
 
-	for (i = 0; i <= spreadsheet->used; i++)
+	for (i = 0; i < spreadsheet->used; i++)
 	{
-		fprintf(stdout, "%d | %d | %d | %d | %d | %d\n",
+		fprintf(stdout, "[%d] %d | %d | %d | %d | %d\n",
 			i,
-			1,
+			spreadsheet->details[i].cod_employee,
 			spreadsheet->details[i].full_days,
 			spreadsheet->details[i].half_days,
 			spreadsheet->details[i].weekend_days,
@@ -172,37 +191,35 @@ void h_proc_edit(s_spreadsheet* spreadsheet)
 {
 	int index;
 	int max_days;
+	int op;
 
-	if (spreadsheet == NULL || spreadsheet->used == -1)
+	if (spreadsheet == NULL || spreadsheet->used == 0)
 	{
 		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
 		return;
 	}
 
-	// TODO: Editar por cod employee, fzr pesquisa para encontrar o index
 	index = h_util_get_int(0, spreadsheet->used, H_STRS_EDIT);
-	if (spreadsheet->used < index)
-	{
-		fprintf(stdout, RED("[!] Nada para editar\n"));
-		return;
-	}
 
 	fprintf(stdout, H_STRS_PROC_TABLE_HEADER);
+	fprintf(stdout, "Mês: %s\n", h_calendar_str_from_month(spreadsheet->month));
 	fprintf(stdout, "%d | %d | %d | %d | %d | %d\n",
 		index,
-		1,
+		spreadsheet->details[index].cod_employee,
 		spreadsheet->details[index].full_days,
 		spreadsheet->details[index].half_days,
 		spreadsheet->details[index].weekend_days,
 		spreadsheet->details[index].absent_days
 	);
 
+	op = h_util_get_int(0, 1, "Quer editar o mês correpondente?\n 1. Sim\n 0. Não");
+	if (op == 1)
+		spreadsheet->month = h_util_get_int(1, 12, "Novo mês?") - 1;
+
 	max_days = h_calendar_days_in_month(spreadsheet->month);
-	// TODO: dar possiblidade editar mes tbm
 	spreadsheet->details[index].full_days = h_util_get_int(0, max_days, "Dias completos");
 	spreadsheet->details[index].half_days = h_util_get_int(0, max_days, "Meios dias");
-	// TODO: Um mês tem 4 fins de semana mais o menos
-	spreadsheet->details[index].weekend_days = h_util_get_int(0, max_days, "Fins de semana");
+	spreadsheet->details[index].weekend_days = h_util_get_int(0, 5, "Fins de semana");
 	spreadsheet->details[index].absent_days = h_util_get_int(0, max_days, "Faltas");
 }
 
@@ -211,21 +228,17 @@ void h_proc_delete(s_spreadsheet* spreadsheet)
 	int index;
 	int i;
 
-	if (spreadsheet == NULL || spreadsheet->used == -1)
+	if (spreadsheet == NULL || spreadsheet->used == 0)
 	{
 		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
 		return;
 	}
 
 	// TODO: Eliminar por cod employee, fzr pesquisa para encontrar o index
+	fprintf(stdout, "Registos: %d\n", spreadsheet->used);
 	index = h_util_get_int(0, spreadsheet->used, H_STRS_DELETE);
-	if (spreadsheet->used < index)
-	{
-		fprintf(stdout, RED("[!] Nada para eliminar\n"));
-		return;
-	}
 
-	for (i = index; i <= spreadsheet->used - 1; i++)
+	for (i = index; i < spreadsheet->used - 1; i++)
 		spreadsheet->details[i] = spreadsheet->details[i + 1];
 
 	spreadsheet->used--;
@@ -265,7 +278,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 	FILE* fp;
 	char* filename;
 
-	if (spreadsheet->used == -1)
+	if (spreadsheet->used == 0)
 	{
 		puts(RED("[!] Nada a exportar"));
 		return;
@@ -284,7 +297,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 
 	free(filename);
 
-	for (i = 0; i <= spreadsheet->used; i++)
+	for (i = 0; i < spreadsheet->used; i++)
 	{
 		fprintf(fp, "%d;%d;%d;%d\n",
 			spreadsheet->details[i].full_days,
@@ -298,7 +311,8 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 	fprintf(stdout, YELLOW("[!] Ficheiro exportado com sucesso\n"));
 }
 
-void h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_seg_social* ss_array, s_arr_employees* employees_array)
+void
+h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_seg_social* ss_array, s_arr_employees* employees_array)
 {
 	int i;
 
