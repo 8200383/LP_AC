@@ -10,6 +10,7 @@
 #include <stdlib.h>
 
 #include "util.h"
+#include "strs.h"
 
 typedef struct
 {

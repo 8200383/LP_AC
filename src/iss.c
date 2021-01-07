@@ -3,7 +3,6 @@
  */
 
 #include "iss.h"
-#include "colors.h"
 
 s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 {
@@ -80,13 +79,12 @@ void h_seg_social_print(s_arr_seg_social* array)
 {
 	int i;
 
-	for (i = 0; i <= array->used; i++)
+	fprintf(stdout, "%s", H_STRS_SS_TABLE_HEADER);
+	for (i = 0; i < array->used; i++)
 	{
-		printf("%d. Criterio: %c ### Empregador: %.2f%% ### Empregado: %.2f%%\n",
-			i,
-			array->data[i].criteria,
-			array->data[i].employer,
-			array->data[i].employee);
+		fprintf(stdout, RED("[%d] "), i);
+		fprintf(stdout, YELLOW("%c "), array->data[i].criteria);
+		fprintf(stdout, BLUE("| %.2f%% | %.2f%%\n"), array->data[i].employer, array->data[i].employee);
 	}
 }
 
