@@ -12,20 +12,20 @@
 
 s_spreadsheet* h_proc_alloc(int initial_capacity)
 {
-	s_spreadsheet* arr_spreadsheets;
+	s_spreadsheet* spreadsheet;
 
-	arr_spreadsheets = malloc(sizeof(s_details));
-	if (arr_spreadsheets == NULL)
+	spreadsheet = malloc(sizeof(s_details));
+	if (spreadsheet == NULL)
 		return NULL;
 
-	arr_spreadsheets->details = malloc(initial_capacity * sizeof(s_details));
-	if (arr_spreadsheets->details == NULL)
+	spreadsheet->details = malloc(initial_capacity * sizeof(s_details));
+	if (spreadsheet->details == NULL)
 		return NULL;
 
-	arr_spreadsheets->used = -1;
-	arr_spreadsheets->max_capacity = initial_capacity;
+	spreadsheet->used = -1;
+	spreadsheet->max_capacity = initial_capacity;
 
-	return arr_spreadsheets;
+	return spreadsheet;
 }
 
 void h_proc_free(s_spreadsheet* spreadsheet)
@@ -41,7 +41,7 @@ s_spreadsheet* h_proc_import()
 {
 	int month;
 	char* filename;
-	s_spreadsheet* arr_spreadsheets;
+	s_spreadsheet* spreadsheet;
 
 	month = h_util_get_int(1, 12, "Importar Mês? (1-12)") - 1;
 	filename = h_proc_generate_filename(month, ".bin");
@@ -55,21 +55,21 @@ s_spreadsheet* h_proc_import()
 		return NULL;
 	}
 
-	arr_spreadsheets = h_proc_open(filename, month);
-	if (arr_spreadsheets == NULL)
+	spreadsheet = h_proc_open(filename, month);
+	if (spreadsheet == NULL)
 	{
 		free(filename);
 		return NULL;
 	}
 
 	free(filename);
-	return arr_spreadsheets;
+	return spreadsheet;
 }
 
 s_spreadsheet* h_proc_open(const char* filename, e_month month)
 {
 	FILE* fp;
-	s_spreadsheet* array;
+	s_spreadsheet* spreadsheet;
 	int file_size;
 
 	fprintf(stdout, YELLOW("[!] Importing: %s\n"), filename);
@@ -82,29 +82,29 @@ s_spreadsheet* h_proc_open(const char* filename, e_month month)
 	while (!feof(fp))
 		file_size++;
 
-	array = h_proc_alloc(file_size);
-	if (array == NULL)
+	spreadsheet = h_proc_alloc(file_size);
+	if (spreadsheet == NULL)
 		return NULL;
 
-	array->month = month;
+	spreadsheet->month = month;
 	for (int i = 0; !feof(fp); i++)
 	{
-		if (array->used == array->max_capacity)
+		if (spreadsheet->used == spreadsheet->max_capacity)
 		{
-			array = realloc(array->details, array->max_capacity * 2);
-			if (array == NULL)
+			spreadsheet = realloc(spreadsheet->details, spreadsheet->max_capacity * 2);
+			if (spreadsheet == NULL)
 				return NULL;
 
-			array->max_capacity *= 2;
+			spreadsheet->max_capacity *= 2;
 		}
 
-		if (fread(&array->details[i], sizeof(s_details), 1, fp) != 1)
+		if (fread(&spreadsheet->details[i], sizeof(s_details), 1, fp) != 1)
 			return NULL;
 
-		array->used++;
+		spreadsheet->used++;
 	}
 
-	return array;
+	return spreadsheet;
 }
 
 void h_proc_add(s_spreadsheet* spreadsheet)
@@ -298,7 +298,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 	fprintf(stdout, YELLOW("[!] Ficheiro exportado com sucesso\n"));
 }
 
-void h_processing(s_spreadsheet spreadsheets_array, s_arr_irs irs_array, s_arr_seg_social ss_array, s_arr_employees employees_array)
+void h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_seg_social* ss_array, s_arr_employees* employees_array)
 {
 	int i;
 
@@ -313,27 +313,27 @@ void h_processing(s_spreadsheet spreadsheets_array, s_arr_irs irs_array, s_arr_s
 	float ss_retention_employee_percentage; //
 	float irs_retention_percentage; //
 
-	if (irs_array.used == 0 || ss_array.used == 0)
+	if (irs_array->used == 0 || ss_array->used == 0 || employees_array->used == 0)
 		return;
 
-	for (i = 0; i <= spreadsheets_array.used; i++)
+	for (i = 0; i <= spreadsheet->used; i++)
 	{
 		//Falta definir as constantes do sálario de acordo com o cargo do trabalhador.
-		base_salary = (float)spreadsheets_array.details[i].full_days * 40 +
-					  (float)spreadsheets_array.details[i].half_days * 40 / 2.0f +
-					  (float)spreadsheets_array.details[i].weekend_days * 40 * 1.5f;
+		base_salary = (float)spreadsheet->details[i].full_days * 40 +
+					  (float)spreadsheet->details[i].half_days * 40 / 2.0f +
+					  (float)spreadsheet->details[i].weekend_days * 40 * 1.5f;
 
 		//Falta definir as constantes do subsídio da alimentação de acordo com o cargo do trabalhador.
-		food_allowance = (float)spreadsheets_array.details[i].full_days * 5 +
-						 (float)spreadsheets_array.details[i].weekend_days * 5;
+		food_allowance = (float)spreadsheet->details[i].full_days * 5 +
+						 (float)spreadsheet->details[i].weekend_days * 5;
 
 		//Falta aceder aos dados dos trabalhadores para determinar o escalão de IRS.
-		irs_retention_percentage = irs_array.data[i].monthly_pay_value / 100.0f;
+		irs_retention_percentage = irs_array->data[i].monthly_pay_value / 100.0f;
 		irs_retention = (base_salary + food_allowance) * irs_retention_percentage;
 
 		//Falta aceder aos dados dos trabalhadores para determinar as percentagens de descontos da SS.
-		ss_retention_employer_percentage = ss_array.data[i].employer / 100.0f;
-		ss_retention_employee_percentage = ss_array.data[i].employee / 100.0f;
+		ss_retention_employer_percentage = ss_array->data[i].employer / 100.0f;
+		ss_retention_employee_percentage = ss_array->data[i].employee / 100.0f;
 
 		ss_retention_employer = (base_salary + food_allowance) * ss_retention_employer_percentage;
 		ss_retention_employee = (base_salary + food_allowance) * ss_retention_employee_percentage;

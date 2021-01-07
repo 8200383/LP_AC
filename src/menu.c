@@ -227,7 +227,6 @@ void h_menu_processing(
 					h_calendar_str_from_month(spreadsheet->month));
 				free(spreadsheet);
 			}
-
 			spreadsheet = h_proc_import();
 			break;
 		case 10:
