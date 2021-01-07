@@ -3,6 +3,7 @@
  */
 
 #include "iss.h"
+#include "colors.h"
 
 s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 {
@@ -179,12 +180,8 @@ void h_seg_social_edit(s_arr_seg_social* array)
 	int num;
 	char new_criteria;
 
-	num = h_util_get_int(0, 100, "\nLinha a editar: ");
-
-	if (num < 0 || num >= array->used)
-	{
-		return;
-	}
+	fprintf(stdout, YELLOW("Registos: %d\n"), array->used);
+	num = h_util_get_int(0, array->used, "Linha a editar: ");
 
 	printf("Critério - Valor atual: %c | ", array->data[num].criteria);
 	printf("Novo valor: ");
