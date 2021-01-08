@@ -14,10 +14,7 @@ int main_menu()
 {
 	int op;
 
-	int seg_social_size;
 	int employees_size;
-
-	char* seg_social_str;
 	char* employees_str;
 
 	s_arr_irs* single_table;
@@ -30,9 +27,12 @@ int main_menu()
 	 * IRS
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
+
 	single_table = h_irs_alloc(INITIAL_CAPACITY);
 	if (single_table == NULL)
+	{
 		return -1;
+	}
 
 	unique_holder_table = h_irs_alloc(INITIAL_CAPACITY);
 	if (unique_holder_table == NULL)
@@ -53,16 +53,21 @@ int main_menu()
 	 * Segurança Social
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
-	seg_social_size = 0;
-	seg_social_str = h_util_file_read(H_PATH_SEG_SOCIAL, &seg_social_size);
-	seg_social_table = h_seg_social_alloc(seg_social_size);
 
-	h_seg_social_parse(seg_social_table, seg_social_str);
+	seg_social_table = h_seg_social_alloc(INITIAL_CAPACITY);
+	if (seg_social_table == NULL)
+	{
+		free(single_table);
+		free(unique_holder_table);
+		free(two_holders_table);
+		return -1;
+	}
 
 	/*
 	 * Gestão de Funcionários
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
+
 	employees_size = 0;
 	employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
 

@@ -118,26 +118,38 @@ void h_menu_irs(
 
 void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 {
-	unsigned int op;
+	int op;
+	int seg_social_size;
+	char* seg_social_str;
 
 	do
 	{
 		fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
 		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
-		scanf(" %u", &op);
+		op = h_util_get_int(0, 5, "Opção: ");
 
 		switch (op)
 		{
 		case 1:
-			h_seg_social_print(seg_social_table);
+			seg_social_str = h_util_file_read(H_PATH_SEG_SOCIAL, &seg_social_size);
+			if (seg_social_str == NULL)
+			{
+				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
+				return;
+			}
+			h_seg_social_parse(seg_social_table, seg_social_str);
+			free(seg_social_str);
 			break;
 		case 2:
-			h_seg_social_add(seg_social_table);
+			h_seg_social_print(seg_social_table);
 			break;
 		case 3:
-			h_seg_social_delete(seg_social_table);
+			h_seg_social_add(seg_social_table);
 			break;
 		case 4:
+			h_seg_social_delete(seg_social_table);
+			break;
+		case 5:
 			h_seg_social_edit(seg_social_table);
 			break;
 		case 0:

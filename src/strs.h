@@ -13,6 +13,8 @@
 #define H_STRS_EDIT "Editar linha?"
 #define H_STRS_DELETE "Apagar linha?"
 
+#define H_STRS_EMPTY_TABLE RED("Tabela Vazia.\n")
+
 #define H_STRS_MENU MAGENTA( \
 "*******************************\n" \
 "*         -|  MENU  |-        *\n" \
@@ -66,10 +68,11 @@
 "**************************************\n" \
 "* -| Menu Tabela Segurança Social |- *\n" \
 "*                                    *\n" \
-"* 1. Visualizar                      *\n" \
-"* 2. Adicionar                       *\n" \
-"* 3. Remover                         *\n" \
-"* 4. Editar                          *\n" \
+"* 1. Carregar Tabela                 *\n" \
+"* 2. Visualizar                      *\n" \
+"* 3. Adicionar                       *\n" \
+"* 4. Remover                         *\n" \
+"* 5. Editar                          *\n" \
 "* 0. Voltar ao menu anterior         *\n" \
 "*                                    *\n" \
 "**************************************\n")

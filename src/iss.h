@@ -14,7 +14,7 @@
 
 typedef struct
 {
-	char criteria;
+	char* criteria;
 	float employer;
 	float employee;
 } s_seg_social;

@@ -39,7 +39,8 @@ void h_seg_social_free(s_arr_seg_social* array)
 
 void h_seg_social_parse(s_arr_seg_social* array, char* str)
 {
-	int i, offset = -1;
+	int i;
+	int offset = -1;
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
@@ -60,7 +61,13 @@ void h_seg_social_parse(s_arr_seg_social* array, char* str)
 				}
 				else
 				{
-					array->data[array->used].criteria = str[offset];
+					array->data[array->used].criteria = malloc(sizeof(char) * 64);
+					if (array->data[array->used].criteria == NULL)
+					{
+						return;
+					}
+
+					array->data[array->used].criteria = str + offset;
 				}
 				offset = -1;
 			}
@@ -79,19 +86,25 @@ void h_seg_social_print(s_arr_seg_social* array)
 {
 	int i;
 
-	fprintf(stdout, "%s", H_STRS_SS_TABLE_HEADER);
+	if (array->used == 0)
+	{
+		printf(H_STRS_EMPTY_TABLE);
+		return;
+	}
+
+	printf("%s", H_STRS_SS_TABLE_HEADER);
 	for (i = 0; i < array->used; i++)
 	{
-		fprintf(stdout, RED("[%d] "), i);
-		fprintf(stdout, YELLOW("%c "), array->data[i].criteria);
-		fprintf(stdout, BLUE("| %.2f%% | %.2f%%\n"), array->data[i].employer, array->data[i].employee);
+		printf(RED("[%d] "), i);
+		printf(YELLOW("%s "), array->data[i].criteria);
+		printf(BLUE("| %.2f%% | %.2f%%\n"), array->data[i].employer, array->data[i].employee);
 	}
 }
 
 void h_seg_social_add(s_arr_seg_social* array)
 {
 	int i;
-	char new_criteria;
+	char* new_criteria;
 
 	if (array->used == array->max_capacity)
 	{
@@ -103,8 +116,14 @@ void h_seg_social_add(s_arr_seg_social* array)
 		}
 	}
 
+	new_criteria = malloc(sizeof(char) * 64);
+	if (new_criteria == NULL)
+	{
+		return;
+	}
+
 	printf("\nNovo critério: ");
-	scanf(" %c", &new_criteria);
+	scanf("%s", new_criteria);
 
 	for (i = 0; i <= array->used; i++)
 	{
@@ -114,10 +133,10 @@ void h_seg_social_add(s_arr_seg_social* array)
 		}
 	}
 
-	array->used++;
 	array->data[array->used].criteria = new_criteria;
 	array->data[array->used].employer = h_util_get_float(0.0f, 100.0f, "Empregador: ");
 	array->data[array->used].employee = h_util_get_float(0.0f, 100.0f, "Empregado: ");
+	array->used++;
 }
 
 void h_seg_social_delete(s_arr_seg_social* array)
@@ -130,13 +149,15 @@ void h_seg_social_delete(s_arr_seg_social* array)
 		return;
 	}
 
-	num = h_util_get_int(0, 100, "Linha a eliminar: ");
-	if (num < 0 || num >= array->used)
+	if (array->used == 0)
 	{
+		printf(H_STRS_EMPTY_TABLE);
 		return;
 	}
 
-	for (i = num; i <= array->used - 1; i++)
+	num = h_util_get_int(0, (array->used) - 1, "Linha a eliminar: ");
+
+	for (i = num; i < array->used; i++)
 	{
 		array->data[i] = array->data[i + 1];
 	}
@@ -162,7 +183,7 @@ void h_seg_social_write(s_arr_seg_social* array, const char* path)
 
 	for (i = 0; i <= array->used; i++)
 	{
-		fprintf(fp, "%c,%.2f%%,%.2f%%,\n",
+		fprintf(fp, "%s,%.2f%%,%.2f%%,\n",
 			array->data[i].criteria,
 			array->data[i].employer,
 			array->data[i].employee);
@@ -175,14 +196,26 @@ void h_seg_social_edit(s_arr_seg_social* array)
 {
 	int i;
 	int num;
-	char new_criteria;
+	char* new_criteria;
 
-	fprintf(stdout, YELLOW("Registos: %d\n"), array->used);
+	if (array->used == 0)
+	{
+		printf(H_STRS_EMPTY_TABLE);
+		return;
+	}
+
+	printf(YELLOW("Número de Registos: %d\n"), array->used);
 	num = h_util_get_int(0, array->used, "Linha a editar: ");
 
-	printf("Critério - Valor atual: %c | ", array->data[num].criteria);
+	new_criteria = malloc(sizeof(char) * 64);
+	if (new_criteria == NULL)
+	{
+		return;
+	}
+
+	printf("Critério - Valor atual: %s | ", array->data[num].criteria);
 	printf("Novo valor: ");
-	scanf(" %c", &new_criteria);
+	scanf("%s", new_criteria);
 
 	for (i = 0; i <= array->used; i++)
 	{
