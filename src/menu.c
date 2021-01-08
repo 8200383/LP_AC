@@ -132,7 +132,7 @@ void h_menu_irs(
 	} while (op != 0);
 }
 
-void h_menu_seg_social(s_arr_seg_social* seg_social_table)
+void h_menu_seg_social(s_arr_iss* seg_social_table)
 {
 	int op;
 	int social_sec_size = 0;
@@ -157,20 +157,20 @@ void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
 				//h_irs_delete_all(seg_social_table);
 			}
-			h_seg_social_parse(seg_social_table, social_sec_str);
+			h_iss_parse(seg_social_table, social_sec_str);
 			free(social_sec_str);
 			break;
 		case 2:
-			h_seg_social_print(seg_social_table);
+			h_iss_print(seg_social_table);
 			break;
 		case 3:
-			h_seg_social_add(seg_social_table);
+			h_iss_add(seg_social_table);
 			break;
 		case 4:
-			h_seg_social_delete(seg_social_table);
+			h_iss_delete(seg_social_table);
 			break;
 		case 5:
-			h_seg_social_edit(seg_social_table);
+			h_iss_edit(seg_social_table);
 			break;
 		case 0:
 			break;
@@ -185,7 +185,7 @@ void h_menu_processing(
 	s_arr_irs* single_table,
 	s_arr_irs* unique_holder_table,
 	s_arr_irs* two_holders_table,
-	s_arr_seg_social* seg_social_table,
+	s_arr_iss* seg_social_table,
 	s_arr_employees* employees
 )
 {

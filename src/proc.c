@@ -311,7 +311,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 	fprintf(stdout, YELLOW("[!] Ficheiro exportado com sucesso\n"));
 }
 
-void h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_seg_social* ss_array, s_arr_employees* employees_array)
+void h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_iss* ss_array, s_arr_employees* employees_array)
 {
 	int i;
 

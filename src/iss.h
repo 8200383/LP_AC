@@ -19,22 +19,22 @@ typedef struct
 	char* criteria;
 	float employer;
 	float employee;
-} s_seg_social;
+} s_iss;
 
 typedef struct
 {
-	s_seg_social* data;
+	s_iss* data;
 	int used;
 	int max_capacity;
-} s_arr_seg_social;
+} s_arr_iss;
 
-s_arr_seg_social* h_seg_social_alloc(int initial_capacity);
-void h_seg_social_free(s_arr_seg_social* array);
-void h_seg_social_parse(s_arr_seg_social* array, char* str);
-void h_seg_social_print(s_arr_seg_social* array);
-void h_seg_social_add(s_arr_seg_social* array);
-void h_seg_social_delete(s_arr_seg_social* array);
-void h_seg_social_write(s_arr_seg_social* array, const char* path);
-void h_seg_social_edit(s_arr_seg_social* array);
+s_arr_iss* h_iss_alloc(int initial_capacity);
+void h_iss_free(s_arr_iss* array);
+void h_iss_parse(s_arr_iss* array, char* str);
+void h_iss_print(s_arr_iss* array);
+void h_iss_add(s_arr_iss* array);
+void h_iss_delete(s_arr_iss* array);
+void h_iss_write(s_arr_iss* array, const char* path);
+void h_iss_edit(s_arr_iss* array);
 
 #endif //ISS_H

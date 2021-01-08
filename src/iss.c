@@ -5,18 +5,18 @@
 #include <string.h>
 #include "iss.h"
 
-s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
+s_arr_iss* h_iss_alloc(int initial_capacity)
 {
-	s_arr_seg_social* array;
+	s_arr_iss* array;
 	int i;
 
-	array = malloc(sizeof(s_arr_seg_social));
+	array = malloc(sizeof(s_arr_iss));
 	if (array == NULL)
 	{
 		return NULL;
 	}
 
-	array->data = malloc(initial_capacity * sizeof(s_seg_social));
+	array->data = malloc(initial_capacity * sizeof(s_iss));
 	if (array->data == NULL)
 	{
 		return NULL;
@@ -35,7 +35,7 @@ s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 	return array;
 }
 
-void h_seg_social_free(s_arr_seg_social* array)
+void h_iss_free(s_arr_iss* array)
 {
 	if (array == NULL)
 	{
@@ -46,7 +46,7 @@ void h_seg_social_free(s_arr_seg_social* array)
 	free(array);
 }
 
-void h_seg_social_parse(s_arr_seg_social* array, char* str)
+void h_iss_parse(s_arr_iss* array, char* str)
 {
 	int i;
 	int offset = -1;
@@ -96,7 +96,7 @@ void h_seg_social_parse(s_arr_seg_social* array, char* str)
 	}
 }
 
-void h_seg_social_print(s_arr_seg_social* array)
+void h_iss_print(s_arr_iss* array)
 {
 	int i;
 
@@ -115,7 +115,7 @@ void h_seg_social_print(s_arr_seg_social* array)
 	}
 }
 
-void h_seg_social_add(s_arr_seg_social* array)
+void h_iss_add(s_arr_iss* array)
 {
 	int i;
 	char* new_criteria;
@@ -123,7 +123,7 @@ void h_seg_social_add(s_arr_seg_social* array)
 	if (array->used == array->max_capacity)
 	{
 		array->max_capacity *= 2;
-		array->data = realloc(array->data, array->max_capacity * sizeof(s_seg_social));
+		array->data = realloc(array->data, array->max_capacity * sizeof(s_iss));
 		if (array->data == NULL)
 		{
 			return;
@@ -153,7 +153,7 @@ void h_seg_social_add(s_arr_seg_social* array)
 	array->used++;
 }
 
-void h_seg_social_delete(s_arr_seg_social* array)
+void h_iss_delete(s_arr_iss* array)
 {
 	int i;
 	int num;
@@ -179,7 +179,7 @@ void h_seg_social_delete(s_arr_seg_social* array)
 	array->used--;
 }
 
-void h_seg_social_write(s_arr_seg_social* array, const char* path)
+void h_iss_write(s_arr_iss* array, const char* path)
 {
 	int i;
 	FILE* fp;
@@ -206,7 +206,7 @@ void h_seg_social_write(s_arr_seg_social* array, const char* path)
 	fclose(fp);
 }
 
-void h_seg_social_edit(s_arr_seg_social* array)
+void h_iss_edit(s_arr_iss* array)
 {
 	int i;
 	int num;

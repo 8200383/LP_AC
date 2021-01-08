@@ -20,7 +20,7 @@ int main_menu()
 	s_arr_irs* single_table;
 	s_arr_irs* unique_holder_table;
 	s_arr_irs* two_holders_table;
-	s_arr_seg_social* seg_social_table;
+	s_arr_iss* seg_social_table;
 	s_arr_employees* employees_table;
 
 	/*
@@ -54,7 +54,7 @@ int main_menu()
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
 
-	seg_social_table = h_seg_social_alloc(INITIAL_CAPACITY);
+	seg_social_table = h_iss_alloc(INITIAL_CAPACITY);
 	if (seg_social_table == NULL)
 	{
 		free(single_table);
@@ -96,7 +96,7 @@ int main_menu()
 			break;
 		case 9:
 			// TODO: tem de ir pra tabela da iss
-			h_seg_social_write(seg_social_table, H_PATH_SEG_SOCIAL);
+			h_iss_write(seg_social_table, H_PATH_SEG_SOCIAL);
 			fprintf(stdout, GREEN("[!] Guardado com sucesso\n"));
 			break;
 		default:
@@ -107,7 +107,7 @@ int main_menu()
 	h_irs_free(single_table);
 	h_irs_free(unique_holder_table);
 	h_irs_free(two_holders_table);
-	h_seg_social_free(seg_social_table);
+	h_iss_free(seg_social_table);
 
 	return 0;
 }
