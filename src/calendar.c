@@ -20,7 +20,7 @@ void h_calendar_get_date(s_date* date, const char* msg)
 
 		if (error == 1)
 		{
-			puts(RED("Data incorreta"));
+			puts(RED("[!] Data incorreta"));
 		}
 
 	} while (error == 1);
