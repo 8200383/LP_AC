@@ -12,6 +12,8 @@
 #include "util.h"
 #include "strs.h"
 
+#define BUFFER_SIZE 64
+
 typedef struct
 {
 	char* criteria;

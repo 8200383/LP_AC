@@ -2,11 +2,13 @@
  * Created by Hugo Carvalho on 12/24/20.
  */
 
+#include <string.h>
 #include "iss.h"
 
 s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 {
 	s_arr_seg_social* array;
+	int i;
 
 	array = malloc(sizeof(s_arr_seg_social));
 	if (array == NULL)
@@ -21,7 +23,14 @@ s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
 	}
 
 	array->used = 0;
-	array->max_capacity = initial_capacity - 1;
+	array->max_capacity = initial_capacity;
+
+	for (i = 0; i <= array->max_capacity; i++)
+	{
+		array->data[i].criteria = malloc(BUFFER_SIZE * sizeof(char));
+		if (array->data[i].criteria == NULL)
+			return NULL;
+	}
 
 	return array;
 }
@@ -61,13 +70,18 @@ void h_seg_social_parse(s_arr_seg_social* array, char* str)
 				}
 				else
 				{
-					array->data[array->used].criteria = malloc(sizeof(char) * 64);
-					if (array->data[array->used].criteria == NULL)
+					str[i] = '\0';
+
+					if (strlen(str + offset) > BUFFER_SIZE)
 					{
-						return;
+						array->data[array->used].criteria = realloc(array->data[array->used].criteria,
+							(BUFFER_SIZE * 2) * sizeof(char));
+
+						if (array->data[array->used].criteria == NULL)
+							return;
 					}
 
-					array->data[array->used].criteria = str + offset;
+					strcpy(array->data[array->used].criteria, str + offset);
 				}
 				offset = -1;
 			}
