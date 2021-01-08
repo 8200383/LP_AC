@@ -1,3 +1,10 @@
+/**
+ * @file menu.h
+ * @author Micael Dias, Hugo Carvalho, Rui Gonçalves
+ * @date 8/1/2020
+ * @brief Menus
+ */
+
 #ifndef MENU_H
 #define MENU_H
 

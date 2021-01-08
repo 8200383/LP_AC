@@ -1,7 +1,7 @@
 /**
  * @file strs.h
  * @author Micael Dias, Hugo Carvalho, Rui Gonçalves
- * @date 8/1/2020
+ * @date 8/1/2021
  * @brief Standardized strings
  */
 

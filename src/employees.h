@@ -2,6 +2,7 @@
  * @file employees.h
  * @author Rui Gonçalves, Micael Dias
  * @date 11/12/2020
+ * @brief Functions to handle employees
  */
 
 #ifndef EMPLOYEES_H

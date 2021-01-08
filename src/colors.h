@@ -1,5 +1,8 @@
-/*
- * Created by Micael Dias on 10/12/20.
+/**
+ * @file colors.h
+ * @author Micael Dias
+ * @date 24/12/2020
+ * @brief Standardized colors
  */
 
 #ifndef COLORS_H

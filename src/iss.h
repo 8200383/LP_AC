@@ -1,5 +1,8 @@
-/*
- * Created by Hugo Carvalho on 12/24/20.
+/**
+ * @file iss.h
+ * @author Hugo Carvalho, Micael Dias
+ * @date 24/12/2020
+ * @brief Functions to handle ISS
  */
 
 #ifndef ISS_H

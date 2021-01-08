@@ -1,5 +1,8 @@
-/* 
- * Created by Micael Dias on 17/12/20.
+/**
+ * @file paths.h
+ * @author Micael Dias, Hugo Carvalho, Rui Gonçalves
+ * @date 8/1/2021
+ * @brief Standardized paths
  */
 
 #ifndef PATHS_H
