@@ -45,7 +45,7 @@ void h_menu_irs(
 				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
 				h_irs_delete_all(single_table);
 			}
-			h_irs_parse(single_table, single_str, h_irs_build);
+			h_irs_parse(single_table, single_str, h_irs_pair);
 			free(single_str);
 			break;
 		case 2:
@@ -75,7 +75,7 @@ void h_menu_irs(
 				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
 				h_irs_delete_all(single_table);
 			}
-			h_irs_parse(unique_holder_table, unique_holder_str, h_irs_build);
+			h_irs_parse(unique_holder_table, unique_holder_str, h_irs_pair);
 			free(unique_holder_str);
 			break;
 		case 8:
@@ -105,7 +105,7 @@ void h_menu_irs(
 				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
 				h_irs_delete_all(single_table);
 			}
-			h_irs_parse(two_holders_table, two_holders_str, h_irs_build);
+			h_irs_parse(two_holders_table, two_holders_str, h_irs_pair);
 			free(two_holders_str);
 			break;
 		case 14:

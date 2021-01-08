@@ -341,7 +341,7 @@ void h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_seg_
 						 (float)spreadsheet->details[i].weekend_days * 5;
 
 		//Falta aceder aos dados dos trabalhadores para determinar o escalão de IRS.
-		irs_retention_percentage = irs_array->data[i].monthly_pay_value / 100.0f;
+		irs_retention_percentage = irs_array->elements[i].monthly_pay_value / 100.0f;
 		irs_retention = (base_salary + food_allowance) * irs_retention_percentage;
 
 		//Falta aceder aos dados dos trabalhadores para determinar as percentagens de descontos da SS.
