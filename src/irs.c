@@ -28,7 +28,7 @@ s_arr_irs* h_irs_alloc(int initial_capacity)
 
 	for (i = 0; i <= array->max_capacity; i++)
 	{
-		array->elements[i].percentage_per_dependent = malloc(MAX_DEPENDENT_NUMBER * sizeof(float));
+		array->elements[i].percentage_per_dependent = malloc((MAX_DEPENDENT_NUMBER + 1) * sizeof(float));
 		if (array->elements[i].percentage_per_dependent == NULL)
 			return NULL;
 	}
