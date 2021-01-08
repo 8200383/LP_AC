@@ -12,6 +12,8 @@
 #define CSV_COLUMN_DELIMITER ','
 #define CSV_NEW_LINE_DELIMITER '\n'
 #define CSV_BUFFER 50
+#define MAX_DEPENDENT_NUMBER 5
+#define MAX_PHONE_NUMBER 9
 
 typedef enum
 {
@@ -61,5 +63,8 @@ void h_employees_add(s_arr_employees* array);
 void h_employees_pair(s_employee_record* employee, char* str, int column);
 void h_employees_parse(s_arr_employees* array, const char* str);
 void h_employees_print(s_arr_employees* array);
+void h_employees_edit(s_arr_employees* array);
+int h_employees_verify_phone(char* str);
+
 
 #endif //EMPLOYEES_H

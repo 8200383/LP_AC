@@ -117,6 +117,85 @@ void h_employees_add(s_arr_employees* array)
 	array->employees[array->used].phone_number = h_util_get_int(1, 9, "Numero Telefone: ");
 }
 
+void h_employees_edit(s_arr_employees* array)
+{
+	int num;
+	char str[MAX_PHONE_NUMBER];
+	int error;
+
+	printf("Nº de registos do ficheiro: %d\n", array->used);
+
+	/****************************************************
+	 * Na função abaixo, peço um inteiro que representa
+	 * linha que o utilizador quer fazer a alteração e
+	 * igualo o valor a uma variável int(num).
+	 * **************************************************/
+	num = h_util_get_int(0, array->used, "Linha a editar: ");
+
+	printf("Código atual: %d | ", array->employees[num].code);
+	array->employees[num].code = h_util_get_int(0, MAX_VALUE, "Novo código: ");
+
+	printf("Primeiro nome: %s | ", array->employees[num].first_name);
+	printf(YELLOW("Novo primeiro nome: "));
+	scanf(" %s", array->employees[num].first_name);
+
+	printf("Último nome: %s | ", array->employees[num].last_name);
+	printf(YELLOW("Novo último nome: "));
+	scanf(" %s", array->employees[num].last_name);
+
+	error = 0;
+	do
+	{
+		printf("Nº de telefone atual: %d | ", array->employees[num].phone_number);
+		printf(YELLOW("Novo nº de telefone: "));
+		scanf(" %s", str);
+
+		if (h_employees_verify_phone(str) == -1)
+		{
+			error = 1;
+		}
+
+		if (error == 0)
+		{
+			array->employees[num].phone_number = atoi(str);
+		}
+
+	} while (error == 1);
+
+	puts(MAGENTA("\n0- Solteiro\n1- Casado\n2- Divorciado\n3- Viúvo\n"));
+	printf("Estado civíl atual: %d | ", array->employees[num].marital_status);
+	array->employees[num].marital_status = h_util_get_int(0, 2, "Novo estado civíl: ");
+
+	printf("Nº de dependentes atual: %d | ", array->employees[num].number_dependents);
+	array->employees[num].number_dependents = h_util_get_int(0, MAX_DEPENDENT_NUMBER, "Novo nº de dependentes: ");
+
+	printf("Data de nascimento atual: %d/%d/%d | ", array->employees[array->used].birthday->day, array->employees[array
+		->used].birthday->month, array->employees[array->used].birthday->year);
+	h_calendar_get_date(array->employees[array->used].birthday, YELLOW("Nova data de nascimento: "));
+	h_calendar_get_date(array->employees[array->used].entry_date, YELLOW("Nova data de entrada: "));
+}
+
+int h_employees_verify_phone(char* str)
+{
+
+	if (h_util_str_is_digit(str) != MAX_PHONE_NUMBER)
+	{
+		return -1;
+	}
+
+	if (str[0] != '9')
+	{
+		return -1;
+	}
+
+	if (str[1] != '1' && str[1] != '2' && str[1] != '3' && str[1] != '6')
+	{
+		return -1;
+	}
+
+	return 0;
+}
+
 void h_employees_print(s_arr_employees* array)
 {
 	if (array == NULL || array->used == 0)
@@ -162,7 +241,7 @@ void h_employees_pair(s_employee_record* employee, char* str, int column)
 	if (h_util_str_is_digit(str) == 1 && column == COL_ROLE)
 		employee->role = atoi(str);
 
-	if (h_util_str_is_digit(str) == 9 && column == COL_PHONE_NUMBER)
+	if (h_util_str_is_digit(str) == MAX_PHONE_NUMBER && column == COL_PHONE_NUMBER)
 		employee->phone_number = atoi(str);
 
 	if (strcmp(str, "MARRIED") == 0 && column == COL_MARITAL_STATUS)
