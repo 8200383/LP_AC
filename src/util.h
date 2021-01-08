@@ -17,9 +17,17 @@
 char* h_util_file_read(const char* path, int* size);
 
 /**
+ * Read a string from stdin
+ * @param length The length of the string to read
+ * @param msg The message to displays
+ * @return char* Returns the readed string
+ */
+char* h_util_get_string(int length, const char* msg);
+
+/**
  * Gets an alphabetical letter from stdin
- * @param msg Sets a message to display when input
- * @return char
+ * @param msg Sets a message to display
+ * @return char Returns the alpha char readed
  */
 char h_util_get_alphabetical_char(const char* msg);
 
@@ -27,23 +35,16 @@ char h_util_get_alphabetical_char(const char* msg);
  * Gets an int from stdin
  * @param min Sets a min value to input
  * @param max Sets a max value to input
- * @param msg Sets a message to display when input
- * @return int
+ * @param msg Sets a message to display
+ * @return int Returns the readed integer
  */
 int h_util_get_int(int min, int max, const char* msg);
-
-/**
- * Verifiy if a string is a digit
- * @param str The string to verify
- * @return int Return the number of digits found or 0 returned
- */
-int h_util_str_is_digit(const char* str);
 
 /**
  * Gets a float from stdin
  * @param min Sets a min value to input
  * @param max Sets a max value to input
- * @param msg Sets a message to display when input
+ * @param msg Sets a message to display
  * @return float
  */
 float h_util_get_float(float min, float max, const char* msg);

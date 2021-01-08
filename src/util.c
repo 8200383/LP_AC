@@ -63,6 +63,20 @@ void h_util_clean_buffer()
 	while ((ch = getchar()) != '\n' && ch != EOF);
 }
 
+char* h_util_get_string(int length, const char* msg)
+{
+	char* str = malloc((length + 1) * sizeof(char));
+	if (str == NULL)
+		return NULL;
+
+	fprintf(stdout, YELLOW("%s "), msg);
+
+	fgets(str, length + 1, stdin);
+
+	str[strlen(str) - 1] = '\0';
+	return str;
+}
+
 char h_util_get_alphabetical_char(const char* msg)
 {
 	char c;
@@ -109,20 +123,5 @@ float h_util_get_float(float min, float max, const char* msg)
 		fprintf(stdout, RED("%s"), msg);
 	}
 
-	return num;
-}
-
-int h_util_str_is_digit(const char* str)
-{
-	int num;
-	int i;
-
-	num = 0;
-	for (i = 0; str[i] != '\0'; i++)
-	{
-		// check for decimal digits
-		if (isdigit(str[i]) != 0)
-			num++;
-	}
 	return num;
 }

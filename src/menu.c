@@ -286,7 +286,7 @@ void h_menu_employees(s_arr_employees* employees)
 			printf("Remove employee");
 			break;
 		case 4:
-			printf("Edit employee");
+			h_employees_edit(employees);
 			break;
 		case 0:
 			break;
