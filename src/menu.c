@@ -24,9 +24,10 @@ void h_menu_irs(
 	int two_holders_size = 0;
 	char* two_holders_str;
 
+	fprintf(stdout, H_STRS_IRS_MENU);
+
 	do
 	{
-		fprintf(stdout, H_STRS_IRS_MENU);
 		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
 		op = h_util_get_int(0, 18, "Opção?");
 
@@ -39,7 +40,12 @@ void h_menu_irs(
 				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_SINGLE);
 				return;
 			}
-			h_irs_parse(single_table, single_str, h_irs_build);
+			if (single_table->used > 0)
+			{
+				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
+				h_irs_delete_all(single_table);
+			}
+			h_irs_parse(single_table, single_str, h_irs_pair);
 			free(single_str);
 			break;
 		case 2:
@@ -64,20 +70,25 @@ void h_menu_irs(
 				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_UNIQUE_HOLDER);
 				return;
 			}
-			h_irs_parse(unique_holder_table, unique_holder_str, h_irs_build);
+			if (single_table->used > 0)
+			{
+				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
+				h_irs_delete_all(single_table);
+			}
+			h_irs_parse(unique_holder_table, unique_holder_str, h_irs_pair);
 			free(unique_holder_str);
 			break;
 		case 8:
-			h_irs_print(single_table);
+			h_irs_print(unique_holder_table);
 			break;
 		case 9:
-			h_irs_edit(single_table);
+			h_irs_edit(unique_holder_table);
 			break;
 		case 10:
-			h_irs_add(single_table);
+			h_irs_add(unique_holder_table);
 			break;
 		case 11:
-			h_irs_delete(single_table);
+			h_irs_delete(unique_holder_table);
 			break;
 		case 12:
 			h_irs_write(unique_holder_table, H_PATH_UNIQUE_HOLDER);
@@ -89,20 +100,25 @@ void h_menu_irs(
 				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_TWO_HOLDERS);
 				return;
 			}
-			h_irs_parse(two_holders_table, two_holders_str, h_irs_build);
+			if (single_table->used > 0)
+			{
+				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
+				h_irs_delete_all(single_table);
+			}
+			h_irs_parse(two_holders_table, two_holders_str, h_irs_pair);
 			free(two_holders_str);
 			break;
 		case 14:
-			h_irs_print(single_table);
+			h_irs_print(two_holders_table);
 			break;
 		case 15:
-			h_irs_edit(single_table);
+			h_irs_edit(two_holders_table);
 			break;
 		case 16:
-			h_irs_add(single_table);
+			h_irs_add(two_holders_table);
 			break;
 		case 17:
-			h_irs_delete(single_table);
+			h_irs_delete(two_holders_table);
 			break;
 		case 18:
 			h_irs_write(two_holders_table, H_PATH_TWO_HOLDERS);
@@ -119,37 +135,24 @@ void h_menu_irs(
 void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 {
 	int op;
-	int seg_social_size;
-	char* seg_social_str;
 
 	do
 	{
 		fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
-		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
-		op = h_util_get_int(0, 5, "Opção: ");
+		op = h_util_get_int(0, 4, "Opção?");
 
 		switch (op)
 		{
 		case 1:
-			seg_social_str = h_util_file_read(H_PATH_SEG_SOCIAL, &seg_social_size);
-			if (seg_social_str == NULL)
-			{
-				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
-				return;
-			}
-			h_seg_social_parse(seg_social_table, seg_social_str);
-			free(seg_social_str);
-			break;
-		case 2:
 			h_seg_social_print(seg_social_table);
 			break;
-		case 3:
+		case 2:
 			h_seg_social_add(seg_social_table);
 			break;
-		case 4:
+		case 3:
 			h_seg_social_delete(seg_social_table);
 			break;
-		case 5:
+		case 4:
 			h_seg_social_edit(seg_social_table);
 			break;
 		case 0:
@@ -165,17 +168,18 @@ void h_menu_processing(
 	s_arr_irs* single_table,
 	s_arr_irs* unique_holder_table,
 	s_arr_irs* two_holders_table,
-	s_arr_seg_social* seg_social_table
+	s_arr_seg_social* seg_social_table,
+	s_arr_employees* employees
 )
 {
 	int op;
 	s_spreadsheet* spreadsheet = NULL;
 
+
+	fprintf(stdout, H_STRS_PROC);
 	do
 	{
-		fprintf(stdout, H_STRS_PROC);
-		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
-		scanf(" %u", &op);
+		op = h_util_get_int(0, 10, "Opção?");
 
 		switch (op)
 		{
@@ -201,7 +205,7 @@ void h_menu_processing(
 			h_proc_print(spreadsheet);
 			break;
 		case 3:
-			h_proc_add(spreadsheet);
+			h_proc_add(spreadsheet, employees);
 			break;
 		case 4:
 			h_proc_edit(spreadsheet);
@@ -223,7 +227,6 @@ void h_menu_processing(
 					h_calendar_str_from_month(spreadsheet->month));
 				free(spreadsheet);
 			}
-
 			spreadsheet = h_proc_import();
 			break;
 		case 10:
@@ -246,11 +249,10 @@ void h_menu_employees(s_arr_employees* employees)
 {
 	int op;
 
+	fprintf(stdout, H_STRS_EMPLOYEES_MENU);
 	do
 	{
-		fprintf(stdout, H_STRS_EMPLOYEES_MENU);
-		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
-		scanf(" %u", &op);
+		op = h_util_get_int(0, 5, "Opção?");
 
 		switch (op)
 		{
