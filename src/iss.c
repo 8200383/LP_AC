@@ -2,32 +2,40 @@
  * Created by Hugo Carvalho on 12/24/20.
  */
 
+#include <string.h>
 #include "iss.h"
-#include "colors.h"
 
-s_arr_seg_social* h_seg_social_alloc(int initial_capacity)
+s_arr_iss* h_iss_alloc(int initial_capacity)
 {
-	s_arr_seg_social* array;
+	s_arr_iss* array;
+	int i;
 
-	array = malloc(sizeof(s_arr_seg_social));
+	array = malloc(sizeof(s_arr_iss));
 	if (array == NULL)
 	{
 		return NULL;
 	}
 
-	array->data = malloc(initial_capacity * sizeof(s_seg_social));
+	array->data = malloc(initial_capacity * sizeof(s_iss));
 	if (array->data == NULL)
 	{
 		return NULL;
 	}
 
 	array->used = 0;
-	array->max_capacity = initial_capacity - 1;
+	array->max_capacity = initial_capacity;
+
+	for (i = 0; i <= array->max_capacity; i++)
+	{
+		array->data[i].criteria = malloc(BUFFER_SIZE * sizeof(char));
+		if (array->data[i].criteria == NULL)
+			return NULL;
+	}
 
 	return array;
 }
 
-void h_seg_social_free(s_arr_seg_social* array)
+void h_iss_free(s_arr_iss* array)
 {
 	if (array == NULL)
 	{
@@ -38,76 +46,98 @@ void h_seg_social_free(s_arr_seg_social* array)
 	free(array);
 }
 
-void h_seg_social_parse(s_arr_seg_social* array, char* str)
+void h_iss_parse(s_arr_iss* array, char* str)
 {
-	int i, is_employer = 1, offset = -1;
+	int i;
+	int offset = -1;
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
 		if (offset == -1 && isalnum(str[i]))
-			offset = i;
-
-		if (offset != -1 && str[i] == ',')
 		{
-			str[i] = '\0';
-			if (str[i - 1] == '%')
+			offset = i;
+		}
+
+		if (offset != -1)
+		{
+			if (str[i] == ',')
 			{
-				str[i - 1] = '\0';
-				if (is_employer == 1)
+				str[i] = '\0';
+				if (str[i - 1] == '%')
 				{
+					str[i - 1] = '\0';
 					array->data[array->used].employer = strtof(str + offset, NULL);
-					is_employer = 0;
 				}
 				else
 				{
-					array->data[array->used].employee = strtof(str + offset, NULL);
-					is_employer = 1;
+					str[i] = '\0';
+
+					if (strlen(str + offset) > BUFFER_SIZE)
+					{
+						array->data[array->used].criteria = realloc(array->data[array->used].criteria,
+							(BUFFER_SIZE * 2) * sizeof(char));
+
+						if (array->data[array->used].criteria == NULL)
+							return;
+					}
+
+					strcpy(array->data[array->used].criteria, str + offset);
 				}
 				offset = -1;
 			}
-			else
+			else if (str[i] == '\n')
 			{
-				array->data[array->used].criteria = str[offset];
+				str[i - 1] = '\0';
+				array->data[array->used].employee = strtof(str + offset, NULL);
+				array->used++;
 				offset = -1;
 			}
 		}
-
-		if (str[i] == '\n')
-			array->used++;
 	}
 }
 
-void h_seg_social_print(s_arr_seg_social* array)
+void h_iss_print(s_arr_iss* array)
 {
 	int i;
 
-	for (i = 0; i <= array->used; i++)
+	if (array->used == 0)
 	{
-		printf("%d. Criterio: %c ### Empregador: %.2f%% ### Empregado: %.2f%%\n",
-			i,
-			array->data[i].criteria,
-			array->data[i].employer,
-			array->data[i].employee);
+		printf(H_STRS_EMPTY_TABLE);
+		return;
+	}
+
+	printf("%s", H_STRS_SS_TABLE_HEADER);
+	for (i = 0; i < array->used; i++)
+	{
+		printf(RED("[%d] "), i);
+		printf(YELLOW("%s "), array->data[i].criteria);
+		printf(BLUE("| %.2f%% | %.2f%%\n"), array->data[i].employer, array->data[i].employee);
 	}
 }
 
-void h_seg_social_add(s_arr_seg_social* array)
+void h_iss_add(s_arr_iss* array)
 {
 	int i;
-	char new_criteria;
+	char* new_criteria;
 
 	if (array->used == array->max_capacity)
 	{
 		array->max_capacity *= 2;
-		array->data = realloc(array->data, array->max_capacity * sizeof(s_seg_social));
+		array->data = realloc(array->data, array->max_capacity * sizeof(s_iss));
 		if (array->data == NULL)
 		{
 			return;
 		}
 	}
 
+	new_criteria = malloc(sizeof(char) * 64);
+	if (new_criteria == NULL)
+	{
+		return;
+	}
+
 	printf("\nNovo critério: ");
-	scanf(" %c", &new_criteria);
+	scanf("%s", new_criteria);
 
 	for (i = 0; i <= array->used; i++)
 	{
@@ -117,13 +147,13 @@ void h_seg_social_add(s_arr_seg_social* array)
 		}
 	}
 
-	array->used++;
 	array->data[array->used].criteria = new_criteria;
 	array->data[array->used].employer = h_util_get_float(0.0f, 100.0f, "Empregador: ");
 	array->data[array->used].employee = h_util_get_float(0.0f, 100.0f, "Empregado: ");
+	array->used++;
 }
 
-void h_seg_social_delete(s_arr_seg_social* array)
+void h_iss_delete(s_arr_iss* array)
 {
 	int i;
 	int num;
@@ -133,13 +163,15 @@ void h_seg_social_delete(s_arr_seg_social* array)
 		return;
 	}
 
-	num = h_util_get_int(0, 100, "Linha a eliminar: ");
-	if (num < 0 || num >= array->used)
+	if (array->used == 0)
 	{
+		printf(H_STRS_EMPTY_TABLE);
 		return;
 	}
 
-	for (i = num; i <= array->used - 1; i++)
+	num = h_util_get_int(0, (array->used) - 1, "Linha a eliminar: ");
+
+	for (i = num; i < array->used; i++)
 	{
 		array->data[i] = array->data[i + 1];
 	}
@@ -147,7 +179,7 @@ void h_seg_social_delete(s_arr_seg_social* array)
 	array->used--;
 }
 
-void h_seg_social_write(s_arr_seg_social* array, const char* path)
+void h_iss_write(s_arr_iss* array, const char* path)
 {
 	int i;
 	FILE* fp;
@@ -165,7 +197,7 @@ void h_seg_social_write(s_arr_seg_social* array, const char* path)
 
 	for (i = 0; i <= array->used; i++)
 	{
-		fprintf(fp, "%c,%.2f%%,%.2f%%,\n",
+		fprintf(fp, "%s,%.2f%%,%.2f%%,\n",
 			array->data[i].criteria,
 			array->data[i].employer,
 			array->data[i].employee);
@@ -174,18 +206,30 @@ void h_seg_social_write(s_arr_seg_social* array, const char* path)
 	fclose(fp);
 }
 
-void h_seg_social_edit(s_arr_seg_social* array)
+void h_iss_edit(s_arr_iss* array)
 {
 	int i;
 	int num;
-	char new_criteria;
+	char* new_criteria;
 
-	fprintf(stdout, YELLOW("Registos: %d\n"), array->used);
-	num = h_util_get_int(0, array->used, "Linha a editar: ");
+	if (array->used == 0)
+	{
+		printf(H_STRS_EMPTY_TABLE);
+		return;
+	}
 
-	printf("Critério - Valor atual: %c | ", array->data[num].criteria);
+	printf(YELLOW("Número de Registos: %d\n"), array->used);
+	num = h_util_get_int(0, (array->used) - 1, "Linha a editar: ");
+
+	new_criteria = malloc(sizeof(char) * 64);
+	if (new_criteria == NULL)
+	{
+		return;
+	}
+
+	printf("Critério - Valor atual: %s | ", array->data[num].criteria);
 	printf("Novo valor: ");
-	scanf(" %c", &new_criteria);
+	scanf("%s", new_criteria);
 
 	for (i = 0; i <= array->used; i++)
 	{

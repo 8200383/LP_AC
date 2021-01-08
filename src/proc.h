@@ -11,6 +11,7 @@
 #include "irs.h"
 #include "iss.h"
 #include "calendar.h"
+#include "employees.h"
 
 #define MAX_FILENAME 256
 
@@ -20,6 +21,7 @@
  */
 typedef struct
 {
+	int cod_employee; /**< Reprents the employee code */
 	int full_days; /**< Represents the number of full days worked */
 	int half_days; /**< Represents the number of half days worked */
 	int weekend_days; /**< Represents number of the weekends worked */
@@ -56,14 +58,18 @@ s_spreadsheet* h_proc_alloc(int initial_capacity);
  */
 s_spreadsheet* h_proc_open(const char* filename, e_month month);
 
-// TODO: is it really necessary?
+/**
+ * Loads a spreadsheet into memory by asking a month to import
+ * @return s_spreadsheet Returns a ptr to a malloced struct of s_spreadsheet returns NULL if failure
+ */
 s_spreadsheet* h_proc_import();
 
 /**
  * Add details to an existing month
  * @param spreadsheet Ptr to a spreadsheet
+ * @param arr_employees An array of employees
  */
-void h_proc_add(s_spreadsheet* spreadsheet);
+void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees);
 
 /**
  * Edit details from an existing month
@@ -104,18 +110,8 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet);
 char* h_proc_generate_filename(e_month month, const char* extension);
 
 /**
- * TODO: s_error* h_proc_perform(s_arr_employee* empl_arr, s_arr_irs* irs_arr, s_arr_seg_social* segs_arr, s_arr_spreadsheet* ss_arr, e_month month);
- * NOTA:
- * A informação referente ao processamento do salário deverá ficar armazenada
- * em memória/disco e adicionalmente guardada como relatório o num  ficheiro de texto (ex: CSV)
- * Após processamento: call h_proc_export_bin(), h_proc_export_csv() em h_menu_processing() [perguntar sempre]
- *
- * @param empl_arr Array of Employees
- * @param irs_arr Array of IRS
- * @param segs_arr Array of Social Secutiry
- * @param ss_arr Array of Spreadshhets
- * @param month The month to process, if NULL process all months
  * @return s_error Indicates what went wrong or NULL returned
  */
+void h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_iss* ss_array, s_arr_employees* employees_array);
 
 #endif //PROC_H

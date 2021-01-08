@@ -1,15 +1,11 @@
-/*
- * Created by Micael Dias on 10/12/20.
- */
-
-#include "util.h"
-#include "colors.h"
-#include "strs.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <ctype.h>
+
+#include "util.h"
+#include "colors.h"
+#include "strs.h"
 
 char* h_util_file_read(const char* path, int* size)
 {
@@ -57,7 +53,7 @@ char* h_util_file_read(const char* path, int* size)
 		}
 	}
 
-	buffer[counter - 1] = '\0';
+	buffer[counter] = '\0';
 	return buffer;
 }
 

@@ -13,6 +13,8 @@
 #define H_STRS_EDIT "Editar linha?"
 #define H_STRS_DELETE "Apagar linha?"
 
+#define H_STRS_EMPTY_TABLE RED("Tabela Vazia.\n")
+
 #define H_STRS_MENU MAGENTA( \
 "*******************************\n" \
 "*         -|  MENU  |-        *\n" \
@@ -35,22 +37,28 @@
 "*                TRABALHO DEPENDENTE                *\n" \
 "*                                                   *\n" \
 "* -| Tabela I - NÃO CASADO |-                       *\n" \
-"* 1. Visualizar                                     *\n" \
-"* 2. Editar                                         *\n" \
-"* 3. Adicionar                                      *\n" \
-"* 4. Eliminar                                       *\n" \
+"*  1. Carregar Tabela                               *\n" \
+"*  2. Visualizar                                    *\n" \
+"*  3. Editar                                        *\n" \
+"*  4. Adicionar                                     *\n" \
+"*  5. Eliminar                                      *\n" \
+"*  6. Guardar                                       *\n" \
 "*                                                   *\n" \
 "* -| Tabela II - CASADO UNICO TITULAR |-            *\n" \
-"* 5. Visualizar                                     *\n" \
-"* 6. Editar                                         *\n" \
-"* 7. Adicionar                                      *\n" \
-"* 8. Eliminar                                       *\n" \
+"*  7. Carregar Tabela                               *\n" \
+"*  8. Visualizar                                    *\n" \
+"*  9. Editar                                        *\n" \
+"* 10. Adicionar                                     *\n" \
+"* 11. Eliminar                                      *\n" \
+"* 12. Guardar                                       *\n" \
 "*                                                   *\n" \
 "* -| Tabela III - CASADO DOIS TITULAR |-            *\n" \
-"* 9.  Visualizar                                    *\n" \
-"* 10. Editar                                        *\n" \
-"* 11. Adicionar                                     *\n" \
-"* 12. Eliminar                                      *\n" \
+"* 13. Carregar Tabela                               *\n" \
+"* 14. Visualizar                                    *\n" \
+"* 15. Editar                                        *\n" \
+"* 16. Adicionar                                     *\n" \
+"* 17. Eliminar                                      *\n" \
+"* 18. Guardar                                       *\n" \
 "*                                                   *\n" \
 "* 0. Voltar ao menu anterior                        *\n" \
 "*                                                   *\n" \
@@ -60,10 +68,11 @@
 "**************************************\n" \
 "* -| Menu Tabela Segurança Social |- *\n" \
 "*                                    *\n" \
-"* 1. Visualizar                      *\n" \
-"* 2. Adicionar                       *\n" \
-"* 3. Remover                         *\n" \
-"* 4. Editar                          *\n" \
+"* 1. Carregar Tabela                 *\n" \
+"* 2. Visualizar                      *\n" \
+"* 3. Adicionar                       *\n" \
+"* 4. Remover                         *\n" \
+"* 5. Editar                          *\n" \
 "* 0. Voltar ao menu anterior         *\n" \
 "*                                    *\n" \
 "**************************************\n")
@@ -92,11 +101,17 @@
 "*         | Mensal em €     | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
 "*************************************************************\n")
 
+#define H_STRS_SS_TABLE_HEADER BLUE( \
+"*************************************************\n" \
+"* [Linha] | Critério | Percentagens de Retenção *\n" \
+"*         |          | Empregador | Empregado   *\n" \
+"*************************************************\n")
+
 #define H_STRS_EMPLOYEES_TABLE_HEADER GREEN( \
-"********************************************************************************************************************\n" \
-"* [Linha] | Cod      | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  *\n" \
-"*                    | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída *\n" \
-"********************************************************************************************************************\n")
+"***************************************************************************************************************\n" \
+"* [Linha] | Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  *\n" \
+"*         |     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída *\n" \
+"***************************************************************************************************************\n")
 
 #define H_STRS_EMPLOYEES_MENU CYAN ( \
 "**************************************\n" \
@@ -111,9 +126,9 @@
 "************************************** \n")
 
 #define H_STRS_PROC_TABLE_HEADER BLUE( \
-"********************************************************\n" \
-"* [Linha] | Cod | Dias      | Meios | Fins   | Faltas  *\n" \
-"*               | Completos | Dias  | Semana |         *\n" \
-"********************************************************\n")
+"*********************************************************\n" \
+"* [Linha] | Cod  | Dias      | Meios | Fins   | Faltas  *\n" \
+"*         | Func | Completos | Dias  | Semana |         *\n" \
+"*********************************************************\n")
 
 #endif //STRS_H
