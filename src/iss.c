@@ -29,7 +29,9 @@ s_arr_iss* h_iss_alloc(int initial_capacity)
 	{
 		array->data[i].criteria = malloc(BUFFER_SIZE * sizeof(char));
 		if (array->data[i].criteria == NULL)
+		{
 			return NULL;
+		}
 	}
 
 	return array;
@@ -63,6 +65,7 @@ void h_iss_parse(s_arr_iss* array, char* str)
 			if (str[i] == ',')
 			{
 				str[i] = '\0';
+
 				if (str[i - 1] == '%')
 				{
 					str[i - 1] = '\0';
@@ -78,7 +81,9 @@ void h_iss_parse(s_arr_iss* array, char* str)
 							(BUFFER_SIZE * 2) * sizeof(char));
 
 						if (array->data[array->used].criteria == NULL)
+						{
 							return;
+						}
 					}
 
 					strcpy(array->data[array->used].criteria, str + offset);

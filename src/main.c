@@ -82,25 +82,29 @@ int main_menu()
 
 		switch (op)
 		{
-		case 1:
-			h_menu_irs(single_table, unique_holder_table, two_holders_table);
-			break;
-		case 2:
-			h_menu_seg_social(seg_social_table);
-			break;
-		case 3:
-			h_menu_employees(employees_table);
-			break;
-		case 4:
-			h_menu_processing(single_table, unique_holder_table, two_holders_table, seg_social_table, employees_table);
-			break;
-		case 9:
-			// TODO: tem de ir pra tabela da iss
-			h_iss_write(seg_social_table, H_PATH_SEG_SOCIAL);
-			fprintf(stdout, GREEN("[!] Guardado com sucesso\n"));
-			break;
-		default:
-			break;
+			case 1:
+				h_menu_irs(single_table, unique_holder_table, two_holders_table);
+				break;
+			case 2:
+				h_menu_seg_social(seg_social_table);
+				break;
+			case 3:
+				h_menu_employees(employees_table);
+				break;
+			case 4:
+				h_menu_processing(single_table,
+					unique_holder_table,
+					two_holders_table,
+					seg_social_table,
+					employees_table);
+				break;
+			case 9:
+				// TODO: tem de ir pra tabela da iss
+				h_iss_write(seg_social_table, H_PATH_SEG_SOCIAL);
+				fprintf(stdout, GREEN("[!] Guardado com sucesso\n"));
+				break;
+			default:
+				break;
 		}
 	} while (op != 0);
 

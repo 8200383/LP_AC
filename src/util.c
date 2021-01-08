@@ -16,11 +16,15 @@ char* h_util_file_read(const char* path, int* size)
 	int ch;
 
 	if (path == NULL)
+	{
 		return NULL;
+	}
 
 	fptr = fopen(path, "r");
 	if (fptr == NULL)
+	{
 		return NULL;
+	}
 
 	buffer_size = 256;
 	buffer = malloc(buffer_size * sizeof(char));
@@ -37,7 +41,9 @@ char* h_util_file_read(const char* path, int* size)
 		buffer[counter++] = (char)ch;
 
 		if (ch == '\n')
+		{
 			(*size)++;
+		}
 
 		if (counter == buffer_size)
 		{
@@ -60,14 +66,17 @@ char* h_util_file_read(const char* path, int* size)
 void h_util_clean_buffer()
 {
 	int ch;
-	while ((ch = getchar()) != '\n' && ch != EOF);
+	while ((ch = getchar()) != '\n' && ch != EOF)
+	{}
 }
 
 char* h_util_get_string(int length, const char* msg)
 {
 	char* str = malloc((length + 1) * sizeof(char));
 	if (str == NULL)
+	{
 		return NULL;
+	}
 
 	fprintf(stdout, YELLOW("%s "), msg);
 

@@ -17,15 +17,21 @@ s_arr_employees* h_employees_alloc(int initial_capacity)
 	int i;
 
 	if (!initial_capacity)
+	{
 		return NULL;
+	}
 
 	array = malloc(sizeof(s_arr_employees));
 	if (array == NULL)
+	{
 		return NULL;
+	}
 
 	array->employees = malloc(initial_capacity * sizeof(s_employee));
 	if (array->employees == NULL)
+	{
 		return NULL;
+	}
 
 	array->used = 0;
 	array->max_capacity = initial_capacity;
@@ -34,23 +40,33 @@ s_arr_employees* h_employees_alloc(int initial_capacity)
 	{
 		array->employees[i].first_name = malloc(first_name_buffer_size * sizeof(char));
 		if (array->employees[i].first_name == NULL)
+		{
 			return NULL;
+		}
 
 		array->employees[i].last_name = malloc(last_name_buffer_size * sizeof(char));
 		if (array->employees[i].last_name == NULL)
+		{
 			return NULL;
+		}
 
 		array->employees[i].birthday = malloc(sizeof(s_date));
 		if (array->employees[i].birthday == NULL)
+		{
 			return NULL;
+		}
 
 		array->employees[i].entry_date = malloc(sizeof(s_date));
 		if (array->employees[i].entry_date == NULL)
+		{
 			return NULL;
+		}
 
 		array->employees[i].leaving_date = malloc(sizeof(s_date));
 		if (array->employees[i].leaving_date == NULL)
+		{
 			return NULL;
+		}
 	}
 
 	return array;
@@ -68,16 +84,16 @@ int h_employees_get_marital_status()
 
 	switch (h_util_get_int(0, 3, "Estado Civil: (0-3)\n0 - Solteiro\n1 - Casado\n2 - Divorciado\n3 - Viuvo\n? "))
 	{
-	case 0:
-		return SINGLE;
-	case 1:
-		return MARRIED;
-	case 2:
-		return DIVORCED;
-	case 3:
-		return WIDOWED;
-	default:
-		puts("Civil status invalid! Let's assume civil status: SINGLE.");
+		case 0:
+			return SINGLE;
+		case 1:
+			return MARRIED;
+		case 2:
+			return DIVORCED;
+		case 3:
+			return WIDOWED;
+		default:
+			puts("Civil status invalid! Let's assume civil status: SINGLE.");
 	}
 
 	return SINGLE;
@@ -258,7 +274,9 @@ void h_employees_add(s_arr_employees* array)
 		array->max_capacity *= 2;
 		array->employees = realloc(array->employees, array->max_capacity * sizeof(s_employee));
 		if (array->employees == NULL)
+		{
 			return;
+		}
 	}
 
 	h_employees_get_fields(&array->employees[array->used]);
@@ -339,25 +357,37 @@ void h_employees_print(s_arr_employees* array)
 void h_employees_pair(s_employee* employee, char* str, int column)
 {
 	if (strlen(str) == 4 && column == COL_CODE_FUNC)
+	{
 		employee->code = atoi(str);
+	}
 
 	if (strlen(str) == 1 && column == COL_NUM_DEPENDENTS)
+	{
 		employee->number_dependents = atoi(str);
+	}
 
 	if (strlen(str) == 1 && column == COL_ROLE)
+	{
 		employee->role = atoi(str);
+	}
 
 	if (strlen(str) == PHONE_NUMBER_SIZE && column == COL_PHONE_NUMBER)
+	{
 		employee->phone_number = atoi(str);
+	}
 
 	if (strcmp(str, "MARRIED") == 0 && column == COL_MARITAL_STATUS)
+	{
 		employee->marital_status = MARRIED;
-
+	}
 	else if (strcmp(str, "SINGLE") == 0 && column == COL_MARITAL_STATUS)
+	{
 		employee->marital_status = SINGLE;
-
+	}
 	else if (strcmp(str, "DIVORCED") == 0 && column == COL_MARITAL_STATUS)
+	{
 		employee->marital_status = DIVORCED;
+	}
 
 	if (column == COL_FIRST_NAME)
 	{
@@ -365,7 +395,9 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 		{
 			employee->first_name = realloc(employee->first_name, first_name_buffer_size * 2);
 			if (employee->first_name == NULL)
+			{
 				return;
+			}
 
 			first_name_buffer_size *= 2;
 		}
@@ -379,7 +411,9 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 		{
 			employee->last_name = realloc(employee->last_name, last_name_buffer_size * 2);
 			if (employee->last_name == NULL)
+			{
 				return;
+			}
 
 			last_name_buffer_size *= 2;
 		}
@@ -420,7 +454,9 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 void h_employees_parse(s_arr_employees* array, const char* str)
 {
 	if (array == NULL || str == NULL)
+	{
 		return;
+	}
 
 	int i;
 	int j;

@@ -14,10 +14,14 @@ void h_calendar_get_date(s_date* date, const char* msg)
 		scanf("%d/%d/%d", &day, &month, &year);
 
 		if (h_calendar_check_date(day, month, year) == 0)
+		{
 			error = 1;
+		}
 
 		if (error == 1)
+		{
 			puts(RED("Data incorreta"));
+		}
 
 	} while (error == 1);
 
@@ -34,7 +38,9 @@ int h_calendar_leap_year(int year)
 int h_calendar_days_in_month(e_month month)
 {
 	if (month == FEB || month == APR || month == JUN || month == SEP || month == NOV)
+	{
 		return 30;
+	}
 
 	return 31;
 }
@@ -42,25 +48,35 @@ int h_calendar_days_in_month(e_month month)
 int h_calendar_check_date(int day, int month, int year)
 {
 	if (year < 1000 || year > 9999)
+	{
 		return 0;
+	}
 
 	if (month < JAN || month > DEC)
+	{
 		return 0;
+	}
 
 	if (month == FEB && h_calendar_leap_year(year) == 1)
 	{ // days 29
 		if (day < 1 || day > 29)
+		{
 			return 0;
+		}
 	}
 
 	if (month == FEB && h_calendar_leap_year(year) == 0)
 	{ // days 28
 		if (day < 1 || day > 28)
+		{
 			return 0;
+		}
 	}
 
 	if (day < 1 || day > h_calendar_days_in_month(month))
+	{
 		return 0;
+	}
 
 	return 1;
 }

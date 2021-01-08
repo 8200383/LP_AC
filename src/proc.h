@@ -112,6 +112,9 @@ char* h_proc_generate_filename(e_month month, const char* extension);
 /**
  * @return s_error Indicates what went wrong or NULL returned
  */
-void h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_iss* ss_array, s_arr_employees* employees_array);
+void h_proc_perform(s_spreadsheet* spreadsheet,
+	s_arr_irs* irs_array,
+	s_arr_iss* ss_array,
+	s_arr_employees* employees_array);
 
 #endif //PROC_H

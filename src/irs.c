@@ -13,15 +13,21 @@ s_arr_irs* h_irs_alloc(int initial_capacity)
 	int i;
 
 	if (!initial_capacity)
+	{
 		return NULL;
+	}
 
 	array = malloc(sizeof(s_arr_irs));
 	if (array == NULL)
+	{
 		return NULL;
+	}
 
 	array->elements = malloc(initial_capacity * sizeof(s_element));
 	if (array->elements == NULL)
+	{
 		return NULL;
+	}
 
 	array->used = 0;
 	array->max_capacity = initial_capacity;
@@ -30,7 +36,9 @@ s_arr_irs* h_irs_alloc(int initial_capacity)
 	{
 		array->elements[i].percentage_per_dependent = malloc((MAX_DEPENDENT_NUMBER + 1) * sizeof(float));
 		if (array->elements[i].percentage_per_dependent == NULL)
+		{
 			return NULL;
+		}
 	}
 
 	return array;
@@ -39,7 +47,9 @@ s_arr_irs* h_irs_alloc(int initial_capacity)
 void h_irs_free(s_arr_irs* array)
 {
 	if (array == NULL)
+	{
 		return;
+	}
 
 	free(array->elements);
 	free(array);
@@ -115,7 +125,9 @@ void h_irs_print_line(s_element element)
 		element.monthly_pay_value);
 
 	for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
+	{
 		fprintf(stdout, CYAN(" | %.1f%%"), element.percentage_per_dependent[j] * 100.0f);
+	}
 
 	fprintf(stdout, "\n");
 }
@@ -150,16 +162,22 @@ void h_irs_add(s_arr_irs* array)
 
 		array->elements = realloc(array->elements, array->max_capacity * sizeof(s_element));
 		if (array->elements == NULL)
+		{
 			return;
+		}
 
 		for (i = array->used + 1; i <= array->max_capacity; i++)
 		{
 			array->elements[i].percentage_per_dependent = malloc(MAX_DEPENDENT_NUMBER * sizeof(float));
 			if (array->elements[i].percentage_per_dependent == NULL)
+			{
 				return;
+			}
 
 			for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
+			{
 				array->elements[i].percentage_per_dependent[j] = 0.0f;
+			}
 		}
 	}
 
@@ -202,10 +220,13 @@ void h_irs_edit(s_arr_irs* array)
 
 	op = h_util_get_alphabetical_char("[A]té [S]uperior a: ");
 	if (op == 'A' || op == 'a')
+	{
 		array->elements[index].monthly_pay_type = H_IRS_UP_TO;
-
+	}
 	else if (op == 'S' || op == 's')
+	{
 		array->elements[index].monthly_pay_type = H_IRS_BEYOND;
+	}
 
 	array->elements[index].monthly_pay_value = h_util_get_float(0.0f, MAX_REMUNERATION, "Remuneração Mensal: ");
 
@@ -251,6 +272,18 @@ void h_irs_delete_element(s_arr_irs* array, int index)
 {
 	int i;
 
+	if (array->used == 0)
+	{
+		puts(RED("[!] Tabela vazia"));
+		return;
+	}
+
+	if (!index)
+	{
+		puts(RED("[!] Nenhum índice especificado"));
+		return;
+	}
+
 	for (i = index; i < array->used - 1; i++)
 	{
 		array->elements[i] = array->elements[i + 1];
@@ -271,6 +304,12 @@ void h_irs_write(s_arr_irs* array, const char* path)
 		return;
 	}
 
+	if (path == NULL)
+	{
+		puts(RED("[!] Nenhum caminho de ficheiro especificado"));
+		return;
+	}
+
 	fp = fopen(path, "w");
 	if (fp == NULL)
 	{
@@ -285,7 +324,9 @@ void h_irs_write(s_arr_irs* array, const char* path)
 			array->elements[i].monthly_pay_value);
 
 		for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
+		{
 			fprintf(fp, "%.1f%%,", array->elements[i].percentage_per_dependent[j] * 100);
+		}
 
 		fprintf(fp, "\n");
 	}

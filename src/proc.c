@@ -16,11 +16,15 @@ s_spreadsheet* h_proc_alloc(int initial_capacity)
 
 	spreadsheet = malloc(sizeof(s_details));
 	if (spreadsheet == NULL)
+	{
 		return NULL;
+	}
 
 	spreadsheet->details = malloc(initial_capacity * sizeof(s_details));
 	if (spreadsheet->details == NULL)
+	{
 		return NULL;
+	}
 
 	spreadsheet->used = 0;
 	spreadsheet->max_capacity = initial_capacity;
@@ -31,7 +35,9 @@ s_spreadsheet* h_proc_alloc(int initial_capacity)
 void h_proc_free(s_spreadsheet* spreadsheet)
 {
 	if (spreadsheet == NULL)
+	{
 		return;
+	}
 
 	free(spreadsheet->details);
 	free(spreadsheet);
@@ -46,7 +52,9 @@ s_spreadsheet* h_proc_import()
 	month = h_util_get_int(1, 12, "Importar Mês? (1-12)") - 1;
 	filename = h_proc_generate_filename(month, ".bin");
 	if (filename == NULL)
+	{
 		return NULL;
+	}
 
 	if (access(filename, F_OK) == 0)
 	{
@@ -76,15 +84,21 @@ s_spreadsheet* h_proc_open(const char* filename, e_month month)
 
 	fp = fopen(filename, "rb");
 	if (fp == NULL)
+	{
 		return NULL;
+	}
 
 	file_size = 0;
 	while (!feof(fp))
+	{
 		file_size++;
+	}
 
 	spreadsheet = h_proc_alloc(file_size);
 	if (spreadsheet == NULL)
+	{
 		return NULL;
+	}
 
 	spreadsheet->month = month;
 	for (int i = 0; !feof(fp); i++)
@@ -93,13 +107,17 @@ s_spreadsheet* h_proc_open(const char* filename, e_month month)
 		{
 			spreadsheet = realloc(spreadsheet->details, spreadsheet->max_capacity * 2);
 			if (spreadsheet == NULL)
+			{
 				return NULL;
+			}
 
 			spreadsheet->max_capacity *= 2;
 		}
 
 		if (fread(&spreadsheet->details[i], sizeof(s_details), 1, fp) != 1)
+		{
 			return NULL;
+		}
 
 		spreadsheet->used++;
 	}
@@ -110,7 +128,6 @@ s_spreadsheet* h_proc_open(const char* filename, e_month month)
 void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 {
 	int i;
-	int j;
 	int max_days;
 	int employee_index;
 
@@ -214,7 +231,9 @@ void h_proc_edit(s_spreadsheet* spreadsheet)
 
 	op = h_util_get_int(0, 1, "Quer editar o mês correpondente?\n 1. Sim\n 0. Não");
 	if (op == 1)
+	{
 		spreadsheet->month = h_util_get_int(1, 12, "Novo mês?") - 1;
+	}
 
 	max_days = h_calendar_days_in_month(spreadsheet->month);
 	spreadsheet->details[index].full_days = h_util_get_int(0, max_days, "Dias completos");
@@ -239,7 +258,9 @@ void h_proc_delete(s_spreadsheet* spreadsheet)
 	index = h_util_get_int(0, spreadsheet->used, H_STRS_DELETE);
 
 	for (i = index; i < spreadsheet->used - 1; i++)
+	{
 		spreadsheet->details[i] = spreadsheet->details[i + 1];
+	}
 
 	spreadsheet->used--;
 }
@@ -251,23 +272,35 @@ char* h_proc_generate_filename(e_month month, const char* extension)
 
 	month_str = h_calendar_str_from_month(month);
 	if (month_str == NULL)
+	{
 		return NULL;
+	}
 
 	filename = malloc(MAX_FILENAME * sizeof(char));
 	if (filename == NULL)
+	{
 		return NULL;
+	}
 
 	if (memset(filename, '\0', MAX_FILENAME) == NULL)
+	{
 		return NULL;
+	}
 
 	if (strcat(filename, "../data/spreadsheet_") == NULL)
+	{
 		return NULL;
+	}
 
 	if (strcat(filename, month_str) == NULL)
+	{
 		return NULL;
+	}
 
 	if (strcat(filename, extension) == NULL)
+	{
 		return NULL;
+	}
 
 	return filename;
 }
@@ -286,7 +319,9 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 
 	filename = h_proc_generate_filename(spreadsheet->month, ".csv");
 	if (filename == NULL)
+	{
 		return;
+	}
 
 	fp = fopen(filename, "w");
 	if (fp == NULL)
@@ -311,7 +346,11 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 	fprintf(stdout, YELLOW("[!] Ficheiro exportado com sucesso\n"));
 }
 
-void h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_iss* ss_array, s_arr_employees* employees_array)
+void h_proc_perform(
+	s_spreadsheet* spreadsheet,
+	s_arr_irs* irs_array,
+	s_arr_iss* ss_array,
+	s_arr_employees* employees_array)
 {
 	int i;
 
@@ -327,18 +366,20 @@ void h_proc_perform(s_spreadsheet* spreadsheet, s_arr_irs* irs_array, s_arr_iss*
 	float irs_retention_percentage; //
 
 	if (irs_array->used == 0 || ss_array->used == 0 || employees_array->used == 0)
+	{
 		return;
+	}
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
 		//Falta definir as constantes do sálario de acordo com o cargo do trabalhador.
 		base_salary = (float)spreadsheet->details[i].full_days * 40 +
-					  (float)spreadsheet->details[i].half_days * 40 / 2.0f +
-					  (float)spreadsheet->details[i].weekend_days * 40 * 1.5f;
+			(float)spreadsheet->details[i].half_days * 40 / 2.0f +
+			(float)spreadsheet->details[i].weekend_days * 40 * 1.5f;
 
 		//Falta definir as constantes do subsídio da alimentação de acordo com o cargo do trabalhador.
 		food_allowance = (float)spreadsheet->details[i].full_days * 5 +
-						 (float)spreadsheet->details[i].weekend_days * 5;
+			(float)spreadsheet->details[i].weekend_days * 5;
 
 		//Falta aceder aos dados dos trabalhadores para determinar o escalão de IRS.
 		irs_retention_percentage = irs_array->elements[i].monthly_pay_value / 100.0f;
