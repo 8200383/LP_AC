@@ -8,9 +8,10 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "util.h"
 #include "strs.h"
+#include "util.h"
 
 #define BUFFER_SIZE 64
 
@@ -31,10 +32,11 @@ typedef struct
 s_arr_iss* h_iss_alloc(int initial_capacity);
 void h_iss_free(s_arr_iss* array);
 void h_iss_parse(s_arr_iss* array, char* str);
+void h_iss_delete_all(s_arr_iss* array);
 void h_iss_print(s_arr_iss* array);
 void h_iss_add(s_arr_iss* array);
 void h_iss_delete(s_arr_iss* array);
-void h_iss_write(s_arr_iss* array, const char* path);
 void h_iss_edit(s_arr_iss* array);
+void h_iss_write(s_arr_iss* array, const char* path);
 
 #endif //ISS_H

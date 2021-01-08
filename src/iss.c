@@ -2,13 +2,12 @@
  * Created by Hugo Carvalho on 12/24/20.
  */
 
-#include <string.h>
 #include "iss.h"
 
 s_arr_iss* h_iss_alloc(int initial_capacity)
 {
-	s_arr_iss* array;
 	int i;
+	s_arr_iss* array;
 
 	array = malloc(sizeof(s_arr_iss));
 	if (array == NULL)
@@ -33,7 +32,6 @@ s_arr_iss* h_iss_alloc(int initial_capacity)
 			return NULL;
 		}
 	}
-
 	return array;
 }
 
@@ -85,7 +83,6 @@ void h_iss_parse(s_arr_iss* array, char* str)
 							return;
 						}
 					}
-
 					strcpy(array->data[array->used].criteria, str + offset);
 				}
 				offset = -1;
@@ -98,6 +95,22 @@ void h_iss_parse(s_arr_iss* array, char* str)
 				offset = -1;
 			}
 		}
+	}
+}
+
+void h_iss_delete_all(s_arr_iss* array)
+{
+	int i;
+
+	if (array->used == 0)
+	{
+		printf(H_STRS_EMPTY_TABLE);
+		return;
+	}
+
+	for (i = 0; i < array->used; array->used--)
+	{
+		array->data[i] = array->data[i + 1];
 	}
 }
 
@@ -144,10 +157,11 @@ void h_iss_add(s_arr_iss* array)
 	printf("\nNovo critério: ");
 	scanf("%s", new_criteria);
 
-	for (i = 0; i <= array->used; i++)
+	for (i = 0; i < array->used; i++)
 	{
-		if (new_criteria == array->data[i].criteria)
+		if (strcmp(new_criteria, array->data[i].criteria) == 0)
 		{
+			printf(H_STRS_CRITERIA_DUPLICATE);
 			return;
 		}
 	}
@@ -163,11 +177,6 @@ void h_iss_delete(s_arr_iss* array)
 	int i;
 	int num;
 
-	if (array == NULL)
-	{
-		return;
-	}
-
 	if (array->used == 0)
 	{
 		printf(H_STRS_EMPTY_TABLE);
@@ -182,33 +191,6 @@ void h_iss_delete(s_arr_iss* array)
 	}
 
 	array->used--;
-}
-
-void h_iss_write(s_arr_iss* array, const char* path)
-{
-	int i;
-	FILE* fp;
-
-	if (path == NULL)
-	{
-		return;
-	}
-
-	fp = fopen(path, "w");
-	if (fp == NULL)
-	{
-		return;
-	}
-
-	for (i = 0; i <= array->used; i++)
-	{
-		fprintf(fp, "%s,%.2f%%,%.2f%%,\n",
-			array->data[i].criteria,
-			array->data[i].employer,
-			array->data[i].employee);
-	}
-
-	fclose(fp);
 }
 
 void h_iss_edit(s_arr_iss* array)
@@ -238,8 +220,9 @@ void h_iss_edit(s_arr_iss* array)
 
 	for (i = 0; i <= array->used; i++)
 	{
-		if (new_criteria == array->data[i].criteria && i != num)
+		if (strcmp(new_criteria, array->data[i].criteria) == 0 && i != num)
 		{
+			printf(H_STRS_CRITERIA_DUPLICATE);
 			return;
 		}
 	}
@@ -249,4 +232,27 @@ void h_iss_edit(s_arr_iss* array)
 	array->data[num].employer = h_util_get_float(0.0f, 100.0f, "Novo valor: ");
 	printf("Empregado - Valor atual: %.2f | ", array->data[num].employee);
 	array->data[num].employee = h_util_get_float(0.0f, 100.0f, "Novo valor: ");
+}
+
+void h_iss_write(s_arr_iss* array, const char* path)
+{
+	int i;
+	FILE* fp;
+
+	fp = fopen(path, "w");
+	if (fp == NULL)
+	{
+		return;
+	}
+
+	for (i = 0; i <= array->used; i++)
+	{
+		fprintf(fp, "%s,%.2f%%,%.2f%%,\n",
+			array->data[i].criteria,
+			array->data[i].employer,
+			array->data[i].employee);
+	}
+
+	printf(H_STRS_SAVE_SUCCESS);
+	fclose(fp);
 }

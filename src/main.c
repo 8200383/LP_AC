@@ -6,7 +6,6 @@
 #include "menu.h"
 #include "strs.h"
 #include "paths.h"
-#include "proc.h"
 
 #define INITIAL_CAPACITY 50
 
@@ -99,9 +98,7 @@ int main_menu()
 					employees_table);
 				break;
 			case 9:
-				// TODO: tem de ir pra tabela da iss
-				h_iss_write(seg_social_table, H_PATH_SEG_SOCIAL);
-				fprintf(stdout, GREEN("[!] Guardado com sucesso\n"));
+				// TODO: Guardar todas
 				break;
 			default:
 				break;
