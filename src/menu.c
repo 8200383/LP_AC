@@ -135,24 +135,41 @@ void h_menu_irs(
 void h_menu_seg_social(s_arr_seg_social* seg_social_table)
 {
 	int op;
+	int social_sec_size = 0;
+	char* social_sec_str;
 
 	do
 	{
 		fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
-		op = h_util_get_int(0, 4, "Opção?");
+		op = h_util_get_int(0, 5, "Opção: ");
 
 		switch (op)
 		{
 		case 1:
-			h_seg_social_print(seg_social_table);
+			social_sec_str = h_util_file_read(H_PATH_SEG_SOCIAL, &social_sec_size);
+			if (social_sec_str == NULL)
+			{
+				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
+				return;
+			}
+			if (seg_social_table->used > 0)
+			{
+				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
+				//h_irs_delete_all(seg_social_table);
+			}
+			h_seg_social_parse(seg_social_table, social_sec_str);
+			free(social_sec_str);
 			break;
 		case 2:
-			h_seg_social_add(seg_social_table);
+			h_seg_social_print(seg_social_table);
 			break;
 		case 3:
-			h_seg_social_delete(seg_social_table);
+			h_seg_social_add(seg_social_table);
 			break;
 		case 4:
+			h_seg_social_delete(seg_social_table);
+			break;
+		case 5:
 			h_seg_social_edit(seg_social_table);
 			break;
 		case 0:

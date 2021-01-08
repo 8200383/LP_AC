@@ -205,7 +205,7 @@ void h_seg_social_edit(s_arr_seg_social* array)
 	}
 
 	printf(YELLOW("Número de Registos: %d\n"), array->used);
-	num = h_util_get_int(0, array->used, "Linha a editar: ");
+	num = h_util_get_int(0, (array->used) - 1, "Linha a editar: ");
 
 	new_criteria = malloc(sizeof(char) * 64);
 	if (new_criteria == NULL)
