@@ -95,9 +95,7 @@ int main_menu()
 			h_menu_processing(single_table, unique_holder_table, two_holders_table, seg_social_table, employees_table);
 			break;
 		case 9:
-			// TODO: tem de ir pra tabela da iss
-			h_iss_write(seg_social_table, H_PATH_SEG_SOCIAL);
-			fprintf(stdout, GREEN("[!] Guardado com sucesso\n"));
+			// TODO: Guardar todas
 			break;
 		default:
 			break;

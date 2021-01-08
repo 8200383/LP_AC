@@ -10,10 +10,12 @@
 #define H_STRS_INVALID_IMPUT RED("Input Inválido\n")
 #define H_STRS_PROMPT "> "
 
-#define H_STRS_EDIT "Editar linha?"
-#define H_STRS_DELETE "Apagar linha?"
-
+#define H_STRS_EDIT YELLOW("Editar linha?")
+#define H_STRS_DELETE YELLOW("Apagar linha?")
 #define H_STRS_EMPTY_TABLE RED("Tabela Vazia.\n")
+#define H_STRS_SAVE_SUCCESS GREEN("Guardado com Sucesso.\n")
+
+#define H_STRS_CRITERIA_DUPLICATE RED("Já existe um critério com esse nome.\n")
 
 #define H_STRS_MENU MAGENTA( \
 "*******************************\n" \
@@ -73,6 +75,7 @@
 "* 3. Adicionar                       *\n" \
 "* 4. Remover                         *\n" \
 "* 5. Editar                          *\n" \
+"* 6. Guardar                         *\n" \
 "* 0. Voltar ao menu anterior         *\n" \
 "*                                    *\n" \
 "**************************************\n")

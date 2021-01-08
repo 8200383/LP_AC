@@ -141,7 +141,7 @@ void h_menu_seg_social(s_arr_iss* seg_social_table)
 	do
 	{
 		fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
-		op = h_util_get_int(0, 5, "Opção: ");
+		op = h_util_get_int(0, 6, "Opção: ");
 
 		switch (op)
 		{
@@ -149,13 +149,13 @@ void h_menu_seg_social(s_arr_iss* seg_social_table)
 			social_sec_str = h_util_file_read(H_PATH_SEG_SOCIAL, &social_sec_size);
 			if (social_sec_str == NULL)
 			{
-				fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
+				printf(RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
 				return;
 			}
 			if (seg_social_table->used > 0)
 			{
-				fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
-				//h_irs_delete_all(seg_social_table);
+				printf(RED("[!] Já existem dados na tabela. Os novos dados foram carregados.\n"));
+				h_iss_delete_all(seg_social_table);
 			}
 			h_iss_parse(seg_social_table, social_sec_str);
 			free(social_sec_str);
@@ -171,6 +171,9 @@ void h_menu_seg_social(s_arr_iss* seg_social_table)
 			break;
 		case 5:
 			h_iss_edit(seg_social_table);
+			break;
+		case 6:
+			h_iss_write(seg_social_table, H_PATH_SEG_SOCIAL);
 			break;
 		case 0:
 			break;
