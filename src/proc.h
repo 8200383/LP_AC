@@ -8,6 +8,11 @@
 #ifndef PROC_H
 #define PROC_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
 #include "irs.h"
 #include "iss.h"
 #include "calendar.h"
@@ -26,6 +31,11 @@ typedef struct
 	int half_days; /**< Represents the number of half days worked */
 	int weekend_days; /**< Represents number of the weekends worked */
 	int absent_days; /**< Represents the number of days missed */
+	float base_salary;
+	float food_allowance;
+	float irs_retention;
+	float ss_retention_employer;
+	float ss_retention_employee;
 	/* TODO: missing processing vars */
 } s_details;
 
