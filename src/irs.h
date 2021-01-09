@@ -12,7 +12,7 @@
 #define CSV_NEW_LINE_DELIMITER '\n'
 #define CSV_BUFFER 50
 #define MAX_DEPENDENT_NUMBER 5
-#define MAX_REMUNERATION 10000.0f
+#define MAX_REMUNERATION 30000.0f
 #define MAX_PERCENTAGE 100.0f
 
 /** @enum e_type Specification of monthly remuneration */

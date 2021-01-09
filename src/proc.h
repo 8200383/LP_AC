@@ -8,6 +8,11 @@
 #ifndef PROC_H
 #define PROC_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+
 #include "irs.h"
 #include "iss.h"
 #include "calendar.h"
@@ -26,7 +31,11 @@ typedef struct
 	int half_days; /**< Represents the number of half days worked */
 	int weekend_days; /**< Represents number of the weekends worked */
 	int absent_days; /**< Represents the number of days missed */
-	/* TODO: missing processing vars */
+	float base_salary;
+	float food_allowance;
+	float irs_retention;
+	float ss_retention_employer;
+	float ss_retention_employee;
 } s_details;
 
 /**
@@ -110,11 +119,19 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet);
 char* h_proc_generate_filename(e_month month, const char* extension);
 
 /**
- * @return s_error Indicates what went wrong or NULL returned
+ *
+ * @param spreadsheet
+ * @param irs_array
+ * @param ss_array
+ * @param employees_array
  */
-void h_proc_perform(s_spreadsheet* spreadsheet,
-	s_arr_irs* irs_array,
-	s_arr_iss* ss_array,
-	s_arr_employees* employees_array);
+void h_proc_perform(
+	s_spreadsheet* spreadsheet,
+	s_arr_irs* single_table,
+	s_arr_irs* unique_holder_table,
+	s_arr_irs* two_holders_table,
+	s_arr_iss* seg_social_table,
+	s_arr_employees* employees
+);
 
 #endif //PROC_H

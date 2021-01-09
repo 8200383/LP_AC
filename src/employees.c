@@ -93,7 +93,7 @@ int h_employees_get_marital_status()
 		case 3:
 			return WIDOWED;
 		default:
-			puts("Estado civíl inválido! Vamos assumir o estado: Solteiro/a.");
+			puts("Civil status invalid! Let's assume civil status: SINGLE.");
 	}
 
 	return SINGLE;
@@ -177,17 +177,26 @@ void h_employees_get_fields(s_employee* employee)
 
 	if (employee->phone_number)
 	{
-		printf("Atual TLF: %s\n", employee->phone_number);
+		printf("Atual TLF: %s\n", employee->last_name);
 
 	}
 	employee->phone_number = h_employees_get_phone_number();
 
 	if (employee->marital_status)
 	{
-		// TODO: Implementar isto, falta no print tbm
-		printf("Estado Civil atual: %s\n", employee->marital_status);
+		printf("Estado Civil atual: %s\n", h_employees_str_from_marital_status(employee->marital_status));
 	}
 	employee->marital_status = h_employees_get_marital_status();
+
+	if (employee->marital_status == SINGLE)
+	{
+		employee->holders = NONE;
+	}
+	else if (employee->marital_status == MARRIED)
+	{
+		// TODO: Implementar um h_employees_get_holders()
+		employee->holders = NONE;
+	}
 
 	// TODO: Cargo mediantes os cargos que existem na ISS
 
@@ -258,7 +267,13 @@ void h_employees_get_fields(s_employee* employee)
 	{
 		printf("Antigo Valor por hora %f\n", employee->hourly_rate);
 	}
-	employee->hourly_rate = h_util_get_float(0.0f, MAX_REMUNERATION, "Valor por hora? ");
+	employee->hourly_rate = h_util_get_float(0.0f, MAX_HOURLY_RATE, "Valor por hora? ");
+
+	if (employee->base_food_allowance)
+	{
+		printf("Antigo Valor base subsídio de alimentação %f\n", employee->base_food_allowance);
+	}
+	employee->base_food_allowance = h_util_get_float(0.0f, MAX_FOOD_ALLOWANCE, "Valor base subsídio de alimentação?");
 }
 
 void h_employees_add(s_arr_employees* array)
@@ -330,9 +345,10 @@ void h_employees_print(s_arr_employees* array)
 	printf(H_STRS_EMPLOYEES_TABLE_HEADER);
 
 	int i;
-	for (i = 0; i < array->used; i++)
+	for (i = 0; i < array->used;
+		 i++) // TODO: ver strs.h colunas não esta de acordo com os parametros, e falta mostrar se esta marital status e holders
 	{
-		printf("[%d] %d | %s | %s | %d | %d | %d | %.2f€ | %d/%d/%d | %d/%d/%d | %d/%d/%d\n",
+		printf("[%d] %d | %s | %s | %d | %d | %d | %.2f€ | %.2f€ | %d/%d/%d | %d/%d/%d | %d/%d/%d\n",
 			i,
 			array->employees[i].code,
 			array->employees[i].first_name,
@@ -341,6 +357,7 @@ void h_employees_print(s_arr_employees* array)
 			array->employees[i].number_dependents,
 			array->employees[i].role,
 			array->employees[i].hourly_rate,
+			array->employees[i].base_food_allowance,
 			array->employees[i].birthday->day,
 			array->employees[i].birthday->month,
 			array->employees[i].birthday->year,
@@ -376,17 +393,20 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 		employee->phone_number = atoi(str);
 	}
 
-	if (strcmp(str, "MARRIED") == 0 && column == COL_MARITAL_STATUS)
+	if (column == COL_MARITAL_STATUS)
 	{
-		employee->marital_status = MARRIED;
-	}
-	else if (strcmp(str, "SINGLE") == 0 && column == COL_MARITAL_STATUS)
-	{
-		employee->marital_status = SINGLE;
-	}
-	else if (strcmp(str, "DIVORCED") == 0 && column == COL_MARITAL_STATUS)
-	{
-		employee->marital_status = DIVORCED;
+		if (strcmp(str, "MARRIED") == 0)
+		{
+			employee->marital_status = MARRIED;
+		}
+		else if (strcmp(str, "SINGLE") == 0)
+		{
+			employee->marital_status = SINGLE;
+		}
+		else if (strcmp(str, "DIVORCED") == 0)
+		{
+			employee->marital_status = DIVORCED;
+		}
 	}
 
 	if (column == COL_FIRST_NAME)
@@ -445,9 +465,32 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 			&employee->leaving_date->year);
 	}
 
-	if (column == COL_BASE_SALARY)
+	if (column == COL_HOURLY_RATE)
 	{
 		employee->hourly_rate = strtof(str, NULL);
+	}
+
+	if (column == COL_BASE_FOOD_ALLOWANCE)
+	{
+		employee->base_food_allowance = strtof(str, NULL);
+	}
+
+	if (column == COL_HOLDERS)
+	{
+		if (strcmp(str, "NONE") == 0)
+		{
+			employee->holders = NONE;
+		}
+
+		if (strcmp(str, "UNIQUE_HOLDER") == 0)
+		{
+			employee->holders = UNIQUE_HOLDER;
+		}
+
+		if (strcmp(str, "TWO_HOLDERS") == 0)
+		{
+			employee->holders = TWO_HOLDERS;
+		}
 	}
 }
 
@@ -485,4 +528,11 @@ void h_employees_parse(s_arr_employees* array, const char* str)
 			array->used++;
 		}
 	}
+}
+
+char* h_employees_str_from_marital_status(e_marital_status status)
+{
+	char* str[] = { "Solteiro", "Casado", "Divorciado", "Viúvo" };
+
+	return str[status];
 }
