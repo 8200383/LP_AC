@@ -36,7 +36,6 @@ typedef struct
 	float irs_retention;
 	float ss_retention_employer;
 	float ss_retention_employee;
-	/* TODO: missing processing vars */
 } s_details;
 
 /**
