@@ -122,13 +122,13 @@ int h_employees_get_phone_number();
  *
  * @param employee
  */
-void h_employees_get_fields(s_employee* employee, s_arr_iss* iss);
+void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array);
 
 /**
  *
- * @param employees
+ * @param array
  */
-void h_employees_add(s_arr_employees* employees, s_arr_iss* iss);
+void h_employees_add(s_arr_employees* array, s_arr_iss* iss_array);
 
 /**
  *
@@ -140,24 +140,24 @@ void h_employees_pair(s_employee* employee, char* str, int column);
 
 /**
  *
- * @param employees
+ * @param array
  * @param str
  */
-void h_employees_parse(s_arr_employees* employees, const char* str);
+void h_employees_parse(s_arr_employees* array, const char* str);
 
 /**
  *
- * @param employees
- * @param iss
+ * @param array
+ * @param iss_array
  */
-void h_employees_print(s_arr_employees* employees, s_arr_iss* iss);
+void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array);
 
 /**
  *
- * @param employees
- * @param iss
+ * @param array
+ * @param iss_array
  */
-void h_employees_edit(s_arr_employees* employees, s_arr_iss* iss);
+void h_employees_edit(s_arr_employees* array, s_arr_iss* iss_array);
 /**
  *
  * @param str
