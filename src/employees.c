@@ -113,7 +113,7 @@ int h_employees_get_phone_number()
 	return phone_number;
 }
 
-void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
+void h_employees_get_fields(s_employee* employee, s_arr_iss* iss)
 {
 	char* first_name;
 	char* last_name;
@@ -203,11 +203,11 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 	}
 
 	printf(YELLOW("Cargos Disponiveis\n"));
-	for (int i = 0; i < iss_array->used; i++)
+	for (int i = 0; i < iss->used; i++)
 	{
-		printf(YELLOW("%d - %s"), i, iss_array->data[i].criteria);
+		printf(YELLOW("%d - %s"), i, iss->data[i].criteria);
 	}
-	employee->role = h_util_get_int(0, iss_array->used, "Cargo:");
+	employee->role = h_util_get_int(0, iss->used, "Cargo:");
 
 	if (employee->number_dependents)
 	{
@@ -285,61 +285,61 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 	employee->base_food_allowance = h_util_get_float(0.0f, MAX_FOOD_ALLOWANCE, "Valor base subsídio de alimentação: ");
 }
 
-void h_employees_add(s_arr_employees* array, s_arr_iss* iss_array)
+void h_employees_add(s_arr_employees* employees, s_arr_iss* iss)
 {
-	if (array == NULL)
+	if (employees == NULL)
 	{
 		puts(RED("[!] Employees não alocado"));
 		return;
 	}
 
-	if (iss_array == NULL && iss_array->used == 0)
+	if (iss == NULL && iss->used == 0)
 	{
 		puts(RED("[!] ISS não alocada ou vazia"));
 		puts(YELLOW("[!] Não é possivel adicionar funcionários sem a ISS inicializada"));
 		return;
 	}
 
-	if (array->used == array->max_capacity)
+	if (employees->used == employees->max_capacity)
 	{
-		array->max_capacity *= 2;
-		array->employees = realloc(array->employees, array->max_capacity * sizeof(s_employee));
-		if (array->employees == NULL)
+		employees->max_capacity *= 2;
+		employees->employees = realloc(employees->employees, employees->max_capacity * sizeof(s_employee));
+		if (employees->employees == NULL)
 		{
 			return;
 		}
 	}
 
-	h_employees_get_fields(&array->employees[array->used], iss_array);
-	array->used++;
+	h_employees_get_fields(&employees->employees[employees->used], iss);
+	employees->used++;
 }
 
-void h_employees_edit(s_arr_employees* array, s_arr_iss* iss_array) // TODO: testar
+void h_employees_edit(s_arr_employees* employees, s_arr_iss* iss) // TODO: testar
 {
 	int num;
 
-	if (array == NULL || array->used == 0)
+	if (employees == NULL || employees->used == 0)
 	{
 		puts(RED("[!] Employees não alocado ou vazio"));
 		return;
 	}
 
-	if (iss_array == NULL && iss_array->used == 0)
+	if (iss == NULL && iss->used == 0)
 	{
 		puts(RED("[!] ISS não alocada ou vazia"));
 		puts(YELLOW("[!] Não é possivel editar funcionários sem a ISS inicializada"));
 		return;
 	}
 
-	printf("Nº de registos do ficheiro: %d\n", array->used);
+	printf("Nº de registos do ficheiro: %d\n", employees->used);
 
 	/****************************************************
 	 * Na função abaixo, peço um inteiro que representa
 	 * linha que o utilizador quer fazer a alteração e
 	 * igualo o valor a uma variável int(num).
 	 * **************************************************/
-	num = h_util_get_int(0, array->used, "Linha a editar: ");
-	h_employees_get_fields(&array->employees[num], iss_array);
+	num = h_util_get_int(0, employees->used, "Linha a editar: ");
+	h_employees_get_fields(&employees->employees[num], iss);
 }
 
 int h_employees_verify_phone(char* str)
@@ -366,15 +366,15 @@ int h_employees_verify_phone(char* str)
 	return 0;
 }
 
-void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array)
+void h_employees_print(s_arr_employees* employees, s_arr_iss* iss)
 {
-	if (array == NULL || array->used == 0)
+	if (employees == NULL || employees->used == 0)
 	{
 		puts(RED("[!] Employees não alocado ou vazio"));
 		return;
 	}
 
-	if (iss_array == NULL || iss_array->used == 0)
+	if (iss == NULL || iss->used == 0)
 	{
 		puts(RED("[!] ISS não alocada ou vazia"));
 		puts(YELLOW("[!] Impossivel mostrar os cargos sem a tabela da ISS inicializada"));
@@ -384,29 +384,29 @@ void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array)
 	printf(H_STRS_EMPLOYEES_TABLE_HEADER);
 
 	int i;
-	for (i = 0; i < array->used; i++)
+	for (i = 0; i < employees->used; i++)
 	{
 		printf(PRINT_TEMPLATE_STRING,
 			i,
-			array->employees[i].code,
-			array->employees[i].first_name,
-			array->employees[i].last_name,
-			array->employees[i].phone_number,
-			array->employees[i].number_dependents,
-			iss_array->data[array->employees[i].role].criteria,
-			h_employees_str_from_marital_status(array->employees[i].marital_status),
-			array->employees[i].birthday->day,
-			array->employees[i].birthday->month,
-			array->employees[i].birthday->year,
-			array->employees[i].entry_date->day,
-			array->employees[i].entry_date->month,
-			array->employees[i].entry_date->year,
-			array->employees[i].leaving_date->day,
-			array->employees[i].leaving_date->month,
-			array->employees[i].leaving_date->year,
-			array->employees[i].hourly_rate,
-			array->employees[i].base_food_allowance,
-			array->employees[i].holders
+			employees->employees[i].code,
+			employees->employees[i].first_name,
+			employees->employees[i].last_name,
+			employees->employees[i].phone_number,
+			employees->employees[i].number_dependents,
+			iss->data[employees->employees[i].role].criteria,
+			h_employees_str_from_marital_status(employees->employees[i].marital_status),
+			employees->employees[i].birthday->day,
+			employees->employees[i].birthday->month,
+			employees->employees[i].birthday->year,
+			employees->employees[i].entry_date->day,
+			employees->employees[i].entry_date->month,
+			employees->employees[i].entry_date->year,
+			employees->employees[i].leaving_date->day,
+			employees->employees[i].leaving_date->month,
+			employees->employees[i].leaving_date->year,
+			employees->employees[i].hourly_rate,
+			employees->employees[i].base_food_allowance,
+			employees->employees[i].holders
 		);
 	}
 }
@@ -533,9 +533,9 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 	}
 }
 
-void h_employees_parse(s_arr_employees* array, const char* str)
+void h_employees_parse(s_arr_employees* employees, const char* str)
 {
-	if (array == NULL || str == NULL)
+	if (employees == NULL || str == NULL)
 	{
 		return;
 	}
@@ -555,7 +555,7 @@ void h_employees_parse(s_arr_employees* array, const char* str)
 				buffer[k] = str[j];
 			}
 
-			h_employees_pair(&array->employees[array->used], buffer, column);
+			h_employees_pair(&employees->employees[employees->used], buffer, column);
 			memset(buffer, 0, CSV_BUFFER);
 			delimiter = i;
 			column++;
@@ -564,7 +564,7 @@ void h_employees_parse(s_arr_employees* array, const char* str)
 		if (str[i] == CSV_NEW_LINE_DELIMITER)
 		{
 			column = 1;
-			array->used++;
+			employees->used++;
 		}
 	}
 }
