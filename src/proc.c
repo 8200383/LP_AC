@@ -355,38 +355,38 @@ void h_proc_perform(
 	if (spreadsheet == NULL || single_table == NULL || unique_holder_table == NULL ||
 	two_holders_table == NULL || seg_social_table == NULL || employees == NULL)
 	{
-		// TODO: Acrescentar mensagem de erro
+		puts(RED("[!] Tabelas não inicializadas"));
 		return;
 	}
 
 	if (spreadsheet->used == 0 || single_table->used == 0 || unique_holder_table->used == 0 ||
 	two_holders_table->used == 0 || seg_social_table->used == 0 || employees->used == 0)
 	{
-		// TODO: Acrescentar mensagem de erro
+		puts(RED("[!] Tabelas Vazias"));
 	 	return;
 	}
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-		///Calculo dos Dias Trabalhados e o Bonus Correspondente///
+		// Calculo dos Dias Trabalhados e o Bonus Correspondente
 		days_worked = (float)spreadsheet->details[i].full_days +
 					  (float)spreadsheet->details[i].half_days * 0.5f +
 					  (float)spreadsheet->details[i].weekend_days;
 
 		if (days_worked > 20)
 		{
-			salary_bonus_multiplier = 1.05f;
+			salary_bonus_multiplier = BONUS_20_DAYS;
 		}
 		else if (days_worked > 17)
 		{
-			salary_bonus_multiplier = 1.02f;
+			salary_bonus_multiplier = BONUS_17_DAYS;
 		}
 		else
 		{
-			salary_bonus_multiplier = 1.0f;
+			salary_bonus_multiplier = BONUS_BASE;
 		}
 
-		///Calculo do Salário Bruto///
+		// Calculo do Salário Bruto
 		spreadsheet->details->base_salary =
 			(float)spreadsheet->details[i].full_days * employees->employees[i].hourly_rate +
 			(float)spreadsheet->details[i].half_days * employees->employees[i].hourly_rate * 0.5f +
@@ -400,18 +400,18 @@ void h_proc_perform(
 
 		spreadsheet->details->raw_salary = spreadsheet->details->base_salary + spreadsheet->details->food_allowance;
 
-		///Calculo da retenção pelo IRS///
+		// Calculo da retenção pelo IRS
 		switch (employees->employees->holders)
 		{
-		case 0:
+		case NONE:
 			irs_retention_percentage = h_proc_get_irs_retention_percentage
 				(single_table, employees->employees[i], spreadsheet->details->raw_salary);
 			break;
-		case 1:
+		case UNIQUE_HOLDER:
 			irs_retention_percentage = h_proc_get_irs_retention_percentage
 				(unique_holder_table, employees->employees[i], spreadsheet->details->raw_salary);
 			break;
-		case 2:
+		case TWO_HOLDERS:
 			irs_retention_percentage = h_proc_get_irs_retention_percentage
 				(two_holders_table, employees->employees[i], spreadsheet->details->raw_salary);
 			break;
@@ -419,7 +419,7 @@ void h_proc_perform(
 
 		spreadsheet->details->irs_retention = spreadsheet->details->raw_salary * irs_retention_percentage;
 
-		///Calculo da retenção pela Segurança social///
+		// Calculo da retenção pela Segurança social
 		ss_retention_employer_percentage = seg_social_table->data[employees->employees[i].role].employer / 100.0f;
 		ss_retention_employee_percentage = seg_social_table->data[employees->employees[i].role].employee / 100.0f;
 
@@ -428,8 +428,7 @@ void h_proc_perform(
 		spreadsheet->details->ss_retention_employee = (spreadsheet->details->base_salary +
 			spreadsheet->details->food_allowance) * ss_retention_employee_percentage;
 
-		///Calculo do Salário Liquido e o Encargo Total do Empregador///
-
+		// Calculo do Salário Liquido e o Encargo Total do Empregador
 		spreadsheet->details->processed_salary = spreadsheet->details->raw_salary -
 			spreadsheet->details->ss_retention_employee - spreadsheet->details->irs_retention;
 
