@@ -81,9 +81,9 @@ int h_calendar_check_date(int day, int month, int year)
 	return 1;
 }
 
-const char* h_calendar_str_from_month(e_month month)
+char* h_calendar_str_from_month(e_month month)
 {
-	const char* strings[] = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
+	char* strings[] = { "jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec" };
 
 	return strings[month];
 }

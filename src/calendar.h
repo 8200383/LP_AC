@@ -39,6 +39,6 @@ void h_calendar_get_date(s_date* date, const char* msg);
 int h_calendar_days_in_month(e_month month);
 int h_calendar_check_date(int day, int month, int year);
 int h_calendar_leap_year(int year);
-const char* h_calendar_str_from_month(e_month month);
+char* h_calendar_str_from_month(e_month month);
 
 #endif //CALENDAR_H
