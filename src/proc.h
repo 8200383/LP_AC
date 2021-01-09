@@ -33,9 +33,12 @@ typedef struct
 	int absent_days; /**< Represents the number of days missed */
 	float base_salary;
 	float food_allowance;
+	float raw_salary;
 	float irs_retention;
 	float ss_retention_employer;
 	float ss_retention_employee;
+	float processed_salary;
+	float total_cost;
 } s_details;
 
 /**
@@ -133,5 +136,7 @@ void h_proc_perform(
 	s_arr_iss* seg_social_table,
 	s_arr_employees* employees
 );
+
+float h_proc_get_irs_retention_percentage(s_arr_irs* table, s_employee employee, float raw_salary);
 
 #endif //PROC_H
