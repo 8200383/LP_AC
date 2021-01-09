@@ -13,9 +13,6 @@ int main_menu()
 {
 	int op;
 
-	int employees_size;
-	char* employees_str;
-
 	s_arr_irs* single_table;
 	s_arr_irs* unique_holder_table;
 	s_arr_irs* two_holders_table;
@@ -67,12 +64,15 @@ int main_menu()
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
 
-	employees_size = 0;
-	employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
-
-	employees_table = h_employees_alloc(employees_size);
-
-	h_employees_parse(employees_table, employees_str);
+	employees_table = h_employees_alloc(INITIAL_CAPACITY);
+	if (employees_table == NULL)
+	{
+		free(single_table);
+		free(unique_holder_table);
+		free(two_holders_table);
+		free(seg_social_table);
+		return -1;
+	}
 
 	do
 	{
@@ -109,7 +109,6 @@ int main_menu()
 	h_irs_free(unique_holder_table);
 	h_irs_free(two_holders_table);
 	h_iss_free(seg_social_table);
-
 	return 0;
 }
 

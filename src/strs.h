@@ -122,10 +122,12 @@
 "**************************************\n" \
 "* -| Menu Gestão de Funcionários |-  *\n" \
 "*                                    *\n" \
-"* 1. Visualizar                      *\n" \
-"* 2. Adicionar                       *\n" \
-"* 3. Remover                         *\n" \
-"* 4. Editar                          *\n" \
+"* 1. Carregar Tabela                 *\n" \
+"* 2. Visualizar                      *\n" \
+"* 3. Adicionar                       *\n" \
+"* 4. Remover                         *\n" \
+"* 5. Editar                          *\n" \
+"* 6. Guardar                         *\n" \
 "* 0. Voltar ao menu anterior         *\n" \
 "*                                    *\n" \
 "************************************** \n")

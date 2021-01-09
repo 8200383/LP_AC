@@ -2,11 +2,6 @@
 #include <stdlib.h>
 
 #include "menu.h"
-#include "colors.h"
-#include "strs.h"
-#include "util.h"
-#include "proc.h"
-#include "paths.h"
 
 void h_menu_irs(
 	s_arr_irs* single_table,
@@ -134,8 +129,6 @@ void h_menu_irs(
 void h_menu_seg_social(s_arr_iss* seg_social_table)
 {
 	int op;
-	int social_sec_size = 0;
-	char* social_sec_str;
 
 	do
 	{
@@ -145,19 +138,7 @@ void h_menu_seg_social(s_arr_iss* seg_social_table)
 		switch (op)
 		{
 			case 1:
-				social_sec_str = h_util_file_read(H_PATH_SEG_SOCIAL, &social_sec_size);
-				if (social_sec_str == NULL)
-				{
-					printf(RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
-					return;
-				}
-				if (seg_social_table->used > 0)
-				{
-					printf(RED("[!] Já existem dados na tabela. Os novos dados foram carregados.\n"));
-					h_iss_delete_all(seg_social_table);
-				}
-				h_iss_parse(seg_social_table, social_sec_str);
-				free(social_sec_str);
+				h_load_seg_social(seg_social_table);
 				break;
 			case 2:
 				h_iss_print(seg_social_table);
@@ -269,31 +250,73 @@ void h_menu_processing(
 void h_menu_employees(s_arr_employees* employees, s_arr_iss* iss_array)
 {
 	int op;
+	int employees_size = 0;
+	char* employees_str;
 
-	fprintf(stdout, H_STRS_EMPLOYEES_MENU);
 	do
 	{
-		op = h_util_get_int(0, 5, "Opção?");
+		printf(H_STRS_EMPLOYEES_MENU);
+		op = h_util_get_int(0, 6, "> ");
 
 		switch (op)
 		{
 			case 1:
-				h_employees_print(employees, iss_array);
+				h_load_seg_social(iss_array);
+				employees_str = h_util_file_read(H_PATH_SEG_SOCIAL, &employees_size);
+				if (employees_str == NULL)
+				{
+					printf(RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
+					return;
+				}
+				if (employees->used > 0)
+				{
+					printf(RED("[!] Já existem dados na tabela. Os novos dados foram carregados.\n"));
+					// TODO: h_employess_delete_all(employees);
+				}
+				h_employees_parse(employees, employees_str);
+				free(employees_str);
 				break;
 			case 2:
-				h_employees_add(employees, iss_array);
+				h_employees_print(employees, iss_array);
 				break;
 			case 3:
-				printf("Remove employee");
+				h_employees_add(employees, iss_array);
 				break;
 			case 4:
+				// TODO: printf("Remove employee");
+				break;
+			case 5:
 				h_employees_edit(employees, iss_array);
+				break;
+			case 6:
+				// TODO: printf("Save employees");
 				break;
 			case 0:
 				break;
 			default:
-				fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
+				printf(RED("%s"), H_STRS_INVALID_IMPUT);
 				break;
 		}
 	} while (op != 0);
+}
+
+void h_load_seg_social (s_arr_iss* seg_social_table)
+{
+	int social_sec_size = 0;
+	char* social_sec_str;
+
+	social_sec_str = h_util_file_read(H_PATH_SEG_SOCIAL, &social_sec_size);
+	if (social_sec_str == NULL)
+	{
+		printf(RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
+		return;
+	}
+	if (seg_social_table->used > 0)
+	{
+		printf(RED("[!] Já existem dados na tabela. Os novos dados foram carregados.\n"));
+		h_iss_delete_all(seg_social_table);
+	}
+
+	h_iss_parse(seg_social_table, social_sec_str);
+	free(social_sec_str);
 }
