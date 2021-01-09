@@ -56,7 +56,7 @@ typedef struct
 	char* first_name;
 	char* last_name;
 	int phone_number;
-	float base_salary;
+	float hourly_rate;
 	e_marital_status marital_status;
 	s_date* birthday, * entry_date, * leaving_date;
 } s_employee;

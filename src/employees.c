@@ -254,11 +254,11 @@ void h_employees_get_fields(s_employee* employee)
 
 	h_calendar_get_date(employee->leaving_date, "Data de saida? ");
 
-	if (employee->base_salary)
+	if (employee->hourly_rate)
 	{
-		printf("Data de base atual: %f\n", employee->base_salary);
+		printf("Antigo Valor por hora %f\n", employee->hourly_rate);
 	}
-	employee->base_salary = h_util_get_float(0.0f, MAX_REMUNERATION, "Salario Base? ");
+	employee->hourly_rate = h_util_get_float(0.0f, MAX_REMUNERATION, "Valor por hora? ");
 }
 
 void h_employees_add(s_arr_employees* array)
@@ -340,7 +340,7 @@ void h_employees_print(s_arr_employees* array)
 			array->employees[i].phone_number,
 			array->employees[i].number_dependents,
 			array->employees[i].role,
-			array->employees[i].base_salary,
+			array->employees[i].hourly_rate,
 			array->employees[i].birthday->day,
 			array->employees[i].birthday->month,
 			array->employees[i].birthday->year,
@@ -447,7 +447,7 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 
 	if (column == COL_BASE_SALARY)
 	{
-		employee->base_salary = strtof(str, NULL);
+		employee->hourly_rate = strtof(str, NULL);
 	}
 }
 
