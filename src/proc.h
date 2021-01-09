@@ -110,11 +110,19 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet);
 char* h_proc_generate_filename(e_month month, const char* extension);
 
 /**
- * @return s_error Indicates what went wrong or NULL returned
+ *
+ * @param spreadsheet
+ * @param irs_array
+ * @param ss_array
+ * @param employees_array
  */
-void h_proc_perform(s_spreadsheet* spreadsheet,
-	s_arr_irs* irs_array,
-	s_arr_iss* ss_array,
-	s_arr_employees* employees_array);
+void h_proc_perform(
+	s_spreadsheet* spreadsheet,
+	s_arr_irs* single_table,
+	s_arr_irs* unique_holder_table,
+	s_arr_irs* two_holders_table,
+	s_arr_iss* seg_social_table,
+	s_arr_employees* employees
+);
 
 #endif //PROC_H
