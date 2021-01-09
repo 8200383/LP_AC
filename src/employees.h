@@ -157,4 +157,11 @@ void h_employees_edit(s_arr_employees* array);
  */
 int h_employees_verify_phone(char* str);
 
+/**
+ *
+ * @param status
+ * @return
+ */
+char* h_employees_str_from_marital_status(e_marital_status status);
+
 #endif //EMPLOYEES_H
