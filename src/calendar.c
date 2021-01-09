@@ -87,3 +87,19 @@ char* h_calendar_str_from_month(e_month month)
 
 	return strings[month];
 }
+
+struct tm* h_calendar_init_local_time()
+{
+	time_t time_now;
+	struct tm* local_time;
+
+	time_now = time(&time_now);
+	local_time = localtime(&time_now);
+
+	return local_time;
+}
+
+int h_calendar_get_year(struct tm* local_time)
+{
+	return local_time->tm_year + 1900; // get year_now after 1900
+}

@@ -8,6 +8,8 @@
 #ifndef CALENDAR_H
 #define CALENDAR_H
 
+#include <time.h>
+
 /**
  * @struct s_date
  * A structure to represent dates
@@ -40,5 +42,8 @@ int h_calendar_days_in_month(e_month month);
 int h_calendar_check_date(int day, int month, int year);
 int h_calendar_leap_year(int year);
 char* h_calendar_str_from_month(e_month month);
+struct tm* h_calendar_init_local_time();
+int h_calendar_get_year(struct tm* local_time);
+
 
 #endif //CALENDAR_H
