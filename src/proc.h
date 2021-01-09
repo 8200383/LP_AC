@@ -19,6 +19,9 @@
 #include "employees.h"
 
 #define MAX_FILENAME 256
+#define BONUS_BASE 1.0f
+#define BONUS_20_DAYS 1.05f
+#define BONUS_17_DAYS 1.02f
 
 /**
  * @struct s_details
