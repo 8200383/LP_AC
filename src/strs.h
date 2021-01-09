@@ -113,12 +113,11 @@
 "*         |          | Empregador | Empregado   *\n" \
 "*************************************************\n")
 
-// TODO: Adicionar coluna valor por hora e valor base sub alimentação e numero de titulares
 #define H_STRS_EMPLOYEES_TABLE_HEADER GREEN( \
-"***************************************************************************************************************\n" \
-"* [Linha] | Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  *\n" \
-"*         |     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída *\n" \
-"***************************************************************************************************************\n")
+"********************************************************************************************************************************************\n" \
+"* [Linha] | Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  | Valor Subs. | Nº Titulares *\n" \
+"*         |     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída | Alimentação |              *\n" \
+"********************************************************************************************************************************************\n")
 
 #define H_STRS_EMPLOYEES_MENU CYAN ( \
 "**************************************\n" \

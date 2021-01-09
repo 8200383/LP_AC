@@ -177,7 +177,7 @@ void h_employees_get_fields(s_employee* employee)
 
 	if (employee->phone_number)
 	{
-		printf("Atual TLF: %s\n", employee->last_name);
+		printf("TLF atual: %d\n", employee->phone_number);
 
 	}
 	employee->phone_number = h_employees_get_phone_number();
@@ -188,17 +188,21 @@ void h_employees_get_fields(s_employee* employee)
 	}
 	employee->marital_status = h_employees_get_marital_status();
 
-	if (employee->marital_status == SINGLE)
+	if (employee->marital_status == SINGLE || employee->marital_status == DIVORCED
+		|| employee->marital_status == WIDOWED)
 	{
 		employee->holders = NONE;
 	}
-	else if (employee->marital_status == MARRIED)
+	else
 	{
-		// TODO: Implementar um h_employees_get_holders()
-		employee->holders = NONE;
+		employee->holders = h_util_get_int(1, 2, "Unico ou Dois Titulares (1 - 2)?");
 	}
 
-	// TODO: Cargo mediantes os cargos que existem na ISS
+	if (employee->role)
+	{
+		printf("Cargo atual: %d\n", employee->role);
+	}
+	employee->role = h_util_get_int(0, 2, "Cargo (0 - 2):\n0 - Administração\n1 - Chefia\n2 - Empregado\n");
 
 	if (employee->number_dependents)
 	{
@@ -265,15 +269,15 @@ void h_employees_get_fields(s_employee* employee)
 
 	if (employee->hourly_rate)
 	{
-		printf("Antigo Valor por hora %f\n", employee->hourly_rate);
+		printf("Valor por hora atual %.2f\n", employee->hourly_rate);
 	}
-	employee->hourly_rate = h_util_get_float(0.0f, MAX_HOURLY_RATE, "Valor por hora? ");
+	employee->hourly_rate = h_util_get_float(0.0f, MAX_HOURLY_RATE, "Valor por hora: ");
 
 	if (employee->base_food_allowance)
 	{
-		printf("Antigo Valor base subsídio de alimentação %f\n", employee->base_food_allowance);
+		printf("Valor base subsídio de alimentação anterior %.2f\n", employee->base_food_allowance);
 	}
-	employee->base_food_allowance = h_util_get_float(0.0f, MAX_FOOD_ALLOWANCE, "Valor base subsídio de alimentação?");
+	employee->base_food_allowance = h_util_get_float(0.0f, MAX_FOOD_ALLOWANCE, "Valor base subsídio de alimentação: ");
 }
 
 void h_employees_add(s_arr_employees* array)
@@ -346,9 +350,9 @@ void h_employees_print(s_arr_employees* array)
 
 	int i;
 	for (i = 0; i < array->used;
-		 i++) // TODO: ver strs.h colunas não esta de acordo com os parametros, e falta mostrar se esta marital status e holders
+		 i++)
 	{
-		printf("[%d] %d | %s | %s | %d | %d | %d | %.2f€ | %.2f€ | %d/%d/%d | %d/%d/%d | %d/%d/%d\n",
+		printf("[%d] %d | %s | %s | %d | %d | %d | %.2f€ | %.2f€ | %d/%d/%d | %d/%d/%d | %d/%d/%d | %.2f | %.2f | %d\n",
 			i,
 			array->employees[i].code,
 			array->employees[i].first_name,
@@ -366,7 +370,10 @@ void h_employees_print(s_arr_employees* array)
 			array->employees[i].entry_date->year,
 			array->employees[i].leaving_date->day,
 			array->employees[i].leaving_date->month,
-			array->employees[i].leaving_date->year
+			array->employees[i].leaving_date->year,
+			array->employees[i].hourly_rate,
+			array->employees[i].base_food_allowance,
+			array->employees[i].holders
 		);
 	}
 }

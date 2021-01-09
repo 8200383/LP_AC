@@ -1,14 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
 #include "proc.h"
-#include "calendar.h"
-#include "util.h"
-#include "colors.h"
-#include "strs.h"
-#include "employees.h"
 
 s_spreadsheet* h_proc_alloc(int initial_capacity)
 {
@@ -356,43 +346,114 @@ void h_proc_perform(
 {
 	int i;
 
-	float ss_retention_employer_percentage; //
-	float ss_retention_employee_percentage; //
-	float irs_retention_percentage; //
+	float days_worked;
+	float salary_bonus_multiplier;
+	float irs_retention_percentage;
+	float ss_retention_employer_percentage;
+	float ss_retention_employee_percentage;
 
-	// TODO: Atenção que as tabelas podem não estar carregadas
-	/*
-	if (irs_array->used == 0 || ss_array->used == 0 || employees->used == 0)
+	if (spreadsheet == NULL || single_table == NULL || unique_holder_table == NULL ||
+	two_holders_table == NULL || seg_social_table == NULL || employees == NULL)
 	{
+		puts(RED("[!] Tabelas não inicializadas"));
 		return;
-	} */
+	}
+
+	if (spreadsheet->used == 0 || single_table->used == 0 || unique_holder_table->used == 0 ||
+	two_holders_table->used == 0 || seg_social_table->used == 0 || employees->used == 0)
+	{
+		puts(RED("[!] Tabelas Vazias"));
+	 	return;
+	}
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
+		// Calculo dos Dias Trabalhados e o Bonus Correspondente
+		days_worked = (float)spreadsheet->details[i].full_days +
+					  (float)spreadsheet->details[i].half_days * 0.5f +
+					  (float)spreadsheet->details[i].weekend_days;
+
+		if (days_worked > 20)
+		{
+			salary_bonus_multiplier = BONUS_20_DAYS;
+		}
+		else if (days_worked > 17)
+		{
+			salary_bonus_multiplier = BONUS_17_DAYS;
+		}
+		else
+		{
+			salary_bonus_multiplier = BONUS_BASE;
+		}
+
+		// Calculo do Salário Bruto
 		spreadsheet->details->base_salary =
-			(float)spreadsheet->details[i].full_days * employees->employees->hourly_rate +
-			(float)spreadsheet->details[i].half_days * employees->employees->hourly_rate * 0.5f +
-			(float)spreadsheet->details[i].weekend_days * employees->employees->hourly_rate * 1.5f;
+			(float)spreadsheet->details[i].full_days * employees->employees[i].hourly_rate +
+			(float)spreadsheet->details[i].half_days * employees->employees[i].hourly_rate * 0.5f +
+			(float)spreadsheet->details[i].weekend_days * employees->employees[i].hourly_rate * 1.5f;
+
+		spreadsheet->details->base_salary *= salary_bonus_multiplier;
 
 		spreadsheet->details->food_allowance =
-			(float)spreadsheet->details[i].full_days * employees->employees->base_food_allowance +
-			(float)spreadsheet->details[i].weekend_days * employees->employees->base_food_allowance;
+			(float)spreadsheet->details[i].full_days * employees->employees[i].base_food_allowance +
+			(float)spreadsheet->details[i].weekend_days * employees->employees[i].base_food_allowance;
 
-		//Falta aceder aos dados dos trabalhadores para determinar o escalão de IRS.
-		spreadsheet->details->irs_retention =
-			(spreadsheet->details->base_salary + spreadsheet->details->food_allowance) * irs_retention_percentage;
+		spreadsheet->details->raw_salary = spreadsheet->details->base_salary + spreadsheet->details->food_allowance;
 
+		// Calculo da retenção pelo IRS
+		switch (employees->employees->holders)
+		{
+		case NONE:
+			irs_retention_percentage = h_proc_get_irs_retention_percentage
+				(single_table, employees->employees[i], spreadsheet->details->raw_salary);
+			break;
+		case UNIQUE_HOLDER:
+			irs_retention_percentage = h_proc_get_irs_retention_percentage
+				(unique_holder_table, employees->employees[i], spreadsheet->details->raw_salary);
+			break;
+		case TWO_HOLDERS:
+			irs_retention_percentage = h_proc_get_irs_retention_percentage
+				(two_holders_table, employees->employees[i], spreadsheet->details->raw_salary);
+			break;
+		}
 
+		spreadsheet->details->irs_retention = spreadsheet->details->raw_salary * irs_retention_percentage;
 
-
-
-		//Falta aceder aos dados dos trabalhadores para determinar as percentagens de descontos da SS.
-		ss_retention_employer_percentage = seg_social_table->data[i].employer / 100.0f;
-		ss_retention_employee_percentage = seg_social_table->data[i].employee / 100.0f;
+		// Calculo da retenção pela Segurança social
+		ss_retention_employer_percentage = seg_social_table->data[employees->employees[i].role].employer / 100.0f;
+		ss_retention_employee_percentage = seg_social_table->data[employees->employees[i].role].employee / 100.0f;
 
 		spreadsheet->details->ss_retention_employer = (spreadsheet->details->base_salary +
 			spreadsheet->details->food_allowance) * ss_retention_employer_percentage;
 		spreadsheet->details->ss_retention_employee = (spreadsheet->details->base_salary +
 			spreadsheet->details->food_allowance) * ss_retention_employee_percentage;
+
+		// Calculo do Salário Liquido e o Encargo Total do Empregador
+		spreadsheet->details->processed_salary = spreadsheet->details->raw_salary -
+			spreadsheet->details->ss_retention_employee - spreadsheet->details->irs_retention;
+
+		spreadsheet->details->total_cost = spreadsheet->details->raw_salary +
+			spreadsheet->details->ss_retention_employer +
+			spreadsheet->details->ss_retention_employee +
+			spreadsheet->details->irs_retention;
+	}
+}
+
+float h_proc_get_irs_retention_percentage(s_arr_irs* table, s_employee employee, float raw_salary)
+{
+	int i;
+	float retention_percentage;
+
+	if (raw_salary > table->elements[table->used - 1].monthly_pay_value)
+	{
+		return table->elements[table->used - 1].percentage_per_dependent[employee.number_dependents];
+	}
+	else
+	{
+		for (i = 0; raw_salary > table->elements[i].monthly_pay_value; i++)
+		{
+			retention_percentage = table->elements[i].percentage_per_dependent[employee.number_dependents];
+		}
+		return retention_percentage;
 	}
 }
