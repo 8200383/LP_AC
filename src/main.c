@@ -88,7 +88,7 @@ int main_menu()
 				h_menu_seg_social(seg_social_table);
 				break;
 			case 3:
-				h_menu_employees(employees_table);
+				h_menu_employees(employees_table, seg_social_table);
 				break;
 			case 4:
 				h_menu_processing(single_table,

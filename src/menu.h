@@ -27,6 +27,6 @@ void h_menu_processing(
 	s_arr_employees* employees
 );
 
-void h_menu_employees(s_arr_employees* employees);
+void h_menu_employees(s_arr_employees* employees, s_arr_iss* iss_array);
 
 #endif //MENU_H

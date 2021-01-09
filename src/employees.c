@@ -8,8 +8,8 @@
 #include "irs.h"
 #include "util.h"
 
-int first_name_buffer_size = 64;
-int last_name_buffer_size = 64;
+int buffer_first_name = BUFFER_SIZE;
+int buffer_last_name = BUFFER_SIZE;
 
 s_arr_employees* h_employees_alloc(int initial_capacity)
 {
@@ -38,13 +38,13 @@ s_arr_employees* h_employees_alloc(int initial_capacity)
 
 	for (i = 0; i <= array->max_capacity; i++)
 	{
-		array->employees[i].first_name = malloc(first_name_buffer_size * sizeof(char));
+		array->employees[i].first_name = malloc(buffer_first_name * sizeof(char));
 		if (array->employees[i].first_name == NULL)
 		{
 			return NULL;
 		}
 
-		array->employees[i].last_name = malloc(last_name_buffer_size * sizeof(char));
+		array->employees[i].last_name = malloc(buffer_first_name * sizeof(char));
 		if (array->employees[i].last_name == NULL)
 		{
 			return NULL;
@@ -92,8 +92,6 @@ int h_employees_get_marital_status()
 			return DIVORCED;
 		case 3:
 			return WIDOWED;
-		default:
-			puts("Civil status invalid! Let's assume civil status: SINGLE.");
 	}
 
 	return SINGLE;
@@ -115,7 +113,7 @@ int h_employees_get_phone_number()
 	return phone_number;
 }
 
-void h_employees_get_fields(s_employee* employee)
+void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 {
 	char* first_name;
 	char* last_name;
@@ -130,7 +128,7 @@ void h_employees_get_fields(s_employee* employee)
 		printf("Primeiro nome: %s\n", employee->first_name);
 	}
 
-	first_name = h_util_get_string(first_name_buffer_size, "Primeiro Nome:");
+	first_name = h_util_get_string(BUFFER_SIZE, "Primeiro Nome:");
 	if (first_name == NULL)
 	{
 		puts(RED("[!] Não foi possivel ler o primeiro nome"));
@@ -155,7 +153,7 @@ void h_employees_get_fields(s_employee* employee)
 		printf("Último nome: %s\n", employee->last_name);
 	}
 
-	last_name = h_util_get_string(last_name_buffer_size, "Último Nome:");
+	last_name = h_util_get_string(BUFFER_SIZE, "Último Nome:");
 	if (first_name == NULL)
 	{
 		puts(RED("[!] Não foi possivel ler o último nome"));
@@ -188,8 +186,9 @@ void h_employees_get_fields(s_employee* employee)
 	}
 	employee->marital_status = h_employees_get_marital_status();
 
-	if (employee->marital_status == SINGLE || employee->marital_status == DIVORCED
-		|| employee->marital_status == WIDOWED)
+	if (employee->marital_status == SINGLE ||
+		employee->marital_status == DIVORCED ||
+		employee->marital_status == WIDOWED)
 	{
 		employee->holders = NONE;
 	}
@@ -202,7 +201,13 @@ void h_employees_get_fields(s_employee* employee)
 	{
 		printf("Cargo atual: %d\n", employee->role);
 	}
-	employee->role = h_util_get_int(0, 2, "Cargo (0 - 2):\n0 - Administração\n1 - Chefia\n2 - Empregado\n");
+
+	printf(YELLOW("Cargos Disponiveis\n"));
+	for (int i = 0; i < iss_array->used; i++)
+	{
+		printf(YELLOW("%d - %s"), i, iss_array->data[i].criteria);
+	}
+	employee->role = h_util_get_int(0, iss_array->used, "Cargo:");
 
 	if (employee->number_dependents)
 	{
@@ -280,11 +285,18 @@ void h_employees_get_fields(s_employee* employee)
 	employee->base_food_allowance = h_util_get_float(0.0f, MAX_FOOD_ALLOWANCE, "Valor base subsídio de alimentação: ");
 }
 
-void h_employees_add(s_arr_employees* array)
+void h_employees_add(s_arr_employees* array, s_arr_iss* iss_array)
 {
 	if (array == NULL)
 	{
 		puts(RED("[!] Employees não alocado"));
+		return;
+	}
+
+	if (iss_array == NULL && iss_array->used == 0)
+	{
+		puts(RED("[!] ISS não alocada ou vazia"));
+		puts(YELLOW("[!] Não é possivel adicionar funcionários sem a ISS inicializada"));
 		return;
 	}
 
@@ -298,13 +310,26 @@ void h_employees_add(s_arr_employees* array)
 		}
 	}
 
-	h_employees_get_fields(&array->employees[array->used]);
+	h_employees_get_fields(&array->employees[array->used], iss_array);
 	array->used++;
 }
 
-void h_employees_edit(s_arr_employees* array) // TODO: testar
+void h_employees_edit(s_arr_employees* array, s_arr_iss* iss_array) // TODO: testar
 {
 	int num;
+
+	if (array == NULL || array->used == 0)
+	{
+		puts(RED("[!] Employees não alocado ou vazio"));
+		return;
+	}
+
+	if (iss_array == NULL && iss_array->used == 0)
+	{
+		puts(RED("[!] ISS não alocada ou vazia"));
+		puts(YELLOW("[!] Não é possivel editar funcionários sem a ISS inicializada"));
+		return;
+	}
 
 	printf("Nº de registos do ficheiro: %d\n", array->used);
 
@@ -314,14 +339,17 @@ void h_employees_edit(s_arr_employees* array) // TODO: testar
 	 * igualo o valor a uma variável int(num).
 	 * **************************************************/
 	num = h_util_get_int(0, array->used, "Linha a editar: ");
-	h_employees_get_fields(&array->employees[num]);
+	h_employees_get_fields(&array->employees[num], iss_array);
 }
 
 int h_employees_verify_phone(char* str)
 {
 
+	// TODO: isto nao ficou a dar por causa da funçao get_string
+	printf("LENGHT %lu - PHONE %s\n", strlen(str), str);
 	if (strlen(str) != PHONE_NUMBER_SIZE - 1)
 	{
+		puts("aqui");
 		return -1;
 	}
 
@@ -338,7 +366,7 @@ int h_employees_verify_phone(char* str)
 	return 0;
 }
 
-void h_employees_print(s_arr_employees* array)
+void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array)
 {
 	if (array == NULL || array->used == 0)
 	{
@@ -346,22 +374,27 @@ void h_employees_print(s_arr_employees* array)
 		return;
 	}
 
+	if (iss_array == NULL || iss_array->used == 0)
+	{
+		puts(RED("[!] ISS não alocada ou vazia"));
+		puts(YELLOW("[!] Impossivel mostrar os cargos sem a tabela da ISS inicializada"));
+		return;
+	}
+
 	printf(H_STRS_EMPLOYEES_TABLE_HEADER);
 
 	int i;
-	for (i = 0; i < array->used;
-		 i++)
+	for (i = 0; i < array->used; i++)
 	{
-		printf("[%d] %d | %s | %s | %d | %d | %d | %.2f€ | %.2f€ | %d/%d/%d | %d/%d/%d | %d/%d/%d | %.2f | %.2f | %d\n",
+		printf(PRINT_TEMPLATE_STRING,
 			i,
 			array->employees[i].code,
 			array->employees[i].first_name,
 			array->employees[i].last_name,
 			array->employees[i].phone_number,
 			array->employees[i].number_dependents,
-			array->employees[i].role,
-			array->employees[i].hourly_rate,
-			array->employees[i].base_food_allowance,
+			iss_array->data[array->employees[i].role].criteria,
+			h_employees_str_from_marital_status(array->employees[i].marital_status),
 			array->employees[i].birthday->day,
 			array->employees[i].birthday->month,
 			array->employees[i].birthday->year,
@@ -418,15 +451,15 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 
 	if (column == COL_FIRST_NAME)
 	{
-		if (strlen(str) >= first_name_buffer_size)
+		if (strlen(str) >= buffer_first_name)
 		{
-			employee->first_name = realloc(employee->first_name, first_name_buffer_size * 2);
+			employee->first_name = realloc(employee->first_name, buffer_first_name * 2);
 			if (employee->first_name == NULL)
 			{
 				return;
 			}
 
-			first_name_buffer_size *= 2;
+			buffer_first_name *= 2;
 		}
 
 		strcpy(employee->first_name, str);
@@ -434,15 +467,14 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 
 	if (column == COL_LAST_NAME)
 	{
-		if (strlen(str) >= last_name_buffer_size)
+		if (strlen(str) >= buffer_last_name)
 		{
-			employee->last_name = realloc(employee->last_name, last_name_buffer_size * 2);
+			employee->last_name = realloc(employee->last_name, buffer_last_name * 2);
 			if (employee->last_name == NULL)
 			{
 				return;
 			}
-
-			last_name_buffer_size *= 2;
+			buffer_last_name *= 2;
 		}
 
 		strcpy(employee->last_name, str);

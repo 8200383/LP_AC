@@ -11,7 +11,6 @@
 #include "colors.h"
 
 #define H_STRS_INVALID_IMPUT RED("Input Inválido\n")
-#define H_STRS_PROMPT "> "
 
 #define H_STRS_EDIT YELLOW("Editar linha?")
 #define H_STRS_DELETE YELLOW("Apagar linha?")

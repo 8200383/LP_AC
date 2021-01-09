@@ -9,7 +9,9 @@
 #define EMPLOYEES_H
 
 #include "calendar.h"
+#include "iss.h"
 
+#define BUFFER_SIZE 64
 #define MAX_VALUE 9999
 #define CSV_COLUMN_DELIMITER ','
 #define CSV_NEW_LINE_DELIMITER '\n'
@@ -17,6 +19,10 @@
 #define PHONE_NUMBER_SIZE 9
 #define MAX_HOURLY_RATE 20
 #define MAX_FOOD_ALLOWANCE 20
+
+#define PRINT_TEMPLATE_STRING \
+"[%d] %d | %s | %s | %d | %d Dependentes | %s | %s | " \
+"%d/%d/%d | %d/%d/%d | %d/%d/%d | %.2f€ | %.2f€ | %d Titular(es)\n"
 
 /**
  * @enum e_columns
@@ -41,7 +47,8 @@ typedef enum
 /**
  * @enum e_holders
  */
-typedef enum {
+typedef enum
+{
 	NONE = 0,
 	UNIQUE_HOLDER = 1,
 	TWO_HOLDERS = 2
@@ -115,13 +122,13 @@ int h_employees_get_phone_number();
  *
  * @param employee
  */
-void h_employees_get_fields(s_employee* employee);
+void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array);
 
 /**
  *
  * @param array
  */
-void h_employees_add(s_arr_employees* array);
+void h_employees_add(s_arr_employees* array, s_arr_iss* iss_array);
 
 /**
  *
@@ -141,15 +148,16 @@ void h_employees_parse(s_arr_employees* array, const char* str);
 /**
  *
  * @param array
+ * @param iss_array
  */
-void h_employees_print(s_arr_employees* array);
+void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array);
 
 /**
  *
  * @param array
+ * @param iss_array
  */
-void h_employees_edit(s_arr_employees* array);
-
+void h_employees_edit(s_arr_employees* array, s_arr_iss* iss_array);
 /**
  *
  * @param str

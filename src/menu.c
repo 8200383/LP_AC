@@ -28,7 +28,6 @@ void h_menu_irs(
 
 	do
 	{
-		fprintf(stdout, GREEN("%s"), H_STRS_PROMPT);
 		op = h_util_get_int(0, 18, "Opção?");
 
 		switch (op)
@@ -141,7 +140,7 @@ void h_menu_seg_social(s_arr_iss* seg_social_table)
 	do
 	{
 		fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
-		op = h_util_get_int(0, 6, "Opção: ");
+		op = h_util_get_int(0, 6, "Opção?");
 
 		switch (op)
 		{
@@ -267,7 +266,7 @@ void h_menu_processing(
 	}
 }
 
-void h_menu_employees(s_arr_employees* employees)
+void h_menu_employees(s_arr_employees* employees, s_arr_iss* iss_array)
 {
 	int op;
 
@@ -279,16 +278,16 @@ void h_menu_employees(s_arr_employees* employees)
 		switch (op)
 		{
 			case 1:
-				h_employees_print(employees);
+				h_employees_print(employees, iss_array);
 				break;
 			case 2:
-				h_employees_add(employees);
+				h_employees_add(employees, iss_array);
 				break;
 			case 3:
 				printf("Remove employee");
 				break;
 			case 4:
-				h_employees_edit(employees);
+				h_employees_edit(employees, iss_array);
 				break;
 			case 0:
 				break;
