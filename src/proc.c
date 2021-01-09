@@ -356,23 +356,10 @@ void h_proc_perform(
 {
 	int i;
 
-	float base_salary;
-	float food_allowance;
-
-	float irs_retention;
-	float ss_retention_employer;
-	float ss_retention_employee;
-
 	float ss_retention_employer_percentage; //
 	float ss_retention_employee_percentage; //
 	float irs_retention_percentage; //
 
-	/*
-	 * TODO
-	 * Se o employee for divorciado usar single_table
-	 * Se o employee for casado e unico titular usar unique_holder_table
-	 * Se o employee for casado e dois titular usar two_holders_table
-	 */
 	// TODO: Atenção que as tabelas podem não estar carregadas
 	/*
 	if (irs_array->used == 0 || ss_array->used == 0 || employees->used == 0)
@@ -382,27 +369,30 @@ void h_proc_perform(
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-		//Falta definir as constantes do sálario de acordo com o cargo do trabalhador.
-		base_salary = (float)spreadsheet->details[i].full_days * 40 +
-			(float)spreadsheet->details[i].half_days * 40 / 2.0f +
-			(float)spreadsheet->details[i].weekend_days * 40 * 1.5f;
+		spreadsheet->details->base_salary =
+			(float)spreadsheet->details[i].full_days * employees->employees->hourly_rate +
+			(float)spreadsheet->details[i].half_days * employees->employees->hourly_rate * 0.5f +
+			(float)spreadsheet->details[i].weekend_days * employees->employees->hourly_rate * 1.5f;
 
-		//Falta definir as constantes do subsídio da alimentação de acordo com o cargo do trabalhador.
-		food_allowance = (float)spreadsheet->details[i].full_days * 5 +
-			(float)spreadsheet->details[i].weekend_days * 5;
+		spreadsheet->details->food_allowance =
+			(float)spreadsheet->details[i].full_days * employees->employees->base_food_allowance +
+			(float)spreadsheet->details[i].weekend_days * employees->employees->base_food_allowance;
 
 		//Falta aceder aos dados dos trabalhadores para determinar o escalão de IRS.
-		//irs_retention_percentage = irs_array->elements[i].monthly_pay_value / 100.0f;
-		//irs_retention = (base_salary + food_allowance) * irs_retention_percentage;
+		spreadsheet->details->irs_retention =
+			(spreadsheet->details->base_salary + spreadsheet->details->food_allowance) * irs_retention_percentage;
+
+
+
+
 
 		//Falta aceder aos dados dos trabalhadores para determinar as percentagens de descontos da SS.
 		ss_retention_employer_percentage = seg_social_table->data[i].employer / 100.0f;
 		ss_retention_employee_percentage = seg_social_table->data[i].employee / 100.0f;
 
-		ss_retention_employer = (base_salary + food_allowance) * ss_retention_employer_percentage;
-		ss_retention_employee = (base_salary + food_allowance) * ss_retention_employee_percentage;
-
-		//printf("\nSalário Líquido: %.2f€\n", (base_salary + food_allowance) - irs_retention - ss_retention_employee);
-		//printf("Encargo Total (Empregador): %.2f€\n", (base_salary + food_allowance) + irs_retention + ss_retention_employee + ss_retention_employer);
+		spreadsheet->details->ss_retention_employer = (spreadsheet->details->base_salary +
+			spreadsheet->details->food_allowance) * ss_retention_employer_percentage;
+		spreadsheet->details->ss_retention_employee = (spreadsheet->details->base_salary +
+			spreadsheet->details->food_allowance) * ss_retention_employee_percentage;
 	}
 }
