@@ -184,8 +184,7 @@ void h_employees_get_fields(s_employee* employee)
 
 	if (employee->marital_status)
 	{
-		// TODO: Implementar isto, falta no print tbm
-		printf("Estado Civil atual: %s\n", employee->last_name);
+		printf("Estado Civil atual: %s\n", h_employees_str_from_marital_status(employee->marital_status));
 	}
 	employee->marital_status = h_employees_get_marital_status();
 
@@ -346,7 +345,8 @@ void h_employees_print(s_arr_employees* array)
 	printf(H_STRS_EMPLOYEES_TABLE_HEADER);
 
 	int i;
-	for (i = 0; i < array->used; i++) // TODO: ver strs.h colunas não esta de acordo com os parametros, e falta mostrar se esta marital status e holders
+	for (i = 0; i < array->used;
+		 i++) // TODO: ver strs.h colunas não esta de acordo com os parametros, e falta mostrar se esta marital status e holders
 	{
 		printf("[%d] %d | %s | %s | %d | %d | %d | %.2f€ | %.2f€ | %d/%d/%d | %d/%d/%d | %d/%d/%d\n",
 			i,
@@ -528,4 +528,11 @@ void h_employees_parse(s_arr_employees* array, const char* str)
 			array->used++;
 		}
 	}
+}
+
+char* h_employees_str_from_marital_status(e_marital_status status)
+{
+	char* str[] = { "Solteiro", "Casado", "Divorciado", "Viúvo" };
+
+	return str[status];
 }
