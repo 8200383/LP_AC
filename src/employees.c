@@ -93,7 +93,7 @@ int h_employees_get_marital_status()
 		case 3:
 			return WIDOWED;
 		default:
-			puts("Civil status invalid! Let's assume civil status: SINGLE.");
+			puts("Estado civíl inválido! Vamos assumir o estado: Solteiro/a.");
 	}
 
 	return SINGLE;
@@ -177,7 +177,7 @@ void h_employees_get_fields(s_employee* employee)
 
 	if (employee->phone_number)
 	{
-		printf("Atual TLF: %s\n", employee->last_name);
+		printf("Atual TLF: %s\n", employee->phone_number);
 
 	}
 	employee->phone_number = h_employees_get_phone_number();
@@ -185,7 +185,7 @@ void h_employees_get_fields(s_employee* employee)
 	if (employee->marital_status)
 	{
 		// TODO: Implementar isto, falta no print tbm
-		printf("Estado Civil atual: %s\n", employee->last_name);
+		printf("Estado Civil atual: %s\n", employee->marital_status);
 	}
 	employee->marital_status = h_employees_get_marital_status();
 
