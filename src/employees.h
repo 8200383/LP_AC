@@ -15,6 +15,8 @@
 #define CSV_NEW_LINE_DELIMITER '\n'
 #define CSV_BUFFER 50
 #define PHONE_NUMBER_SIZE 9
+#define MAX_HOURLY_RATE 20
+#define MAX_FOOD_ALLOWANCE 20
 
 /**
  * @enum e_columns
@@ -31,18 +33,29 @@ typedef enum
 	COL_BIRTHDAY = 8,
 	COL_ENTRY_DATE = 9,
 	COL_LEAVING_DATE = 10,
-	COL_BASE_SALARY = 11
+	COL_HOURLY_RATE = 11,
+	COL_BASE_FOOD_ALLOWANCE = 12,
+	COL_HOLDERS = 13
 } e_columns;
+
+/**
+ * @enum e_holders
+ */
+typedef enum {
+	NONE = 0,
+	UNIQUE_HOLDER = 1,
+	TWO_HOLDERS = 2
+} e_holders;
 
 /**
  * @enum e_marial_status
  */
 typedef enum
 {
-	SINGLE,
-	MARRIED,
-	DIVORCED,
-	WIDOWED
+	SINGLE = 0,
+	MARRIED = 1,
+	DIVORCED = 2,
+	WIDOWED = 3
 } e_marital_status;
 
 /**
@@ -57,7 +70,9 @@ typedef struct
 	char* last_name;
 	int phone_number;
 	float hourly_rate;
+	float base_food_allowance;
 	e_marital_status marital_status;
+	e_holders holders;
 	s_date* birthday, * entry_date, * leaving_date;
 } s_employee;
 
