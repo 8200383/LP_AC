@@ -64,10 +64,10 @@ void h_menu_irs(
 					fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_UNIQUE_HOLDER);
 					return;
 				}
-				if (single_array->used > 0)
+				if (unique_holder_array->used > 0)
 				{
 					fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
-					h_irs_delete_all(single_array);
+					h_irs_delete_all(unique_holder_array);
 				}
 				h_irs_parse(unique_holder_array, unique_holder_str, h_irs_pair);
 				free(unique_holder_str);
@@ -94,10 +94,10 @@ void h_menu_irs(
 					fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_TWO_HOLDERS);
 					return;
 				}
-				if (single_array->used > 0)
+				if (two_holders_array->used > 0)
 				{
 					fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
-					h_irs_delete_all(single_array);
+					h_irs_delete_all(two_holders_array);
 				}
 				h_irs_parse(two_holders_array, two_holders_str, h_irs_pair);
 				free(two_holders_str);
@@ -261,16 +261,10 @@ void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array)
 		switch (op)
 		{
 			case 1:
-				if (iss_array == NULL)
+				if (iss_array == NULL || iss_array->used == 0)
 				{
 					puts(YELLOW("[!] A tabela da ISS sera carregada automaticamente"));
 					h_iss_load(iss_array);
-				}
-
-				if (iss_array->used == 0)
-				{
-					puts(RED("[!] A tabela ISS vazia, abortar!"));
-					break;
 				}
 
 				employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
