@@ -136,13 +136,20 @@ char* h_proc_generate_filename(e_month month, const char* extension);
  */
 void h_proc_perform(
 	s_spreadsheet* spreadsheet,
-	s_arr_irs* single_table,
-	s_arr_irs* unique_holder_table,
-	s_arr_irs* two_holders_table,
-	s_arr_iss* seg_social_table,
-	s_arr_employees* employees
+	s_arr_irs* single_array,
+	s_arr_irs* unique_holder_array,
+	s_arr_irs* two_holders_array,
+	s_arr_iss* iss_array,
+	s_arr_employees* employees_array
 );
 
+/**
+ *
+ * @param table
+ * @param employee
+ * @param raw_salary
+ * @return
+ */
 float h_proc_get_irs_retention_percentage(s_arr_irs* table, s_employee employee, float raw_salary);
 
 #endif //PROC_H
