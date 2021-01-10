@@ -116,13 +116,14 @@
 "**************************************\n")
 
 #define H_STRS_REPORTS_MENU CYAN( \
-"************************************\n" \
-"*          -| Relatórios |-        *\n" \
-"*                                  *\n" \
-"* 1. Antiguidades dos funcionários *\n" \
-"* 0. Voltar ao menu anterior       *\n" \
-"*                                  *\n" \
-"************************************\n")
+"***************************************************\n" \
+"*                  -| Relatórios |-               *\n" \
+"*                                                 *\n" \
+"* 1. Antiguidades dos funcionários                *\n" \
+"* 2. Percentagem de funcionários por estado civil *\n" \
+"* 0. Voltar ao menu anterior                      *\n" \
+"*                                                 *\n" \
+"***************************************************\n")
 
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
 "*************************************************************\n" \

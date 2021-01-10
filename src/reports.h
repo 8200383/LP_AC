@@ -14,7 +14,6 @@
 #define EMPLOYEE_SENIORITY 5
 
 /*
- * TODO Quem são os trabalhadores com maior número de dependentes
  * TODO Percentagem de trabalhadores casados, solteiros e divorciados
  * TODO Quem são os trabalhadores com mais bônus mensal
  * TODO Quem são os trabalhadores com o subsídio de alimentação mais alto
@@ -30,7 +29,7 @@
 void h_reports_senior_employees(s_arr_employees* employees_array);
 
 /**
- *
+ * TODO Percentagem dos funcionários com o maior número de dependentes
  * @param employees_array The array of employees
  */
 void h_reports_marital_percentage(s_arr_employees* employees_array);

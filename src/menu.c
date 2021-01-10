@@ -319,11 +319,14 @@ void h_menu_reports(s_arr_employees* employees_array)
 	do
 	{
 		fprintf(stdout, H_STRS_REPORTS_MENU);
-		op = h_util_get_int(0, 1, "Opção?");
+		op = h_util_get_int(0, 2, "Opção?");
 		switch (op)
 		{
 			case 1:
 				h_reports_senior_employees(employees_array);
+				break;
+			case 2:
+				h_reports_marital_percentage(employees_array);
 				break;
 			case 0:
 				break;

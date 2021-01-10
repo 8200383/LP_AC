@@ -37,3 +37,49 @@ void h_reports_senior_employees(s_arr_employees* employees_array)
 		}
 	}
 }
+
+void h_reports_marital_percentage(s_arr_employees* employees_array)
+{
+	int i = 0;
+	int married_employees = 0;
+	int single_employees = 0;
+	int widowed_employees = 0;
+	int divorced_employees = 0;
+
+	if (employees_array == NULL || employees_array->used == 0)
+	{
+		puts(RED("[!] Employees vazio ou não inicializado"));
+		return;
+	}
+
+	while (i < employees_array->used && employees_array->employees[i].removed == 0)
+	{
+		if (employees_array->employees[i].marital_status == MARRIED)
+		{
+			married_employees++;
+		}
+
+		if (employees_array->employees[i].marital_status == SINGLE)
+		{
+			single_employees++;
+		}
+
+		if (employees_array->employees[i].marital_status == WIDOWED)
+		{
+			widowed_employees++;
+		}
+
+		if (employees_array->employees[i].marital_status == DIVORCED)
+		{
+			divorced_employees++;
+		}
+
+		i++;
+	}
+
+	puts(CYAN("Percentagem de funcionários"));
+	printf("Casados %.2f%%\n", (float)married_employees / (float)i);
+	printf("Solteiros %.2f%%\n", (float)single_employees / (float)i);
+	printf("Viúvos %.2f%%\n", (float)widowed_employees / (float)i);
+	printf("Divorciados %.2f%%\n", (float)divorced_employees / (float)i);
+}
