@@ -27,6 +27,7 @@
 "* 2. Tabelas Segurança Social *\n" \
 "* 3. Gestão de Funcionários   *\n" \
 "* 4. Processar Salarios       *\n" \
+"* 5. Relatórios               *\n" \
 "* 9. Guardar Tudo             *\n" \
 "* 0. Sair                     *\n" \
 "*                             *\n" \
@@ -96,9 +97,32 @@
 "*  8. Guardar                   *\n" \
 "*  9. Importar mês              *\n" \
 "* 10. Desfazer todas alterações *\n" \
-"* 0. Sair                       *\n" \
+"* 0. Voltar ao menu anterior    *\n" \
 "*                               *\n" \
 "*********************************\n")
+
+#define H_STRS_EMPLOYEES_MENU CYAN( \
+"**************************************\n" \
+"* -| Menu Gestão de Funcionários |-  *\n" \
+"*                                    *\n" \
+"* 1. Carregar Tabela                 *\n" \
+"* 2. Visualizar                      *\n" \
+"* 3. Adicionar                       *\n" \
+"* 4. Remover                         *\n" \
+"* 5. Editar                          *\n" \
+"* 6. Guardar                         *\n" \
+"* 0. Voltar ao menu anterior         *\n" \
+"*                                    *\n" \
+"**************************************\n")
+
+#define H_STRS_REPORTS_MENU CYAN( \
+"************************************\n" \
+"*          -| Relatórios |-        *\n" \
+"*                                  *\n" \
+"* 1. Antiguidades dos funcionários *\n" \
+"* 0. Voltar ao menu anterior       *\n" \
+"*                                  *\n" \
+"************************************\n")
 
 #define H_STRS_IRS_TABLE_HEADER BLUE( \
 "*************************************************************\n" \
@@ -117,20 +141,6 @@
 "* [Linha] | Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  | Valor Base | Subsídio    | Nº Titulares *\n" \
 "*         |     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída | Rendimento | Alimentação |              *\n" \
 "*********************************************************************************************************************************************************\n")
-
-#define H_STRS_EMPLOYEES_MENU CYAN ( \
-"**************************************\n" \
-"* -| Menu Gestão de Funcionários |-  *\n" \
-"*                                    *\n" \
-"* 1. Carregar Tabela                 *\n" \
-"* 2. Visualizar                      *\n" \
-"* 3. Adicionar                       *\n" \
-"* 4. Remover                         *\n" \
-"* 5. Editar                          *\n" \
-"* 6. Guardar                         *\n" \
-"* 0. Voltar ao menu anterior         *\n" \
-"*                                    *\n" \
-"************************************** \n")
 
 #define H_STRS_PROC_TABLE_HEADER BLUE( \
 "*********************************************************\n" \

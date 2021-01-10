@@ -20,10 +20,9 @@ void h_menu_irs(
 	int two_holders_size = 0;
 	char* two_holders_str;
 
-	fprintf(stdout, H_STRS_IRS_MENU);
-
 	do
 	{
+		fprintf(stdout, H_STRS_IRS_MENU);
 		op = h_util_get_int(0, 18, "Opção?");
 
 		switch (op)
@@ -176,9 +175,9 @@ void h_menu_processing(
 	int op;
 	s_spreadsheet* spreadsheet = NULL;
 
-	fprintf(stdout, H_STRS_PROC);
 	do
 	{
+		fprintf(stdout, H_STRS_PROC);
 		op = h_util_get_int(0, 10, "Opção?");
 
 		switch (op)
@@ -305,6 +304,28 @@ void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array)
 				break;
 			case 6:
 				// TODO: printf("Save employees_array");
+				break;
+			case 0:
+				break;
+			default:
+				printf(RED("%s"), H_STRS_INVALID_IMPUT);
+				break;
+		}
+	} while (op != 0);
+}
+
+void h_menu_reports(s_arr_employees* employees_array)
+{
+	int op;
+
+	do
+	{
+		fprintf(stdout, H_STRS_REPORTS_MENU);
+		op = h_util_get_int(0, 1, "Opção?");
+		switch (op)
+		{
+			case 1:
+				h_reports_senior_employees(employees_array);
 				break;
 			case 0:
 				break;
