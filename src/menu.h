@@ -15,21 +15,23 @@
 #include "colors.h"
 
 void h_menu_irs(
-	s_arr_irs* single_table,
-	s_arr_irs* unique_holder_table,
-	s_arr_irs* two_holders_table);
+	s_arr_irs* single_array,
+	s_arr_irs* unique_holder_array,
+	s_arr_irs* two_holders_array);
 
-void h_menu_seg_social(s_arr_iss* seg_social_table);
+void h_menu_iss(s_arr_iss* iss_array);
 
 void h_menu_processing(
-	s_arr_irs* single_table,
-	s_arr_irs* unique_holder_table,
-	s_arr_irs* two_holders_table,
-	s_arr_iss* seg_social_table,
-	s_arr_employees* employees
+	s_arr_irs* single_array,
+	s_arr_irs* unique_holder_array,
+	s_arr_irs* two_holders_array,
+	s_arr_iss* iss_array,
+	s_arr_employees* employees_array
 );
 
-void h_menu_employees(s_arr_employees* employees, s_arr_iss* iss_array);
+void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array);
+
+void h_menu_reports(s_arr_employees* employees_array);
 
 /*
  TODO: Otima idea mas n sei se existe tempo pra isto
