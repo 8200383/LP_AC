@@ -590,7 +590,7 @@ void h_employees_delete(s_arr_employees* array)
 
 	for (int i = num; i < array->used; i++)
 	{
-		array->employees[i].removed = 1;
+		array->employees[i] = array->employees[i + 1];
 	}
 	puts(RED("Funcionário removido"));
 
