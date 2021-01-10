@@ -189,7 +189,7 @@ void h_menu_processing(
 					break;
 				}
 
-				spreadsheet = h_proc_alloc(64); // TODO: alloc com a qte de func
+				spreadsheet = h_proc_alloc(employees_array->used);
 				if (spreadsheet == NULL)
 				{
 					fprintf(stdout, RED("[!] Memória insuficiente\n"));
