@@ -205,7 +205,7 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 	printf(YELLOW("Cargos Disponiveis\n"));
 	for (int i = 0; i < iss_array->used; i++)
 	{
-		printf(YELLOW("%d - %s"), i, iss_array->data[i].criteria);
+		printf(YELLOW("%d - %s\n"), i, iss_array->data[i].criteria);
 	}
 	employee->role = h_util_get_int(0, iss_array->used, "Cargo:");
 
