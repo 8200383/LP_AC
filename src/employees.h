@@ -10,6 +10,7 @@
 
 #include "calendar.h"
 #include "iss.h"
+#include "colors.h"
 
 #define BUFFER_SIZE 64
 #define MAX_VALUE 9999
@@ -23,12 +24,6 @@
 #define PRINT_TEMPLATE_STRING \
 "[%d] %d | %s | %s | %d | %d Dependentes | %s | %s | " \
 "%d/%d/%d | %d/%d/%d | %d/%d/%d | %.2f€ | %.2f€ | %d Titular(es)\n"
-
-#define PRINT_TEMPLATE_REMOVE \
-"*************************************" \
-"******FUNCIONÁRIO***REMOVIDO*********" \
-"*************************************"
-
 
 /**
  * @enum e_columns
