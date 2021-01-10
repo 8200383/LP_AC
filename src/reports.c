@@ -19,13 +19,18 @@ void h_reports_senior_employees(s_arr_employees* arr_employees)
 	local_time = h_calendar_init_local_time();
 	year_now = h_calendar_get_year(local_time);
 
+	printf(YELLOW("Antiguidades dos funcionários\n"));
+
 	for (i = 0; i < arr_employees->used; i++)
 	{
 		years_difference = year_now - arr_employees->employees[i].entry_date->year;
-
 		if (years_difference >= EMPLOYEE_SENIORITY)
 		{
-			puts("Funcionario Antigo");
+			printf(CYAN("%d | %s %s | %d Anos\n"),
+				arr_employees->employees[i].code,
+				arr_employees->employees[i].first_name,
+				arr_employees->employees[i].last_name,
+				years_difference);
 		}
 	}
 }
