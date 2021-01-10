@@ -398,44 +398,44 @@ void h_proc_perform(
 			(float)spreadsheet->details[i].full_days * employees->employees[i].base_food_allowance +
 			(float)spreadsheet->details[i].weekend_days * employees->employees[i].base_food_allowance;
 
-		spreadsheet->details->raw_salary = spreadsheet->details->base_salary + spreadsheet->details->food_allowance;
+		spreadsheet->details[i].raw_salary = spreadsheet->details[i].base_salary + spreadsheet->details[i].food_allowance;
 
 		// Calculo da retenção pelo IRS
-		switch (employees->employees->holders)
+		switch (employees->employees[i].holders)
 		{
 		case NONE:
 			irs_retention_percentage = h_proc_get_irs_retention_percentage
-				(single_table, employees->employees[i], spreadsheet->details->raw_salary);
+				(single_table, employees->employees[i], spreadsheet->details[i].raw_salary);
 			break;
 		case UNIQUE_HOLDER:
 			irs_retention_percentage = h_proc_get_irs_retention_percentage
-				(unique_holder_table, employees->employees[i], spreadsheet->details->raw_salary);
+				(unique_holder_table, employees->employees[i], spreadsheet->details[i].raw_salary);
 			break;
 		case TWO_HOLDERS:
 			irs_retention_percentage = h_proc_get_irs_retention_percentage
-				(two_holders_table, employees->employees[i], spreadsheet->details->raw_salary);
+				(two_holders_table, employees->employees[i], spreadsheet->details[i].raw_salary);
 			break;
 		}
 
-		spreadsheet->details->irs_retention = spreadsheet->details->raw_salary * irs_retention_percentage;
+		spreadsheet->details[i].irs_retention = spreadsheet->details[i].raw_salary * irs_retention_percentage;
 
 		// Calculo da retenção pela Segurança social
 		ss_retention_employer_percentage = seg_social_table->data[employees->employees[i].role].employer / 100.0f;
 		ss_retention_employee_percentage = seg_social_table->data[employees->employees[i].role].employee / 100.0f;
 
-		spreadsheet->details->ss_retention_employer = (spreadsheet->details->base_salary +
-			spreadsheet->details->food_allowance) * ss_retention_employer_percentage;
-		spreadsheet->details->ss_retention_employee = (spreadsheet->details->base_salary +
-			spreadsheet->details->food_allowance) * ss_retention_employee_percentage;
+		spreadsheet->details[i].ss_retention_employer = (spreadsheet->details[i].base_salary +
+			spreadsheet->details[i].food_allowance) * ss_retention_employer_percentage;
+		spreadsheet->details[i].ss_retention_employee = (spreadsheet->details[i].base_salary +
+			spreadsheet->details[i].food_allowance) * ss_retention_employee_percentage;
 
 		// Calculo do Salário Liquido e o Encargo Total do Empregador
-		spreadsheet->details->processed_salary = spreadsheet->details->raw_salary -
-			spreadsheet->details->ss_retention_employee - spreadsheet->details->irs_retention;
+		spreadsheet->details[i].processed_salary = spreadsheet->details[i].raw_salary -
+			spreadsheet->details[i].ss_retention_employee - spreadsheet->details[i].irs_retention;
 
-		spreadsheet->details->total_cost = spreadsheet->details->raw_salary +
-			spreadsheet->details->ss_retention_employer +
-			spreadsheet->details->ss_retention_employee +
-			spreadsheet->details->irs_retention;
+		spreadsheet->details[i].total_cost = spreadsheet->details->raw_salary +
+			spreadsheet->details[i].ss_retention_employer +
+			spreadsheet->details[i].ss_retention_employee +
+			spreadsheet->details[i].irs_retention;
 	}
 }
 
@@ -446,7 +446,7 @@ float h_proc_get_irs_retention_percentage(s_arr_irs* table, s_employee employee,
 
 	if (raw_salary > table->elements[table->used - 1].monthly_pay_value)
 	{
-		return table->elements[table->used - 1].percentage_per_dependent[employee.dependents];
+		return table->elements[table->used - 1].percentage_per_dependent[employee.dependents] / 100.0f;
 	}
 	else
 	{
@@ -454,6 +454,6 @@ float h_proc_get_irs_retention_percentage(s_arr_irs* table, s_employee employee,
 		{
 			retention_percentage = table->elements[i].percentage_per_dependent[employee.dependents];
 		}
-		return retention_percentage;
+		return retention_percentage / 100.0f;
 	}
 }
