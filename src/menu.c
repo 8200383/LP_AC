@@ -41,6 +41,7 @@ void h_menu_irs(
 				}
 				h_irs_parse(single_array, single_str, h_irs_pair);
 				free(single_str);
+				// TODO: mostrar que foi carregada
 				break;
 			case 2:
 				h_irs_print(single_array);
