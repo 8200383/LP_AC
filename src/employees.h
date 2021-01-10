@@ -24,6 +24,12 @@
 "[%d] %d | %s | %s | %d | %d Dependentes | %s | %s | " \
 "%d/%d/%d | %d/%d/%d | %d/%d/%d | %.2f€ | %.2f€ | %d Titular(es)\n"
 
+#define PRINT_TEMPLATE_REMOVE \
+"*************************************" \
+"******FUNCIONÁRIO***REMOVIDO*********" \
+"*************************************"
+
+
 /**
  * @enum e_columns
  */
@@ -175,8 +181,10 @@ char* h_employees_str_from_marital_status(e_marital_status status);
 
 /**
  *
- * @param holders
+ * @param array
  * @return
  */
+
+void h_employees_delete(s_arr_employees* array);
 
 #endif //EMPLOYEES_H

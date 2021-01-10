@@ -575,3 +575,24 @@ char* h_employees_str_from_marital_status(e_marital_status status)
 
 	return str[status];
 }
+
+void h_employees_delete(s_arr_employees* array)
+{
+	int num;
+
+	if (array->used == 0)
+	{
+		printf(H_STRS_EMPTY_TABLE);
+		return;
+	}
+
+	num = h_util_get_int(0, (array->used), "Linha a eliminar: ");
+
+	for (int i = num; i < array->used; i++)
+	{
+		array->employees[i] = array->employees[i + 1];
+	}
+	puts(RED("Funcionário removido"));
+
+	array->used--;
+}

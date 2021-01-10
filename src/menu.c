@@ -291,7 +291,7 @@ void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array)
 				h_employees_add(employees_array, iss_array);
 				break;
 			case 4:
-				// TODO: printf("Remove employee");
+				h_employees_delete(employees_array);
 				break;
 			case 5:
 				h_employees_edit(employees_array, iss_array);
