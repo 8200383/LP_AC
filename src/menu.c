@@ -90,7 +90,7 @@ void h_menu_irs(
 				break;
 			case 13:
 				two_holders_str = h_util_file_read(H_PATH_TWO_HOLDERS, &two_holders_size);
-				if (unique_holder_str == NULL)
+				if (two_holders_str == NULL)
 				{
 					fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_TWO_HOLDERS);
 					return;
@@ -214,6 +214,7 @@ void h_menu_processing(
 				h_proc_delete(spreadsheet);
 				break;
 			case 6:
+				h_proc_perform(spreadsheet, single_array, unique_holder_array, two_holders_array, iss_array, employees_array);
 				break;
 			case 7:
 				h_proc_export_csv(spreadsheet);
