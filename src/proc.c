@@ -446,13 +446,13 @@ float h_proc_get_irs_retention_percentage(s_arr_irs* table, s_employee employee,
 
 	if (raw_salary > table->elements[table->used - 1].monthly_pay_value)
 	{
-		return table->elements[table->used - 1].percentage_per_dependent[employee.number_dependents];
+		return table->elements[table->used - 1].percentage_per_dependent[employee.dependents];
 	}
 	else
 	{
 		for (i = 0; raw_salary > table->elements[i].monthly_pay_value; i++)
 		{
-			retention_percentage = table->elements[i].percentage_per_dependent[employee.number_dependents];
+			retention_percentage = table->elements[i].percentage_per_dependent[employee.dependents];
 		}
 		return retention_percentage;
 	}

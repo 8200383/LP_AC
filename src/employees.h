@@ -71,15 +71,15 @@ typedef enum
 typedef struct
 {
 	int code;
-	int number_dependents;
 	int role;
-	char* first_name;
-	char* last_name;
+	int dependents;
 	int phone_number;
 	float hourly_rate;
 	float base_food_allowance;
-	e_marital_status marital_status;
+	char* first_name;
+	char* last_name;
 	e_holders holders;
+	e_marital_status marital_status;
 	s_date* birthday, * entry_date, * leaving_date;
 	int removed; // TODO: Set to 0 on pair, edit and add, 1 on remove
 } s_employee;

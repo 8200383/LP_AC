@@ -209,11 +209,11 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 	}
 	employee->role = h_util_get_int(0, iss_array->used, "Cargo:");
 
-	if (employee->number_dependents)
+	if (employee->dependents)
 	{
-		printf("Nº de dependentes atual: %d\n", employee->number_dependents);
+		printf("Nº de dependentes atual: %d\n", employee->dependents);
 	}
-	employee->number_dependents = h_util_get_int(0, MAX_DEPENDENT_NUMBER, "Nº de dependentes:");
+	employee->dependents = h_util_get_int(0, MAX_DEPENDENT_NUMBER, "Nº de dependentes:");
 
 	if (employee->birthday == NULL)
 	{
@@ -392,7 +392,7 @@ void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array)
 			array->employees[i].first_name,
 			array->employees[i].last_name,
 			array->employees[i].phone_number,
-			array->employees[i].number_dependents,
+			array->employees[i].dependents,
 			iss_array->data[array->employees[i].role].criteria,
 			h_employees_str_from_marital_status(array->employees[i].marital_status),
 			array->employees[i].birthday->day,
@@ -420,7 +420,7 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 
 	if (strlen(str) == 1 && column == COL_NUM_DEPENDENTS)
 	{
-		employee->number_dependents = atoi(str);
+		employee->dependents = atoi(str);
 	}
 
 	if (strlen(str) == 1 && column == COL_ROLE)
