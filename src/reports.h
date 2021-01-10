@@ -2,7 +2,7 @@
  * @file reports.h
  * @author Micael Dias, Rui Gonçalves, Hugo Carvalho
  * @date 7/1/2021
- * @brief Functions for company analsys/reports
+ * @brief Functions for company reports
  */
 
 #ifndef REPORTS_H
@@ -15,7 +15,7 @@
 
 /*
  * TODO Quem são os trabalhadores com maior número de dependentes
- * TODO Qual a percentagem de trabalhadores casados, solteiros e divorciados
+ * TODO Percentagem de trabalhadores casados, solteiros e divorciados
  * TODO Quem são os trabalhadores com mais bônus mensal
  * TODO Quem são os trabalhadores com o subsídio de alimentação mais alto
  *
@@ -24,9 +24,15 @@
  */
 
 /**
- * Gets all the senior employees according to EMPLOYEE_SENIORITY
- * @param arr_employees The array of employees
+ * Shows all the senior employees according to EMPLOYEE_SENIORITY
+ * @param employees_array The array of employees
  */
-void h_reports_senior_employees(s_arr_employees* arr_employees);
+void h_reports_senior_employees(s_arr_employees* employees_array);
+
+/**
+ *
+ * @param employees_array The array of employees
+ */
+void h_reports_marital_percentage(s_arr_employees* employees_array);
 
 #endif //REPORTS_H

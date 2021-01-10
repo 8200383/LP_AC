@@ -3,14 +3,14 @@
 #include "reports.h"
 #include "calendar.h"
 
-void h_reports_senior_employees(s_arr_employees* arr_employees)
+void h_reports_senior_employees(s_arr_employees* employees_array)
 {
 	int i;
 	int year_now;
 	int years_difference;
 	struct tm* local_time;
 
-	if (arr_employees == NULL || arr_employees->used == 0)
+	if (employees_array == NULL || employees_array->used == 0)
 	{
 		puts(RED("[!] Employees vazio ou não inicializado"));
 		return;
@@ -21,15 +21,17 @@ void h_reports_senior_employees(s_arr_employees* arr_employees)
 
 	printf(YELLOW("Antiguidades dos funcionários\n"));
 
-	for (i = 0; i < arr_employees->used; i++)
+	for (i = 0; i < employees_array->used; i++)
 	{
-		years_difference = year_now - arr_employees->employees[i].entry_date->year;
-		if (years_difference >= EMPLOYEE_SENIORITY)
+		years_difference = year_now - employees_array->employees[i].entry_date->year;
+
+		if (years_difference >= EMPLOYEE_SENIORITY &&
+			employees_array->employees[i].leaving_date->year >= year_now)
 		{
 			printf(CYAN("%d | %s %s | %d Anos\n"),
-				arr_employees->employees[i].code,
-				arr_employees->employees[i].first_name,
-				arr_employees->employees[i].last_name,
+				employees_array->employees[i].code,
+				employees_array->employees[i].first_name,
+				employees_array->employees[i].last_name,
 				years_difference);
 		}
 	}
