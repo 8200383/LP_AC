@@ -442,7 +442,7 @@ void h_proc_perform(
 float h_proc_get_irs_retention_percentage(s_arr_irs* table, s_employee employee, float raw_salary)
 {
 	int i;
-	float retention_percentage;
+	float retention_percentage = 0;
 
 	if (raw_salary > table->elements[table->used - 1].monthly_pay_value)
 	{
@@ -450,7 +450,7 @@ float h_proc_get_irs_retention_percentage(s_arr_irs* table, s_employee employee,
 	}
 	else
 	{
-		for (i = 0; raw_salary > table->elements[i].monthly_pay_value; i++)
+		for (i = 0; i < table->used - 2 && retention_percentage == 0; i++)
 		{
 			retention_percentage = table->elements[i].percentage_per_dependent[employee.dependents];
 		}
