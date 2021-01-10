@@ -14,10 +14,11 @@
 #define EMPLOYEE_SENIORITY 5
 
 /*
- * TODO: Quem são os trabalhadores mais antigos da empresa
- * TODO: Quem são os trabalhadores com maior numero de dependentes
- * TODO: Quem são os trabalhadores mais jovens
- * TODO: Qual a percentagem de trabalhodores casados, solteiros e divorciados
+ * TODO Quem são os trabalhadores mais antigos da empresa
+ * TODO Quem são os trabalhadores com maior número de dependentes
+ * TODO Qual a percentagem de trabalhadores casados, solteiros e divorciados
+ * TODO Quem são os trabalhadores com mais bônus mensal
+ * TODO Quem são os trabalhadores com o subsídio de alimentação mais alto
  *
  * NOTA:
  * Uma função para cada um, no final juntar tudo numa função
