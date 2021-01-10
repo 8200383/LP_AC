@@ -250,38 +250,36 @@ void h_menu_processing(
 void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array)
 {
 	int op;
-	int op_iss;
 	int employees_size = 0;
 	char* employees_str;
 
-	printf(H_STRS_EMPLOYEES_MENU);
-	if (iss_array == NULL || iss_array->used == 0)
-	{
-		op_iss = h_util_get_int(0, 1, "[!] A tabela da ISS ainda não foi carregada, " \
-        "deseja carregar agora? (0 - Não | 1 - Sim)");
-		if (op_iss == 1)
-		{
-			h_iss_load(iss_array);
-		}
-		else
-		{
-			puts(RED("[!] Prosseguindo com a ISS não inicializada"));
-		}
-	}
-
 	do
 	{
-		op = h_util_get_int(0, 6, "> ");
+		printf(H_STRS_EMPLOYEES_MENU);
+		op = h_util_get_int(0, 6, "Opção?");
 
 		switch (op)
 		{
 			case 1:
+				if (iss_array == NULL)
+				{
+					puts(YELLOW("[!] A tabela da ISS sera carregada automaticamente"));
+					h_iss_load(iss_array);
+				}
+
+				if (iss_array->used == 0)
+				{
+					puts(RED("[!] A tabela ISS vazia, abortar!"));
+					break;
+				}
+
 				employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
 				if (employees_str == NULL)
 				{
 					printf(RED("[!] Impossivel carregar %s"), H_PATH_EMPLOYEES);
-					return;
+					break;
 				}
+
 				if (employees_array->used > 0)
 				{
 					printf(RED("[!] Já existem dados na tabela. Os novos dados foram carregados.\n"));
