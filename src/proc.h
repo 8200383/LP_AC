@@ -19,8 +19,11 @@
 #include "employees.h"
 
 #define MAX_FILENAME 256
+/** @const BONUS_BASE */
 #define BONUS_BASE 1.0f
+/** @const BONUS_20_DAYS */
 #define BONUS_20_DAYS 1.05f
+/** @const BONUS_17_DAYS */
 #define BONUS_17_DAYS 1.02f
 
 /**
@@ -125,7 +128,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet);
 char* h_proc_generate_filename(e_month month, const char* extension);
 
 /**
- *
+ * Perform the salary calculations
  * @param spreadsheet
  * @param irs_array
  * @param ss_array

@@ -14,22 +14,18 @@
 #define EMPLOYEE_SENIORITY 5
 
 /*
- * TODO Quem são os trabalhadores mais antigos da empresa
  * TODO Quem são os trabalhadores com maior número de dependentes
  * TODO Qual a percentagem de trabalhadores casados, solteiros e divorciados
  * TODO Quem são os trabalhadores com mais bônus mensal
  * TODO Quem são os trabalhadores com o subsídio de alimentação mais alto
  *
  * NOTA:
- * Uma função para cada um, no final juntar tudo numa função
- *
- * NOTA:
- * Todos os commits devem ser dados com #15 na menssagem pff
+ * Todos os commits devem ser dados com #15 na msg
  */
 
 /**
- *
- * @param arr_employees
+ * Gets all the senior employees according to EMPLOYEE_SENIORITY
+ * @param arr_employees The array of employees
  */
 void h_reports_senior_employees(s_arr_employees* arr_employees);
 

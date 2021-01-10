@@ -22,7 +22,6 @@ int main_menu()
 	 * IRS
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
-
 	single_array = h_irs_alloc(INITIAL_CAPACITY);
 	if (single_array == NULL)
 	{
@@ -48,7 +47,6 @@ int main_menu()
 	 * Segurança Social
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
-
 	iss_array = h_iss_alloc(INITIAL_CAPACITY);
 	if (iss_array == NULL)
 	{
@@ -62,7 +60,6 @@ int main_menu()
 	 * Gestão de Funcionários
 	 * ---------------------------------------------------------------------------------------------------------
 	 */
-
 	employees_array = h_employees_alloc(INITIAL_CAPACITY);
 	if (employees_array == NULL)
 	{
