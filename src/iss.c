@@ -244,7 +244,7 @@ void h_iss_write(s_arr_iss* array, const char* path)
 
 	for (i = 0; i <= array->used; i++)
 	{
-		fprintf(fp, "%s,%.2f%%,%.2f%%,\n",
+		fprintf(fp, "%s,%.2f%%,%.2f%%\n",
 			array->data[i].criteria,
 			array->data[i].employer,
 			array->data[i].employee);
