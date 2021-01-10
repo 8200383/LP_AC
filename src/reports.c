@@ -26,6 +26,7 @@ void h_reports_senior_employees(s_arr_employees* employees_array)
 		years_difference = year_now - employees_array->employees[i].entry_date->year;
 
 		if (years_difference >= EMPLOYEE_SENIORITY &&
+			employees_array->employees[i].removed == 0 &&
 			employees_array->employees[i].leaving_date->year >= year_now)
 		{
 			printf(CYAN("%d | %s %s | %d Anos\n"),
