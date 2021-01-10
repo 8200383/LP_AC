@@ -347,7 +347,6 @@ void h_proc_perform(
 	int i;
 
 	float days_worked;
-	float salary_bonus_multiplier;
 	float irs_retention_percentage;
 	float ss_retention_employer_percentage;
 	float ss_retention_employee_percentage;
@@ -375,100 +374,94 @@ void h_proc_perform(
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-		printf("HERE\n");
-
 		// Calculo dos Dias Trabalhados e o Bonus Correspondente
 		days_worked = (float)spreadsheet->details[i].full_days +
 			(float)spreadsheet->details[i].half_days * 0.5f +
 			(float)spreadsheet->details[i].weekend_days;
 
-		if (days_worked > 20)
-		{
-			salary_bonus_multiplier = BONUS_20_DAYS;
-		}
-		else if (days_worked > 17)
-		{
-			salary_bonus_multiplier = BONUS_17_DAYS;
-		}
-		else
-		{
-			salary_bonus_multiplier = BONUS_BASE;
-		}
-
 		// Calculo do Salário Bruto
-		spreadsheet->details->base_salary =
+		spreadsheet->details[i].gross_pay =
 			(float)spreadsheet->details[i].full_days * employees_array->employees[i].hourly_rate +
 				(float)spreadsheet->details[i].half_days * employees_array->employees[i].hourly_rate * 0.5f +
 				(float)spreadsheet->details[i].weekend_days * employees_array->employees[i].hourly_rate * 1.5f;
 
-		spreadsheet->details->base_salary *= salary_bonus_multiplier;
+		if (days_worked > 20)
+		{
+			spreadsheet->details[i].bonus *= BONUS_20_DAYS;
+		}
+		else if (days_worked > 17)
+		{
+			spreadsheet->details[i].bonus *= BONUS_17_DAYS;
+		}
+		else
+		{
+			spreadsheet->details[i].bonus *= BONUS_BASE;
+		}
 
-		spreadsheet->details->food_allowance =
+		spreadsheet->details[i].gross_pay *= spreadsheet->details[i].bonus;
+
+		spreadsheet->details[i].food_allowance =
 			(float)spreadsheet->details[i].full_days * employees_array->employees[i].base_food_allowance +
 				(float)spreadsheet->details[i].weekend_days * employees_array->employees[i].base_food_allowance;
 
-		spreadsheet->details[i].raw_salary =
-			spreadsheet->details[i].base_salary + spreadsheet->details[i].food_allowance;
+		spreadsheet->details[i].gross_pay += spreadsheet->details[i].food_allowance;
 
 		// Calculo da retenção pelo IRS
 		switch (employees_array->employees[i].holders)
 		{
 			case NONE:
-				printf("single\n");
-				irs_retention_percentage = h_proc_get_irs_retention_percentage
-					(single_array, employees_array->employees[i], spreadsheet->details[i].raw_salary);
+				irs_retention_percentage = h_proc_get_retention_percentage
+					(single_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
 				break;
 			case UNIQUE_HOLDER:
-				printf("unique\n");
-				irs_retention_percentage = h_proc_get_irs_retention_percentage
-					(unique_holder_array, employees_array->employees[i], spreadsheet->details[i].raw_salary);
+				irs_retention_percentage = h_proc_get_retention_percentage
+					(unique_holder_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
 				break;
 			case TWO_HOLDERS:
-				printf("two\n");
-				irs_retention_percentage = h_proc_get_irs_retention_percentage
-					(two_holders_array, employees_array->employees[i], spreadsheet->details[i].raw_salary);
+				irs_retention_percentage = h_proc_get_retention_percentage
+					(two_holders_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
 				break;
 		}
 
 		printf("IRS retenção: %f\n", irs_retention_percentage);
 
-		spreadsheet->details[i].irs_retention = spreadsheet->details[i].raw_salary * irs_retention_percentage;
+		spreadsheet->details[i].irs_retention = spreadsheet->details[i].gross_pay * irs_retention_percentage;
 
 		// Calculo da retenção pela Segurança social
-		ss_retention_employer_percentage = iss_array->data[employees_array->employees[i].role].employer / 100.0f;
-		ss_retention_employee_percentage = iss_array->data[employees_array->employees[i].role].employee / 100.0f;
+		spreadsheet->details[i].iss_retention_employer = spreadsheet->details[i].gross_pay *
+			iss_array->data[employees_array->employees[i].role].employer / 100.0f;
 
-		spreadsheet->details[i].ss_retention_employer = (spreadsheet->details[i].base_salary +
-			spreadsheet->details[i].food_allowance) * ss_retention_employer_percentage;
-		spreadsheet->details[i].ss_retention_employee = (spreadsheet->details[i].base_salary +
-			spreadsheet->details[i].food_allowance) * ss_retention_employee_percentage;
+		spreadsheet->details[i].iss_retention_employee = spreadsheet->details[i].gross_pay *
+			iss_array->data[employees_array->employees[i].role].employee / 100.0f;
 
-		// Calculo do Salário Liquido e o Encargo Total do Empregador
-		spreadsheet->details[i].processed_salary = spreadsheet->details[i].raw_salary -
-			spreadsheet->details[i].ss_retention_employee - spreadsheet->details[i].irs_retention;
+		// Calculo do Salário Liquido
+		spreadsheet->details[i].net_pay = spreadsheet->details[i].gross_pay -
+			spreadsheet->details[i].iss_retention_employee - spreadsheet->details[i].irs_retention;
 
-		spreadsheet->details[i].total_cost = spreadsheet->details->raw_salary +
-			spreadsheet->details[i].ss_retention_employer +
-			spreadsheet->details[i].ss_retention_employee +
+		// Encargo Total do Empregador
+		spreadsheet->details[i].employer_charge = spreadsheet->details[i].gross_pay +
+			spreadsheet->details[i].iss_retention_employer +
+			spreadsheet->details[i].iss_retention_employee +
 			spreadsheet->details[i].irs_retention;
 	}
 }
 
-float h_proc_get_irs_retention_percentage(s_arr_irs* table, s_employee employee, float raw_salary)
+float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, float raw_salary)
 {
 	int i;
 
-	for (i = 0; i < table->used; i++)
+	for (i = 0; i < irs_array->used; i++)
 	{    // TODO: IRS -> Remover opção UP_TO BEHOND
-		if (raw_salary <= table->elements[i].monthly_pay_value && table->elements[i].monthly_pay_type == H_IRS_UP_TO)
+		if (raw_salary <= irs_array->elements[i].monthly_pay_value
+			&& irs_array->elements[i].monthly_pay_type == H_IRS_UP_TO)
 		{
-			return table->elements[i + 1].percentage_per_dependent[employee.dependents] / 100.0f;
+			return irs_array->elements[i + 1].percentage_per_dependent[dependents] / 100.0f;
 		}
 	}
 
-	if (raw_salary > table->elements[table->used - 1].monthly_pay_value &&
-		table->elements[table->used - 1].monthly_pay_type == H_IRS_BEYOND)
+	if (raw_salary > irs_array->elements[irs_array->used - 1].monthly_pay_value &&
+		irs_array->elements[irs_array->used - 1].monthly_pay_type == H_IRS_BEYOND)
 	{
-		return table->elements[table->used - 1].percentage_per_dependent[employee.dependents] / 100.0f;
+		return irs_array->elements[irs_array->used - 1].percentage_per_dependent[dependents] / 100.0f;
 	}
 }

@@ -37,14 +37,14 @@ typedef struct
 	int half_days; /**< Represents the number of half days worked */
 	int weekend_days; /**< Represents number of the weekends worked */
 	int absent_days; /**< Represents the number of days missed */
-	float base_salary;
-	float food_allowance;
-	float raw_salary;
-	float irs_retention;
-	float ss_retention_employer;
-	float ss_retention_employee;
-	float processed_salary;
-	float total_cost;
+	float gross_pay; /**< Salary before taxes */
+	float net_pay; /**< Salary afeter taxes */
+	float bonus; /**< Bonus awarded */
+	float food_allowance; /**< Food allowance calculated */
+	float irs_retention; /**< IRS retention percentage */
+	float iss_retention_employer; /**< ISS retention percentage for employer */
+	float iss_retention_employee; /**< ISS retention percentage for employee */
+	float employer_charge; /**< Total employer charge */
 } s_details;
 
 /**
@@ -144,12 +144,12 @@ void h_proc_perform(
 );
 
 /**
- *
- * @param table
- * @param employee
- * @param raw_salary
- * @return
+ * Gets the retention percentage for IRS based on the salary and number of dependents
+ * @param irs_array The IRS table
+ * @param dependents The number of dependents
+ * @param raw_salary The salary
+ * @return Returns the retention percentage
  */
-float h_proc_get_irs_retention_percentage(s_arr_irs* table, s_employee employee, float raw_salary);
+float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, float raw_salary);
 
 #endif //PROC_H
