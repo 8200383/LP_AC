@@ -100,7 +100,11 @@ int main_menu()
 				h_menu_reports(employees_array);
 				break;
 			case 9:
-				// TODO: Guardar todas
+				// TODO: Guardar Employees, Processamento
+				h_irs_write(single_array, H_PATH_SINGLE);
+				h_irs_write(unique_holder_array, H_PATH_UNIQUE_HOLDER);
+				h_irs_write(two_holders_array, H_PATH_TWO_HOLDERS);
+				h_iss_write(iss_array, H_PATH_SEG_SOCIAL);
 				break;
 			default:
 				break;
