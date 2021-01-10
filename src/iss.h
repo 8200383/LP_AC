@@ -41,5 +41,6 @@ void h_iss_add(s_arr_iss* array);
 void h_iss_delete(s_arr_iss* array);
 void h_iss_edit(s_arr_iss* array);
 void h_iss_write(s_arr_iss* array, const char* path);
+void h_iss_load(s_arr_iss* seg_social_table);
 
 #endif //ISS_H

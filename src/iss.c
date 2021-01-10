@@ -1,8 +1,5 @@
-/*
- * Created by Hugo Carvalho on 12/24/20.
- */
-
 #include "iss.h"
+#include "paths.h"
 
 s_arr_iss* h_iss_alloc(int initial_capacity)
 {
@@ -255,4 +252,26 @@ void h_iss_write(s_arr_iss* array, const char* path)
 
 	printf(H_STRS_SAVE_SUCCESS);
 	fclose(fp);
+}
+
+void h_iss_load(s_arr_iss* seg_social_table)
+{
+	int social_sec_size = 0;
+	char* social_sec_str;
+
+	social_sec_str = h_util_file_read(H_PATH_SEG_SOCIAL, &social_sec_size);
+	if (social_sec_str == NULL)
+	{
+		printf(RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
+		return;
+	}
+
+	if (seg_social_table->used > 0)
+	{
+		printf(RED("[!] Já existem dados na ISS. Os novos dados foram carregados\n"));
+		h_iss_delete_all(seg_social_table);
+	}
+
+	h_iss_parse(seg_social_table, social_sec_str);
+	free(social_sec_str);
 }

@@ -138,7 +138,7 @@ void h_menu_seg_social(s_arr_iss* seg_social_table)
 		switch (op)
 		{
 			case 1:
-				h_load_seg_social(seg_social_table);
+				h_iss_load(seg_social_table);
 				break;
 			case 2:
 				h_iss_print(seg_social_table);
@@ -250,22 +250,36 @@ void h_menu_processing(
 void h_menu_employees(s_arr_employees* employees, s_arr_iss* iss_array)
 {
 	int op;
+	int op_iss;
 	int employees_size = 0;
 	char* employees_str;
 
+	printf(H_STRS_EMPLOYEES_MENU);
+	if (iss_array == NULL || iss_array->used == 0)
+	{
+		op_iss = h_util_get_int(0, 1, "[!] A tabela da ISS ainda não foi carregada, " \
+        "deseja carregar agora? (0 - Não | 1 - Sim)");
+		if (op_iss == 1)
+		{
+			h_iss_load(iss_array);
+		}
+		else
+		{
+			puts(RED("[!] Prosseguindo com a ISS não inicializada"));
+		}
+	}
+
 	do
 	{
-		printf(H_STRS_EMPLOYEES_MENU);
 		op = h_util_get_int(0, 6, "> ");
 
 		switch (op)
 		{
 			case 1:
-				h_load_seg_social(iss_array);
-				employees_str = h_util_file_read(H_PATH_SEG_SOCIAL, &employees_size);
+				employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
 				if (employees_str == NULL)
 				{
-					printf(RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
+					printf(RED("[!] Impossivel carregar %s"), H_PATH_EMPLOYEES);
 					return;
 				}
 				if (employees->used > 0)
@@ -298,25 +312,4 @@ void h_menu_employees(s_arr_employees* employees, s_arr_iss* iss_array)
 				break;
 		}
 	} while (op != 0);
-}
-
-void h_load_seg_social (s_arr_iss* seg_social_table)
-{
-	int social_sec_size = 0;
-	char* social_sec_str;
-
-	social_sec_str = h_util_file_read(H_PATH_SEG_SOCIAL, &social_sec_size);
-	if (social_sec_str == NULL)
-	{
-		printf(RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
-		return;
-	}
-	if (seg_social_table->used > 0)
-	{
-		printf(RED("[!] Já existem dados na tabela. Os novos dados foram carregados.\n"));
-		h_iss_delete_all(seg_social_table);
-	}
-
-	h_iss_parse(seg_social_table, social_sec_str);
-	free(social_sec_str);
 }
