@@ -17,6 +17,7 @@ int main_menu()
 	s_arr_irs* two_holders_array;
 	s_arr_iss* iss_array;
 	s_arr_employees* employees_array;
+	s_spreadsheet* spreadsheet = NULL; // Processamento Salarios
 
 	/*
 	 * IRS
@@ -91,10 +92,11 @@ int main_menu()
 					unique_holder_array,
 					two_holders_array,
 					iss_array,
-					employees_array);
+					employees_array,
+					spreadsheet);
 				break;
 			case 5:
-				h_menu_reports(employees_array);
+				h_menu_reports(employees_array, spreadsheet);
 				break;
 			case 9:
 				// TODO: Guardar Employees, Processamento

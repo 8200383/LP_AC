@@ -83,3 +83,40 @@ void h_reports_marital_percentage(s_arr_employees* employees_array)
 	printf("Viúvos %.2f%%\n", (float)widowed_employees / (float)i);
 	printf("Divorciados %.2f%%\n", (float)divorced_employees / (float)i);
 }
+
+void h_reports_bonus(s_spreadsheet* spreadsheet)
+{
+	int i;
+	int employees_earned_base_bonus = 0;
+	int employees_earned_17_days_bonus = 0;
+	int employees_earned_20_days_bonus = 0;
+
+	if (spreadsheet == NULL || spreadsheet->used == 0)
+	{
+		puts(RED("[!] Nenhum mês processado"));
+		return;
+	}
+
+	for (i = 0; i < spreadsheet->used; i++)
+	{
+		if (spreadsheet->details[i].bonus == BONUS_BASE)
+		{
+			employees_earned_base_bonus++;
+		}
+
+		if (spreadsheet->details[i].bonus == BONUS_17_DAYS)
+		{
+			employees_earned_17_days_bonus++;
+		}
+
+		if (spreadsheet->details[i].bonus == BONUS_20_DAYS)
+		{
+			employees_earned_20_days_bonus++;
+		}
+	}
+
+	puts(CYAN("Percentagem de funcionários no mês que ganharam bonus"));
+	printf("Bonus base %.2f%%\n", (float)employees_earned_base_bonus / (float)i);
+	printf("Bonus 17 dias %.2f%%\n", (float)employees_earned_17_days_bonus / (float)i);
+	printf("Bonus 20 dias %.2f%%\n", (float)employees_earned_20_days_bonus / (float)i);
+}

@@ -44,7 +44,8 @@ void h_menu_processing(
 	s_arr_irs* unique_holder_array,
 	s_arr_irs* two_holders_array,
 	s_arr_iss* iss_array,
-	s_arr_employees* employees_array
+	s_arr_employees* employees_array,
+	s_spreadsheet* spreadsheet
 );
 
 /**
@@ -57,8 +58,9 @@ void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array);
 /**
  * Reports Menu
  * @param employees_array The array of employees
+ * @param spreadsheet The spreadsheet referring to a month
  */
-void h_menu_reports(s_arr_employees* employees_array);
+void h_menu_reports(s_arr_employees* employees_array, s_spreadsheet* spreadsheet);
 
 /*
  TODO: Otima idea mas n sei se existe tempo pra isto

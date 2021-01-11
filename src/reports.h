@@ -9,13 +9,13 @@
 #define REPORTS_H
 
 #include "employees.h"
+#include "proc.h"
 
 /** @const EMPLOYEE_SENIORITY Represents the time in years an employee is considered senior */
 #define EMPLOYEE_SENIORITY 5
 
 /*
- * TODO Percentagem de trabalhadores casados, solteiros e divorciados
- * TODO Quem são os trabalhadores com mais bônus mensal
+ * TODO Percentage of employees with the largest number of dependents
  * TODO Quem são os trabalhadores com o subsídio de alimentação mais alto
  *
  * NOTA:
@@ -29,9 +29,15 @@
 void h_reports_senior_employees(s_arr_employees* employees_array);
 
 /**
- * TODO Percentagem dos funcionários com o maior número de dependentes
+ * Gets the percentage of married, single, widowed and divorced employees
  * @param employees_array The array of employees
  */
 void h_reports_marital_percentage(s_arr_employees* employees_array);
+
+/**
+ * Gets the percentage of employees of earned a bonus
+ * @param spreadsheet The spreadsheet referring to a month
+ */
+void h_reports_bonus(s_spreadsheet* spreadsheet);
 
 #endif //REPORTS_H

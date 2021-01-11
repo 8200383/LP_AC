@@ -170,11 +170,11 @@ void h_menu_processing(
 	s_arr_irs* unique_holder_array,
 	s_arr_irs* two_holders_array,
 	s_arr_iss* iss_array,
-	s_arr_employees* employees_array
+	s_arr_employees* employees_array,
+	s_spreadsheet* spreadsheet
 )
 {
 	int op;
-	s_spreadsheet* spreadsheet = NULL;
 
 	do
 	{
@@ -214,7 +214,12 @@ void h_menu_processing(
 				h_proc_delete(spreadsheet);
 				break;
 			case 6:
-				h_proc_perform(spreadsheet, single_array, unique_holder_array, two_holders_array, iss_array, employees_array);
+				h_proc_perform(spreadsheet,
+					single_array,
+					unique_holder_array,
+					two_holders_array,
+					iss_array,
+					employees_array);
 				break;
 			case 7:
 				h_proc_export_csv(spreadsheet);
@@ -308,7 +313,7 @@ void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array)
 	} while (op != 0);
 }
 
-void h_menu_reports(s_arr_employees* employees_array)
+void h_menu_reports(s_arr_employees* employees_array, s_spreadsheet* spreadsheet)
 {
 	int op;
 
@@ -324,6 +329,8 @@ void h_menu_reports(s_arr_employees* employees_array)
 			case 2:
 				h_reports_marital_percentage(employees_array);
 				break;
+			case 3:
+				h_reports_bonus(spreadsheet);
 			case 0:
 				break;
 			default:
