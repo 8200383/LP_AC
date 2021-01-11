@@ -279,7 +279,7 @@ void h_iss_write(s_arr_iss *array, const char *path)
     printf("%s -> %s\n", H_STRS_SAVE_SUCCESS, path);
 }
 
-void h_iss_load(s_arr_iss *seg_social_table, const char *path)
+void h_iss_load(s_arr_iss *array, const char *path)
 {
     int size = 0;
     char *str;
@@ -291,13 +291,13 @@ void h_iss_load(s_arr_iss *seg_social_table, const char *path)
         return;
     }
 
-    if (seg_social_table->used > 0)
+    if (array->used > 0)
     {
         printf("ISS - %s", H_STRS_LOAD_REPLACE);
-        h_iss_delete_all(seg_social_table);
+        h_iss_delete_all(array);
     }
 
-    h_iss_parse(seg_social_table, str);
+    h_iss_parse(array, str);
     free(str);
 
     printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, path);
