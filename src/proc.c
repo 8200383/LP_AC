@@ -449,7 +449,7 @@ float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, floa
 	int i;
 
 	for (i = 0; i < irs_array->used; i++)
-	{    // TODO: IRS -> Remover opção UP_TO BEHOND
+	{
 		if (raw_salary <= irs_array->elements[i].monthly_pay_value
 			&& irs_array->elements[i].monthly_pay_type == H_IRS_UP_TO)
 		{
