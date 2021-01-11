@@ -75,41 +75,46 @@ int main_menu()
         fprintf(stdout, "%s", H_STRS_MENU);
         op = h_util_get_int(0, 9, "Opção?");
 
-		switch (op)
-		{
-			case 1:
-				h_menu_irs(single_array, unique_holder_array, two_holders_array);
-				break;
-			case 2:
-				h_menu_iss(iss_array);
-				break;
-			case 3:
-				h_menu_employees(employees_array, iss_array);
-				break;
-			case 4:
-				h_menu_processing(single_array,
-					unique_holder_array,
-					two_holders_array,
-					iss_array,
-					employees_array,
-					spreadsheet);
-				break;
-			case 5:
-				h_menu_reports(employees_array, spreadsheet);
-				break;
-			case 8:
-				// TODO: Carregar Tudo -> quando tiver as funções load
-			case 9:
-				// TODO: Guardar Employees, Processamento
-				h_irs_write(single_array, H_PATH_SINGLE);
-				h_irs_write(unique_holder_array, H_PATH_UNIQUE_HOLDER);
-				h_irs_write(two_holders_array, H_PATH_TWO_HOLDERS);
-				h_iss_write(iss_array, H_PATH_SEG_SOCIAL);
-				break;
-			default:
-				break;
-		}
-	} while (op != 0);
+        switch (op)
+        {
+            case 1:
+                h_menu_irs(single_array, unique_holder_array, two_holders_array);
+                break;
+            case 2:
+                h_menu_iss(iss_array);
+                break;
+            case 3:
+                h_menu_employees(employees_array, iss_array);
+                break;
+            case 4:
+                h_menu_processing(single_array,
+                                  unique_holder_array,
+                                  two_holders_array,
+                                  iss_array,
+                                  employees_array,
+                                  spreadsheet);
+                break;
+            case 5:
+                h_menu_reports(employees_array, spreadsheet);
+                break;
+            case 8:
+                h_irs_load(single_array, H_PATH_SINGLE);
+                h_irs_load(unique_holder_array, H_PATH_SINGLE);
+                h_irs_load(two_holders_array, H_PATH_SINGLE);
+                h_iss_load(iss_array, H_PATH_ISS);
+                // TODO: Load employees
+                break;
+            case 9:
+                // TODO: Guardar Employees, Proc
+                h_irs_write(single_array, H_PATH_SINGLE);
+                h_irs_write(unique_holder_array, H_PATH_UNIQUE_HOLDER);
+                h_irs_write(two_holders_array, H_PATH_TWO_HOLDERS);
+                h_iss_write(iss_array, H_PATH_ISS);
+                break;
+            default:
+                break;
+        }
+    } while (op != 0);
 
     h_irs_free(single_array);
     h_irs_free(unique_holder_array);

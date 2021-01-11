@@ -16,106 +16,69 @@ void h_menu_irs(
         fprintf(stdout, H_STRS_IRS_MENU);
         op = h_util_get_int(0, 18, "Opção?");
 
-		switch (op)
-		{
-			case 1:
-				single_str = h_util_file_read(H_PATH_SINGLE, &single_size);
-				if (single_str == NULL)
-				{
-					fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_SINGLE);
-					return;
-				}
-				if (single_array->used > 0)
-				{
-					fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
-					h_irs_delete_all(single_array);
-				}
-				h_irs_parse(single_array, single_str, h_irs_pair);
-				free(single_str);
-				// TODO: mostrar que foi carregada
-				break;
-			case 2:
-				h_irs_print(single_array);
-				break;
-			case 3:
-				h_irs_edit(single_array);
-				break;
-			case 4:
-				h_irs_add(single_array);
-				break;
-			case 5:
-				h_irs_delete(single_array);
-				break;
-			case 6:
-				h_irs_write(single_array, H_PATH_SINGLE);
-				break;
-			case 7:
-				unique_holder_str = h_util_file_read(H_PATH_UNIQUE_HOLDER, &unique_holder_size);
-				if (unique_holder_str == NULL)
-				{
-					fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_UNIQUE_HOLDER);
-					return;
-				}
-				if (unique_holder_array->used > 0)
-				{
-					fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
-					h_irs_delete_all(unique_holder_array);
-				}
-				h_irs_parse(unique_holder_array, unique_holder_str, h_irs_pair);
-				free(unique_holder_str);
-				break;
-			case 8:
-				h_irs_print(unique_holder_array);
-				break;
-			case 9:
-				h_irs_edit(unique_holder_array);
-				break;
-			case 10:
-				h_irs_add(unique_holder_array);
-				break;
-			case 11:
-				h_irs_delete(unique_holder_array);
-				break;
-			case 12:
-				h_irs_write(unique_holder_array, H_PATH_UNIQUE_HOLDER);
-				break;
-			case 13:
-				two_holders_str = h_util_file_read(H_PATH_TWO_HOLDERS, &two_holders_size);
-				if (two_holders_str == NULL)
-				{
-					fprintf(stdout, RED("[!] Impossivel carregar %s"), H_PATH_TWO_HOLDERS);
-					return;
-				}
-				if (two_holders_array->used > 0)
-				{
-					fprintf(stdout, RED("[!] Já existe dados na tabela, overide...\n"));
-					h_irs_delete_all(two_holders_array);
-				}
-				h_irs_parse(two_holders_array, two_holders_str, h_irs_pair);
-				free(two_holders_str);
-				break;
-			case 14:
-				h_irs_print(two_holders_array);
-				break;
-			case 15:
-				h_irs_edit(two_holders_array);
-				break;
-			case 16:
-				h_irs_add(two_holders_array);
-				break;
-			case 17:
-				h_irs_delete(two_holders_array);
-				break;
-			case 18:
-				h_irs_write(two_holders_array, H_PATH_TWO_HOLDERS);
-				break;
-			case 0:
-				break;
-			default:
-				fprintf(stdout, RED("%s"), H_STRS_INVALID_INPUT);
-				break;
-		}
-	} while (op != 0);
+        switch (op)
+        {
+            case 1:
+                h_irs_load(single_array, H_PATH_SINGLE);
+                break;
+            case 2:
+                h_irs_print(single_array);
+                break;
+            case 3:
+                h_irs_edit(single_array);
+                break;
+            case 4:
+                h_irs_add(single_array);
+                break;
+            case 5:
+                h_irs_delete(single_array);
+                break;
+            case 6:
+                h_irs_write(single_array, H_PATH_SINGLE);
+                break;
+            case 7:
+                h_irs_load(unique_holder_array, H_PATH_UNIQUE_HOLDER);
+                break;
+            case 8:
+                h_irs_print(unique_holder_array);
+                break;
+            case 9:
+                h_irs_edit(unique_holder_array);
+                break;
+            case 10:
+                h_irs_add(unique_holder_array);
+                break;
+            case 11:
+                h_irs_delete(unique_holder_array);
+                break;
+            case 12:
+                h_irs_write(unique_holder_array, H_PATH_UNIQUE_HOLDER);
+                break;
+            case 13:
+                h_irs_load(two_holders_array, H_PATH_TWO_HOLDERS);
+                break;
+            case 14:
+                h_irs_print(two_holders_array);
+                break;
+            case 15:
+                h_irs_edit(two_holders_array);
+                break;
+            case 16:
+                h_irs_add(two_holders_array);
+                break;
+            case 17:
+                h_irs_delete(two_holders_array);
+                break;
+            case 18:
+                h_irs_write(two_holders_array, H_PATH_TWO_HOLDERS);
+                break;
+            case 0:
+                break;
+            default:
+                fprintf(stdout, RED("%s"), H_STRS_INVALID_INPUT);
+                break;
+        }
+    } while (op != 0);
 }
 
 void h_menu_iss(s_arr_iss *iss_array)
@@ -127,33 +90,33 @@ void h_menu_iss(s_arr_iss *iss_array)
         fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
         op = h_util_get_int(0, 6, "Opção?");
 
-		switch (op)
-		{
-			case 1:
-				h_iss_load(iss_array);
-				break;
-			case 2:
-				h_iss_print(iss_array);
-				break;
-			case 3:
-				h_iss_add(iss_array);
-				break;
-			case 4:
-				h_iss_delete(iss_array);
-				break;
-			case 5:
-				h_iss_edit(iss_array);
-				break;
-			case 6:
-				h_iss_write(iss_array, H_PATH_SEG_SOCIAL);
-				break;
-			case 0:
-				break;
-			default:
-				fprintf(stdout, RED("%s"), H_STRS_INVALID_INPUT);
-				break;
-		}
-	} while (op != 0);
+        switch (op)
+        {
+            case 1:
+                h_iss_load(iss_array, H_PATH_ISS);
+                break;
+            case 2:
+                h_iss_print(iss_array);
+                break;
+            case 3:
+                h_iss_add(iss_array);
+                break;
+            case 4:
+                h_iss_delete(iss_array);
+                break;
+            case 5:
+                h_iss_edit(iss_array);
+                break;
+            case 6:
+                h_iss_write(iss_array, H_PATH_ISS);
+                break;
+            case 0:
+                break;
+            default:
+                fprintf(stdout, RED("%s"), H_STRS_INVALID_INPUT);
+                break;
+        }
+    } while (op != 0);
 }
 
 void h_menu_processing(

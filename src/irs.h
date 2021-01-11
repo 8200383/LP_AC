@@ -49,7 +49,7 @@ typedef struct
 typedef void (* h_irs_pair_func)(s_element*, char*, int*);
 
 /**
- * Allocs an array of IRS
+ * Alloc an array of IRS
  * @param initial_capacity The initial capacity of the array
  * @return s_arr_irs* Returns a ptr to the malloced struct or NULL if an error occurred
  */
@@ -127,7 +127,11 @@ void h_irs_edit(s_arr_irs* array);
  */
 void h_irs_pair(s_element* element, char* str, int* dependent);
 
-// TODO: Documentação
-void h_irs_load(s_arr_irs * irs_table, char* path);
+/**
+ * Loads an IRS table from a given path
+ * @param s_arr_irs The IRS array to fill
+ * @param path The path to load
+ */
+void h_irs_load(s_arr_irs * irs_array, char* path);
 
 #endif //IRS_H

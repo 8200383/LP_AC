@@ -334,24 +334,26 @@ void h_irs_write(s_arr_irs *array, const char *path)
     fclose(fp);
 }
 
-void h_irs_load(s_arr_irs * irs_table, char* path)
-{
-	int irs_size = 0;
-	char* irs_str;
+void h_irs_load(s_arr_irs *irs_array, char *path)
+{ // TODO: Ver pk explode ao carregar de novo
+    int size = 0;
+    char *str;
 
-	irs_str = h_util_file_read(path, &irs_size);
-	if (irs_str == NULL)
-	{
-		printf("%s \"%s\"\n", H_STRS_LOAD_FAILED, path);
-		return;
-	}
+    str = h_util_file_read(path, &size);
+    if (str == NULL)
+    {
+        printf("%s \"%s\"\n", H_STRS_LOAD_FAILED, path);
+        return;
+    }
 
-	if (irs_table->used > 0)
-	{
-		printf("IRS - %s", H_STRS_LOAD_REPLACE);
-		h_irs_delete_all(irs_table);
-	}
+    if (irs_array->used > 0)
+    {
+        printf("IRS - %s", H_STRS_LOAD_REPLACE);
+        h_irs_delete_all(irs_array);
+    }
 
-	h_irs_parse(irs_table, irs_str, h_irs_pair);
-	free(irs_table);
+    h_irs_parse(irs_array, str, h_irs_pair);
+    free(str);
+
+    printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, path);
 }

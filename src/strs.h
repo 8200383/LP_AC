@@ -16,6 +16,7 @@
 #define H_STRS_MALLOC_FAILED RED("[!] Não foi possível alocar espaço\n")
 #define H_STRS_MISSING_CAPACITY RED("[!] Tamanho inicial não definido\n")
 #define H_STRS_PARSE_ERROR RED("[!] Software não esta pronto para executar o parsing\n")
+#define H_STRS_LOAD_SUCCESS GREEN("[!] Carregado com sucesso")
 #define H_STRS_LOAD_FAILED RED("[!] Falha ao carregar o ficheiro")
 #define H_STRS_LOAD_REPLACE RED("[!] Já existiam dados na tabela. Novos foram carregados\n")
 #define H_STRS_SAVE_SUCCESS GREEN("Guardado com Sucesso\n")
@@ -40,6 +41,7 @@
 "* 3. Gestão de Funcionários   *\n" \
 "* 4. Processar Salarios       *\n" \
 "* 5. Relatórios               *\n" \
+"* 8. Carregar Tudo             *\n" \
 "* 9. Guardar Tudo             *\n" \
 "* 0. Sair                     *\n" \
 "*                             *\n" \
