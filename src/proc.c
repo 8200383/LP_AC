@@ -243,7 +243,6 @@ void h_proc_delete(s_spreadsheet* spreadsheet)
 		return;
 	}
 
-	// TODO: Eliminar por cod employee, fzr pesquisa para encontrar o index
 	fprintf(stdout, "Registos: %d\n", spreadsheet->used);
 	index = h_util_get_int(0, spreadsheet->used, H_STRS_DELETE);
 
@@ -348,8 +347,6 @@ void h_proc_perform(
 
 	float days_worked;
 	float irs_retention_percentage;
-	float ss_retention_employer_percentage;
-	float ss_retention_employee_percentage;
 
 	if (spreadsheet == NULL || single_array == NULL || unique_holder_array == NULL ||
 		two_holders_array == NULL || iss_array == NULL || employees_array == NULL)
