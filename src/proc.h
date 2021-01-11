@@ -59,8 +59,6 @@ typedef struct
 	int max_capacity; /**< Tracks max capacity of the array **/
 } s_spreadsheet;
 
-// TODO: void h_proc_export_bin(s_spreadsheet* spreadsheet);
-
 /**
  * Allocs an array of structs (s_arr_spreadsheet),
  * containing the month (enum) and details (s_details) for the month
@@ -74,13 +72,19 @@ s_spreadsheet* h_proc_alloc(int initial_capacity);
  * @param month Month to import
  * @return s_spreadsheet Returns a ptr to a malloced struct of s_spreadsheet returns NULL if failure
  */
-s_spreadsheet* h_proc_open(const char* filename, e_month month);
+s_spreadsheet* h_proc_read(const char* filename, e_month month);
 
 /**
  * Loads a spreadsheet into memory by asking a month to import
  * @return s_spreadsheet Returns a ptr to a malloced struct of s_spreadsheet returns NULL if failure
  */
 s_spreadsheet* h_proc_import();
+
+/**
+ * Writes into a binary file a spreadsheet
+ * @param spreadsheet The spreadsheet referring to a month
+ */
+void h_proc_write(s_spreadsheet* spreadsheet, const char* path);
 
 /**
  * Add details to an existing month
@@ -151,5 +155,12 @@ void h_proc_perform(
  * @return Returns the retention percentage
  */
 float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, float raw_salary);
+
+/**
+ *
+ * @param spreadsheet
+ * @param path
+ */
+void h_proc_write(s_spreadsheet* spreadsheet, const char* path);
 
 #endif //PROC_H
