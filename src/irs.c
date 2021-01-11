@@ -323,7 +323,7 @@ void h_irs_write(s_arr_irs *array, const char *path)
                 array->elements[i].monthly_pay_type == H_IRS_UP_TO ? "Até" : "Superior a",
                 array->elements[i].monthly_pay_value);
 
-        for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
+        for (j = 0; j < MAX_DEPENDENT_NUMBER + 1; j++)
         {
             fprintf(fp, ",%.1f%%", array->elements[i].percentage_per_dependent[j] * 100);
         }
