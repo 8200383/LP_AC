@@ -225,7 +225,7 @@ void h_menu_processing(
 				h_proc_export_csv(spreadsheet);
 				break;
 			case 8:
-				// TODO: Gravar Tudo
+				h_proc_write(spreadsheet, h_proc_generate_filename(spreadsheet->month, ".bin"));
 				break;
 			case 9:
 				if (spreadsheet)
