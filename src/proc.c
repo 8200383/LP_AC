@@ -466,7 +466,6 @@ float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, floa
 
 void h_proc_write(s_spreadsheet* spreadsheet, const char* path)
 {
-	int i;
 	FILE* fp;
 
 	fp = fopen(path, "wb");

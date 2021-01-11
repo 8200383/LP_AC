@@ -133,10 +133,12 @@ char* h_proc_generate_filename(e_month month, const char* extension);
 
 /**
  * Perform the salary calculations
- * @param spreadsheet
- * @param irs_array
- * @param ss_array
- * @param employees_array
+ * @param spreadsheet A Spreadsheet referring a month
+ * @param single_array The single IRS table
+ * @param unique_holder_array The unique holder IRS table
+ * @param two_holders_array The two holders IRS table
+ * @param iss_array An ISS table
+ * @param employees_array The employees array
  */
 void h_proc_perform(
 	s_spreadsheet* spreadsheet,
@@ -149,17 +151,17 @@ void h_proc_perform(
 
 /**
  * Gets the retention percentage for IRS based on the salary and number of dependents
- * @param irs_array The IRS table
+ * @param irs_array An IRS table
  * @param dependents The number of dependents
- * @param raw_salary The salary
+ * @param raw_salary The salary before retentions
  * @return Returns the retention percentage
  */
 float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, float raw_salary);
 
 /**
- *
- * @param spreadsheet
- * @param path
+ * Writes into a file path a spreadsheet
+ * @param spreadsheet A spreadsheet referring a month
+ * @param path The file path
  */
 void h_proc_write(s_spreadsheet* spreadsheet, const char* path);
 
