@@ -14,10 +14,10 @@
 
 #define H_STRS_EDIT YELLOW("Editar linha?")
 #define H_STRS_DELETE YELLOW("Apagar linha?")
-#define H_STRS_EMPTY_TABLE RED("Tabela Vazia.\n")
-#define H_STRS_SAVE_SUCCESS GREEN("Guardado com Sucesso.\n")
+#define H_STRS_EMPTY_TABLE RED("Tabela Vazia\n")
+#define H_STRS_SAVE_SUCCESS GREEN("Guardado com Sucesso\n")
 
-#define H_STRS_CRITERIA_DUPLICATE RED("Já existe um critério com esse nome.\n")
+#define H_STRS_CRITERIA_DUPLICATE RED("Já existe um critério com esse nome\n")
 
 #define H_STRS_MENU MAGENTA( \
 "*******************************\n" \
@@ -28,6 +28,7 @@
 "* 3. Gestão de Funcionários   *\n" \
 "* 4. Processar Salarios       *\n" \
 "* 5. Relatórios               *\n" \
+"* 8. Carregar Tudo            *\n" \
 "* 9. Guardar Tudo             *\n" \
 "* 0. Sair                     *\n" \
 "*                             *\n" \
@@ -96,8 +97,7 @@
 "*  7. Exportar mês para CSV     *\n" \
 "*  8. Guardar                   *\n" \
 "*  9. Importar mês              *\n" \
-"* 10. Desfazer todas alterações *\n" \
-"* 0. Voltar ao menu anterior    *\n" \
+"*  0. Voltar ao menu anterior   *\n" \
 "*                               *\n" \
 "*********************************\n")
 

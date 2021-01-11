@@ -46,14 +46,14 @@ s_spreadsheet* h_proc_import()
 		return NULL;
 	}
 
-	if (access(filename, F_OK) == 0)
+	if (access(filename, F_OK) == -1)
 	{
-		puts(RED("[!] Nenhum ficheiro encontrado, nada importado"));
+		printf(RED("[!] Ficheiro %s não encontrado\n"), filename);
 		free(filename);
 		return NULL;
 	}
 
-	spreadsheet = h_proc_open(filename, month);
+	spreadsheet = h_proc_read(filename, month);
 	if (spreadsheet == NULL)
 	{
 		free(filename);
@@ -64,11 +64,11 @@ s_spreadsheet* h_proc_import()
 	return spreadsheet;
 }
 
-s_spreadsheet* h_proc_open(const char* filename, e_month month)
+s_spreadsheet* h_proc_read(const char* filename, e_month month)
 {
 	FILE* fp;
 	s_spreadsheet* spreadsheet;
-	int file_size;
+	int counter;
 
 	fprintf(stdout, YELLOW("[!] Importing: %s\n"), filename);
 
@@ -78,20 +78,15 @@ s_spreadsheet* h_proc_open(const char* filename, e_month month)
 		return NULL;
 	}
 
-	file_size = 0;
-	while (!feof(fp))
-	{
-		file_size++;
-	}
-
-	spreadsheet = h_proc_alloc(file_size);
+	spreadsheet = h_proc_alloc(100);
 	if (spreadsheet == NULL)
 	{
 		return NULL;
 	}
 
 	spreadsheet->month = month;
-	for (int i = 0; !feof(fp); i++)
+
+	while (fread(spreadsheet->details, sizeof(s_details), 1, fp))
 	{
 		if (spreadsheet->used == spreadsheet->max_capacity)
 		{
@@ -102,11 +97,6 @@ s_spreadsheet* h_proc_open(const char* filename, e_month month)
 			}
 
 			spreadsheet->max_capacity *= 2;
-		}
-
-		if (fread(&spreadsheet->details[i], sizeof(s_details), 1, fp) != 1)
-		{
-			return NULL;
 		}
 
 		spreadsheet->used++;
@@ -323,7 +313,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-		fprintf(fp, "%d;%d;%d;%d\n",
+		fprintf(fp, "%d,%d,%d,%d\n",
 			spreadsheet->details[i].full_days,
 			spreadsheet->details[i].half_days,
 			spreadsheet->details[i].weekend_days,
@@ -461,4 +451,21 @@ float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, floa
 	{
 		return irs_array->elements[irs_array->used - 1].percentage_per_dependent[dependents] / 100.0f;
 	}
+}
+
+void h_proc_write(s_spreadsheet* spreadsheet, const char* path)
+{
+	int i;
+	FILE* fp;
+
+	fp = fopen(path, "wb");
+	if (fp == NULL)
+	{
+		return;
+	}
+
+	fwrite(spreadsheet->details, sizeof(s_details), 1, fp);
+
+	printf(H_STRS_SAVE_SUCCESS);
+	fclose(fp);
 }
