@@ -1,0 +1,55 @@
+var employees_8h =
+[
+    [ "s_employee", "structs__employee.html", "structs__employee" ],
+    [ "s_arr_employees", "structs__arr__employees.html", "structs__arr__employees" ],
+    [ "BUFFER_SIZE", "employees_8h.html#a6b20d41d6252e9871430c242cb1a56e7", null ],
+    [ "CSV_BUFFER", "employees_8h.html#a438bf0283107dea7f5408691193b7d4b", null ],
+    [ "CSV_COLUMN_DELIMITER", "employees_8h.html#a4801ccaf48490021b4dbb2586919fe6f", null ],
+    [ "CSV_NEW_LINE_DELIMITER", "employees_8h.html#ac2e42acd15fcf96fa56e5addf3c1e048", null ],
+    [ "MAX_FOOD_ALLOWANCE", "employees_8h.html#a781fcee71cacd3e28765de4a14efada8", null ],
+    [ "MAX_HOURLY_RATE", "employees_8h.html#a056add2e1d5699290d185a73f65bbdf3", null ],
+    [ "MAX_VALUE", "employees_8h.html#a4ce3e2af80a76d816ab7f8567ec4a65a", null ],
+    [ "PHONE_NUMBER_SIZE", "employees_8h.html#afa488cf61c439defb6a18c3e4ac8b6d4", null ],
+    [ "PRINT_TEMPLATE_STRING", "employees_8h.html#a047b2f08509224866e93a8ed3b53b7d0", null ],
+    [ "e_columns", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832", [
+      [ "COL_CODE_FUNC", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832adf88a60187489b2462ab39fa5f796f64", null ],
+      [ "COL_FIRST_NAME", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832a017425631dc96de17948740d941f70b6", null ],
+      [ "COL_LAST_NAME", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832a84a5bbdf0ff73099f97efbbd73a728c3", null ],
+      [ "COL_PHONE_NUMBER", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832af2f778babe7f2a8ee77afcb2d6cdeefe", null ],
+      [ "COL_MARITAL_STATUS", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832a921aa753de297f622186047f8e89c8bd", null ],
+      [ "COL_ROLE", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832a64248a1ae8eaa65482f06ab580c2f9aa", null ],
+      [ "COL_NUM_DEPENDENTS", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832a49e656f6d78c2b4f1cf9d5ace5b57505", null ],
+      [ "COL_BIRTHDAY", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832ac83f4a65778a32f75e48d143faaff132", null ],
+      [ "COL_ENTRY_DATE", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832a4b4fec66e095c5029f0b4db0e54f4a6f", null ],
+      [ "COL_LEAVING_DATE", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832a024911ae46ba5ceb02a0ce8492d3e682", null ],
+      [ "COL_HOURLY_RATE", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832aae3efaf67157ac50b39eb522b60d1b41", null ],
+      [ "COL_BASE_FOOD_ALLOWANCE", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832a679454052093d837438510c0675d90de", null ],
+      [ "COL_HOLDERS", "employees_8h.html#a5eb4b2214c143ecec1360b9bb2329832a342477e56ee8184c08b06758584debee", null ]
+    ] ],
+    [ "e_holders", "employees_8h.html#a485115c951054a44cafbdb41a9091d35", [
+      [ "NONE", "employees_8h.html#a485115c951054a44cafbdb41a9091d35ac157bdf0b85a40d2619cbc8bc1ae5fe2", null ],
+      [ "UNIQUE_HOLDER", "employees_8h.html#a485115c951054a44cafbdb41a9091d35ad0eabf404df2f74fa38b6973d46d7002", null ],
+      [ "TWO_HOLDERS", "employees_8h.html#a485115c951054a44cafbdb41a9091d35a02135d4f49d310dc5c8afdee5760ba26", null ]
+    ] ],
+    [ "e_marital_status", "employees_8h.html#a05390f9c8d5d59f1d45bc96a8e721fcb", [
+      [ "SINGLE", "employees_8h.html#a05390f9c8d5d59f1d45bc96a8e721fcba3388f7110f6f25a54e215eb75d5d7516", null ],
+      [ "MARRIED", "employees_8h.html#a05390f9c8d5d59f1d45bc96a8e721fcbaeddba8148282a3a125778c2ac1937b6c", null ],
+      [ "DIVORCED", "employees_8h.html#a05390f9c8d5d59f1d45bc96a8e721fcba68573404057ede52164cdd2c7a5b77b4", null ],
+      [ "WIDOWED", "employees_8h.html#a05390f9c8d5d59f1d45bc96a8e721fcbaf2fb9e3b7fe5396657c0f81a15f3bfb3", null ]
+    ] ],
+    [ "h_employees_add", "employees_8h.html#ac832fa83725d39bdc7eede5666f31dcc", null ],
+    [ "h_employees_alloc", "employees_8h.html#ab826796e708abc202b13d349d3fd355a", null ],
+    [ "h_employees_delete", "employees_8h.html#ade4ac9331230b816d3089d87f20f48cf", null ],
+    [ "h_employees_edit", "employees_8h.html#a2005c2e4bb1e4a7e0931c81ee1928585", null ],
+    [ "h_employees_get_fields", "employees_8h.html#aa150f21a88c0d48c70293e6f581ec627", null ],
+    [ "h_employees_get_marital_status", "employees_8h.html#af9e7eece3ea7548a8a82a55d32354e1e", null ],
+    [ "h_employees_get_phone_number", "employees_8h.html#af99695c02a8bc8c53654f103fd89366b", null ],
+    [ "h_employees_pair", "employees_8h.html#a421a0d513edb1078ba3b7170c67bd439", null ],
+    [ "h_employees_parse", "employees_8h.html#a282bd4b6dece49e241c90cc56bd693c0", null ],
+    [ "h_employees_print", "employees_8h.html#affa6bd65105157cda097832df7ee86b3", null ],
+    [ "h_employees_randomize", "employees_8h.html#ae0ebbecbba513ba062e941700ef3e1e6", null ],
+    [ "h_employees_save", "employees_8h.html#a036e4e76650ec0e8298a2ad6e17ff912", null ],
+    [ "h_employees_str_from_holders", "employees_8h.html#aef98ac95de4c421b39fbb977f6a2c43e", null ],
+    [ "h_employees_str_from_marital_status", "employees_8h.html#a6df09cf0c120abaf6ac40cea47c4eae9", null ],
+    [ "h_employees_verify_phone", "employees_8h.html#a273bcb841ae9558f66a6644ff4fbcd63", null ]
+];

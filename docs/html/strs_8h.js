@@ -1,0 +1,27 @@
+var strs_8h =
+[
+    [ "H_STRS_CRITERIA_DUPLICATE", "strs_8h.html#a04888ef3fea60f9a2b16030334898b45", null ],
+    [ "H_STRS_DELETE", "strs_8h.html#ab0c573227ec1ba651c55b92340de765e", null ],
+    [ "H_STRS_EDIT", "strs_8h.html#a9678bc315a413e188130a6abdcc545b2", null ],
+    [ "H_STRS_EMPLOYEES_MENU", "strs_8h.html#a6f34eff4c0120d7b73e8dbd5cdbabb0e", null ],
+    [ "H_STRS_EMPLOYEES_TABLE_HEADER", "strs_8h.html#a8ecabfcbe7bfba3c0ba26ba490dc3736", null ],
+    [ "H_STRS_EMPTY_TABLE", "strs_8h.html#add2f401e9689d6b62e1b31b170d12d6c", null ],
+    [ "H_STRS_INVALID_INPUT", "strs_8h.html#af24ab59cc6d4387b6aa9fdbc91b4a792", null ],
+    [ "H_STRS_IRS_MENU", "strs_8h.html#aafd420efd8c9b90239243a690c5695ac", null ],
+    [ "H_STRS_IRS_TABLE_HEADER", "strs_8h.html#a34d8961337ce6a4fdfb8965e7834e386", null ],
+    [ "H_STRS_LOAD_FAILED", "strs_8h.html#a9f6c6a4e8365a681d704a4ba4c20fddd", null ],
+    [ "H_STRS_LOAD_REPLACE", "strs_8h.html#a35874d8ebdd2f7657c23175e00b2216a", null ],
+    [ "H_STRS_MALLOC_FAILED", "strs_8h.html#a6218b81a4a79408965f444f38cf68345", null ],
+    [ "H_STRS_MENU", "strs_8h.html#afc542794d6e810e1c168aed3384f0aa3", null ],
+    [ "H_STRS_MISSING_CAPACITY", "strs_8h.html#a3daa7e8cd0970037bd7b35b02ed23a4d", null ],
+    [ "H_STRS_NEW_CRITERIA", "strs_8h.html#a62a5a343946e8a947d57fd566e557189", null ],
+    [ "H_STRS_PARSE_ERROR", "strs_8h.html#a7e54df5f464ddcb4248c01fda3806e69", null ],
+    [ "H_STRS_PATH_MISSING", "strs_8h.html#a09b73b2df700a8103eae1f5d34ff9345", null ],
+    [ "H_STRS_PROC", "strs_8h.html#ae8b0392b54bd43c95559d4c481f7fec8", null ],
+    [ "H_STRS_PROC_TABLE_HEADER", "strs_8h.html#afebd0a63332eddf7d4c3915d6211c51d", null ],
+    [ "H_STRS_REPORTS_MENU", "strs_8h.html#a863e94255dc60e3fd8846bd1e42cc790", null ],
+    [ "H_STRS_SAVE_FILE_ERROR", "strs_8h.html#a60bc28197b3555e9686facc072f4b029", null ],
+    [ "H_STRS_SAVE_SUCCESS", "strs_8h.html#a048e97b68ecf11a910400ec98871b8c4", null ],
+    [ "H_STRS_SEG_SOCIAL_MENU", "strs_8h.html#abc92de393ef067a15286293f9ad69fa4", null ],
+    [ "H_STRS_SS_TABLE_HEADER", "strs_8h.html#a0a4578c3827a27d073996dbbc4255214", null ]
+];
