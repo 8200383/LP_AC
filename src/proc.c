@@ -143,14 +143,14 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 	{
 		fprintf(stdout, "[%d] %d | %s %s\n",
 			i,
-			arr_employees->employees[i].code,
+			arr_employees->employees[i].cod_employee,
 			arr_employees->employees[i].first_name,
 			arr_employees->employees[i].last_name);
 	}
 
 	employee_index = h_util_get_int(0, arr_employees->used, "Adicionar funcionário?");
 
-	spreadsheet->details[spreadsheet->used - 1].cod_employee = arr_employees->employees[employee_index].code;
+	spreadsheet->details[spreadsheet->used - 1].cod_employee = arr_employees->employees[employee_index].cod_employee;
 	spreadsheet->details[spreadsheet->used - 1].full_days = h_util_get_int(0, max_days, "Dias completos?");
 	spreadsheet->details[spreadsheet->used - 1].half_days = h_util_get_int(0, max_days, "Meios dias?");
 	spreadsheet->details[spreadsheet->used - 1].weekend_days = h_util_get_int(0, 5, "Fins de semana? (0-5)");
