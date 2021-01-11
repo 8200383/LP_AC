@@ -15,6 +15,7 @@
 
 #include "strs.h"
 #include "util.h"
+#include "paths.h"
 
 #define BUFFER_SIZE 64
 
@@ -51,12 +52,6 @@ void h_iss_free(s_arr_iss* array);
  * @param str
  */
 void h_iss_parse(s_arr_iss* array, char* str);
-
-/**
- * Delete all elements of an IRS array
- * @param array The ISS array
- */
-void h_iss_delete_all(s_arr_iss* array);
 
 /**
  * Print all elements of an ISS array

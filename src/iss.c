@@ -1,5 +1,4 @@
 #include "iss.h"
-#include "paths.h"
 
 s_arr_iss *h_iss_alloc(int initial_capacity)
 {
@@ -106,22 +105,6 @@ void h_iss_parse(s_arr_iss *array, char *str)
                 offset = -1;
             }
         }
-    }
-}
-
-void h_iss_delete_all(s_arr_iss *array)
-{
-    int i;
-
-    if (array->used == 0)
-    {
-        printf("ISS - %s", H_STRS_EMPTY_TABLE);
-        return;
-    }
-
-    for (i = 0; i < array->used; array->used--)
-    {
-        array->data[i] = array->data[i + 1];
     }
 }
 
@@ -294,11 +277,10 @@ void h_iss_load(s_arr_iss *array, const char *path)
     if (array->used > 0)
     {
         printf("ISS - %s", H_STRS_LOAD_REPLACE);
-        h_iss_delete_all(array);
+        array->used = 0;
     }
 
     h_iss_parse(array, str);
-    free(str);
-
     printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, path);
+    free(str);
 }

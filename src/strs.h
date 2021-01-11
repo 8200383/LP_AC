@@ -28,7 +28,7 @@
 #define H_STRS_EMPTY_TABLE RED("Tabela Vazia\n")
 
 // ISS
-#define H_STRS_NEW_CRITERIA YELLOW("\nNovo critério: ")
+#define H_STRS_NEW_CRITERIA YELLOW("Novo critério: ")
 #define H_STRS_CRITERIA_DUPLICATE RED("[!] Já existe um critério com esse nome. Abortar...\n")
 
 
