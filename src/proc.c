@@ -452,3 +452,20 @@ float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, floa
 		return irs_array->elements[irs_array->used - 1].percentage_per_dependent[dependents] / 100.0f;
 	}
 }
+
+void h_proc_write(s_spreadsheet* spreadsheet, const char* path)
+{
+	int i;
+	FILE* fp;
+
+	fp = fopen(path, "wb");
+	if (fp == NULL)
+	{
+		return;
+	}
+
+	fwrite(spreadsheet->details, sizeof(s_details), 1, fp);
+
+	printf(H_STRS_SAVE_SUCCESS);
+	fclose(fp);
+}
