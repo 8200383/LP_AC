@@ -613,9 +613,11 @@ void h_employees_save(s_arr_employees* array, const char* path)
 		return;
 	}
 
-	if (array->employees->removed == 0)
+	for (i = 0; i <= array->used; i++)
 	{
-		for (i = 0; i <= array->used; i++)
+		if (array->employees[i].removed == 0)
+			//I've to go through the whole array, to check if the removed field it is empty.
+			// We don't import employees removed.
 		{
 			fprintf(fp, "%d, %s, %s, %d, %s, %d, %d, %d/%d/%d, %d/%d/%d, %d/%d/%d, %.2f, %.2f, %s \n",
 				array->employees[i].code,

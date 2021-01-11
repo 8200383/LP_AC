@@ -26,7 +26,7 @@
 "%d/%d/%d | %d/%d/%d | %d/%d/%d | %.2f€ | %.2f€ | %d Titular(es) %s\n"
 
 /**
- * @enum e_columns
+ * @enum e_columns Enumeration w/ the number of columns in the csv file
  */
 typedef enum
 {
@@ -46,7 +46,7 @@ typedef enum
 } e_columns;
 
 /**
- * @enum e_holders
+ * @enum Specification
  */
 typedef enum
 {
@@ -56,7 +56,7 @@ typedef enum
 } e_holders;
 
 /**
- * @enum e_marial_status
+ * @enum e_marital_status
  */
 typedef enum
 {
