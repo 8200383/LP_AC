@@ -182,4 +182,20 @@ char* h_employees_str_from_marital_status(e_marital_status status);
 
 void h_employees_delete(s_arr_employees* array);
 
+/**
+ *
+ * @param array, path
+ * @return
+ */
+
+void h_employees_save(s_arr_employees* array, const char* path);
+
+/**
+ *
+ * @param holders
+ * @return
+ */
+
+char* h_employees_str_from_holders(e_holders holders);
+
 #endif //EMPLOYEES_H

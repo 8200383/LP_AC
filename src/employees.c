@@ -232,7 +232,7 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 			employee->birthday->year);
 	}
 
-	h_calendar_get_date(employee->birthday, "Data de nascimento? ");
+	h_calendar_get_date(employee->birthday, "Data de nascimento: ");
 
 	if (employee->entry_date == NULL)
 	{
@@ -251,7 +251,7 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 			employee->entry_date->year);
 	}
 
-	h_calendar_get_date(employee->entry_date, "Data de entrada? ");
+	h_calendar_get_date(employee->entry_date, "Data de entrada: ");
 
 	if (employee->leaving_date == NULL)
 	{
@@ -577,6 +577,13 @@ char* h_employees_str_from_marital_status(e_marital_status status)
 	return str[status];
 }
 
+char* h_employees_str_from_holders(e_holders holders)
+{
+	char* str[] = { "NONE", "UNIQUE_HOLDER", "TWO_HOLDERS" };
+
+	return str[holders];
+}
+
 void h_employees_delete(s_arr_employees* array)
 {
 	int num;
@@ -593,4 +600,47 @@ void h_employees_delete(s_arr_employees* array)
 
 	puts(RED("Funcionário removido"));
 
+}
+
+void h_employees_save(s_arr_employees* array, const char* path)
+{
+	int i;
+	FILE* fp;
+
+	fp = fopen(path, "w");
+	if (fp == NULL)
+	{
+		return;
+	}
+
+	if (array->employees->removed == 0)
+	{
+		for (i = 0; i <= array->used; i++)
+		{
+			fprintf(fp, "%d, %s, %s, %d, %s, %d, %d, %d/%d/%d, %d/%d/%d, %d/%d/%d, %.2f, %.2f, %s \n",
+				array->employees[i].code,
+				array->employees[i].first_name,
+				array->employees[i].last_name,
+				array->employees[i].phone_number,
+				h_employees_str_from_marital_status(array->employees[i].marital_status),
+				array->employees[i].role,
+				array->employees[i].dependents,
+				array->employees[i].birthday->day,
+				array->employees[i].birthday->month,
+				array->employees[i].birthday->year,
+				array->employees[i].entry_date->day,
+				array->employees[i].entry_date->month,
+				array->employees[i].entry_date->year,
+				array->employees[i].leaving_date->day,
+				array->employees[i].leaving_date->month,
+				array->employees[i].leaving_date->year,
+				array->employees[i].hourly_rate,
+				array->employees[i].base_food_allowance,
+				h_employees_str_from_holders(array->employees[i].holders)
+			);
+		}
+	}
+
+	printf(H_STRS_SAVE_SUCCESS);
+	fclose(fp);
 }
