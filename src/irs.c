@@ -332,6 +332,8 @@ void h_irs_write(s_arr_irs *array, const char *path)
     }
 
     fclose(fp);
+
+    printf("%s -> %s\n", H_STRS_SAVE_SUCCESS, path);
 }
 
 void h_irs_load(s_arr_irs *irs_array, char *path)

@@ -643,6 +643,6 @@ void h_employees_save(s_arr_employees* array, const char* path)
 		}
 	}
 
-	printf(H_STRS_SAVE_SUCCESS);
+	puts(H_STRS_SAVE_SUCCESS);
 	fclose(fp);
 }

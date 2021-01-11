@@ -19,7 +19,7 @@ void h_reports_senior_employees(s_arr_employees* employees_array)
 	local_time = h_calendar_init_local_time();
 	year_now = h_calendar_get_year(local_time);
 
-	printf(YELLOW("Antiguidades dos funcionários\n"));
+	printf(YELLOW("Antiguidade dos funcionários\n"));
 
 	for (i = 0; i < employees_array->used; i++)
 	{

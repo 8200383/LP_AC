@@ -477,6 +477,6 @@ void h_proc_write(s_spreadsheet* spreadsheet, const char* path)
 
 	fwrite(spreadsheet->details, sizeof(s_details), 1, fp);
 
-	printf(H_STRS_SAVE_SUCCESS);
+	puts(H_STRS_SAVE_SUCCESS);
 	fclose(fp);
 }

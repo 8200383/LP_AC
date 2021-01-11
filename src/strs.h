@@ -19,7 +19,7 @@
 #define H_STRS_LOAD_SUCCESS GREEN("[!] Carregado com sucesso")
 #define H_STRS_LOAD_FAILED RED("[!] Falha ao carregar o ficheiro")
 #define H_STRS_LOAD_REPLACE RED("[!] Já existiam dados na tabela. Novos foram carregados\n")
-#define H_STRS_SAVE_SUCCESS GREEN("Guardado com Sucesso\n")
+#define H_STRS_SAVE_SUCCESS GREEN("Guardado com Sucesso")
 #define H_STRS_SAVE_FILE_ERROR RED("[!] Não foi possível guardar o ficheiro")
 #define H_STRS_PATH_MISSING RED("[!] A localização do ficheiro não foi especificada\n")
 
@@ -41,7 +41,7 @@
 "* 3. Gestão de Funcionários   *\n" \
 "* 4. Processar Salarios       *\n" \
 "* 5. Relatórios               *\n" \
-"* 8. Carregar Tudo             *\n" \
+"* 8. Carregar Tudo            *\n" \
 "* 9. Guardar Tudo             *\n" \
 "* 0. Sair                     *\n" \
 "*                             *\n" \

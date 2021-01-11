@@ -274,8 +274,9 @@ void h_iss_write(s_arr_iss *array, const char *path)
                 array->data[i].employee);
     }
 
-    printf(H_STRS_SAVE_SUCCESS);
     fclose(fp);
+
+    printf("%s -> %s\n", H_STRS_SAVE_SUCCESS, path);
 }
 
 void h_iss_load(s_arr_iss *seg_social_table, const char *path)
