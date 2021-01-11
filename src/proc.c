@@ -313,7 +313,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-		fprintf(fp, "%d;%d;%d;%d\n",
+		fprintf(fp, "%d,%d,%d,%d\n",
 			spreadsheet->details[i].full_days,
 			spreadsheet->details[i].half_days,
 			spreadsheet->details[i].weekend_days,
