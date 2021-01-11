@@ -82,7 +82,7 @@ typedef struct
 	e_holders holders;
 	e_marital_status marital_status;
 	s_date* birthday, * entry_date, * leaving_date;
-	int removed; // TODO: Set to 0 on pair, edit and add, 1 on remove
+	int removed;
 } s_employee;
 
 /**
