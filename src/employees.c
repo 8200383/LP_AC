@@ -118,9 +118,9 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 	char* first_name;
 	char* last_name;
 
-	if (!employee->code)
+	if (!employee->cod_employee)
 	{
-		employee->code = h_employees_randomize();
+		employee->cod_employee = h_employees_randomize();
 	}
 
 	if (employee->first_name)
@@ -388,7 +388,7 @@ void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array)
 	{
 		printf(PRINT_TEMPLATE_STRING,
 			i,
-			array->employees[i].code,
+			array->employees[i].cod_employee,
 			array->employees[i].first_name,
 			array->employees[i].last_name,
 			array->employees[i].phone_number,
@@ -416,7 +416,7 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 {
 	if (strlen(str) == 4 && column == COL_CODE_FUNC)
 	{
-		employee->code = atoi(str);
+		employee->cod_employee = atoi(str);
 	}
 
 	if (strlen(str) == 1 && column == COL_NUM_DEPENDENTS)

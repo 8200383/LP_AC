@@ -71,7 +71,7 @@ typedef enum
  */
 typedef struct
 {
-	int code;
+	int cod_employee;
 	int role;
 	int dependents;
 	int phone_number;
