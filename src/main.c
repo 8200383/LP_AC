@@ -98,6 +98,8 @@ int main_menu()
 			case 5:
 				h_menu_reports(employees_array, spreadsheet);
 				break;
+			case 8:
+				// TODO: Carregar Tudo -> quando tiver as funções load
 			case 9:
 				// TODO: Guardar Employees, Processamento
 				h_irs_write(single_array, H_PATH_SINGLE);

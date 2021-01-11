@@ -23,10 +23,10 @@
 
 #define PRINT_TEMPLATE_STRING \
 "[%d] %d | %s | %s | %d | %d Dependentes | %s | %s | " \
-"%d/%d/%d | %d/%d/%d | %d/%d/%d | %.2f€ | %.2f€ | %d Titular(es)\n"
+"%d/%d/%d | %d/%d/%d | %d/%d/%d | %.2f€ | %.2f€ | %d Titular(es) %s\n"
 
 /**
- * @enum e_columns
+ * @enum e_columns Enumeration w/ the number of columns in the csv file
  */
 typedef enum
 {
@@ -46,7 +46,7 @@ typedef enum
 } e_columns;
 
 /**
- * @enum e_holders
+ * @enum Specification
  */
 typedef enum
 {
@@ -56,7 +56,7 @@ typedef enum
 } e_holders;
 
 /**
- * @enum e_marial_status
+ * @enum e_marital_status
  */
 typedef enum
 {
@@ -71,7 +71,7 @@ typedef enum
  */
 typedef struct
 {
-	int code;
+	int cod_employee;
 	int role;
 	int dependents;
 	int phone_number;
@@ -82,7 +82,7 @@ typedef struct
 	e_holders holders;
 	e_marital_status marital_status;
 	s_date* birthday, * entry_date, * leaving_date;
-	int removed; // TODO: Set to 0 on pair, edit and add, 1 on remove
+	int removed;
 } s_employee;
 
 /**
@@ -181,5 +181,21 @@ char* h_employees_str_from_marital_status(e_marital_status status);
  */
 
 void h_employees_delete(s_arr_employees* array);
+
+/**
+ *
+ * @param array, path
+ * @return
+ */
+
+void h_employees_save(s_arr_employees* array, const char* path);
+
+/**
+ *
+ * @param holders
+ * @return
+ */
+
+char* h_employees_str_from_holders(e_holders holders);
 
 #endif //EMPLOYEES_H

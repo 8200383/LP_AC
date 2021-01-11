@@ -46,14 +46,14 @@ s_spreadsheet* h_proc_import()
 		return NULL;
 	}
 
-	if (access(filename, F_OK) == 0)
+	if (access(filename, F_OK) == -1)
 	{
-		puts(RED("[!] Nenhum ficheiro encontrado, nada importado"));
+		printf(RED("[!] Ficheiro %s não encontrado\n"), filename);
 		free(filename);
 		return NULL;
 	}
 
-	spreadsheet = h_proc_open(filename, month);
+	spreadsheet = h_proc_read(filename, month);
 	if (spreadsheet == NULL)
 	{
 		free(filename);
@@ -64,11 +64,11 @@ s_spreadsheet* h_proc_import()
 	return spreadsheet;
 }
 
-s_spreadsheet* h_proc_open(const char* filename, e_month month)
+s_spreadsheet* h_proc_read(const char* filename, e_month month)
 {
 	FILE* fp;
 	s_spreadsheet* spreadsheet;
-	int file_size;
+	int counter;
 
 	fprintf(stdout, YELLOW("[!] Importing: %s\n"), filename);
 
@@ -78,20 +78,15 @@ s_spreadsheet* h_proc_open(const char* filename, e_month month)
 		return NULL;
 	}
 
-	file_size = 0;
-	while (!feof(fp))
-	{
-		file_size++;
-	}
-
-	spreadsheet = h_proc_alloc(file_size);
+	spreadsheet = h_proc_alloc(100);
 	if (spreadsheet == NULL)
 	{
 		return NULL;
 	}
 
 	spreadsheet->month = month;
-	for (int i = 0; !feof(fp); i++)
+
+	while (fread(spreadsheet->details, sizeof(s_details), 1, fp))
 	{
 		if (spreadsheet->used == spreadsheet->max_capacity)
 		{
@@ -102,11 +97,6 @@ s_spreadsheet* h_proc_open(const char* filename, e_month month)
 			}
 
 			spreadsheet->max_capacity *= 2;
-		}
-
-		if (fread(&spreadsheet->details[i], sizeof(s_details), 1, fp) != 1)
-		{
-			return NULL;
 		}
 
 		spreadsheet->used++;
@@ -153,14 +143,14 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 	{
 		fprintf(stdout, "[%d] %d | %s %s\n",
 			i,
-			arr_employees->employees[i].code,
+			arr_employees->employees[i].cod_employee,
 			arr_employees->employees[i].first_name,
 			arr_employees->employees[i].last_name);
 	}
 
 	employee_index = h_util_get_int(0, arr_employees->used, "Adicionar funcionário?");
 
-	spreadsheet->details[spreadsheet->used - 1].cod_employee = arr_employees->employees[employee_index].code;
+	spreadsheet->details[spreadsheet->used - 1].cod_employee = arr_employees->employees[employee_index].cod_employee;
 	spreadsheet->details[spreadsheet->used - 1].full_days = h_util_get_int(0, max_days, "Dias completos?");
 	spreadsheet->details[spreadsheet->used - 1].half_days = h_util_get_int(0, max_days, "Meios dias?");
 	spreadsheet->details[spreadsheet->used - 1].weekend_days = h_util_get_int(0, 5, "Fins de semana? (0-5)");
@@ -323,7 +313,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-		fprintf(fp, "%d;%d;%d;%d\n",
+		fprintf(fp, "%d,%d,%d,%d\n",
 			spreadsheet->details[i].full_days,
 			spreadsheet->details[i].half_days,
 			spreadsheet->details[i].weekend_days,
@@ -346,12 +336,25 @@ void h_proc_perform(
 	int i;
 
 	float days_worked;
-	float irs_retention_percentage;
 
-	if (spreadsheet == NULL || single_array == NULL || unique_holder_array == NULL ||
-		two_holders_array == NULL || iss_array == NULL || employees_array == NULL)
-	{ // TODO: tornar mais explicito pk falhou, qual delelas falhou
-		puts(RED("[!] Tabelas não inicializadas"));
+	if (spreadsheet == NULL)
+	{
+		puts(RED("[!] Nenhum mês criado"));
+		return;
+	}
+	else if (single_array == NULL || unique_holder_array == NULL || two_holders_array == NULL)
+	{
+		puts(RED("[!] Tabelas IRS possivelmente não inicializadas"));
+		return;
+	}
+	else if (iss_array == NULL)
+	{
+		puts(RED("[!] Tabela ISS não inicializada"));
+		return;
+	}
+	else if (employees_array == NULL)
+	{
+		puts(RED("[!] Employees não inicializado"));
 		return;
 	}
 	/*
@@ -407,22 +410,20 @@ void h_proc_perform(
 		switch (employees_array->employees[i].holders)
 		{
 			case NONE:
-				irs_retention_percentage = h_proc_get_retention_percentage
+				spreadsheet->details[i].irs_retention = h_proc_get_retention_percentage
 					(single_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
 				break;
 			case UNIQUE_HOLDER:
-				irs_retention_percentage = h_proc_get_retention_percentage
+				spreadsheet->details[i].irs_retention = h_proc_get_retention_percentage
 					(unique_holder_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
 				break;
 			case TWO_HOLDERS:
-				irs_retention_percentage = h_proc_get_retention_percentage
+				spreadsheet->details[i].irs_retention = h_proc_get_retention_percentage
 					(two_holders_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
 				break;
 		}
 
-		printf("IRS retenção: %f\n", irs_retention_percentage);
-
-		spreadsheet->details[i].irs_retention = spreadsheet->details[i].gross_pay * irs_retention_percentage;
+		spreadsheet->details[i].irs_retention *= spreadsheet->details[i].gross_pay;
 
 		// Calculo da retenção pela Segurança social
 		spreadsheet->details[i].iss_retention_employer = spreadsheet->details[i].gross_pay *
@@ -461,4 +462,21 @@ float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, floa
 	{
 		return irs_array->elements[irs_array->used - 1].percentage_per_dependent[dependents] / 100.0f;
 	}
+}
+
+void h_proc_write(s_spreadsheet* spreadsheet, const char* path)
+{
+	int i;
+	FILE* fp;
+
+	fp = fopen(path, "wb");
+	if (fp == NULL)
+	{
+		return;
+	}
+
+	fwrite(spreadsheet->details, sizeof(s_details), 1, fp);
+
+	printf(H_STRS_SAVE_SUCCESS);
+	fclose(fp);
 }

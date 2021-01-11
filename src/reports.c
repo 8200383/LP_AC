@@ -30,7 +30,7 @@ void h_reports_senior_employees(s_arr_employees* employees_array)
 			employees_array->employees[i].leaving_date->year >= year_now)
 		{
 			printf(CYAN("%d | %s %s | %d Anos\n"),
-				employees_array->employees[i].code,
+				employees_array->employees[i].cod_employee,
 				employees_array->employees[i].first_name,
 				employees_array->employees[i].last_name,
 				years_difference);

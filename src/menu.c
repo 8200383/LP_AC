@@ -179,7 +179,7 @@ void h_menu_processing(
 	do
 	{
 		fprintf(stdout, H_STRS_PROC);
-		op = h_util_get_int(0, 10, "Opção?");
+		op = h_util_get_int(0, 9, "Opção?");
 
 		switch (op)
 		{
@@ -187,7 +187,7 @@ void h_menu_processing(
 				if (spreadsheet)
 				{
 					fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(spreadsheet->month));
-					break;
+					h_proc_free(spreadsheet);
 				}
 
 				spreadsheet = h_proc_alloc(employees_array->used);
@@ -225,20 +225,16 @@ void h_menu_processing(
 				h_proc_export_csv(spreadsheet);
 				break;
 			case 8:
-				// TODO: Gravar Tudo
+				h_proc_write(spreadsheet, h_proc_generate_filename(spreadsheet->month, ".bin"));
 				break;
 			case 9:
 				if (spreadsheet)
 				{
 					fprintf(stdout, RED("[!] Já existia %s, este sera eliminado\n"),
 						h_calendar_str_from_month(spreadsheet->month));
-					free(spreadsheet);
+					h_proc_free(spreadsheet);
 				}
 				spreadsheet = h_proc_import();
-				break;
-			case 10:
-				fprintf(stdout, RED("[!] Apagar mês de %s...\n"), h_calendar_str_from_month(spreadsheet->month));
-				h_proc_free(spreadsheet);
 				break;
 			case 0:
 				break;
@@ -247,11 +243,6 @@ void h_menu_processing(
 				break;
 		}
 	} while (op != 0);
-
-	if (spreadsheet)
-	{
-		h_proc_free(spreadsheet);
-	}
 }
 
 void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array)
@@ -302,7 +293,7 @@ void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array)
 				h_employees_edit(employees_array, iss_array);
 				break;
 			case 6:
-				// TODO: printf("Save employees_array");
+				h_employees_save(employees_array, H_PATH_EMPLOYEES);
 				break;
 			case 0:
 				break;
@@ -320,7 +311,7 @@ void h_menu_reports(s_arr_employees* employees_array, s_spreadsheet* spreadsheet
 	do
 	{
 		fprintf(stdout, H_STRS_REPORTS_MENU);
-		op = h_util_get_int(0, 2, "Opção?");
+		op = h_util_get_int(0, 3, "Opção?");
 		switch (op)
 		{
 			case 1:
@@ -330,7 +321,7 @@ void h_menu_reports(s_arr_employees* employees_array, s_spreadsheet* spreadsheet
 				h_reports_marital_percentage(employees_array);
 				break;
 			case 3:
-				h_reports_bonus(spreadsheet);
+				h_reports_bonus(spreadsheet, employees_array);
 			case 0:
 				break;
 			default:
