@@ -336,7 +336,6 @@ void h_proc_perform(
 	int i;
 
 	float days_worked;
-	float irs_retention_percentage;
 
 	if (spreadsheet == NULL)
 	{
@@ -411,22 +410,20 @@ void h_proc_perform(
 		switch (employees_array->employees[i].holders)
 		{
 			case NONE:
-				irs_retention_percentage = h_proc_get_retention_percentage
+				spreadsheet->details[i].irs_retention = h_proc_get_retention_percentage
 					(single_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
 				break;
 			case UNIQUE_HOLDER:
-				irs_retention_percentage = h_proc_get_retention_percentage
+				spreadsheet->details[i].irs_retention = h_proc_get_retention_percentage
 					(unique_holder_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
 				break;
 			case TWO_HOLDERS:
-				irs_retention_percentage = h_proc_get_retention_percentage
+				spreadsheet->details[i].irs_retention = h_proc_get_retention_percentage
 					(two_holders_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
 				break;
 		}
 
-		printf("IRS retenção: %f\n", irs_retention_percentage);
-
-		spreadsheet->details[i].irs_retention = spreadsheet->details[i].gross_pay * irs_retention_percentage;
+		spreadsheet->details[i].irs_retention *= spreadsheet->details[i].gross_pay;
 
 		// Calculo da retenção pela Segurança social
 		spreadsheet->details[i].iss_retention_employer = spreadsheet->details[i].gross_pay *
