@@ -28,6 +28,7 @@
 "* 3. Gestão de Funcionários   *\n" \
 "* 4. Processar Salarios       *\n" \
 "* 5. Relatórios               *\n" \
+"* 8. Carregar Tudo            *\n" \
 "* 9. Guardar Tudo             *\n" \
 "* 0. Sair                     *\n" \
 "*                             *\n" \
