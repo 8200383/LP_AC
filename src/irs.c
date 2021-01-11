@@ -14,21 +14,21 @@ s_arr_irs* h_irs_alloc(int initial_capacity)
 
 	if (!initial_capacity)
 	{
-		printf(H_STRS_MISSING_CAPACITY);
+		printf("IRS - %s", H_STRS_MISSING_CAPACITY);
 		return NULL;
 	}
 
 	array = malloc(sizeof(s_arr_irs));
 	if (array == NULL)
 	{
-		printf("IRS - %s", H_STRS_MALLOC_STRUCT_FAILED);
+		printf("IRS - %s", H_STRS_MALLOC_FAILED);
 		return NULL;
 	}
 
 	array->elements = malloc(initial_capacity * sizeof(s_element));
 	if (array->elements == NULL)
 	{
-		printf("IRS - %s", H_STRS_MALLOC_ARRAY_FAILED);
+		printf("IRS - %s", H_STRS_MALLOC_FAILED);
 		return NULL;
 	}
 
@@ -40,7 +40,7 @@ s_arr_irs* h_irs_alloc(int initial_capacity)
 		array->elements[i].percentage_per_dependent = malloc((MAX_DEPENDENT_NUMBER + 1) * sizeof(float));
 		if (array->elements[i].percentage_per_dependent == NULL)
 		{
-			printf("IRS - %s", H_STRS_DEPENDENT_MALLOC_FAILED);
+			printf("IRS - %s", H_STRS_MALLOC_FAILED);
 			return NULL;
 		}
 	}
@@ -52,7 +52,6 @@ void h_irs_free(s_arr_irs* array)
 {
 	if (array == NULL)
 	{
-		printf("IRS - %s", H_STRS_FREE_FAILED);
 		return;
 	}
 

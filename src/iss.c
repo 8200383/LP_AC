@@ -15,14 +15,14 @@ s_arr_iss* h_iss_alloc(int initial_capacity)
 	array = malloc(sizeof(s_arr_iss));
 	if (array == NULL)
 	{
-		printf("ISS - %s", H_STRS_MALLOC_STRUCT_FAILED);
+		printf("ISS - %s", H_STRS_MALLOC_FAILED);
 		return NULL;
 	}
 
 	array->data = malloc(initial_capacity * sizeof(s_iss));
 	if (array->data == NULL)
 	{
-		printf("ISS - %s", H_STRS_MALLOC_ARRAY_FAILED);
+		printf("ISS - %s", H_STRS_MALLOC_FAILED);
 		return NULL;
 	}
 
@@ -34,7 +34,7 @@ s_arr_iss* h_iss_alloc(int initial_capacity)
 		array->data[i].criteria = malloc(BUFFER_SIZE * sizeof(char));
 		if (array->data[i].criteria == NULL)
 		{
-			printf("ISS - %s", H_STRS_CRITERIA_MALLOC_FAILED);
+			printf("ISS - %s", H_STRS_MALLOC_FAILED);
 			return NULL;
 		}
 	}
@@ -45,7 +45,6 @@ void h_iss_free(s_arr_iss* array)
 {
 	if (array == NULL)
 	{
-		printf("ISS - %s", H_STRS_FREE_FAILED);
 		return;
 	}
 
@@ -93,7 +92,7 @@ void h_iss_parse(s_arr_iss* array, char* str)
 
 						if (array->data[array->used].criteria == NULL)
 						{
-							printf(H_STRS_CRITERIA_REALLOC_FAILED);
+							printf(H_STRS_MALLOC_FAILED);
 							return;
 						}
 					}
@@ -158,7 +157,7 @@ void h_iss_add(s_arr_iss* array)
 		array->data = realloc(array->data, array->max_capacity * sizeof(s_iss));
 		if (array->data == NULL)
 		{
-			printf("ISS - %s", H_STRS_MALLOC_ARRAY_FAILED);
+			printf("ISS - %s", H_STRS_MALLOC_FAILED);
 			return;
 		}
 	}
@@ -166,7 +165,7 @@ void h_iss_add(s_arr_iss* array)
 	new_criteria = malloc(sizeof(char) * 64);
 	if (new_criteria == NULL)
 	{
-		printf(H_STRS_CRITERIA_MALLOC_FAILED);
+		printf(H_STRS_MALLOC_FAILED);
 		return;
 	}
 
@@ -227,7 +226,7 @@ void h_iss_edit(s_arr_iss* array)
 	new_criteria = malloc(sizeof(char) * 64);
 	if (new_criteria == NULL)
 	{
-		printf(H_STRS_CRITERIA_MALLOC_FAILED);
+		printf(H_STRS_MALLOC_FAILED);
 		return;
 	}
 
