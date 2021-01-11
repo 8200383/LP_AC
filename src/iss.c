@@ -6,15 +6,23 @@ s_arr_iss* h_iss_alloc(int initial_capacity)
 	int i;
 	s_arr_iss* array;
 
+	if (!initial_capacity)
+	{
+		printf(H_STRS_MISSING_CAPACITY);
+		return NULL;
+	}
+
 	array = malloc(sizeof(s_arr_iss));
 	if (array == NULL)
 	{
+		printf("ISS - %s", H_STRS_MALLOC_STRUCT_FAILED);
 		return NULL;
 	}
 
 	array->data = malloc(initial_capacity * sizeof(s_iss));
 	if (array->data == NULL)
 	{
+		printf("ISS - %s", H_STRS_MALLOC_ARRAY_FAILED);
 		return NULL;
 	}
 
@@ -26,6 +34,7 @@ s_arr_iss* h_iss_alloc(int initial_capacity)
 		array->data[i].criteria = malloc(BUFFER_SIZE * sizeof(char));
 		if (array->data[i].criteria == NULL)
 		{
+			printf("ISS - %s", H_STRS_CRITERIA_MALLOC_FAILED);
 			return NULL;
 		}
 	}
@@ -36,6 +45,7 @@ void h_iss_free(s_arr_iss* array)
 {
 	if (array == NULL)
 	{
+		printf("ISS - %s", H_STRS_FREE_FAILED);
 		return;
 	}
 
@@ -47,6 +57,12 @@ void h_iss_parse(s_arr_iss* array, char* str)
 {
 	int i;
 	int offset = -1;
+
+	if (array == NULL || str == NULL)
+	{
+		printf(H_STRS_PARSE_ERROR);
+		return;
+	}
 
 	for (i = 0; str[i] != '\0'; i++)
 	{
@@ -77,6 +93,7 @@ void h_iss_parse(s_arr_iss* array, char* str)
 
 						if (array->data[array->used].criteria == NULL)
 						{
+							printf(H_STRS_CRITERIA_REALLOC_FAILED);
 							return;
 						}
 					}
@@ -101,7 +118,7 @@ void h_iss_delete_all(s_arr_iss* array)
 
 	if (array->used == 0)
 	{
-		printf(H_STRS_EMPTY_TABLE);
+		printf("ISS - %s", H_STRS_EMPTY_TABLE);
 		return;
 	}
 
@@ -141,6 +158,7 @@ void h_iss_add(s_arr_iss* array)
 		array->data = realloc(array->data, array->max_capacity * sizeof(s_iss));
 		if (array->data == NULL)
 		{
+			printf("ISS - %s", H_STRS_MALLOC_ARRAY_FAILED);
 			return;
 		}
 	}
@@ -148,10 +166,11 @@ void h_iss_add(s_arr_iss* array)
 	new_criteria = malloc(sizeof(char) * 64);
 	if (new_criteria == NULL)
 	{
+		printf(H_STRS_CRITERIA_MALLOC_FAILED);
 		return;
 	}
 
-	printf("\nNovo critério: ");
+	printf("\n%s", H_STRS_NEW_CRITERIA);
 	scanf("%s", new_criteria);
 
 	for (i = 0; i < array->used; i++)
@@ -180,7 +199,7 @@ void h_iss_delete(s_arr_iss* array)
 		return;
 	}
 
-	num = h_util_get_int(0, (array->used) - 1, "Linha a eliminar: ");
+	num = h_util_get_int(0, (array->used) - 1, H_STRS_DELETE);
 
 	for (i = num; i < array->used; i++)
 	{
@@ -203,11 +222,12 @@ void h_iss_edit(s_arr_iss* array)
 	}
 
 	printf(YELLOW("Número de Registos: %d\n"), array->used);
-	num = h_util_get_int(0, (array->used) - 1, "Linha a editar: ");
+	num = h_util_get_int(0, (array->used) - 1, H_STRS_EDIT);
 
 	new_criteria = malloc(sizeof(char) * 64);
 	if (new_criteria == NULL)
 	{
+		printf(H_STRS_CRITERIA_MALLOC_FAILED);
 		return;
 	}
 
@@ -239,6 +259,7 @@ void h_iss_write(s_arr_iss* array, const char* path)
 	fp = fopen(path, "w");
 	if (fp == NULL)
 	{
+		printf("ISS - %s \"%s\"\n", H_STRS_SAVE_FILE_ERROR, path);
 		return;
 	}
 
@@ -262,13 +283,13 @@ void h_iss_load(s_arr_iss* seg_social_table)
 	social_sec_str = h_util_file_read(H_PATH_SEG_SOCIAL, &social_sec_size);
 	if (social_sec_str == NULL)
 	{
-		printf(RED("[!] Impossivel carregar %s"), H_PATH_SEG_SOCIAL);
+		printf("%s \"%s\"\n", H_STRS_LOAD_FAILED, H_PATH_SEG_SOCIAL);
 		return;
 	}
 
 	if (seg_social_table->used > 0)
 	{
-		printf(RED("[!] Já existem dados na ISS. Os novos dados foram carregados\n"));
+		printf("ISS - %s", H_STRS_LOAD_REPLACE);
 		h_iss_delete_all(seg_social_table);
 	}
 

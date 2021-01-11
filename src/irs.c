@@ -14,18 +14,21 @@ s_arr_irs* h_irs_alloc(int initial_capacity)
 
 	if (!initial_capacity)
 	{
+		printf(H_STRS_MISSING_CAPACITY);
 		return NULL;
 	}
 
 	array = malloc(sizeof(s_arr_irs));
 	if (array == NULL)
 	{
+		printf("IRS - %s", H_STRS_MALLOC_STRUCT_FAILED);
 		return NULL;
 	}
 
 	array->elements = malloc(initial_capacity * sizeof(s_element));
 	if (array->elements == NULL)
 	{
+		printf("IRS - %s", H_STRS_MALLOC_ARRAY_FAILED);
 		return NULL;
 	}
 
@@ -37,6 +40,7 @@ s_arr_irs* h_irs_alloc(int initial_capacity)
 		array->elements[i].percentage_per_dependent = malloc((MAX_DEPENDENT_NUMBER + 1) * sizeof(float));
 		if (array->elements[i].percentage_per_dependent == NULL)
 		{
+			printf("IRS - %s", H_STRS_DEPENDENT_MALLOC_FAILED);
 			return NULL;
 		}
 	}
@@ -48,6 +52,7 @@ void h_irs_free(s_arr_irs* array)
 {
 	if (array == NULL)
 	{
+		printf("IRS - %s", H_STRS_FREE_FAILED);
 		return;
 	}
 
@@ -83,7 +88,7 @@ void h_irs_parse(s_arr_irs* array, const char* str, h_irs_pair_func pair_func)
 {
 	if (array == NULL || str == NULL)
 	{
-		fprintf(stdout, RED("[!] CSV parser error"));
+		printf(H_STRS_PARSE_ERROR);
 		return;
 	}
 
@@ -120,16 +125,16 @@ void h_irs_print_line(s_element element)
 {
 	int j;
 
-	fprintf(stdout, YELLOW("%s %.2f€"),
+	printf(YELLOW("%s %.2f€"),
 		element.monthly_pay_type == H_IRS_UP_TO ? "Até" : "Superior a",
 		element.monthly_pay_value);
 
 	for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
 	{
-		fprintf(stdout, CYAN(" | %.1f%%"), element.percentage_per_dependent[j] * 100.0f);
+		printf(CYAN(" | %.1f%%"), element.percentage_per_dependent[j] * 100.0f);
 	}
 
-	fprintf(stdout, "\n");
+	printf("\n");
 }
 
 void h_irs_print(s_arr_irs* array)
@@ -138,14 +143,14 @@ void h_irs_print(s_arr_irs* array)
 
 	if (array->used == 0)
 	{
-		puts(RED("[!] Tabela vazia"));
+		printf("IRS - %s", H_STRS_EMPTY_TABLE);
 		return;
 	}
 
-	fprintf(stdout, "%s", H_STRS_IRS_TABLE_HEADER);
+	printf("%s", H_STRS_IRS_TABLE_HEADER);
 	for (i = 0; i < array->used; i++)
 	{
-		fprintf(stdout, RED("[%d] "), i);
+		printf(RED("[%d] "), i);
 		h_irs_print_line(array->elements[i]);
 	}
 }
@@ -195,7 +200,7 @@ void h_irs_add(s_arr_irs* array)
 
 	array->elements[array->used - 1].monthly_pay_value = h_util_get_float(0.0f, 10000.0f, "Remuneração Mensal: ");
 
-	fprintf(stdout, YELLOW("[!] Inserir percentagem para os dependentes de 0 a 5 ou mais\n"));
+	printf(YELLOW("[!] Inserir percentagem para os dependentes de 0 a 5 ou mais\n"));
 	for (k = 0; k < MAX_DEPENDENT_NUMBER; k++)
 	{
 		array->elements[array->used - 1].percentage_per_dependent[k] = h_util_get_float(0.0f, 100.0f, "Percentagem: ");
@@ -210,12 +215,12 @@ void h_irs_edit(s_arr_irs* array)
 
 	if (array->used == 0)
 	{
-		puts(RED("[!] Tabela Vazia"));
+		printf("IRS - %s", H_STRS_EMPTY_TABLE);
 		return;
 	}
 
 	index = h_util_get_int(0, array->used, H_STRS_EDIT);
-	fprintf(stdout, H_STRS_IRS_TABLE_HEADER);
+	printf(H_STRS_IRS_TABLE_HEADER);
 	h_irs_print_line(array->elements[index]);
 
 	op = h_util_get_alphabetical_char("[A]té [S]uperior a: ");
@@ -230,7 +235,7 @@ void h_irs_edit(s_arr_irs* array)
 
 	array->elements[index].monthly_pay_value = h_util_get_float(0.0f, MAX_REMUNERATION, "Remuneração Mensal: ");
 
-	fprintf(stdout, YELLOW("[!] Inserir percentagem para os dependentes de 0 a 5 ou mais\n"));
+	printf(YELLOW("[!] Inserir percentagem para os dependentes de 0 a 5 ou mais\n"));
 	for (i = 0; i < MAX_DEPENDENT_NUMBER; i++)
 	{
 		array->elements[index].percentage_per_dependent[i] = h_util_get_float(0.0f, MAX_PERCENTAGE, "Percentagem: ");
@@ -243,7 +248,7 @@ void h_irs_delete(s_arr_irs* array)
 
 	if (array->used == 0)
 	{
-		puts(RED("[!] Tabela vazia"));
+		printf("IRS - %s", H_STRS_EMPTY_TABLE);
 		return;
 	}
 
@@ -258,7 +263,7 @@ void h_irs_delete_all(s_arr_irs* array)
 
 	if (array->used == 0)
 	{
-		puts(RED("[!] Tabela vazia"));
+		printf("IRS - %s", H_STRS_EMPTY_TABLE);
 		return;
 	}
 
@@ -274,7 +279,7 @@ void h_irs_delete_element(s_arr_irs* array, int index)
 
 	if (array->used == 0)
 	{
-		puts(RED("[!] Tabela vazia"));
+		printf("IRS - %s", H_STRS_EMPTY_TABLE);
 		return;
 	}
 
@@ -300,20 +305,20 @@ void h_irs_write(s_arr_irs* array, const char* path)
 
 	if (array->used == 0)
 	{
-		puts(RED("[!] Tabela vazia"));
+		printf("IRS - %s", H_STRS_EMPTY_TABLE);
 		return;
 	}
 
 	if (path == NULL)
 	{
-		puts(RED("[!] Nenhum caminho de ficheiro especificado"));
+		printf(H_STRS_PATH_MISSING);
 		return;
 	}
 
 	fp = fopen(path, "w");
 	if (fp == NULL)
 	{
-		fprintf(stdout, RED("[!] Impossivel guardar em %s"), path);
+		printf("IRS - %s \"%s\"\n", H_STRS_SAVE_FILE_ERROR, path);
 		return;
 	}
 
