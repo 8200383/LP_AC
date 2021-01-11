@@ -94,7 +94,7 @@ char h_util_get_alphabetical_char(const char* msg)
 
 	while (scanf("%c", &c) != 1 || !isalpha(c))
 	{
-		fprintf(stdout, H_STRS_INVALID_IMPUT);
+		fprintf(stdout, H_STRS_INVALID_INPUT);
 		h_util_clean_buffer();
 		fprintf(stdout, RED("%s "), msg);
 	}
@@ -110,7 +110,7 @@ int h_util_get_int(int min, int max, const char* msg)
 
 	while (scanf("%d", &num) != 1 || num < min || num > max)
 	{
-		fprintf(stdout, H_STRS_INVALID_IMPUT);
+		fprintf(stdout, H_STRS_INVALID_INPUT);
 		h_util_clean_buffer();
 		fprintf(stdout, RED("%s "), msg);
 	}
@@ -127,7 +127,7 @@ float h_util_get_float(float min, float max, const char* msg)
 
 	while (scanf("%f", &num) != 1 || num < min || num > max)
 	{
-		puts(H_STRS_INVALID_IMPUT);
+		puts(H_STRS_INVALID_INPUT);
 		h_util_clean_buffer();
 		fprintf(stdout, RED("%s"), msg);
 	}

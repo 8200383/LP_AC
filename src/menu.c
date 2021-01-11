@@ -121,7 +121,7 @@ void h_menu_irs(
 			case 0:
 				break;
 			default:
-				fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
+				fprintf(stdout, RED("%s"), H_STRS_INVALID_INPUT);
 				break;
 		}
 	} while (op != 0);
@@ -159,7 +159,7 @@ void h_menu_iss(s_arr_iss* iss_array)
 			case 0:
 				break;
 			default:
-				fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
+				fprintf(stdout, RED("%s"), H_STRS_INVALID_INPUT);
 				break;
 		}
 	} while (op != 0);
@@ -239,7 +239,7 @@ void h_menu_processing(
 			case 0:
 				break;
 			default:
-				fprintf(stdout, RED("%s"), H_STRS_INVALID_IMPUT);
+				fprintf(stdout, RED("%s"), H_STRS_INVALID_INPUT);
 				break;
 		}
 	} while (op != 0);
@@ -298,7 +298,7 @@ void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array)
 			case 0:
 				break;
 			default:
-				printf(RED("%s"), H_STRS_INVALID_IMPUT);
+				printf(RED("%s"), H_STRS_INVALID_INPUT);
 				break;
 		}
 	} while (op != 0);
@@ -325,7 +325,7 @@ void h_menu_reports(s_arr_employees* employees_array, s_spreadsheet* spreadsheet
 			case 0:
 				break;
 			default:
-				printf(RED("%s"), H_STRS_INVALID_IMPUT);
+				printf(RED("%s"), H_STRS_INVALID_INPUT);
 				break;
 		}
 	} while (op != 0);

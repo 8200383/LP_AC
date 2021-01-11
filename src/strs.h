@@ -12,7 +12,7 @@
 
 // Globals
 
-#define H_STRS_INVALID_IMPUT RED("[!] Input Inválido\n")
+#define H_STRS_INVALID_INPUT RED("[!] Input Inválido\n")
 #define H_STRS_MALLOC_FAILED RED("[!] Não foi possível alocar espaço\n")
 #define H_STRS_MISSING_CAPACITY RED("[!] Tamanho inicial não definido\n")
 #define H_STRS_PARSE_ERROR RED("[!] Software não esta pronto para executar o parsing\n")
