@@ -1,6 +1,6 @@
 
-# Created by https://www.toptal.com/developers/gitignore/api/clion
-# Edit at https://www.toptal.com/developers/gitignore?templates=clion
+# Created by https://www.toptal.com/developers/gitignore/api/clion,netbeans
+# Edit at https://www.toptal.com/developers/gitignore?templates=clion,netbeans
 
 ### CLion ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -105,6 +105,14 @@ fabric.properties
 # https://plugins.jetbrains.com/plugin/12206-codestream
 .idea/codestream.xml
 
-data/*.bin
+### NetBeans ###
+**/nbproject/private/
+**/nbproject/Makefile-*.mk
+**/nbproject/Package-*.bash
+build/
+nbbuild/
+dist/
+nbdist/
+.nb-gradle/
 
-# End of https://www.toptal.com/developers/gitignore/api/clion
+# End of https://www.toptal.com/developers/gitignore/api/clion,netbeans
