@@ -23,7 +23,7 @@
 
 #define PRINT_TEMPLATE_STRING \
 "[%d] %d | %s | %s | %d | %d Dependentes | %s | %s | " \
-"%d/%d/%d | %d/%d/%d | %d/%d/%d | %.2f€ | %.2f€ | %d Titular(es)\n"
+"%d/%d/%d | %d/%d/%d | %d/%d/%d | %.2f€ | %.2f€ | %d Titular(es) %s\n"
 
 /**
  * @enum e_columns

@@ -386,57 +386,29 @@ void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array)
 	int i;
 	for (i = 0; i < array->used; i++)
 	{
-		if (array->employees[i].removed == 1)
-		{
-			printf(RED(PRINT_TEMPLATE_STRING),
-				i,
-				array->employees[i].code,
-				array->employees[i].first_name,
-				array->employees[i].last_name,
-				array->employees[i].phone_number,
-				array->employees[i].dependents,
-				iss_array->data[array->employees[i].role].criteria,
-				h_employees_str_from_marital_status(array->employees[i].marital_status),
-				array->employees[i].birthday->day,
-				array->employees[i].birthday->month,
-				array->employees[i].birthday->year,
-				array->employees[i].entry_date->day,
-				array->employees[i].entry_date->month,
-				array->employees[i].entry_date->year,
-				array->employees[i].leaving_date->day,
-				array->employees[i].leaving_date->month,
-				array->employees[i].leaving_date->year,
-				array->employees[i].hourly_rate,
-				array->employees[i].base_food_allowance,
-				array->employees[i].holders
-			);
-		}
-		else
-		{
-			printf(GREEN(PRINT_TEMPLATE_STRING),
-				i,
-				array->employees[i].code,
-				array->employees[i].first_name,
-				array->employees[i].last_name,
-				array->employees[i].phone_number,
-				array->employees[i].dependents,
-				iss_array->data[array->employees[i].role].criteria,
-				h_employees_str_from_marital_status(array->employees[i].marital_status),
-				array->employees[i].birthday->day,
-				array->employees[i].birthday->month,
-				array->employees[i].birthday->year,
-				array->employees[i].entry_date->day,
-				array->employees[i].entry_date->month,
-				array->employees[i].entry_date->year,
-				array->employees[i].leaving_date->day,
-				array->employees[i].leaving_date->month,
-				array->employees[i].leaving_date->year,
-				array->employees[i].hourly_rate,
-				array->employees[i].base_food_allowance,
-				array->employees[i].holders
-			);
-		}
-
+		printf(PRINT_TEMPLATE_STRING,
+			i,
+			array->employees[i].code,
+			array->employees[i].first_name,
+			array->employees[i].last_name,
+			array->employees[i].phone_number,
+			array->employees[i].dependents,
+			iss_array->data[array->employees[i].role].criteria,
+			h_employees_str_from_marital_status(array->employees[i].marital_status),
+			array->employees[i].birthday->day,
+			array->employees[i].birthday->month,
+			array->employees[i].birthday->year,
+			array->employees[i].entry_date->day,
+			array->employees[i].entry_date->month,
+			array->employees[i].entry_date->year,
+			array->employees[i].leaving_date->day,
+			array->employees[i].leaving_date->month,
+			array->employees[i].leaving_date->year,
+			array->employees[i].hourly_rate,
+			array->employees[i].base_food_allowance,
+			array->employees[i].holders,
+			array->employees[i].removed == 1 ? RED("[Removido]") : " "
+		);
 	}
 }
 
