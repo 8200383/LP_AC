@@ -1,5 +1,5 @@
 /**
- * @file irs.c
+ * @file irs.h
  * @author Micael Dias
  * @date 10/12/20
  * @brief Functions to handle IRS
