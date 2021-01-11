@@ -620,7 +620,7 @@ void h_employees_save(s_arr_employees* array, const char* path)
 			// We don't import employees removed.
 		{
 			fprintf(fp, "%d, %s, %s, %d, %s, %d, %d, %d/%d/%d, %d/%d/%d, %d/%d/%d, %.2f, %.2f, %s \n",
-				array->employees[i].code,
+				array->employees[i].cod_employee,
 				array->employees[i].first_name,
 				array->employees[i].last_name,
 				array->employees[i].phone_number,
