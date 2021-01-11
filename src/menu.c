@@ -293,7 +293,7 @@ void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array)
 				h_employees_edit(employees_array, iss_array);
 				break;
 			case 6:
-				// TODO: printf("Save employees_array");
+				h_employees_save(employees_array, H_PATH_EMPLOYEES);
 				break;
 			case 0:
 				break;
