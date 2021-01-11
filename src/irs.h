@@ -89,12 +89,6 @@ void h_irs_add(s_arr_irs* array);
 void h_irs_delete(s_arr_irs* array);
 
 /**
- * Delete all elements of an IRS array
- * @param array The IRS array
- */
-void h_irs_delete_all(s_arr_irs* array);
-
-/**
  * Delete an element of an IRS array
  * @param array The IRS array
  * @param index The position to delete

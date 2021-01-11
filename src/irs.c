@@ -252,22 +252,6 @@ void h_irs_delete(s_arr_irs *array)
     h_irs_delete_element(array, index);
 }
 
-void h_irs_delete_all(s_arr_irs *array)
-{
-    int i;
-
-    if (array->used == 0)
-    {
-        printf("IRS - %s", H_STRS_EMPTY_TABLE);
-        return;
-    }
-
-    for (i = 0; i < array->used; i++)
-    {
-        h_irs_delete_element(array, i);
-    }
-}
-
 void h_irs_delete_element(s_arr_irs *array, int index)
 {
     int i;
@@ -337,7 +321,7 @@ void h_irs_write(s_arr_irs *array, const char *path)
 }
 
 void h_irs_load(s_arr_irs *irs_array, char *path)
-{ // TODO: Ver pk explode ao carregar de novo
+{
     int size = 0;
     char *str;
 
@@ -351,7 +335,7 @@ void h_irs_load(s_arr_irs *irs_array, char *path)
     if (irs_array->used > 0)
     {
         printf("IRS - %s", H_STRS_LOAD_REPLACE);
-        h_irs_delete_all(irs_array);
+        irs_array->used = 0;
     }
 
     h_irs_parse(irs_array, str, h_irs_pair);
