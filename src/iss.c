@@ -253,6 +253,12 @@ void h_iss_write(s_arr_iss *array, const char *path)
     int i;
     FILE *fp;
 
+    if (array->used == 0)
+    {
+        printf("ISS - %s", H_STRS_EMPTY_TABLE);
+        return;
+    }
+
     fp = fopen(path, "w");
     if (fp == NULL)
     {
