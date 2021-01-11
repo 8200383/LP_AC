@@ -179,7 +179,7 @@ void h_menu_processing(
 	do
 	{
 		fprintf(stdout, H_STRS_PROC);
-		op = h_util_get_int(0, 10, "Opção?");
+		op = h_util_get_int(0, 9, "Opção?");
 
 		switch (op)
 		{
@@ -235,10 +235,6 @@ void h_menu_processing(
 					free(spreadsheet);
 				}
 				spreadsheet = h_proc_import();
-				break;
-			case 10:
-				fprintf(stdout, RED("[!] Apagar mês de %s...\n"), h_calendar_str_from_month(spreadsheet->month));
-				h_proc_free(spreadsheet);
 				break;
 			case 0:
 				break;
