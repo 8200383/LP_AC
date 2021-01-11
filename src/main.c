@@ -4,7 +4,6 @@
 #include "irs.h"
 #include "iss.h"
 #include "menu.h"
-#include "strs.h"
 
 #define INITIAL_CAPACITY 50
 

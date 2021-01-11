@@ -127,4 +127,7 @@ void h_irs_edit(s_arr_irs* array);
  */
 void h_irs_pair(s_element* element, char* str, int* dependent);
 
+// TODO: Documentação
+void h_irs_load(s_arr_irs * irs_table, char* path);
+
 #endif //IRS_H
