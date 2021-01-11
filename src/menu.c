@@ -5,25 +5,16 @@
 #include "reports.h"
 
 void h_menu_irs(
-	s_arr_irs* single_array,
-	s_arr_irs* unique_holder_array,
-	s_arr_irs* two_holders_array)
+        s_arr_irs *single_array,
+        s_arr_irs *unique_holder_array,
+        s_arr_irs *two_holders_array)
 {
-	int op;
+    int op;
 
-	int single_size = 0;
-	char* single_str;
-
-	int unique_holder_size = 0;
-	char* unique_holder_str;
-
-	int two_holders_size = 0;
-	char* two_holders_str;
-
-	do
-	{
-		fprintf(stdout, H_STRS_IRS_MENU);
-		op = h_util_get_int(0, 18, "Opção?");
+    do
+    {
+        fprintf(stdout, H_STRS_IRS_MENU);
+        op = h_util_get_int(0, 18, "Opção?");
 
 		switch (op)
 		{
@@ -127,14 +118,14 @@ void h_menu_irs(
 	} while (op != 0);
 }
 
-void h_menu_iss(s_arr_iss* iss_array)
+void h_menu_iss(s_arr_iss *iss_array)
 {
-	int op;
+    int op;
 
-	do
-	{
-		fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
-		op = h_util_get_int(0, 6, "Opção?");
+    do
+    {
+        fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
+        op = h_util_get_int(0, 6, "Opção?");
 
 		switch (op)
 		{
@@ -166,168 +157,169 @@ void h_menu_iss(s_arr_iss* iss_array)
 }
 
 void h_menu_processing(
-	s_arr_irs* single_array,
-	s_arr_irs* unique_holder_array,
-	s_arr_irs* two_holders_array,
-	s_arr_iss* iss_array,
-	s_arr_employees* employees_array,
-	s_spreadsheet* spreadsheet
+        s_arr_irs *single_array,
+        s_arr_irs *unique_holder_array,
+        s_arr_irs *two_holders_array,
+        s_arr_iss *iss_array,
+        s_arr_employees *employees_array,
+        s_spreadsheet *spreadsheet
 )
 {
-	int op;
+    int op;
 
-	do
-	{
-		fprintf(stdout, H_STRS_PROC);
-		op = h_util_get_int(0, 9, "Opção?");
+    do
+    {
+        fprintf(stdout, H_STRS_PROC);
+        op = h_util_get_int(0, 9, "Opção?");
 
-		switch (op)
-		{
-			case 1:
-				if (spreadsheet)
-				{
-					fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(spreadsheet->month));
-					h_proc_free(spreadsheet);
-				}
+        switch (op)
+        {
+            case 1:
+                if (spreadsheet)
+                {
+                    fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(spreadsheet->month));
+                    h_proc_free(spreadsheet);
+                }
 
-				spreadsheet = h_proc_alloc(employees_array->used);
-				if (spreadsheet == NULL)
-				{
-					fprintf(stdout, RED("[!] Memória insuficiente\n"));
-					return;
-				}
+                spreadsheet = h_proc_alloc(employees_array->used);
+                if (spreadsheet == NULL)
+                {
+                    fprintf(stdout, RED("[!] Memória insuficiente\n"));
+                    return;
+                }
 
-				spreadsheet->month = h_util_get_int(1, 12, "Mês: (1-12)") - 1;
-				fprintf(stdout, GREEN("[!] Mês de %s criado com sucesso\n"),
-					h_calendar_str_from_month(spreadsheet->month));
-				break;
-			case 2:
-				h_proc_print(spreadsheet);
-				break;
-			case 3:
-				h_proc_add(spreadsheet, employees_array);
-				break;
-			case 4:
-				h_proc_edit(spreadsheet);
-				break;
-			case 5:
-				h_proc_delete(spreadsheet);
-				break;
-			case 6:
-				h_proc_perform(spreadsheet,
-					single_array,
-					unique_holder_array,
-					two_holders_array,
-					iss_array,
-					employees_array);
-				break;
-			case 7:
-				h_proc_export_csv(spreadsheet);
-				break;
-			case 8:
-				h_proc_write(spreadsheet, h_proc_generate_filename(spreadsheet->month, ".bin"));
-				break;
-			case 9:
-				if (spreadsheet)
-				{
-					fprintf(stdout, RED("[!] Já existia %s, este sera eliminado\n"),
-						h_calendar_str_from_month(spreadsheet->month));
-					h_proc_free(spreadsheet);
-				}
-				spreadsheet = h_proc_import();
-				break;
-			case 0:
-				break;
-			default:
-				fprintf(stdout, RED("%s"), H_STRS_INVALID_INPUT);
-				break;
-		}
-	} while (op != 0);
+                spreadsheet->month = h_util_get_int(1, 12, "Mês: (1-12)") - 1;
+                fprintf(stdout, GREEN("[!] Mês de %s criado com sucesso\n"),
+                        h_calendar_str_from_month(spreadsheet->month));
+                break;
+            case 2:
+                h_proc_print(spreadsheet);
+                break;
+            case 3:
+                h_proc_add(spreadsheet, employees_array);
+                break;
+            case 4:
+                h_proc_edit(spreadsheet);
+                break;
+            case 5:
+                h_proc_delete(spreadsheet);
+                break;
+            case 6:
+                h_proc_perform(spreadsheet,
+                               single_array,
+                               unique_holder_array,
+                               two_holders_array,
+                               iss_array,
+                               employees_array);
+                break;
+            case 7:
+                h_proc_export_csv(spreadsheet);
+                break;
+            case 8:
+                h_proc_write(spreadsheet, h_proc_generate_filename(spreadsheet->month, ".bin"));
+                break;
+            case 9:
+                if (spreadsheet)
+                {
+                    fprintf(stdout, RED("[!] Já existia %s, este sera eliminado\n"),
+                            h_calendar_str_from_month(spreadsheet->month));
+                    h_proc_free(spreadsheet);
+                }
+                spreadsheet = h_proc_import();
+                break;
+            case 0:
+                break;
+            default:
+                fprintf(stdout, RED("%s"), H_STRS_INVALID_INPUT);
+                break;
+        }
+    } while (op != 0);
 }
 
-void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array)
+void h_menu_employees(s_arr_employees *employees_array, s_arr_iss *iss_array)
 {
-	int op;
-	int employees_size = 0;
-	char* employees_str;
+    int op;
+    int employees_size = 0;
+    char *employees_str;
 
-	do
-	{
-		printf(H_STRS_EMPLOYEES_MENU);
-		op = h_util_get_int(0, 6, "Opção?");
+    do
+    {
+        printf(H_STRS_EMPLOYEES_MENU);
+        op = h_util_get_int(0, 6, "Opção?");
 
-		switch (op)
-		{
-			case 1:
-				if (iss_array == NULL || iss_array->used == 0)
-				{
-					puts(YELLOW("[!] A tabela da ISS sera carregada automaticamente"));
-					h_iss_load(iss_array);
-				}
+        switch (op)
+        {
+            case 1:
+                // TODO: primeiro registo vem a 0
+                if (iss_array == NULL || iss_array->used == 0)
+                {
+                    puts(YELLOW("[!] A tabela da ISS sera carregada automaticamente"));
+                    h_iss_load(iss_array, H_PATH_ISS);
+                }
 
-				employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
-				if (employees_str == NULL)
-				{
-					printf(RED("[!] Impossivel carregar %s"), H_PATH_EMPLOYEES);
-					break;
-				}
+                employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
+                if (employees_str == NULL)
+                {
+                    printf(RED("[!] Impossivel carregar %s"), H_PATH_EMPLOYEES);
+                    break;
+                }
 
-				if (employees_array->used > 0)
-				{
-					printf(RED("[!] Já existem dados na tabela. Os novos dados foram carregados.\n"));
-					// TODO: h_employess_delete_all(employees_array);
-				}
-				h_employees_parse(employees_array, employees_str);
-				free(employees_str);
-				break;
-			case 2:
-				h_employees_print(employees_array, iss_array);
-				break;
-			case 3:
-				h_employees_add(employees_array, iss_array);
-				break;
-			case 4:
-				h_employees_delete(employees_array);
-				break;
-			case 5:
-				h_employees_edit(employees_array, iss_array);
-				break;
-			case 6:
-				h_employees_save(employees_array, H_PATH_EMPLOYEES);
-				break;
-			case 0:
-				break;
-			default:
-				printf(RED("%s"), H_STRS_INVALID_INPUT);
-				break;
-		}
-	} while (op != 0);
+                if (employees_array->used > 0)
+                {
+                    printf(RED("[!] Já existem dados na tabela. Os novos dados foram carregados.\n"));
+                    // TODO: h_employess_delete_all(employees_array);
+                }
+                h_employees_parse(employees_array, employees_str);
+                free(employees_str);
+                break;
+            case 2:
+                h_employees_print(employees_array, iss_array);
+                break;
+            case 3:
+                h_employees_add(employees_array, iss_array);
+                break;
+            case 4:
+                h_employees_delete(employees_array);
+                break;
+            case 5:
+                h_employees_edit(employees_array, iss_array);
+                break;
+            case 6:
+                h_employees_save(employees_array, H_PATH_EMPLOYEES);
+                break;
+            case 0:
+                break;
+            default:
+                printf(RED("%s"), H_STRS_INVALID_INPUT);
+                break;
+        }
+    } while (op != 0);
 }
 
-void h_menu_reports(s_arr_employees* employees_array, s_spreadsheet* spreadsheet)
+void h_menu_reports(s_arr_employees *employees_array, s_spreadsheet *spreadsheet)
 {
-	int op;
+    int op;
 
-	do
-	{
-		fprintf(stdout, H_STRS_REPORTS_MENU);
-		op = h_util_get_int(0, 3, "Opção?");
-		switch (op)
-		{
-			case 1:
-				h_reports_senior_employees(employees_array);
-				break;
-			case 2:
-				h_reports_marital_percentage(employees_array);
-				break;
-			case 3:
-				// TODO: Erro aqui (Tira o comment da linha e vais ver)
-				//h_reports_bonus(spreadsheet, employees_array);
-			case 0:
-				break;
-			default:
-				printf(RED("%s"), H_STRS_INVALID_INPUT);
-				break;
-		}
-	} while (op != 0);
+    do
+    {
+        fprintf(stdout, H_STRS_REPORTS_MENU);
+        op = h_util_get_int(0, 3, "Opção?");
+        switch (op)
+        {
+            case 1:
+                h_reports_senior_employees(employees_array);
+                break;
+            case 2:
+                h_reports_marital_percentage(employees_array);
+                break;
+            case 3:
+                // TODO: Erro aqui (Tira o comment da linha e vais ver)
+                //h_reports_bonus(spreadsheet, employees_array);
+            case 0:
+                break;
+            default:
+                printf(RED("%s"), H_STRS_INVALID_INPUT);
+                break;
+        }
+    } while (op != 0);
 }

@@ -9,71 +9,71 @@
 
 int main_menu()
 {
-	int op;
+    int op;
 
-	s_arr_irs* single_array;
-	s_arr_irs* unique_holder_array;
-	s_arr_irs* two_holders_array;
-	s_arr_iss* iss_array;
-	s_arr_employees* employees_array;
-	s_spreadsheet* spreadsheet = NULL; // Processamento Salarios
+    s_arr_irs *single_array;
+    s_arr_irs *unique_holder_array;
+    s_arr_irs *two_holders_array;
+    s_arr_iss *iss_array;
+    s_arr_employees *employees_array;
+    s_spreadsheet *spreadsheet = NULL; // Processamento Salarios
 
-	/*
-	 * IRS
-	 * ---------------------------------------------------------------------------------------------------------
-	 */
-	single_array = h_irs_alloc(INITIAL_CAPACITY);
-	if (single_array == NULL)
-	{
-		return -1;
-	}
+    /*
+     * IRS
+     * ---------------------------------------------------------------------------------------------------------
+     */
+    single_array = h_irs_alloc(INITIAL_CAPACITY);
+    if (single_array == NULL)
+    {
+        return -1;
+    }
 
-	unique_holder_array = h_irs_alloc(INITIAL_CAPACITY);
-	if (unique_holder_array == NULL)
-	{
-		free(single_array);
-		return -1;
-	}
+    unique_holder_array = h_irs_alloc(INITIAL_CAPACITY);
+    if (unique_holder_array == NULL)
+    {
+        free(single_array);
+        return -1;
+    }
 
-	two_holders_array = h_irs_alloc(INITIAL_CAPACITY);
-	if (two_holders_array == NULL)
-	{
-		free(single_array);
-		free(unique_holder_array);
-		return -1;
-	}
+    two_holders_array = h_irs_alloc(INITIAL_CAPACITY);
+    if (two_holders_array == NULL)
+    {
+        free(single_array);
+        free(unique_holder_array);
+        return -1;
+    }
 
-	/*
-	 * Segurança Social
-	 * ---------------------------------------------------------------------------------------------------------
-	 */
-	iss_array = h_iss_alloc(INITIAL_CAPACITY);
-	if (iss_array == NULL)
-	{
-		free(single_array);
-		free(unique_holder_array);
-		free(two_holders_array);
-		return -1;
-	}
+    /*
+     * Segurança Social
+     * ---------------------------------------------------------------------------------------------------------
+     */
+    iss_array = h_iss_alloc(INITIAL_CAPACITY);
+    if (iss_array == NULL)
+    {
+        free(single_array);
+        free(unique_holder_array);
+        free(two_holders_array);
+        return -1;
+    }
 
-	/*
-	 * Gestão de Funcionários
-	 * ---------------------------------------------------------------------------------------------------------
-	 */
-	employees_array = h_employees_alloc(INITIAL_CAPACITY);
-	if (employees_array == NULL)
-	{
-		free(single_array);
-		free(unique_holder_array);
-		free(two_holders_array);
-		free(iss_array);
-		return -1;
-	}
+    /*
+     * Gestão de Funcionários
+     * ---------------------------------------------------------------------------------------------------------
+     */
+    employees_array = h_employees_alloc(INITIAL_CAPACITY);
+    if (employees_array == NULL)
+    {
+        free(single_array);
+        free(unique_holder_array);
+        free(two_holders_array);
+        free(iss_array);
+        return -1;
+    }
 
-	do
-	{
-		fprintf(stdout, "%s", H_STRS_MENU);
-		op = h_util_get_int(0, 9, "Opção?");
+    do
+    {
+        fprintf(stdout, "%s", H_STRS_MENU);
+        op = h_util_get_int(0, 9, "Opção?");
 
 		switch (op)
 		{
@@ -111,14 +111,14 @@ int main_menu()
 		}
 	} while (op != 0);
 
-	h_irs_free(single_array);
-	h_irs_free(unique_holder_array);
-	h_irs_free(two_holders_array);
-	h_iss_free(iss_array);
-	return 0;
+    h_irs_free(single_array);
+    h_irs_free(unique_holder_array);
+    h_irs_free(two_holders_array);
+    h_iss_free(iss_array);
+    return 0;
 }
 
 int main()
 {
-	return main_menu();
+    return main_menu();
 }
