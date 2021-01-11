@@ -338,10 +338,24 @@ void h_proc_perform(
 	float days_worked;
 	float irs_retention_percentage;
 
-	if (spreadsheet == NULL || single_array == NULL || unique_holder_array == NULL ||
-		two_holders_array == NULL || iss_array == NULL || employees_array == NULL)
-	{ // TODO: tornar mais explicito pk falhou, qual delelas falhou
-		puts(RED("[!] Tabelas não inicializadas"));
+	if (spreadsheet == NULL)
+	{
+		puts(RED("[!] Nenhum mês criado"));
+		return;
+	}
+	else if (single_array == NULL || unique_holder_array == NULL || two_holders_array == NULL)
+	{
+		puts(RED("[!] Tabelas IRS possivelmente não inicializadas"));
+		return;
+	}
+	else if (iss_array == NULL)
+	{
+		puts(RED("[!] Tabela ISS não inicializada"));
+		return;
+	}
+	else if (employees_array == NULL)
+	{
+		puts(RED("[!] Employees não inicializado"));
 		return;
 	}
 	/*
