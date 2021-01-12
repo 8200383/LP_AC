@@ -281,6 +281,7 @@ void h_iss_load(s_arr_iss *array, const char *path)
     }
 
     h_iss_parse(array, str);
-    printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, path);
     free(str);
+
+    printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, path);
 }

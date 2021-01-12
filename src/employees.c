@@ -600,7 +600,7 @@ void h_employees_delete(s_arr_employees* array)
 		return;
 	}
 
-	num = h_util_get_int(0, (array->used), "Linha a eliminar: ");
+	num = h_util_get_int(0, array->used, "Linha a eliminar: ");
 
 	array->employees[num].removed = 1;
 
@@ -608,7 +608,6 @@ void h_employees_delete(s_arr_employees* array)
 
 }
 
-// TODO: testar se da pra importar de novo depois de guardar
 void h_employees_write(s_arr_employees* array, const char* path)
 {
 	int i;
@@ -620,7 +619,7 @@ void h_employees_write(s_arr_employees* array, const char* path)
 		return;
 	}
 
-	for (i = 0; i <= array->used; i++)
+	for (i = 0; i < array->used; i++)
 	{
 		if (array->employees[i].removed == 0)
 			// I've to go through the whole array, to check if the removed field it is empty.
@@ -631,7 +630,7 @@ void h_employees_write(s_arr_employees* array, const char* path)
 				array->employees[i].first_name,
 				array->employees[i].last_name,
 				array->employees[i].phone_number,
-				h_employees_str_from_marital_status(array->employees[i].marital_status),
+				h_employees_str_from_marital_status(array->employees[i].marital_status, 0),
 				array->employees[i].role,
 				array->employees[i].dependents,
 				array->employees[i].birthday->day,
@@ -650,8 +649,9 @@ void h_employees_write(s_arr_employees* array, const char* path)
 		}
 	}
 
-	puts(H_STRS_SAVE_SUCCESS);
 	fclose(fp);
+
+    printf("%s -> %s\n", H_STRS_SAVE_SUCCESS, path);
 }
 
 void h_employees_load(s_arr_employees* array, const char* path)
@@ -673,8 +673,9 @@ void h_employees_load(s_arr_employees* array, const char* path)
     }
 
     h_employees_parse(array, str);
-    printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, H_PATH_EMPLOYEES);
     free(str);
+
+    printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, path);
 }
 
 void h_employees_free(s_arr_employees* array)

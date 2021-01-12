@@ -8,22 +8,17 @@
 #ifndef PROC_H
 #define PROC_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-
 #include "irs.h"
 #include "iss.h"
 #include "calendar.h"
 #include "employees.h"
 
 #define MAX_FILENAME 256
-/** @const BONUS_BASE Base bonuses awarded */
+/** Base bonuses awarded */
 #define BONUS_BASE 1.0f
-/** @const BONUS_20_DAYS Bonuses awarded for 20 working days */
+/** Bonuses awarded for 20 working days */
 #define BONUS_20_DAYS 1.05f
-/** @const BONUS_17_DAYS Bonuses awarded for 17 working days */
+/** Bonuses awarded for 17 working days */
 #define BONUS_17_DAYS 1.02f
 
 /**

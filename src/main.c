@@ -105,11 +105,12 @@ int main_menu()
                 h_employees_load(employees_array, H_PATH_EMPLOYEES);
                 break;
             case 9:
-                // TODO: Guardar Employees, Proc
                 h_irs_write(single_array, H_PATH_SINGLE);
                 h_irs_write(unique_holder_array, H_PATH_UNIQUE_HOLDER);
                 h_irs_write(two_holders_array, H_PATH_TWO_HOLDERS);
                 h_iss_write(iss_array, H_PATH_ISS);
+                h_employees_write(employees_array, H_PATH_EMPLOYEES);
+                // TODO: write proc
                 break;
             default:
                 break;
