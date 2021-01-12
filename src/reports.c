@@ -3,15 +3,16 @@
 #include "reports.h"
 #include "calendar.h"
 
-// TODO: Percentagem employees seniores
 void h_reports_senior_employees(s_arr_employees *employees_array)
 {
     int i;
     int year_now;
     int years_difference;
+    int senior_employees = 0;
+    int total_employees = 0;
     struct tm *local_time;
 
-    if (employees_array == NULL || employees_array->used == 0)
+    if (employees_array->used == 0)
     {
         puts(RED("[!] Employees vazio ou não inicializado"));
         return;
@@ -21,15 +22,21 @@ void h_reports_senior_employees(s_arr_employees *employees_array)
     year_now = h_calendar_get_year(local_time);
 
     printf(YELLOW("Antiguidade dos funcionários\n"));
-
     for (i = 0; i < employees_array->used; i++)
     {
         years_difference = year_now - employees_array->employees[i].entry_date->year;
+
+        if (employees_array->employees[i].removed == 0 &&
+            employees_array->employees[i].leaving_date->year >= year_now)
+        {
+            total_employees++;
+        }
 
         if (years_difference >= EMPLOYEE_SENIORITY &&
             employees_array->employees[i].removed == 0 &&
             employees_array->employees[i].leaving_date->year >= year_now)
         {
+            senior_employees++;
             printf(CYAN("%d | %s %s | %d Anos\n"),
                    employees_array->employees[i].cod_employee,
                    employees_array->employees[i].first_name,
@@ -37,10 +44,12 @@ void h_reports_senior_employees(s_arr_employees *employees_array)
                    years_difference);
         }
     }
+
+    printf("Porcentagem: %.2f%%\n", (float) senior_employees / (float) total_employees);
 }
 
 // TODO: Mostrar quem são
-void h_reports_marital_percentage(s_arr_employees *employees_array)
+void h_reports_marital_status(s_arr_employees *employees_array)
 {
     int i = 0;
     int married_employees = 0;
@@ -48,7 +57,7 @@ void h_reports_marital_percentage(s_arr_employees *employees_array)
     int widowed_employees = 0;
     int divorced_employees = 0;
 
-    if (employees_array == NULL || employees_array->used == 0)
+    if (employees_array->used == 0)
     {
         puts(RED("[!] Employees vazio ou não inicializado"));
         return;
@@ -79,7 +88,7 @@ void h_reports_marital_percentage(s_arr_employees *employees_array)
         i++;
     }
 
-    puts(CYAN("Percentagem de funcionários"));
+    puts(CYAN("Porcentagem de funcionários"));
     printf("Casados %.2f%%\n", (float) married_employees / (float) i);
     printf("Solteiros %.2f%%\n", (float) single_employees / (float) i);
     printf("Viúvos %.2f%%\n", (float) widowed_employees / (float) i);
@@ -191,7 +200,7 @@ void h_reports_bonus(s_spreadsheet *spreadsheet, s_arr_employees *employees_arra
 
     if (base_bonus_counter != 0)
     {
-        printf(CYAN("Percentagem bónus base -> %.2f%%\n"), (float) base_bonus_counter / (float) i);
+        printf(CYAN("Porcentagem bónus base -> %.2f%%\n"), (float) base_bonus_counter / (float) i);
     }
 
     for (l = 0; l < seventeen_days_bonus_counter; l++)
@@ -211,7 +220,7 @@ void h_reports_bonus(s_spreadsheet *spreadsheet, s_arr_employees *employees_arra
 
     if (seventeen_days_bonus_counter != 0)
     {
-        printf(CYAN("Percentagem bónus 17 dias -> %.2f%%\n"), (float) seventeen_days_bonus_counter / (float) i);
+        printf(CYAN("Porcentagem bónus 17 dias -> %.2f%%\n"), (float) seventeen_days_bonus_counter / (float) i);
     }
 
     for (x = 0; x < twenty_days_bonus_counter; x++)
@@ -231,7 +240,7 @@ void h_reports_bonus(s_spreadsheet *spreadsheet, s_arr_employees *employees_arra
 
     if (twenty_days_bonus_counter != 0)
     {
-        printf(CYAN("Percentagem bónus 20 dias -> %.2f%%\n"), (float) twenty_days_bonus_counter / (float) i);
+        printf(CYAN("Porcentagem bónus 20 dias -> %.2f%%\n"), (float) twenty_days_bonus_counter / (float) i);
     }
 
     free(employees_base_bonus);

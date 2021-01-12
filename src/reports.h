@@ -17,11 +17,7 @@
 /*
  * TODO Percentage of employees with the largest number of dependents
  * TODO Quem são os trabalhadores com o subsídio de alimentação mais alto
- *
- * NOTA:
- * Todos os commits devem ser dados com #15 na msg
- */
-
+*/
 /**
  * Shows all the senior employees according to EMPLOYEE_SENIORITY
  * @param employees_array The array of employees
@@ -32,7 +28,7 @@ void h_reports_senior_employees(s_arr_employees* employees_array);
  * Gets the percentage of married, single, widowed and divorced employees
  * @param employees_array The array of employees
  */
-void h_reports_marital_percentage(s_arr_employees* employees_array);
+void h_reports_marital_status(s_arr_employees* employees_array);
 
 /**
  * Gets the percentage of employees of earned a bonus
