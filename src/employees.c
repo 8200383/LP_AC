@@ -104,7 +104,7 @@ int h_employees_get_phone_number()
 
 	do
 	{
-		str = h_util_get_string(PHONE_NUMBER_SIZE, "TLF:");
+		str = h_util_get_string(PHONE_NUMBER_SIZE + 1, "TLF:");
 	} while (h_employees_verify_phone(str) == -1);
 
 	phone_number = atoi(str);
@@ -344,10 +344,7 @@ void h_employees_edit(s_arr_employees* array, s_arr_iss* iss_array)
 
 int h_employees_verify_phone(char* str)
 {
-
-	// TODO: isto nao ficou a dar por causa da funçao get_string
-	printf("LENGHT %lu - PHONE %s\n", strlen(str), str);
-	if (strlen(str) != PHONE_NUMBER_SIZE - 1)
+	if (strlen(str) != PHONE_NUMBER_SIZE)
 	{
 		puts("aqui");
 		return -1;
