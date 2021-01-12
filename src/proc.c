@@ -24,6 +24,7 @@ s_spreadsheet* h_proc_alloc(int initial_capacity)
 	}
 
 	spreadsheet->month_is_set = 0;
+	spreadsheet->is_processed = 0;
 	spreadsheet->used = 0;
 	spreadsheet->max_capacity = initial_capacity;
 
@@ -156,7 +157,7 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 			arr_employees->employees[i].last_name);
 	}
 
-	employee_index = h_util_get_int(0, arr_employees->used, "Adicionar funcionário?");
+	employee_index = h_util_get_int(0, arr_employees->used - 1, "Adicionar funcionário?");
 
 	spreadsheet->details[spreadsheet->used - 1].cod_employee = arr_employees->employees[employee_index].cod_employee;
 	spreadsheet->details[spreadsheet->used - 1].full_days = h_util_get_int(0, max_days, "Dias completos?");
@@ -349,7 +350,11 @@ void h_proc_perform(
 	{
 		puts(RED("[!] Mês não criado ou vazio"));
 		return;
-	}
+	} else if (spreadsheet->is_processed == 1) // Alteração doutras tabelas não deve refletir sobre meses ja processados
+    {
+        puts(RED("[!] Mês já processado"));
+        return;
+    }
 	else if (single_array->used == 0 || unique_holder_array->used == 0 || two_holders_array->used == 0)
 	{
 		puts(RED("[!] Tabelas IRS possivelmente não inicializadas"));
@@ -381,15 +386,15 @@ void h_proc_perform(
 
 		if (days_worked > 20)
 		{
-			spreadsheet->details[i].bonus *= BONUS_20_DAYS;
+			spreadsheet->details[i].bonus = BONUS_20_DAYS;
 		}
 		else if (days_worked > 17)
 		{
-			spreadsheet->details[i].bonus *= BONUS_17_DAYS;
+			spreadsheet->details[i].bonus = BONUS_17_DAYS;
 		}
 		else
 		{
-			spreadsheet->details[i].bonus *= BONUS_BASE;
+			spreadsheet->details[i].bonus = BONUS_BASE;
 		}
 
 		spreadsheet->details[i].gross_pay *= spreadsheet->details[i].bonus;
@@ -436,6 +441,9 @@ void h_proc_perform(
 			spreadsheet->details[i].iss_retention_employee +
 			spreadsheet->details[i].irs_retention;
 	}
+
+    spreadsheet->is_processed = 1;
+	puts(GREEN("[!] Mês processado com sucesso"));
 }
 
 float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, float raw_salary)
