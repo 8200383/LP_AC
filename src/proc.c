@@ -5,6 +5,8 @@
 
 #include "proc.h"
 
+#define INITIAL_CAPACITY 50
+
 s_spreadsheet* h_proc_alloc(int initial_capacity)
 {
 	s_spreadsheet* spreadsheet;
@@ -21,6 +23,7 @@ s_spreadsheet* h_proc_alloc(int initial_capacity)
 		return NULL;
 	}
 
+	spreadsheet->month_is_set = 0;
 	spreadsheet->used = 0;
 	spreadsheet->max_capacity = initial_capacity;
 
@@ -73,7 +76,6 @@ s_spreadsheet* h_proc_read(const char* filename, e_month month)
 {
 	FILE* fp;
 	s_spreadsheet* spreadsheet;
-	int counter;
 
 	fprintf(stdout, YELLOW("[!] Importing: %s\n"), filename);
 
@@ -83,13 +85,14 @@ s_spreadsheet* h_proc_read(const char* filename, e_month month)
 		return NULL;
 	}
 
-	spreadsheet = h_proc_alloc(100);
+	spreadsheet = h_proc_alloc(INITIAL_CAPACITY);
 	if (spreadsheet == NULL)
 	{
 		return NULL;
 	}
 
 	spreadsheet->month = month;
+	spreadsheet->month_is_set = 1;
 
 	while (fread(spreadsheet->details, sizeof(s_details), 1, fp))
 	{
@@ -116,7 +119,7 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 	int max_days;
 	int employee_index;
 
-	if (spreadsheet == NULL)
+    if (spreadsheet->month_is_set == 0)
 	{
 		fprintf(stdout, RED("[!] Mẽs não criado\n"));
 		return;
@@ -167,7 +170,7 @@ void h_proc_print(s_spreadsheet* spreadsheet)
 {
 	int i;
 
-	if (spreadsheet == NULL || spreadsheet->used == 0)
+    if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
 	{
 		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
 		return;
@@ -195,7 +198,7 @@ void h_proc_edit(s_spreadsheet* spreadsheet)
 	int max_days;
 	int op;
 
-	if (spreadsheet == NULL || spreadsheet->used == 0)
+    if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
 	{
 		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
 		return;
@@ -232,7 +235,7 @@ void h_proc_delete(s_spreadsheet* spreadsheet)
 	int index;
 	int i;
 
-	if (spreadsheet == NULL || spreadsheet->used == 0)
+    if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
 	{
 		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
 		return;
@@ -295,7 +298,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 	FILE* fp;
 	char* filename;
 
-	if (spreadsheet->used == 0)
+    if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
 	{
 		puts(RED("[!] Nada a exportar"));
 		return;
@@ -342,38 +345,24 @@ void h_proc_perform(
 
 	float days_worked;
 
-	if (spreadsheet == NULL)
+	if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
 	{
-		puts(RED("[!] Nenhum mês criado"));
+		puts(RED("[!] Mês não criado ou vazio"));
 		return;
 	}
-	else if (single_array == NULL || unique_holder_array == NULL || two_holders_array == NULL)
+	else if (single_array->used == 0 || unique_holder_array->used == 0 || two_holders_array->used == 0)
 	{
 		puts(RED("[!] Tabelas IRS possivelmente não inicializadas"));
 		return;
 	}
-	else if (iss_array == NULL)
+	else if (iss_array->used == 0)
 	{
 		puts(RED("[!] Tabela ISS não inicializada"));
 		return;
 	}
-	else if (employees_array == NULL)
+	else if (employees_array->used == 0)
 	{
 		puts(RED("[!] Employees não inicializado"));
-		return;
-	}
-	/*
-	   if (spreadsheet->used == 0 || single_array->used == 0 || unique_holder_array->used == 0 ||
-		   two_holders_array->used == 0 || iss_array->used == 0 || employees_array->used == 0)
-	   {
-		   puts(RED("[!] Tabelas Vazias"));
-		   return;
-	   }
-	*/
-
-	if (spreadsheet->used == 0)
-	{
-		puts(RED("[!] Não existe detalhes no mês"));
 		return;
 	}
 
@@ -473,6 +462,12 @@ void h_proc_write(s_spreadsheet* spreadsheet, const char* path)
 {
 	FILE* fp;
 
+    if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
+	{
+	    printf("%s: %s", H_STRS_SAVE_FILE_ERROR, path);
+        return;
+	}
+
 	fp = fopen(path, "wb");
 	if (fp == NULL)
 	{
@@ -483,4 +478,18 @@ void h_proc_write(s_spreadsheet* spreadsheet, const char* path)
 
 	puts(H_STRS_SAVE_SUCCESS);
 	fclose(fp);
+}
+
+void h_proc_create(s_spreadsheet *spreadsheet)
+{
+    if (spreadsheet->month_is_set == 1)
+    {
+        fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(spreadsheet->month));
+        return;
+    }
+
+    spreadsheet->month = h_util_get_int(1, 12, "Mês: (1-12)") - 1;
+    spreadsheet->month_is_set = 1;
+
+    fprintf(stdout, GREEN("[!] Mês de %s criado com sucesso\n"), h_calendar_str_from_month(spreadsheet->month));
 }

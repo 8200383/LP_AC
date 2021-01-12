@@ -50,6 +50,7 @@ typedef struct
 {
     s_details *details; /**< Array of details **/
     e_month month; /**< Represent the month of the spreadsheet **/
+    int month_is_set; /** Determine if a month is set */
     int used; /**< Tracks used capacity of the array **/
     int max_capacity; /**< Tracks max capacity of the array **/
 } s_spreadsheet;
@@ -159,5 +160,11 @@ float h_proc_get_retention_percentage(s_arr_irs *irs_array, int dependents, floa
  * @param path The file path
  */
 void h_proc_write(s_spreadsheet *spreadsheet, const char *path);
+
+/**
+ * Creates a spreadsheet with a given month
+ * @param spreadsheet The struct to fill
+ */
+void h_proc_create(s_spreadsheet *spreadsheet);
 
 #endif //PROC_H

@@ -137,23 +137,7 @@ void h_menu_processing(
         switch (op)
         {
             case 1:
-                // TODO: load spreadsheet
-                if (spreadsheet)
-                {
-                    fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(spreadsheet->month));
-                    break;
-                }
-
-                spreadsheet = h_proc_alloc(64);
-                if (spreadsheet == NULL)
-                {
-                    fprintf(stdout, RED("[!] Memória insuficiente\n"));
-                    return;
-                }
-
-                spreadsheet->month = h_util_get_int(1, 12, "Mês: (1-12)") - 1;
-                fprintf(stdout, GREEN("[!] Mês de %s criado com sucesso\n"),
-                        h_calendar_str_from_month(spreadsheet->month));
+                h_proc_create(spreadsheet);
                 break;
             case 2:
                 h_proc_print(spreadsheet);

@@ -16,7 +16,7 @@ int main_menu()
     s_arr_irs *two_holders_array;
     s_arr_iss *iss_array;
     s_arr_employees *employees_array;
-    s_spreadsheet *spreadsheet = NULL; // Processamento Salarios
+    s_spreadsheet *spreadsheet;
 
     /*
      * IRS
@@ -70,6 +70,18 @@ int main_menu()
         return -1;
     }
 
+    spreadsheet = h_proc_alloc(INITIAL_CAPACITY);
+    if (spreadsheet == NULL)
+    {
+        free(single_array);
+        free(unique_holder_array);
+        free(two_holders_array);
+        free(iss_array);
+        free(employees_array);
+        return -1;
+    }
+
+
     do
     {
         printf(H_STRS_MENU);
@@ -110,7 +122,6 @@ int main_menu()
                 h_irs_write(two_holders_array, H_PATH_TWO_HOLDERS);
                 h_iss_write(iss_array, H_PATH_ISS);
                 h_employees_write(employees_array, H_PATH_EMPLOYEES);
-                // TODO: write proc -> esta a vir vazio para escrita
                 break;
             default:
                 break;
@@ -122,7 +133,7 @@ int main_menu()
     h_irs_free(two_holders_array);
     h_iss_free(iss_array);
     h_employees_free(employees_array);
-    // TODO: free spreadsheet
+    h_proc_free(spreadsheet);
     return 0;
 }
 
