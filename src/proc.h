@@ -156,13 +156,6 @@ void h_proc_perform(
 float h_proc_get_retention_percentage(s_arr_irs *irs_array, int dependents, float raw_salary);
 
 /**
- * Writes into a file path a spreadsheet
- * @param spreadsheet A spreadsheet referring a month
- * @param path The file path
- */
-void h_proc_write(s_spreadsheet *spreadsheet, const char *path);
-
-/**
  * Creates a spreadsheet with a given month
  * @param spreadsheet The struct to fill
  */
