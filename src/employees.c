@@ -414,7 +414,7 @@ void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array)
 
 void h_employees_pair(s_employee* employee, char* str, int column)
 {
-	if (strlen(str) == 4 && column == COL_CODE_FUNC)
+	if (column == COL_CODE_FUNC)
 	{
 		employee->cod_employee = atoi(str);
 	}
