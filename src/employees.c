@@ -673,16 +673,20 @@ void h_employees_load(s_arr_employees* array, const char* path)
 
 void h_employees_free(s_arr_employees* array)
 {
+    int i;
     if (array == NULL)
     {
         return;
     }
 
-    free(array->employees->birthday);
-    free(array->employees->entry_date);
-    free(array->employees->leaving_date);
-    free(array->employees->first_name);
-    free(array->employees->last_name);
+    for (i = 0; i < array->used; i++) {
+        free(array->employees[i].birthday);
+        free(array->employees[i].entry_date);
+        free(array->employees[i].leaving_date);
+        free(array->employees[i].first_name);
+        free(array->employees[i].last_name);
+    }
+
     free(array->employees);
     free(array);
 }

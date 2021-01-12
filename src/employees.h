@@ -197,6 +197,6 @@ void h_employees_load(s_arr_employees* array, const char* path);
  * Free an array of employees
  * @param array The array to be freed
  */
-void h_employees_free(s_arr_employees* array); // TODO: WIP -> é preciso ver se n é preciso um for
+void h_employees_free(s_arr_employees* array);
 
 #endif //EMPLOYEES_H
