@@ -401,12 +401,15 @@ void h_proc_perform(
 		}
 
 		spreadsheet->details[i].gross_pay *= spreadsheet->details[i].bonus;
+        printf("Raw: %.2f\n", spreadsheet->details[i].gross_pay);
 
 		spreadsheet->details[i].food_allowance =
 			(float)spreadsheet->details[i].full_days * employees_array->employees[emp_index].base_food_allowance +
             (float)spreadsheet->details[i].weekend_days * employees_array->employees[emp_index].base_food_allowance;
+        printf("Food: %.2f\n", spreadsheet->details[i].food_allowance);
 
 		spreadsheet->details[i].gross_pay += spreadsheet->details[i].food_allowance;
+        printf("Gross: %.2f\n", spreadsheet->details[i].gross_pay);
 
 		// Calculo da retenção pelo IRS
 		switch (employees_array->employees[emp_index].holders)
