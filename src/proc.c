@@ -344,7 +344,7 @@ void h_proc_perform(
 	s_arr_employees* employees_array)
 {
 	int i;
-
+    int emp_index;
 	float days_worked;
 
 	if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
@@ -374,16 +374,18 @@ void h_proc_perform(
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-		// Calculo dos Dias Trabalhados e o Bonus Correspondente
+        emp_index = h_proc_get_employee_index(employees_array, spreadsheet->details->cod_employee);
+
+	    // Calculo dos Dias Trabalhados e o Bonus Correspondente
 		days_worked = (float)spreadsheet->details[i].full_days +
 		              (float)spreadsheet->details[i].half_days * 0.5f +
 			          (float)spreadsheet->details[i].weekend_days;
 
 		// Calculo do Salário Bruto
 		spreadsheet->details[i].gross_pay =
-			(float)spreadsheet->details[i].full_days * employees_array->employees[i].hourly_rate +
-			(float)spreadsheet->details[i].half_days * employees_array->employees[i].hourly_rate * 0.5f +
-			(float)spreadsheet->details[i].weekend_days * employees_array->employees[i].hourly_rate * 1.5f;
+			(float)spreadsheet->details[i].full_days * employees_array->employees[emp_index].hourly_rate +
+			(float)spreadsheet->details[i].half_days * employees_array->employees[emp_index].hourly_rate * 0.5f +
+			(float)spreadsheet->details[i].weekend_days * employees_array->employees[emp_index].hourly_rate * 1.5f;
 
 		if (days_worked > 20)
 		{
@@ -401,25 +403,25 @@ void h_proc_perform(
 		spreadsheet->details[i].gross_pay *= spreadsheet->details[i].bonus;
 
 		spreadsheet->details[i].food_allowance =
-			(float)spreadsheet->details[i].full_days * employees_array->employees[i].base_food_allowance +
-            (float)spreadsheet->details[i].weekend_days * employees_array->employees[i].base_food_allowance;
+			(float)spreadsheet->details[i].full_days * employees_array->employees[emp_index].base_food_allowance +
+            (float)spreadsheet->details[i].weekend_days * employees_array->employees[emp_index].base_food_allowance;
 
 		spreadsheet->details[i].gross_pay += spreadsheet->details[i].food_allowance;
 
 		// Calculo da retenção pelo IRS
-		switch (employees_array->employees[i].holders)
+		switch (employees_array->employees[emp_index].holders)
 		{
 			case NONE:
 				spreadsheet->details[i].irs_retention = h_proc_get_retention_percentage
-					(single_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
+					(single_array, employees_array->employees[emp_index].dependents, spreadsheet->details[i].gross_pay);
 				break;
 			case UNIQUE_HOLDER:
 				spreadsheet->details[i].irs_retention = h_proc_get_retention_percentage
-					(unique_holder_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
+					(unique_holder_array, employees_array->employees[emp_index].dependents, spreadsheet->details[i].gross_pay);
 				break;
 			case TWO_HOLDERS:
 				spreadsheet->details[i].irs_retention = h_proc_get_retention_percentage
-					(two_holders_array, employees_array->employees[i].dependents, spreadsheet->details[i].gross_pay);
+					(two_holders_array, employees_array->employees[emp_index].dependents, spreadsheet->details[i].gross_pay);
 				break;
 		}
 
@@ -427,10 +429,10 @@ void h_proc_perform(
 
 		// Calculo da retenção pela Segurança social
 		spreadsheet->details[i].iss_retention_employer = spreadsheet->details[i].gross_pay *
-			iss_array->data[employees_array->employees[i].role].employer / 100.0f;
+			iss_array->data[employees_array->employees[emp_index].role].employer / 100.0f;
 
 		spreadsheet->details[i].iss_retention_employee = spreadsheet->details[i].gross_pay *
-			iss_array->data[employees_array->employees[i].role].employee / 100.0f;
+			iss_array->data[employees_array->employees[emp_index].role].employee / 100.0f;
 
 		// Calculo do Salário Liquido
 		spreadsheet->details[i].net_pay = spreadsheet->details[i].gross_pay -
@@ -445,6 +447,19 @@ void h_proc_perform(
 
     spreadsheet->is_processed = 1;
 	puts(GREEN("[!] Mês processado com sucesso"));
+}
+
+int h_proc_get_employee_index(s_arr_employees* employees_array, int code)
+{
+    int i;
+
+    for (i = 0; i < employees_array->used; i++)
+    {
+        if (code == employees_array->employees->cod_employee)
+        {
+            return i;
+        }
+    }
 }
 
 float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, float raw_salary)
