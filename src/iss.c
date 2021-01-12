@@ -262,12 +262,12 @@ void h_iss_write(s_arr_iss *array, const char *path)
     printf("%s -> %s\n", H_STRS_SAVE_SUCCESS, path);
 }
 
-void h_iss_load(s_arr_iss *array)
+void h_iss_load(s_arr_iss *array, const char *path)
 {
     int size = 0;
     char *str;
 
-    str = h_util_file_read(H_PATH_ISS, &size);
+    str = h_util_file_read(path, &size);
     if (str == NULL)
     {
         printf("%s \"%s\"\n", H_STRS_LOAD_FAILED, H_PATH_ISS);
@@ -281,6 +281,6 @@ void h_iss_load(s_arr_iss *array)
     }
 
     h_iss_parse(array, str);
-    printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, H_PATH_ISS);
+    printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, path);
     free(str);
 }
