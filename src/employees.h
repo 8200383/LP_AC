@@ -193,4 +193,10 @@ char* h_employees_str_from_holders(e_holders holder);
  */
 void h_employees_load(s_arr_employees* array, const char* path);
 
+/**
+ * Free an array of employees
+ * @param array The array to be freed
+ */
+void h_employees_free(s_arr_employees* array); // TODO: WIP -> é preciso ver se n é preciso um for
+
 #endif //EMPLOYEES_H

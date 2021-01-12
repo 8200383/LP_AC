@@ -670,3 +670,19 @@ void h_employees_load(s_arr_employees* array, const char* path)
     printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, H_PATH_EMPLOYEES);
     free(str);
 }
+
+void h_employees_free(s_arr_employees* array)
+{
+    if (array == NULL)
+    {
+        return;
+    }
+
+    free(array->employees->birthday);
+    free(array->employees->entry_date);
+    free(array->employees->leaving_date);
+    free(array->employees->first_name);
+    free(array->employees->last_name);
+    free(array->employees);
+    free(array);
+}
