@@ -114,6 +114,7 @@ s_spreadsheet* h_proc_read(const char* filename, e_month month)
 	return spreadsheet;
 }
 
+// TODO: não pode adicionar o mesmo employee duas vezes
 void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 {
 	int i;

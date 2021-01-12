@@ -10,8 +10,9 @@
 
 #include "colors.h"
 
-// Globals
+// TODO: Acabar padronização
 
+// Globals
 #define H_STRS_MENU_CHOICE GREEN("> ")
 
 #define H_STRS_INVALID_INPUT RED("[!] Input Inválido\n")
