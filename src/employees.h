@@ -201,7 +201,8 @@ char* h_employees_str_from_holders(e_holders holders);
 /**
  * Loads an Employees table from a given path
  * @param array The Employees array to fill
+ * @param path The file path to read
  */
-void h_employees_load(s_arr_employees* array);
+void h_employees_load(s_arr_employees* array, const char* path);
 
 #endif //EMPLOYEES_H

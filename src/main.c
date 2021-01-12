@@ -101,8 +101,8 @@ int main_menu()
                 h_irs_load(single_array, H_PATH_SINGLE);
                 h_irs_load(unique_holder_array, H_PATH_UNIQUE_HOLDER);
                 h_irs_load(two_holders_array, H_PATH_TWO_HOLDERS);
-                h_iss_load(iss_array);
-                h_employees_load(employees_array);
+                h_iss_load(iss_array, H_PATH_ISS);
+                h_employees_load(employees_array, H_PATH_EMPLOYEES);
                 break;
             case 9:
                 // TODO: Guardar Employees, Proc

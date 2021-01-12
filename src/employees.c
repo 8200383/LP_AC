@@ -647,21 +647,21 @@ void h_employees_save(s_arr_employees* array, const char* path)
 	fclose(fp);
 }
 
-void h_employees_load(s_arr_employees* array)
+void h_employees_load(s_arr_employees* array, const char* path)
 {
     int size = 0;
     char *str;
 
-    str = h_util_file_read(H_PATH_EMPLOYEES, &size);
+    str = h_util_file_read(path, &size);
     if (str == NULL)
     {
-        printf("%s \"%s\"\n", H_STRS_LOAD_FAILED, H_PATH_EMPLOYEES);
+        printf("%s \"%s\"\n", H_STRS_LOAD_FAILED, path);
         return;
     }
 
     if (array->used > 0)
     {
-        printf("Employees - %s", H_STRS_LOAD_REPLACE);
+        printf("Employees - %s", path);
         array->used = 0;
     }
 
