@@ -121,7 +121,7 @@
 "**************************************\n" \
 "* -| Menu Gestão de Funcionários |-  *\n" \
 "*                                    *\n" \
-"* 1. Carregar Tabela                 *\n" \
+"* 1. Carregar Tabelas                *\n" \
 "* 2. Visualizar                      *\n" \
 "* 3. Adicionar                       *\n" \
 "* 4. Remover                         *\n" \

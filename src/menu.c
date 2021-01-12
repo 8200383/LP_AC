@@ -93,7 +93,7 @@ void h_menu_iss(s_arr_iss *iss_array)
         switch (op)
         {
             case 1:
-                h_iss_load(iss_array, H_PATH_ISS);
+                h_iss_load(iss_array);
                 break;
             case 2:
                 h_iss_print(iss_array);
@@ -202,8 +202,6 @@ void h_menu_processing(
 void h_menu_employees(s_arr_employees *employees_array, s_arr_iss *iss_array)
 {
     int op;
-    int employees_size = 0;
-    char *employees_str;
 
     do
     {
@@ -216,24 +214,10 @@ void h_menu_employees(s_arr_employees *employees_array, s_arr_iss *iss_array)
                 // TODO: primeiro registo vem a 0
                 if (iss_array == NULL || iss_array->used == 0)
                 {
-                    puts(YELLOW("[!] A tabela da ISS sera carregada automaticamente"));
-                    h_iss_load(iss_array, H_PATH_ISS);
+                    h_iss_load(iss_array);
                 }
 
-                employees_str = h_util_file_read(H_PATH_EMPLOYEES, &employees_size);
-                if (employees_str == NULL)
-                {
-                    printf(RED("[!] Impossivel carregar %s"), H_PATH_EMPLOYEES);
-                    break;
-                }
-
-                if (employees_array->used > 0)
-                {
-                    printf(RED("[!] Já existem dados na tabela. Os novos dados foram carregados.\n"));
-                    // TODO: h_employess_delete_all(employees_array);
-                }
-                h_employees_parse(employees_array, employees_str);
-                free(employees_str);
+                h_employees_load(employees_array);
                 break;
             case 2:
                 h_employees_print(employees_array, iss_array);
@@ -253,7 +237,7 @@ void h_menu_employees(s_arr_employees *employees_array, s_arr_iss *iss_array)
             case 0:
                 break;
             default:
-                printf(RED("%s"), H_STRS_INVALID_INPUT);
+                printf("%s", H_STRS_INVALID_INPUT);
                 break;
         }
     } while (op != 0);

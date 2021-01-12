@@ -646,3 +646,26 @@ void h_employees_save(s_arr_employees* array, const char* path)
 	puts(H_STRS_SAVE_SUCCESS);
 	fclose(fp);
 }
+
+void h_employees_load(s_arr_employees* array)
+{
+    int size = 0;
+    char *str;
+
+    str = h_util_file_read(H_PATH_EMPLOYEES, &size);
+    if (str == NULL)
+    {
+        printf("%s \"%s\"\n", H_STRS_LOAD_FAILED, H_PATH_EMPLOYEES);
+        return;
+    }
+
+    if (array->used > 0)
+    {
+        printf("Employees - %s", H_STRS_LOAD_REPLACE);
+        array->used = 0;
+    }
+
+    h_employees_parse(array, str);
+    printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, H_PATH_EMPLOYEES);
+    free(str);
+}

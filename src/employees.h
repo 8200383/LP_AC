@@ -198,4 +198,10 @@ void h_employees_save(s_arr_employees* array, const char* path);
 
 char* h_employees_str_from_holders(e_holders holders);
 
+/**
+ * Loads an Employees table from a given path
+ * @param array The Employees array to fill
+ */
+void h_employees_load(s_arr_employees* array);
+
 #endif //EMPLOYEES_H

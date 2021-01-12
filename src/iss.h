@@ -87,8 +87,7 @@ void h_iss_write(s_arr_iss* array, const char* path);
 /**
  * Loads an ISS table from a given path
  * @param array The ISS array to fill
- * @param path The file path to read
  */
-void h_iss_load(s_arr_iss* array, const char* path);
+void h_iss_load(s_arr_iss* array);
 
 #endif //ISS_H
