@@ -112,7 +112,6 @@
 "*  7. Exportar mês para CSV     *\n" \
 "*  8. Guardar                   *\n" \
 "*  9. Importar mês              *\n" \
-"* 10. Desfazer todas alterações *\n" \
 "* 0. Voltar ao menu anterior    *\n" \
 "*                               *\n" \
 "*********************************\n")
