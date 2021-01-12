@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 
 #include "menu.h"
 #include "reports.h"
@@ -93,7 +92,7 @@ void h_menu_iss(s_arr_iss *iss_array)
         switch (op)
         {
             case 1:
-                h_iss_load(iss_array);
+                h_iss_load(iss_array, H_PATH_ISS);
                 break;
             case 2:
                 h_iss_print(iss_array);
@@ -214,10 +213,10 @@ void h_menu_employees(s_arr_employees *employees_array, s_arr_iss *iss_array)
                 // TODO: primeiro registo vem a 0
                 if (iss_array == NULL || iss_array->used == 0)
                 {
-                    h_iss_load(iss_array);
+                    h_iss_load(iss_array, H_PATH_ISS);
                 }
 
-                h_employees_load(employees_array);
+                h_employees_load(employees_array, H_PATH_EMPLOYEES);
                 break;
             case 2:
                 h_employees_print(employees_array, iss_array);
