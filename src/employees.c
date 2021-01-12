@@ -394,7 +394,7 @@ void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array)
 			array->employees[i].phone_number,
 			array->employees[i].dependents,
 			iss_array->data[array->employees[i].role].criteria,
-			h_employees_str_from_marital_status(array->employees[i].marital_status),
+			h_employees_str_from_marital_status(array->employees[i].marital_status, 1),
 			array->employees[i].birthday->day,
 			array->employees[i].birthday->month,
 			array->employees[i].birthday->year,
@@ -570,11 +570,17 @@ void h_employees_parse(s_arr_employees* array, const char* str)
 	}
 }
 
-char* h_employees_str_from_marital_status(e_marital_status status)
+char* h_employees_str_from_marital_status(e_marital_status status, int display)
 {
-	char* str[] = { "Solteiro", "Casado", "Divorciado", "Viúvo" };
+	char* status_display[] = { "Solteiro", "Casado", "Divorciado", "Viúvo" };
+    char* status_write[] = { "SINGLE", "MARRIED", "DIVORCED", "WIDOWED" };
 
-	return str[status];
+    if (display == 1)
+    {
+        return status_display[status];
+    }
+
+    return status_write[status];
 }
 
 char* h_employees_str_from_holders(e_holders holder)

@@ -160,11 +160,12 @@ void h_employees_edit(s_arr_employees* array, s_arr_iss* iss_array);
 int h_employees_verify_phone(char* str);
 
 /**
- * Converts marital status enum to str
+ * Converts marital status enum to str for write on file or display
  * @param status The enum item to convert
+ * @param display Set to 1 to get a string for display purposes
  * @return char* Returns a string corresponding to the specified status
  */
-char* h_employees_str_from_marital_status(e_marital_status status);
+char* h_employees_str_from_marital_status(e_marital_status status, int display);
 
 /**
  * Marks an employee as removed, not deleting his record
