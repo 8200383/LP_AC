@@ -41,15 +41,17 @@ var employees_8h =
     [ "h_employees_alloc", "employees_8h.html#ab826796e708abc202b13d349d3fd355a", null ],
     [ "h_employees_delete", "employees_8h.html#ade4ac9331230b816d3089d87f20f48cf", null ],
     [ "h_employees_edit", "employees_8h.html#a2005c2e4bb1e4a7e0931c81ee1928585", null ],
+    [ "h_employees_free", "employees_8h.html#af3609a10af5080b801741a0a2fb351c1", null ],
     [ "h_employees_get_fields", "employees_8h.html#aa150f21a88c0d48c70293e6f581ec627", null ],
     [ "h_employees_get_marital_status", "employees_8h.html#af9e7eece3ea7548a8a82a55d32354e1e", null ],
     [ "h_employees_get_phone_number", "employees_8h.html#af99695c02a8bc8c53654f103fd89366b", null ],
+    [ "h_employees_load", "employees_8h.html#adb60d7beb86a0d15e1828d09c7e24800", null ],
     [ "h_employees_pair", "employees_8h.html#a421a0d513edb1078ba3b7170c67bd439", null ],
     [ "h_employees_parse", "employees_8h.html#a282bd4b6dece49e241c90cc56bd693c0", null ],
     [ "h_employees_print", "employees_8h.html#affa6bd65105157cda097832df7ee86b3", null ],
     [ "h_employees_randomize", "employees_8h.html#ae0ebbecbba513ba062e941700ef3e1e6", null ],
-    [ "h_employees_save", "employees_8h.html#a036e4e76650ec0e8298a2ad6e17ff912", null ],
-    [ "h_employees_str_from_holders", "employees_8h.html#aef98ac95de4c421b39fbb977f6a2c43e", null ],
+    [ "h_employees_str_from_holders", "employees_8h.html#ad3dd4ab9020580505f82a601ba1e680c", null ],
     [ "h_employees_str_from_marital_status", "employees_8h.html#a6df09cf0c120abaf6ac40cea47c4eae9", null ],
-    [ "h_employees_verify_phone", "employees_8h.html#a273bcb841ae9558f66a6644ff4fbcd63", null ]
+    [ "h_employees_verify_phone", "employees_8h.html#a273bcb841ae9558f66a6644ff4fbcd63", null ],
+    [ "h_employees_write", "employees_8h.html#aa8d87edeccfafed062588eaedda33354", null ]
 ];
