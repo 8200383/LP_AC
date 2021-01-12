@@ -243,8 +243,7 @@ void h_menu_reports(s_arr_employees *employees_array, s_spreadsheet *spreadsheet
                 h_reports_marital_percentage(employees_array);
                 break;
             case 3:
-                // TODO: Erro aqui (Tira o comment da linha e vais ver)
-                //h_reports_bonus(spreadsheet, employees_array);
+                h_reports_bonus(spreadsheet, employees_array);
             case 0:
                 break;
             default:

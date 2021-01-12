@@ -38,6 +38,6 @@ void h_reports_marital_percentage(s_arr_employees* employees_array);
  * Gets the percentage of employees of earned a bonus
  * @param spreadsheet The spreadsheet referring to a month
  */
-void h_reports_bonus(s_spreadsheet* spreadsheet);
+void h_reports_bonus(s_spreadsheet* spreadsheet, s_arr_employees *employees_array);
 
 #endif //REPORTS_H
