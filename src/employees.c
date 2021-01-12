@@ -182,7 +182,7 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 
 	if (employee->marital_status)
 	{
-		printf("Estado Civil atual: %s\n", h_employees_str_from_marital_status(employee->marital_status));
+		printf("Estado Civil atual: %s\n", h_employees_str_from_marital_status(employee->marital_status, 1));
 	}
 	employee->marital_status = h_employees_get_marital_status();
 
@@ -314,7 +314,7 @@ void h_employees_add(s_arr_employees* array, s_arr_iss* iss_array)
 	array->used++;
 }
 
-void h_employees_edit(s_arr_employees* array, s_arr_iss* iss_array) // TODO: testar
+void h_employees_edit(s_arr_employees* array, s_arr_iss* iss_array)
 {
 	int num;
 
