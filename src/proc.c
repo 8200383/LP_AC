@@ -370,14 +370,14 @@ void h_proc_perform(
 	{
 		// Calculo dos Dias Trabalhados e o Bonus Correspondente
 		days_worked = (float)spreadsheet->details[i].full_days +
-			(float)spreadsheet->details[i].half_days * 0.5f +
-			(float)spreadsheet->details[i].weekend_days;
+		              (float)spreadsheet->details[i].half_days * 0.5f +
+			          (float)spreadsheet->details[i].weekend_days;
 
 		// Calculo do Salário Bruto
 		spreadsheet->details[i].gross_pay =
 			(float)spreadsheet->details[i].full_days * employees_array->employees[i].hourly_rate +
-				(float)spreadsheet->details[i].half_days * employees_array->employees[i].hourly_rate * 0.5f +
-				(float)spreadsheet->details[i].weekend_days * employees_array->employees[i].hourly_rate * 1.5f;
+            (float)spreadsheet->details[i].half_days * employees_array->employees[i].hourly_rate * 0.5f +
+            (float)spreadsheet->details[i].weekend_days * employees_array->employees[i].hourly_rate * 1.5f;
 
 		if (days_worked > 20)
 		{
@@ -389,14 +389,14 @@ void h_proc_perform(
 		}
 		else
 		{
-			spreadsheet->details[i].bonus *= BONUS_BASE;
+			spreadsheet->details[i].bonus *= BASE_BONUS;
 		}
 
 		spreadsheet->details[i].gross_pay *= spreadsheet->details[i].bonus;
 
 		spreadsheet->details[i].food_allowance =
 			(float)spreadsheet->details[i].full_days * employees_array->employees[i].base_food_allowance +
-				(float)spreadsheet->details[i].weekend_days * employees_array->employees[i].base_food_allowance;
+            (float)spreadsheet->details[i].weekend_days * employees_array->employees[i].base_food_allowance;
 
 		spreadsheet->details[i].gross_pay += spreadsheet->details[i].food_allowance;
 

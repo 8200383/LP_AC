@@ -15,7 +15,7 @@
 
 #define MAX_FILENAME 256
 /** Base bonuses awarded */
-#define BONUS_BASE 1.0f
+#define BASE_BONUS 1.0f
 /** Bonuses awarded for 20 working days */
 #define BONUS_20_DAYS 1.05f
 /** Bonuses awarded for 17 working days */

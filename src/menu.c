@@ -124,8 +124,7 @@ void h_menu_processing(
         s_arr_irs *two_holders_array,
         s_arr_iss *iss_array,
         s_arr_employees *employees_array,
-        s_spreadsheet *spreadsheet
-)
+        s_spreadsheet *spreadsheet)
 {
     int op;
 
@@ -177,7 +176,7 @@ void h_menu_processing(
             case 0:
                 break;
             default:
-                fprintf(stdout, RED("%s"), H_STRS_INVALID_INPUT);
+                printf(H_STRS_INVALID_INPUT);
                 break;
         }
     } while (op != 0);
@@ -220,7 +219,7 @@ void h_menu_employees(s_arr_employees *employees_array, s_arr_iss *iss_array)
             case 0:
                 break;
             default:
-                printf("%s", H_STRS_INVALID_INPUT);
+                printf(H_STRS_INVALID_INPUT);
                 break;
         }
     } while (op != 0);
@@ -234,6 +233,7 @@ void h_menu_reports(s_arr_employees *employees_array, s_spreadsheet *spreadsheet
     {
         fprintf(stdout, H_STRS_REPORTS_MENU);
         op = h_util_get_int(0, 3, H_STRS_MENU_CHOICE);
+
         switch (op)
         {
             case 1:
@@ -243,8 +243,14 @@ void h_menu_reports(s_arr_employees *employees_array, s_spreadsheet *spreadsheet
                 h_reports_marital_percentage(employees_array);
                 break;
             case 3:
-                // TODO: Erro aqui (Tira o comment da linha e vais ver)
-                //h_reports_bonus(spreadsheet, employees_array);
+                h_reports_bonus(spreadsheet);
+                break;
+            case 4:
+                // TODO: 4ª listagem.
+                break;
+            case 5:
+                // TODO: 5ª listagem.
+                break;
             case 0:
                 break;
             default:

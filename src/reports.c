@@ -99,7 +99,7 @@ void h_reports_bonus(s_spreadsheet* spreadsheet)
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-		if (spreadsheet->details[i].bonus == BONUS_BASE)
+		if (spreadsheet->details[i].bonus == BASE_BONUS)
 		{
 			employees_earned_base_bonus++;
 		}
