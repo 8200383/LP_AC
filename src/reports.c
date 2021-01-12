@@ -48,7 +48,6 @@ void h_reports_senior_employees(s_arr_employees *employees_array)
     printf("Porcentagem: %.2f%%\n", (float) senior_employees / (float) total_employees);
 }
 
-// TODO: Mostrar quem são
 void h_reports_marital_status(s_arr_employees *employees_array)
 {
     int i = 0;
@@ -59,36 +58,65 @@ void h_reports_marital_status(s_arr_employees *employees_array)
 
     if (employees_array->used == 0)
     {
-        puts(RED("[!] Employees vazio ou não inicializado"));
+        puts(RED("[!] Nenhum funcionário encontrado"));
         return;
     }
+
+    puts(CYAN("Relatório estado civil dos funcionários"));
 
     while (i < employees_array->used && employees_array->employees[i].removed == 0)
     {
         if (employees_array->employees[i].marital_status == MARRIED)
         {
+            printf(YELLOW("[%d] %s %s | Estado Civil Atual: %s\n"),
+                   employees_array->employees[i].cod_employee,
+                   employees_array->employees[i].first_name,
+                   employees_array->employees[i].last_name,
+                   h_employees_str_from_marital_status(employees_array->employees[i].marital_status, 1)
+            );
+
             married_employees++;
         }
 
         if (employees_array->employees[i].marital_status == SINGLE)
         {
+            printf(YELLOW("[%d] %s %s | Estado Civil Atual: %s\n"),
+                   employees_array->employees[i].cod_employee,
+                   employees_array->employees[i].first_name,
+                   employees_array->employees[i].last_name,
+                   h_employees_str_from_marital_status(employees_array->employees[i].marital_status, 1)
+            );
+
             single_employees++;
         }
 
         if (employees_array->employees[i].marital_status == WIDOWED)
         {
+            printf(YELLOW("[%d] %s %s | Estado Civil Atual: %s\n"),
+                   employees_array->employees[i].cod_employee,
+                   employees_array->employees[i].first_name,
+                   employees_array->employees[i].last_name,
+                   h_employees_str_from_marital_status(employees_array->employees[i].marital_status, 1)
+            );
+
             widowed_employees++;
         }
 
         if (employees_array->employees[i].marital_status == DIVORCED)
         {
+            printf(YELLOW("[%d] %s %s | Estado Civil Atual: %s\n"),
+                   employees_array->employees[i].cod_employee,
+                   employees_array->employees[i].first_name,
+                   employees_array->employees[i].last_name,
+                   h_employees_str_from_marital_status(employees_array->employees[i].marital_status, 1)
+            );
+
             divorced_employees++;
         }
 
         i++;
     }
 
-    puts(CYAN("Porcentagem de funcionários"));
     printf("Casados %.2f%%\n", (float) married_employees / (float) i);
     printf("Solteiros %.2f%%\n", (float) single_employees / (float) i);
     printf("Viúvos %.2f%%\n", (float) widowed_employees / (float) i);
