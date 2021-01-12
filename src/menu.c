@@ -137,13 +137,14 @@ void h_menu_processing(
         switch (op)
         {
             case 1:
+                // TODO: load spreadsheet
                 if (spreadsheet)
                 {
                     fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(spreadsheet->month));
-                    h_proc_free(spreadsheet);
+                    break;
                 }
 
-                spreadsheet = h_proc_alloc(employees_array->used);
+                spreadsheet = h_proc_alloc(64);
                 if (spreadsheet == NULL)
                 {
                     fprintf(stdout, RED("[!] Memória insuficiente\n"));
@@ -210,7 +211,6 @@ void h_menu_employees(s_arr_employees *employees_array, s_arr_iss *iss_array)
         switch (op)
         {
             case 1:
-                // TODO: primeiro registo vem a 0
                 if (iss_array == NULL || iss_array->used == 0)
                 {
                     h_iss_load(iss_array, H_PATH_ISS);

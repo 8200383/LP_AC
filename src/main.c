@@ -110,7 +110,7 @@ int main_menu()
                 h_irs_write(two_holders_array, H_PATH_TWO_HOLDERS);
                 h_iss_write(iss_array, H_PATH_ISS);
                 h_employees_write(employees_array, H_PATH_EMPLOYEES);
-                // TODO: write proc
+                // TODO: write proc -> esta a vir vazio para escrita
                 break;
             default:
                 break;
@@ -122,7 +122,7 @@ int main_menu()
     h_irs_free(two_holders_array);
     h_iss_free(iss_array);
     h_employees_free(employees_array);
-    // TODO: free dos employees
+    // TODO: free spreadsheet
     return 0;
 }
 

@@ -62,9 +62,4 @@ void h_menu_employees(s_arr_employees* employees_array, s_arr_iss* iss_array);
  */
 void h_menu_reports(s_arr_employees* employees_array, s_spreadsheet* spreadsheet);
 
-/*
- TODO: Otima idea mas n sei se existe tempo pra isto
-void h_employees_load (s_arr_employees* employees_table);
- */
-
 #endif //MENU_H
