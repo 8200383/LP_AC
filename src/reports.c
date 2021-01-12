@@ -148,7 +148,7 @@ void h_reports_bonus(s_spreadsheet *spreadsheet, s_arr_employees *employees_arra
 
     for (i = 0; i < spreadsheet->used; i++)
     {
-        if (spreadsheet->details[i].bonus == BONUS_BASE)
+        if (spreadsheet->details[i].bonus == BASE_BONUS)
         {
             employees_base_bonus[base_bonus_counter] = spreadsheet->details[i].cod_employee;
             base_bonus_counter++;
