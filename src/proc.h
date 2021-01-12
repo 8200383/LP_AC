@@ -51,6 +51,7 @@ typedef struct
     s_details *details; /**< Array of details **/
     e_month month; /**< Represent the month of the spreadsheet **/
     int month_is_set; /** Determine if a month is set */
+    int is_processed; /** Determine if a month was processed */
     int used; /**< Tracks used capacity of the array **/
     int max_capacity; /**< Tracks max capacity of the array **/
 } s_spreadsheet;
