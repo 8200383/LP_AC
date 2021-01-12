@@ -120,6 +120,7 @@ int main_menu()
     h_irs_free(unique_holder_array);
     h_irs_free(two_holders_array);
     h_iss_free(iss_array);
+    // TODO: free dos employees
     return 0;
 }
 

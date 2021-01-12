@@ -577,11 +577,11 @@ char* h_employees_str_from_marital_status(e_marital_status status)
 	return str[status];
 }
 
-char* h_employees_str_from_holders(e_holders holders)
+char* h_employees_str_from_holders(e_holders holder)
 {
 	char* str[] = { "NONE", "UNIQUE_HOLDER", "TWO_HOLDERS" };
 
-	return str[holders];
+	return str[holder];
 }
 
 void h_employees_delete(s_arr_employees* array)
@@ -602,7 +602,8 @@ void h_employees_delete(s_arr_employees* array)
 
 }
 
-void h_employees_save(s_arr_employees* array, const char* path)
+// TODO: testar se da pra importar de novo depois de guardar
+void h_employees_write(s_arr_employees* array, const char* path)
 {
 	int i;
 	FILE* fp;
@@ -616,10 +617,10 @@ void h_employees_save(s_arr_employees* array, const char* path)
 	for (i = 0; i <= array->used; i++)
 	{
 		if (array->employees[i].removed == 0)
-			//I've to go through the whole array, to check if the removed field it is empty.
+			// I've to go through the whole array, to check if the removed field it is empty.
 			// We don't import employees removed.
 		{
-			fprintf(fp, "%d, %s, %s, %d, %s, %d, %d, %d/%d/%d, %d/%d/%d, %d/%d/%d, %.2f, %.2f, %s \n",
+			fprintf(fp, "%d,%s,%s,%d,%s,%d,%d,%d/%d/%d,%d/%d/%d,%d/%d/%d,%.2f,%.2f,%s\n",
 				array->employees[i].cod_employee,
 				array->employees[i].first_name,
 				array->employees[i].last_name,

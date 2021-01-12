@@ -49,7 +49,7 @@ void h_iss_free(s_arr_iss* array);
 /**
  * Parse a delimited string to an ISS array
  * @param array The ISS array
- * @param str
+ * @param str The string to parse
  */
 void h_iss_parse(s_arr_iss* array, char* str);
 
