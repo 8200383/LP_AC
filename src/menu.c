@@ -14,7 +14,7 @@ void h_menu_irs(
     do
     {
         fprintf(stdout, H_STRS_IRS_MENU);
-        op = h_util_get_int(0, 18, "Opção?");
+        op = h_util_get_int(0, 18, H_STRS_MENU_CHOICE);
 
         switch (op)
         {
@@ -88,7 +88,7 @@ void h_menu_iss(s_arr_iss *iss_array)
     do
     {
         fprintf(stdout, H_STRS_SEG_SOCIAL_MENU);
-        op = h_util_get_int(0, 6, "Opção?");
+        op = h_util_get_int(0, 6, H_STRS_MENU_CHOICE);
 
         switch (op)
         {
@@ -133,7 +133,7 @@ void h_menu_processing(
     do
     {
         fprintf(stdout, H_STRS_PROC);
-        op = h_util_get_int(0, 9, "Opção?");
+        op = h_util_get_int(0, 9, H_STRS_MENU_CHOICE);
 
         switch (op)
         {
@@ -208,7 +208,7 @@ void h_menu_employees(s_arr_employees *employees_array, s_arr_iss *iss_array)
     do
     {
         printf(H_STRS_EMPLOYEES_MENU);
-        op = h_util_get_int(0, 6, "Opção?");
+        op = h_util_get_int(0, 6, H_STRS_MENU_CHOICE);
 
         switch (op)
         {
@@ -266,7 +266,7 @@ void h_menu_reports(s_arr_employees *employees_array, s_spreadsheet *spreadsheet
     do
     {
         fprintf(stdout, H_STRS_REPORTS_MENU);
-        op = h_util_get_int(0, 3, "Opção?");
+        op = h_util_get_int(0, 3, H_STRS_MENU_CHOICE);
         switch (op)
         {
             case 1:
@@ -281,7 +281,7 @@ void h_menu_reports(s_arr_employees *employees_array, s_spreadsheet *spreadsheet
             case 0:
                 break;
             default:
-                printf(RED("%s"), H_STRS_INVALID_INPUT);
+                printf(H_STRS_INVALID_INPUT);
                 break;
         }
     } while (op != 0);

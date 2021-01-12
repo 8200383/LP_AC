@@ -72,8 +72,8 @@ int main_menu()
 
     do
     {
-        fprintf(stdout, "%s", H_STRS_MENU);
-        op = h_util_get_int(0, 9, "Opção?");
+        printf(H_STRS_MENU);
+        op = h_util_get_int(0, 9, H_STRS_MENU_CHOICE);
 
         switch (op)
         {

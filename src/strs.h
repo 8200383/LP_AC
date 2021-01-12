@@ -12,11 +12,13 @@
 
 // Globals
 
+#define H_STRS_MENU_CHOICE GREEN("> ")
+
 #define H_STRS_INVALID_INPUT RED("[!] Input Inválido\n")
 #define H_STRS_MALLOC_FAILED RED("[!] Não foi possível alocar espaço\n")
 #define H_STRS_MISSING_CAPACITY RED("[!] Tamanho inicial não definido\n")
 #define H_STRS_PARSE_ERROR RED("[!] Software não esta pronto para executar o parsing\n")
-#define H_STRS_LOAD_SUCCESS GREEN("[!] Carregado com sucesso")
+#define H_STRS_LOAD_SUCCESS GREEN("Ficheiro carregado com sucesso.")
 #define H_STRS_LOAD_FAILED RED("[!] Falha ao carregar o ficheiro")
 #define H_STRS_LOAD_REPLACE RED("[!] Já existiam dados na tabela. Novos foram carregados\n")
 #define H_STRS_SAVE_SUCCESS GREEN("Guardado com Sucesso")
@@ -25,14 +27,14 @@
 
 #define H_STRS_EDIT YELLOW("Linha a editar:")
 #define H_STRS_DELETE YELLOW("Linha a eliminar:")
-#define H_STRS_EMPTY_TABLE RED("Tabela Vazia\n")
+#define H_STRS_EMPTY_TABLE RED("[!] Tabela Vazia\n")
 
 // ISS
 #define H_STRS_NEW_CRITERIA YELLOW("Novo critério: ")
 #define H_STRS_CRITERIA_DUPLICATE RED("[!] Já existe um critério com esse nome. Abortar...\n")
 
 
-#define H_STRS_MENU MAGENTA( \
+#define H_STRS_MENU BLUE( \
 "*******************************\n" \
 "*         -|  MENU  |-        *\n" \
 "*                             *\n" \
@@ -47,7 +49,7 @@
 "*                             *\n" \
 "*******************************\n")
 
-#define H_STRS_IRS_MENU MAGENTA( \
+#define H_STRS_IRS_MENU BLUE( \
 "*****************************************************\n" \
 "*         -| Menu Tabelas de Retenção IRS |-        *\n" \
 "*                                                   *\n" \
@@ -83,7 +85,7 @@
 "*                                                   *\n" \
 "*****************************************************\n")
 
-#define H_STRS_SEG_SOCIAL_MENU MAGENTA( \
+#define H_STRS_SEG_SOCIAL_MENU BLUE( \
 "**************************************\n" \
 "* -| Menu Tabela Segurança Social |- *\n" \
 "*                                    *\n" \
@@ -97,7 +99,7 @@
 "*                                    *\n" \
 "**************************************\n")
 
-#define H_STRS_PROC MAGENTA( \
+#define H_STRS_PROC BLUE( \
 "*********************************\n" \
 "*  -| Processamento Salarios |- *\n" \
 "*                               *\n" \
@@ -115,7 +117,7 @@
 "*                               *\n" \
 "*********************************\n")
 
-#define H_STRS_EMPLOYEES_MENU CYAN( \
+#define H_STRS_EMPLOYEES_MENU BLUE( \
 "**************************************\n" \
 "* -| Menu Gestão de Funcionários |-  *\n" \
 "*                                    *\n" \
@@ -129,7 +131,7 @@
 "*                                    *\n" \
 "**************************************\n")
 
-#define H_STRS_REPORTS_MENU CYAN( \
+#define H_STRS_REPORTS_MENU BLUE( \
 "****************************************************\n" \
 "*                  -| Relatórios |-                *\n" \
 "*                                                  *\n" \
@@ -140,28 +142,28 @@
 "*                                                  *\n" \
 "***************************************************\n")
 
-#define H_STRS_IRS_TABLE_HEADER BLUE( \
+#define H_STRS_IRS_TABLE_HEADER CYAN( \
 "*************************************************************\n" \
 "* [Linha] | Remuneração     | Numero de Dependentes         *\n" \
 "*         | Mensal em €     | 0 | 1 | 2 | 3 | 4 | 5 ou mais *\n" \
 "*************************************************************\n")
 
-#define H_STRS_SS_TABLE_HEADER BLUE( \
+#define H_STRS_SS_TABLE_HEADER CYAN( \
 "*************************************************\n" \
 "* [Linha] | Critério | Percentagens de Retenção *\n" \
-"*         |          | Empregador | Empregado   *\n" \
+"*         |          | Empregador  /  Empregado *\n" \
 "*************************************************\n")
 
-#define H_STRS_EMPLOYEES_TABLE_HEADER GREEN( \
-"*********************************************************************************************************************************************************\n" \
-"* [Linha] | Cod | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data       | Data    | Data  | Valor Base | Subsídio    | Nº Titulares *\n" \
-"*         |     | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída | Rendimento | Alimentação |              *\n" \
-"*********************************************************************************************************************************************************\n")
+#define H_STRS_EMPLOYEES_TABLE_HEADER CYAN( \
+"*******************************************************************************************************************************************************************\n" \
+"* [Linha] | Código      | Primeiro | Último   | Tlf. | Nº Dependentes | Cargo | Estado | Data de    | Data de | Data de | Rendimento | Subsídio de | Nº Titulares *\n" \
+"*         | Funcionário | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída   | Base       | Alimentação |              *\n" \
+"*******************************************************************************************************************************************************************\n")
 
-#define H_STRS_PROC_TABLE_HEADER BLUE( \
-"*********************************************************\n" \
-"* [Linha] | Cod  | Dias      | Meios | Fins   | Faltas  *\n" \
-"*         | Func | Completos | Dias  | Semana |         *\n" \
-"*********************************************************\n")
+#define H_STRS_PROC_TABLE_HEADER CYAN( \
+"****************************************************************\n" \
+"* [Linha] | Código      | Dias      | Meios | Fins   | Faltas  *\n" \
+"*         | Funcionário | Completos | Dias  | Semana |         *\n" \
+"****************************************************************\n")
 
 #endif //STRS_H
