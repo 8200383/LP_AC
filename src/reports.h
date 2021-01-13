@@ -16,8 +16,7 @@
 
 /*
  * TODO Percentage of employees with the largest number of dependents
- * TODO Quem são os trabalhadores com o subsídio de alimentação mais alto
-*/
+ */
 /**
  * Shows all the senior employees according to EMPLOYEE_SENIORITY
  * @param employees_array The array of employees
@@ -35,5 +34,12 @@ void h_reports_marital_status(s_arr_employees* employees_array);
  * @param spreadsheet The spreadsheet referring to a month
  */
 void h_reports_bonus(s_spreadsheet* spreadsheet, s_arr_employees *employees_array);
+
+/**
+ * Gets the percentage of employees with the higher food allowance
+ * @param spreadsheet The spreadsheet referring to a month
+ * @param employees_array The array of employees
+ */
+void h_reports_food_allowance(s_spreadsheet* spreadsheet, s_arr_employees *employees_array);
 
 #endif //REPORTS_H
