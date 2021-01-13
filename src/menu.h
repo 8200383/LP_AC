@@ -21,9 +21,9 @@
  * @param two_holders_array Married Two Holders Table
  */
 void h_menu_irs(
-	s_arr_irs* single_array,
-	s_arr_irs* unique_holder_array,
-	s_arr_irs* two_holders_array);
+		s_arr_irs* single_array,
+		s_arr_irs* unique_holder_array,
+		s_arr_irs* two_holders_array);
 
 /**
  * ISS Menu
@@ -40,12 +40,12 @@ void h_menu_iss(s_arr_iss* iss_array);
  * @param employees_array The array of employees
  */
 void h_menu_processing(
-	s_arr_irs* single_array,
-	s_arr_irs* unique_holder_array,
-	s_arr_irs* two_holders_array,
-	s_arr_iss* iss_array,
-	s_arr_employees* employees_array,
-	s_spreadsheet* spreadsheet
+		s_arr_irs* single_array,
+		s_arr_irs* unique_holder_array,
+		s_arr_irs* two_holders_array,
+		s_arr_iss* iss_array,
+		s_arr_employees* employees_array,
+		s_spreadsheet* spreadsheet
 );
 
 /**

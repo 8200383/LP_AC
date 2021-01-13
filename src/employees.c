@@ -226,10 +226,11 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 	}
 	else
 	{
-		printf("Data de nascimento atual: %d/%d/%d\n",
-			employee->birthday->day,
-			employee->birthday->month,
-			employee->birthday->year);
+		printf(
+				"Data de nascimento atual: %d/%d/%d\n",
+				employee->birthday->day,
+				employee->birthday->month,
+				employee->birthday->year);
 	}
 
 	h_calendar_get_date(employee->birthday, "Data de nascimento: ");
@@ -245,10 +246,11 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 	}
 	else
 	{
-		printf("Data de entrada atual: %d/%d/%d\n",
-			employee->entry_date->day,
-			employee->entry_date->month,
-			employee->entry_date->year);
+		printf(
+				"Data de entrada atual: %d/%d/%d\n",
+				employee->entry_date->day,
+				employee->entry_date->month,
+				employee->entry_date->year);
 	}
 
 	h_calendar_get_date(employee->entry_date, "Data de entrada: ");
@@ -264,10 +266,11 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 	}
 	else
 	{
-		printf("Data de saida atual: %d/%d/%d\n",
-			employee->leaving_date->day,
-			employee->leaving_date->month,
-			employee->leaving_date->year);
+		printf(
+				"Data de saida atual: %d/%d/%d\n",
+				employee->leaving_date->day,
+				employee->leaving_date->month,
+				employee->leaving_date->year);
 	}
 
 	h_calendar_get_date(employee->leaving_date, "Data de saida? ");
@@ -383,28 +386,29 @@ void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array)
 	int i;
 	for (i = 0; i < array->used; i++)
 	{
-		printf(PRINT_TEMPLATE_STRING,
-			i,
-			array->employees[i].cod_employee,
-			array->employees[i].first_name,
-			array->employees[i].last_name,
-			array->employees[i].phone_number,
-			array->employees[i].dependents,
-			iss_array->data[array->employees[i].role].criteria,
-			h_employees_str_from_marital_status(array->employees[i].marital_status, 1),
-			array->employees[i].birthday->day,
-			array->employees[i].birthday->month,
-			array->employees[i].birthday->year,
-			array->employees[i].entry_date->day,
-			array->employees[i].entry_date->month,
-			array->employees[i].entry_date->year,
-			array->employees[i].leaving_date->day,
-			array->employees[i].leaving_date->month,
-			array->employees[i].leaving_date->year,
-			array->employees[i].hourly_rate,
-			array->employees[i].base_food_allowance,
-			array->employees[i].holders,
-			array->employees[i].removed == 1 ? RED("[Removido]") : " "
+		printf(
+				PRINT_TEMPLATE_STRING,
+				i,
+				array->employees[i].cod_employee,
+				array->employees[i].first_name,
+				array->employees[i].last_name,
+				array->employees[i].phone_number,
+				array->employees[i].dependents,
+				iss_array->data[array->employees[i].role].criteria,
+				h_employees_str_from_marital_status(array->employees[i].marital_status, 1),
+				array->employees[i].birthday->day,
+				array->employees[i].birthday->month,
+				array->employees[i].birthday->year,
+				array->employees[i].entry_date->day,
+				array->employees[i].entry_date->month,
+				array->employees[i].entry_date->year,
+				array->employees[i].leaving_date->day,
+				array->employees[i].leaving_date->month,
+				array->employees[i].leaving_date->year,
+				array->employees[i].hourly_rate,
+				array->employees[i].base_food_allowance,
+				array->employees[i].holders,
+				array->employees[i].removed == 1 ? RED("[Removido]") : " "
 		);
 	}
 }
@@ -480,26 +484,29 @@ void h_employees_pair(s_employee* employee, char* str, int column)
 
 	if (column == COL_BIRTHDAY)
 	{
-		sscanf(str, "%d/%d/%d",
-			&employee->birthday->day,
-			&employee->birthday->month,
-			&employee->birthday->year);
+		sscanf(
+				str, "%d/%d/%d",
+				&employee->birthday->day,
+				&employee->birthday->month,
+				&employee->birthday->year);
 	}
 
 	if (column == COL_ENTRY_DATE)
 	{
-		sscanf(str, "%d/%d/%d",
-			&employee->entry_date->day,
-			&employee->entry_date->month,
-			&employee->entry_date->year);
+		sscanf(
+				str, "%d/%d/%d",
+				&employee->entry_date->day,
+				&employee->entry_date->month,
+				&employee->entry_date->year);
 	}
 
 	if (column == COL_LEAVING_DATE)
 	{
-		sscanf(str, "%d/%d/%d",
-			&employee->leaving_date->day,
-			&employee->leaving_date->month,
-			&employee->leaving_date->year);
+		sscanf(
+				str, "%d/%d/%d",
+				&employee->leaving_date->day,
+				&employee->leaving_date->month,
+				&employee->leaving_date->year);
 	}
 
 	if (column == COL_HOURLY_RATE)
@@ -569,20 +576,20 @@ void h_employees_parse(s_arr_employees* array, const char* str)
 
 char* h_employees_str_from_marital_status(e_marital_status status, int display)
 {
-	char* status_display[] = { "Solteiro", "Casado", "Divorciado", "Viúvo" };
-    char* status_write[] = { "SINGLE", "MARRIED", "DIVORCED", "WIDOWED" };
+	char* status_display[] = {"Solteiro", "Casado", "Divorciado", "Viúvo"};
+	char* status_write[] = {"SINGLE", "MARRIED", "DIVORCED", "WIDOWED"};
 
-    if (display == 1)
-    {
-        return status_display[status];
-    }
+	if (display == 1)
+	{
+		return status_display[status];
+	}
 
-    return status_write[status];
+	return status_write[status];
 }
 
 char* h_employees_str_from_holders(e_holders holder)
 {
-	char* str[] = { "NONE", "UNIQUE_HOLDER", "TWO_HOLDERS" };
+	char* str[] = {"NONE", "UNIQUE_HOLDER", "TWO_HOLDERS"};
 
 	return str[holder];
 }
@@ -622,75 +629,77 @@ void h_employees_write(s_arr_employees* array, const char* path)
 			// I've to go through the whole array, to check if the removed field it is empty.
 			// We don't import employees removed.
 		{
-			fprintf(fp, "%d,%s,%s,%d,%s,%d,%d,%d/%d/%d,%d/%d/%d,%d/%d/%d,%.2f,%.2f,%s\n",
-				array->employees[i].cod_employee,
-				array->employees[i].first_name,
-				array->employees[i].last_name,
-				array->employees[i].phone_number,
-				h_employees_str_from_marital_status(array->employees[i].marital_status, 0),
-				array->employees[i].role,
-				array->employees[i].dependents,
-				array->employees[i].birthday->day,
-				array->employees[i].birthday->month,
-				array->employees[i].birthday->year,
-				array->employees[i].entry_date->day,
-				array->employees[i].entry_date->month,
-				array->employees[i].entry_date->year,
-				array->employees[i].leaving_date->day,
-				array->employees[i].leaving_date->month,
-				array->employees[i].leaving_date->year,
-				array->employees[i].hourly_rate,
-				array->employees[i].base_food_allowance,
-				h_employees_str_from_holders(array->employees[i].holders)
+			fprintf(
+					fp, "%d,%s,%s,%d,%s,%d,%d,%d/%d/%d,%d/%d/%d,%d/%d/%d,%.2f,%.2f,%s\n",
+					array->employees[i].cod_employee,
+					array->employees[i].first_name,
+					array->employees[i].last_name,
+					array->employees[i].phone_number,
+					h_employees_str_from_marital_status(array->employees[i].marital_status, 0),
+					array->employees[i].role,
+					array->employees[i].dependents,
+					array->employees[i].birthday->day,
+					array->employees[i].birthday->month,
+					array->employees[i].birthday->year,
+					array->employees[i].entry_date->day,
+					array->employees[i].entry_date->month,
+					array->employees[i].entry_date->year,
+					array->employees[i].leaving_date->day,
+					array->employees[i].leaving_date->month,
+					array->employees[i].leaving_date->year,
+					array->employees[i].hourly_rate,
+					array->employees[i].base_food_allowance,
+					h_employees_str_from_holders(array->employees[i].holders)
 			);
 		}
 	}
 
 	fclose(fp);
 
-    printf("%s -> %s\n", H_STRS_SAVE_SUCCESS, path);
+	printf("%s -> %s\n", H_STRS_SAVE_SUCCESS, path);
 }
 
 void h_employees_load(s_arr_employees* array, const char* path)
 {
-    int size = 0;
-    char *str;
+	int size = 0;
+	char* str;
 
-    str = h_util_file_read(path, &size);
-    if (str == NULL)
-    {
-        printf("%s \"%s\"\n", H_STRS_LOAD_FAILED, path);
-        return;
-    }
+	str = h_util_file_read(path, &size);
+	if (str == NULL)
+	{
+		printf("%s \"%s\"\n", H_STRS_LOAD_FAILED, path);
+		return;
+	}
 
-    if (array->used > 0)
-    {
-        printf("Employees - %s", path);
-        array->used = 0;
-    }
+	if (array->used > 0)
+	{
+		printf("Employees - %s", path);
+		array->used = 0;
+	}
 
-    h_employees_parse(array, str);
-    free(str);
+	h_employees_parse(array, str);
+	free(str);
 
-    printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, path);
+	printf("%s -> %s\n", H_STRS_LOAD_SUCCESS, path);
 }
 
 void h_employees_free(s_arr_employees* array)
 {
-    int i;
-    if (array == NULL)
-    {
-        return;
-    }
+	int i;
+	if (array == NULL)
+	{
+		return;
+	}
 
-    for (i = 0; i < array->used; i++) {
-        free(array->employees[i].birthday);
-        free(array->employees[i].entry_date);
-        free(array->employees[i].leaving_date);
-        free(array->employees[i].first_name);
-        free(array->employees[i].last_name);
-    }
+	for (i = 0; i < array->used; i++)
+	{
+		free(array->employees[i].birthday);
+		free(array->employees[i].entry_date);
+		free(array->employees[i].leaving_date);
+		free(array->employees[i].first_name);
+		free(array->employees[i].last_name);
+	}
 
-    free(array->employees);
-    free(array);
+	free(array->employees);
+	free(array);
 }

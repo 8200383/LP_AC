@@ -126,6 +126,6 @@ void h_irs_pair(s_element* element, char* str, int* dependent);
  * @param s_arr_irs The IRS array to fill
  * @param path The path to load
  */
-void h_irs_load(s_arr_irs * irs_array, char* path);
+void h_irs_load(s_arr_irs* irs_array, char* path);
 
 #endif //IRS_H

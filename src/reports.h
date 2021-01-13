@@ -35,14 +35,14 @@ void h_reports_marital_status(s_arr_employees* employees_array);
  * Gets the percentage of employees who have earned a bonus
  * @param spreadsheet The spreadsheet referring to a month
  */
-void h_reports_bonus(s_spreadsheet* spreadsheet, s_arr_employees *employees_array);
+void h_reports_bonus(s_spreadsheet* spreadsheet, s_arr_employees* employees_array);
 
 /**
  * Gets the percentage of employees with the higher food allowance
  * @param spreadsheet The spreadsheet referring to a month
  * @param employees_array The array of employees
  */
-void h_reports_food_allowance(s_spreadsheet* spreadsheet, s_arr_employees *employees_array);
+void h_reports_food_allowance(s_spreadsheet* spreadsheet, s_arr_employees* employees_array);
 
 /**
  * Gets the percentage occupied by each number of dependents
