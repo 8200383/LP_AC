@@ -53,6 +53,6 @@ void h_reports_percentage_per_dependent(s_arr_employees* array);
  * @param array The array of employees
  * @param integer The number of dependents so search for
  */
-void h_reports_ppd_print(s_arr_employees* array, int dependents);
+void h_reports_percentage_per_dependent_print(s_arr_employees* array, int dependents);
 
 #endif //REPORTS_H

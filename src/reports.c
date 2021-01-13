@@ -366,20 +366,20 @@ void h_reports_percentage_per_dependent(s_arr_employees* array)
 	}
 
 	printf("0 Dependentes: %.2f%%\n", (zero_dependents / (float)array->used) * 100.0f);
-	h_reports_ppd_print(array, 0);
+	h_reports_percentage_per_dependent_print(array, 0);
 	printf("1 Dependentes: %.2f%%\n", (one_dependents / (float)array->used) * 100.0f);
-	h_reports_ppd_print(array, 1);
+	h_reports_percentage_per_dependent_print(array, 1);
 	printf("2 Dependentes: %.2f%%\n", (two_dependents / (float)array->used) * 100.0f);
-	h_reports_ppd_print(array, 2);
+	h_reports_percentage_per_dependent_print(array, 2);
 	printf("3 Dependentes: %.2f%%\n", (three_dependents / (float)array->used) * 100.0f);
-	h_reports_ppd_print(array, 3);
+	h_reports_percentage_per_dependent_print(array, 3);
 	printf("4 Dependentes: %.2f%%\n", (four_dependents / (float)array->used) * 100.0f);
-	h_reports_ppd_print(array, 4);
+	h_reports_percentage_per_dependent_print(array, 4);
 	printf("5 ou mais Dependentes: %.2f%%\n", (zero_dependents / (float)array->used) * 100.0f);
-	h_reports_ppd_print(array, 5);
+	h_reports_percentage_per_dependent_print(array, 5);
 }
 
-void h_reports_ppd_print(s_arr_employees* array, int dependents)
+void h_reports_percentage_per_dependent_print(s_arr_employees* array, int dependents)
 {
 	int i;
 
@@ -388,32 +388,20 @@ void h_reports_ppd_print(s_arr_employees* array, int dependents)
 		return;
 	}
 
-	if (dependents != 5)
+	for (i = 0; i < array->used; i++)
 	{
-		for (i = 0; i < array->used; i++)
+		if (dependents != 5 && array->employees[i].dependents == dependents)
 		{
-			if (array->employees[i].dependents == dependents)
-			{
-				printf("%s %s", array->employees[i].first_name, array->employees[i].last_name);
-				if (i != array->used - 1)
-				{
-					printf(" | ");
-				}
-			}
+			printf("%s %s", array->employees[i].first_name, array->employees[i].last_name);
 		}
-	}
-	else
-	{
-		for (i = 0; i < array->used; i++)
+		else if (dependents == 5 && array->employees[i].dependents >= dependents)
 		{
-			if (array->employees[i].dependents >= dependents)
-			{
-				printf("%s %s", array->employees[i].first_name, array->employees[i].last_name);
-				if (i != array->used - 1)
-				{
-					printf(" | ");
-				}
-			}
+			printf("%s %s", array->employees[i].first_name, array->employees[i].last_name);
+		}
+
+		if (i != array->used - 1)
+		{
+			printf(" | ");
 		}
 	}
 	printf("\n");
