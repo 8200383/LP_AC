@@ -178,20 +178,40 @@ void h_proc_print(s_spreadsheet* spreadsheet)
 		return;
 	}
 
-	fprintf(stdout, YELLOW("N Registos encontrados: %d\n"), spreadsheet->used);
-	fprintf(stdout, H_STRS_PROC_TABLE_HEADER);
+    fprintf(stdout, YELLOW("N Registos encontrados: %d\n"), spreadsheet->used);
 
-	for (i = 0; i < spreadsheet->used; i++)
-	{
-		fprintf(stdout, "[%d] %d | %d | %d | %d | %d\n",
-			i,
-			spreadsheet->details[i].cod_employee,
-			spreadsheet->details[i].full_days,
-			spreadsheet->details[i].half_days,
-			spreadsheet->details[i].weekend_days,
-			spreadsheet->details[i].absent_days
-		);
-	}
+    if (spreadsheet->is_processed)
+    {
+        fprintf(stdout, H_STRS_PROCESSED_TABLE_HEADER);
+    } else
+    {
+        fprintf(stdout, H_STRS_PROC_TABLE_HEADER);
+    }
+
+    for (i = 0; i < spreadsheet->used; i++)
+    {
+        fprintf(stdout, "[%d] %d | %d | %d | %d | %d",
+                i,
+                spreadsheet->details[i].cod_employee,
+                spreadsheet->details[i].full_days,
+                spreadsheet->details[i].half_days,
+                spreadsheet->details[i].weekend_days,
+                spreadsheet->details[i].absent_days
+        );
+
+        if (spreadsheet->is_processed)
+        {
+            printf(" | %.2f€ | %.2f€ | %.2f€ | %.1f%% | %.1f%% | %.1f%%",
+                   spreadsheet->details[i].gross_pay,
+                   spreadsheet->details[i].net_pay,
+                   spreadsheet->details[i].food_allowance,
+                   spreadsheet->details[i].irs_retention,
+                   spreadsheet->details[i].iss_retention_employee,
+                   spreadsheet->details[i].iss_retention_employer);
+        }
+
+        printf("\n");
+    }
 }
 
 void h_proc_edit(s_spreadsheet* spreadsheet)

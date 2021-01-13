@@ -165,6 +165,5 @@ float h_proc_get_retention_percentage(s_arr_irs *irs_array, int dependents, floa
 void h_proc_create(s_spreadsheet *spreadsheet);
 
 // TODO: Apagar mês e os respetivos dados
-// TODO: Mostrar mês processado
 
 #endif //PROC_H
