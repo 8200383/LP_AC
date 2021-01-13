@@ -468,10 +468,8 @@ void h_proc_perform(
 
 		// Encargo Total do Empregador
 		spreadsheet->details[i].employer_charge = spreadsheet->details[i].gross_pay +
-			spreadsheet->details[i].iss_retention_employer +
-			spreadsheet->details[i].iss_retention_employee +
-			spreadsheet->details[i].irs_retention;
-        printf("Charge: %.2f€\n", spreadsheet->details[i].employer_charge);
+			spreadsheet->details[i].iss_retention_employer;
+        printf("Charge: %.2f€\n\n", spreadsheet->details[i].employer_charge);
 	}
 
     spreadsheet->is_processed = 1;
