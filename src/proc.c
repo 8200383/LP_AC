@@ -57,7 +57,7 @@ s_spreadsheet* h_proc_import()
 
 	if (access(filename, F_OK) == -1)
 	{
-		printf(RED("[!] Ficheiro %s não encontrado\n"), filename);
+		printf(H_STRS_FILE_NOT_FOUND("%s"), filename);
 		free(filename);
 		return NULL;
 	}
@@ -123,13 +123,19 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 
 	if (spreadsheet->month_is_set == 0)
 	{
-		fprintf(stdout, RED("[!] Mẽs não criado\n"));
+		puts(H_STRS_MONTH_NOT_CREATED);
+		return;
+	}
+	else if (spreadsheet->is_processed)
+	{
+		puts(H_STRS_ALREADY_PROCESSED);
 		return;
 	}
 
+
 	if (arr_employees == NULL || arr_employees->used == 0)
 	{
-		fprintf(stdout, RED("[!] Nenhum funcionário encontrado\n"));
+		puts(H_STRS_EMPLOYEES_NOT_FOUND);
 		return;
 	}
 
@@ -138,7 +144,7 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 		spreadsheet->details = realloc(spreadsheet->details, (spreadsheet->max_capacity * 2) * sizeof(s_details));
 		if (spreadsheet->details == NULL)
 		{
-			puts("[!] Realloc spreadshhets falhou");
+			puts(H_STRS_MALLOC_FAILED);
 			return;
 		}
 
@@ -173,9 +179,14 @@ void h_proc_print(s_spreadsheet* spreadsheet)
 {
 	int i;
 
-	if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
+	if (spreadsheet->used == 0)
 	{
-		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
+		puts(H_STRS_EMPLOYEES_NOT_FOUND);
+		return;
+	}
+	else if (spreadsheet->month_is_set == 0)
+	{
+		puts(H_STRS_MONTH_NOT_CREATED);
 		return;
 	}
 
@@ -205,13 +216,26 @@ void h_proc_print(s_spreadsheet* spreadsheet)
 		if (spreadsheet->is_processed)
 		{
 			printf(
-					" | %.2f€ | %.2f€ | %.2f€ | %.1f%% | %.1f%% | %.1f%%",
+					" | %.2f€ | %.2f€ | %.2f€ | %.2f€ | %.2f€ | %.2f€ ",
 					spreadsheet->details[i].gross_pay,
 					spreadsheet->details[i].net_pay,
 					spreadsheet->details[i].food_allowance,
 					spreadsheet->details[i].irs_retention,
 					spreadsheet->details[i].iss_retention_employee,
 					spreadsheet->details[i].iss_retention_employer);
+
+			if (spreadsheet->details[i].bonus == BASE_BONUS)
+			{
+				printf(GREEN("[Base]"));
+			}
+			else if (spreadsheet->details[i].bonus == BONUS_17_DAYS)
+			{
+				printf("[17 dias]");
+			}
+			else if (spreadsheet->details[i].bonus == BONUS_20_DAYS)
+			{
+				printf("[20 dias]");
+			}
 		}
 
 		printf("\n");
@@ -224,9 +248,19 @@ void h_proc_edit(s_spreadsheet* spreadsheet)
 	int max_days;
 	int op;
 
-	if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
+	if (spreadsheet->used == 0)
 	{
-		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
+		puts(H_STRS_EMPLOYEES_NOT_FOUND);
+		return;
+	}
+	else if (spreadsheet->month_is_set == 0)
+	{
+		puts(H_STRS_MONTH_NOT_CREATED);
+		return;
+	}
+	else if (spreadsheet->is_processed)
+	{
+		puts(H_STRS_ALREADY_PROCESSED);
 		return;
 	}
 
@@ -262,9 +296,19 @@ void h_proc_delete(s_spreadsheet* spreadsheet)
 	int index;
 	int i;
 
-	if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
+	if (spreadsheet->used == 0)
 	{
-		fprintf(stdout, RED("[!] Mês não criado ou vazio\n"));
+		puts(H_STRS_EMPLOYEES_NOT_FOUND);
+		return;
+	}
+	else if (spreadsheet->month_is_set == 0)
+	{
+		puts(H_STRS_MONTH_NOT_CREATED);
+		return;
+	}
+	else if (spreadsheet->is_processed)
+	{
+		puts(H_STRS_ALREADY_PROCESSED);
 		return;
 	}
 
@@ -325,9 +369,14 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 	FILE* fp;
 	char* filename;
 
-	if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
+	if (spreadsheet->used == 0)
 	{
-		puts(RED("[!] Nada a exportar"));
+		puts(H_STRS_EMPLOYEES_NOT_FOUND);
+		return;
+	}
+	else if (spreadsheet->month_is_set == 0)
+	{
+		puts(H_STRS_MONTH_NOT_CREATED);
 		return;
 	}
 
@@ -373,29 +422,47 @@ void h_proc_perform(
 	int emp_index;
 	float days_worked;
 
-	if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
+	if (spreadsheet->used == 0)
 	{
-		puts(RED("[!] Mês não criado ou vazio"));
+		puts(H_STRS_EMPLOYEES_NOT_FOUND);
 		return;
 	}
-	else if (spreadsheet->is_processed == 1) // Alteração doutras tabelas não deve refletir sobre meses ja processados
+	else if (spreadsheet->month_is_set == 0)
 	{
-		puts(RED("[!] Mês já processado"));
+		puts(H_STRS_MONTH_NOT_CREATED);
 		return;
 	}
-	else if (single_array->used == 0 || unique_holder_array->used == 0 || two_holders_array->used == 0)
+	else if (spreadsheet->is_processed)
 	{
-		puts(RED("[!] Tabelas IRS possivelmente não inicializadas"));
+		puts(H_STRS_ALREADY_PROCESSED);
 		return;
 	}
-	else if (iss_array->used == 0)
+
+	if (single_array->used == 0)
 	{
-		puts(RED("[!] Tabela ISS não inicializada"));
+		puts(H_STRS_IRS_ERROR_INIT("Não Casado"));
 		return;
 	}
-	else if (employees_array->used == 0)
+	else if (unique_holder_array->used == 0)
 	{
-		puts(RED("[!] Employees não inicializado"));
+		puts(H_STRS_IRS_ERROR_INIT("Único Titular"));
+		return;
+	}
+	else if (two_holders_array->used == 0)
+	{
+		puts(H_STRS_IRS_ERROR_INIT("Dois Titular"));
+		return;
+	}
+
+	if (iss_array->used == 0)
+	{
+		puts(H_STRS_ISS_ERROR_INIT);
+		return;
+	}
+
+	if (employees_array->used == 0)
+	{
+		puts(H_STRS_EMPLOYEES_ERROR_INIT);
 		return;
 	}
 
@@ -486,7 +553,7 @@ void h_proc_perform(
 	}
 
 	spreadsheet->is_processed = 1;
-	puts(GREEN("[!] Mês processado com sucesso"));
+	puts(H_STRS_PROCESSED_SUCCESS);
 }
 
 int h_proc_get_employee_index(s_arr_employees* employees_array, int code)
@@ -528,7 +595,7 @@ void h_proc_write(s_spreadsheet* spreadsheet, const char* path)
 
 	if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
 	{
-		printf("%s: %s", H_STRS_SAVE_FILE_ERROR, path);
+		printf("%s: %s\n", H_STRS_SAVE_FILE_ERROR, path);
 		return;
 	}
 
@@ -548,7 +615,7 @@ void h_proc_create(s_spreadsheet* spreadsheet)
 {
 	if (spreadsheet->month_is_set == 1)
 	{
-		fprintf(stdout, RED("[!] Mês %s já criado\n"), h_calendar_str_from_month(spreadsheet->month));
+		puts(H_STRS_ALREADY_CREATED);
 		return;
 	}
 

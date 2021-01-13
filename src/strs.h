@@ -14,26 +14,39 @@
 
 // Globals
 #define H_STRS_MENU_CHOICE GREEN("> ")
-
-#define H_STRS_INVALID_INPUT RED("[!] Input Inválido\n")
-#define H_STRS_MALLOC_FAILED RED("[!] Não foi possível alocar espaço\n")
-#define H_STRS_MISSING_CAPACITY RED("[!] Tamanho inicial não definido\n")
-#define H_STRS_PARSE_ERROR RED("[!] Software não esta pronto para executar o parsing\n")
-#define H_STRS_LOAD_SUCCESS GREEN("Ficheiro carregado com sucesso")
+#define H_STRS_INVALID_INPUT RED("[!] Input Inválido")
+#define H_STRS_MALLOC_FAILED RED("[!] Não foi possível alocar espaço")
+#define H_STRS_MISSING_CAPACITY RED("[!] Tamanho inicial não definido")
+#define H_STRS_PARSE_ERROR RED("[!] Software não esta pronto para executar o parsing")
+#define H_STRS_LOAD_SUCCESS GREEN("[!] Ficheiro carregado com sucesso")
 #define H_STRS_LOAD_FAILED RED("[!] Falha ao carregar o ficheiro")
-#define H_STRS_LOAD_REPLACE RED("[!] Já existiam dados na tabela. Novos foram carregados\n")
-#define H_STRS_SAVE_SUCCESS GREEN("Guardado com Sucesso")
+#define H_STRS_LOAD_REPLACE RED("[!] Já existiam dados na tabela. Novos foram carregados")
+#define H_STRS_SAVE_SUCCESS GREEN("[!] Guardado com Sucesso")
 #define H_STRS_SAVE_FILE_ERROR RED("[!] Não foi possível guardar o ficheiro")
-#define H_STRS_PATH_MISSING RED("[!] A localização do ficheiro não foi especificada\n")
+#define H_STRS_PATH_MISSING RED("[!] A localização do ficheiro não foi especificada")
+#define H_STRS_FILE_NOT_FOUND(file) RED("Ficheiro ") file RED(" não encontrado")
 
 #define H_STRS_EDIT YELLOW("Linha a editar:")
 #define H_STRS_DELETE YELLOW("Linha a eliminar:")
 #define H_STRS_EMPTY_TABLE RED("[!] Tabela Vazia\n")
 
+// Employees
+#define H_STRS_EMPLOYEES_ERROR_INIT RED("Fúncionarios não inicializados")
+
+// IRS
+#define H_STRS_IRS_ERROR_INIT(table) RED("Tabela IRS ") table RED(" não inicializada")
+
 // ISS
 #define H_STRS_NEW_CRITERIA YELLOW("Novo critério: ")
 #define H_STRS_CRITERIA_DUPLICATE RED("[!] Já existe um critério com esse nome. Abortar...\n")
+#define H_STRS_ISS_ERROR_INIT RED("[!] Tabela ISS não inicializada")
 
+// PROC
+#define H_STRS_EMPLOYEES_NOT_FOUND RED("[!] Nenhum funcionário encontrado")
+#define H_STRS_MONTH_NOT_CREATED RED("[!] Nenhum mês foi criado")
+#define H_STRS_ALREADY_PROCESSED RED("[!] Mês já processado")
+#define H_STRS_ALREADY_CREATED RED("[!] Mês já foi criado")
+#define H_STRS_PROCESSED_SUCCESS GREEN("[!] Mês processado com sucesso")
 
 #define H_STRS_MENU BLUE( \
 "*********************************\n" \
@@ -161,10 +174,10 @@
 "*******************************************************************************************************************************************************************\n")
 
 #define H_STRS_PROCESSED_TABLE_HEADER CYAN( \
-"*****************************************************************************************************************************\n" \
-"* [Linha] | Código      | Dias      | Meios | Fins   | Faltas | Salário | Salário  | Retenção | Retenção ISS | Retenção ISS *\n" \
-"*         | Funcionário | Completos | Dias  | Semana |        | Bruto   | Ilíquido | IRS      | funcionário  | empregador   *\n" \
-"*****************************************************************************************************************************\n")
+"*****************************************************************************************************************************************\n" \
+"* [Linha] | Código      | Dias      | Meios | Fins   | Faltas | Salário | Salário  | Retenção | Retenção ISS | Retenção ISS | Bónus     *\n" \
+"*         | Funcionário | Completos | Dias  | Semana |        | Bruto   | Ilíquido | IRS      | funcionário  | empregador   | Atribuído *\n" \
+"*****************************************************************************************************************************************\n")
 
 #define H_STRS_PROC_TABLE_HEADER CYAN( \
 "****************************************************************\n" \

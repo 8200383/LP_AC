@@ -14,21 +14,21 @@ s_arr_irs *h_irs_alloc(int initial_capacity)
 
     if (!initial_capacity)
     {
-        printf("IRS - %s", H_STRS_MISSING_CAPACITY);
+        printf("IRS - %s\n", H_STRS_MISSING_CAPACITY);
         return NULL;
     }
 
     array = malloc(sizeof(s_arr_irs));
     if (array == NULL)
     {
-        printf("IRS - %s", H_STRS_MALLOC_FAILED);
+        printf("IRS - %s\n", H_STRS_MALLOC_FAILED);
         return NULL;
     }
 
     array->elements = malloc(initial_capacity * sizeof(s_element));
     if (array->elements == NULL)
     {
-        printf("IRS - %s", H_STRS_MALLOC_FAILED);
+        printf("IRS - %s\n", H_STRS_MALLOC_FAILED);
         return NULL;
     }
 
@@ -40,7 +40,7 @@ s_arr_irs *h_irs_alloc(int initial_capacity)
         array->elements[i].percentage_per_dependent = malloc((MAX_DEPENDENT_NUMBER + 1) * sizeof(float));
         if (array->elements[i].percentage_per_dependent == NULL)
         {
-            printf("IRS - %s", H_STRS_MALLOC_FAILED);
+            printf("IRS - %s\n", H_STRS_MALLOC_FAILED);
             return NULL;
         }
     }
@@ -85,7 +85,7 @@ void h_irs_parse(s_arr_irs *array, const char *str, h_irs_pair_func pair_func)
 {
     if (array == NULL || str == NULL)
     {
-        printf(H_STRS_PARSE_ERROR);
+        puts(H_STRS_PARSE_ERROR);
         return;
     }
 
@@ -284,13 +284,13 @@ void h_irs_write(s_arr_irs *array, const char *path)
 
     if (array->used == 0)
     {
-        printf("IRS - %s", H_STRS_EMPTY_TABLE);
+        printf("IRS - %s\n", H_STRS_EMPTY_TABLE);
         return;
     }
 
     if (path == NULL)
     {
-        printf(H_STRS_PATH_MISSING);
+        puts(H_STRS_PATH_MISSING);
         return;
     }
 
@@ -334,7 +334,7 @@ void h_irs_load(s_arr_irs *irs_array, char *path)
 
     if (irs_array->used > 0)
     {
-        printf("IRS - %s", H_STRS_LOAD_REPLACE);
+        printf("IRS - %s\n", H_STRS_LOAD_REPLACE);
         irs_array->used = 0;
     }
 
