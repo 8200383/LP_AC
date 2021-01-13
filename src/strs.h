@@ -160,6 +160,12 @@
 "*         | Funcionário | Nome     | Nome     |      |                |       | Cívil  | Nascimento | Entrada | Saída   | Base       | Alimentação |              *\n" \
 "*******************************************************************************************************************************************************************\n")
 
+#define H_STRS_PROCESSED_TABLE_HEADER CYAN( \
+"*****************************************************************************************************************************\n" \
+"* [Linha] | Código      | Dias      | Meios | Fins   | Faltas | Salário | Salário  | Retenção | Retenção ISS | Retenção ISS *\n" \
+"*         | Funcionário | Completos | Dias  | Semana |        | Bruto   | Ilíquido | IRS      | funcionário  | empregador   *\n" \
+"*****************************************************************************************************************************\n")
+
 #define H_STRS_PROC_TABLE_HEADER CYAN( \
 "****************************************************************\n" \
 "* [Linha] | Código      | Dias      | Meios | Fins   | Faltas  *\n" \
