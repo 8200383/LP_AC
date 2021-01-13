@@ -51,7 +51,7 @@ var employees_8h =
     [ "h_employees_print", "employees_8h.html#affa6bd65105157cda097832df7ee86b3", null ],
     [ "h_employees_randomize", "employees_8h.html#ae0ebbecbba513ba062e941700ef3e1e6", null ],
     [ "h_employees_str_from_holders", "employees_8h.html#ad3dd4ab9020580505f82a601ba1e680c", null ],
-    [ "h_employees_str_from_marital_status", "employees_8h.html#a6df09cf0c120abaf6ac40cea47c4eae9", null ],
+    [ "h_employees_str_from_marital_status", "employees_8h.html#a1307020ed122969742e22e4ec47f7f3a", null ],
     [ "h_employees_verify_phone", "employees_8h.html#a273bcb841ae9558f66a6644ff4fbcd63", null ],
     [ "h_employees_write", "employees_8h.html#aa8d87edeccfafed062588eaedda33354", null ]
 ];

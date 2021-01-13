@@ -108,6 +108,11 @@ Data Fields</h2></td></tr>
 <tr class="separator:af608c64f445b2c8fd007a7d1b5c182da"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30a6ca816b827b5a07717b4a6e7d9104"><td class="memItemLeft" align="right" valign="top"><a class="el" href="calendar_8h.html#a3b409859783eb63e7281db9f41f8e0e7">e_month</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs__spreadsheet.html#a30a6ca816b827b5a07717b4a6e7d9104">month</a></td></tr>
 <tr class="separator:a30a6ca816b827b5a07717b4a6e7d9104"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3a2927e12dd2137a2ac37875bab29a80"><td class="memItemLeft" align="right" valign="top"><a id="a3a2927e12dd2137a2ac37875bab29a80"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>month_is_set</b></td></tr>
+<tr class="separator:a3a2927e12dd2137a2ac37875bab29a80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a230d8ee4c90cd75b33fb0abfe7db345f"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs__spreadsheet.html#a230d8ee4c90cd75b33fb0abfe7db345f">is_processed</a></td></tr>
+<tr class="separator:a230d8ee4c90cd75b33fb0abfe7db345f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5810b6407672b8e7aeba609b4bb649de"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs__spreadsheet.html#a5810b6407672b8e7aeba609b4bb649de">used</a></td></tr>
 <tr class="separator:a5810b6407672b8e7aeba609b4bb649de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3a5503dec3cf0229318473053533ae7a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structs__spreadsheet.html#a3a5503dec3cf0229318473053533ae7a">max_capacity</a></td></tr>
@@ -116,7 +121,7 @@ Data Fields</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>A struct that represents a spreadsheet for a given month </p>
 
-<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00054">54</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00049">49</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
 </div><h2 class="groupheader">Field Documentation</h2>
 <a id="af608c64f445b2c8fd007a7d1b5c182da"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af608c64f445b2c8fd007a7d1b5c182da">&#9670;&nbsp;</a></span>details</h2>
@@ -131,7 +136,24 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Array of details </p>
 
-<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00056">56</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00051">51</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
+
+</div>
+</div>
+<a id="a230d8ee4c90cd75b33fb0abfe7db345f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a230d8ee4c90cd75b33fb0abfe7db345f">&#9670;&nbsp;</a></span>is_processed</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int is_processed</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Determine if a month is set </p>
+
+<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00054">54</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
 
 </div>
 </div>
@@ -148,7 +170,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Tracks max capacity of the array </p>
 
-<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00059">59</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00056">56</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
 
 </div>
 </div>
@@ -165,7 +187,7 @@ Data Fields</h2></td></tr>
 </div><div class="memdoc">
 <p>Represent the month of the spreadsheet </p>
 
-<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00057">57</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00052">52</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
 
 </div>
 </div>
@@ -180,9 +202,9 @@ Data Fields</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Tracks used capacity of the array </p>
+<p>Determine if a month was processed Tracks used capacity of the array </p>
 
-<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00058">58</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="proc_8h_source.html#l00055">55</a> of file <a class="el" href="proc_8h_source.html">proc.h</a>.</p>
 
 </div>
 </div>
