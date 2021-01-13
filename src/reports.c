@@ -279,3 +279,45 @@ void h_reports_bonus(s_spreadsheet* spreadsheet, s_arr_employees* employees_arra
 	free(employees_seventeen_days_bonus);
 	free(employees_twenty_days_bonus);
 }
+
+void h_reports_food_allowance(s_spreadsheet* spreadsheet, s_arr_employees* employees_array)
+{
+	int i;
+	int employee_index;
+	float max_food_allowance;
+
+	if (spreadsheet->used == 0 || employees_array->used == 0)
+	{
+		puts(H_STRS_EMPLOYEES_NOT_FOUND);
+		return;
+	}
+	else if (spreadsheet->month_is_set == 0)
+	{
+		puts(H_STRS_MONTH_NOT_CREATED);
+		return;
+	}
+	else if (spreadsheet->is_processed == 0)
+	{
+		puts(RED("[!] Nenhum mês foi ainda processado"));
+		return;
+	}
+
+	max_food_allowance = employees_array->employees->base_food_allowance;
+	for (i = 0; i < employees_array->used; i++)
+	{
+		if (employees_array->employees[i].base_food_allowance > max_food_allowance)
+		{
+			max_food_allowance = employees_array->employees[i].base_food_allowance;
+			employee_index = i;
+		}
+	}
+
+	printf(
+			"[!] Funcionário com o subsídio de alimentação base mais elevado:\n [%d] %s %s %.2f€\n",
+			employees_array->employees[employee_index].cod_employee,
+			employees_array->employees[employee_index].first_name,
+			employees_array->employees[employee_index].last_name,
+			max_food_allowance);
+
+	// TODO: Food Allowance processado
+}
