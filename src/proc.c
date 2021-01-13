@@ -180,10 +180,11 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 
 }
 
-void h_proc_print(s_spreadsheet* spreadsheet)
+void h_proc_print(s_spreadsheet* spreadsheet, s_arr_employees* employees_array)
 {
 	int i;
-	// TODO: mostrar nome funcionario ao fzr print
+	int j;
+
 	if (spreadsheet->used == 0)
 	{
 		puts(H_STRS_EMPLOYEES_NOT_FOUND);
@@ -195,33 +196,42 @@ void h_proc_print(s_spreadsheet* spreadsheet)
 		return;
 	}
 
-	fprintf(stdout, YELLOW("N Registos encontrados: %d\n"), spreadsheet->used);
+	printf(YELLOW("N Registos encontrados: %d\n"), spreadsheet->used);
 
 	if (spreadsheet->is_processed)
 	{
-		fprintf(stdout, H_STRS_PROCESSED_TABLE_HEADER);
+		printf(H_STRS_PROCESSED_TABLE_HEADER);
 	}
 	else
 	{
-		fprintf(stdout, H_STRS_PROC_TABLE_HEADER);
+		printf(H_STRS_PROC_TABLE_HEADER);
 	}
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-		fprintf(
-				stdout, "[%d] %d | %d | %d | %d | %d",
-				i,
-				spreadsheet->details[i].cod_employee,
-				spreadsheet->details[i].full_days,
-				spreadsheet->details[i].half_days,
-				spreadsheet->details[i].weekend_days,
-				spreadsheet->details[i].absent_days
-		);
+		for (j = 0; j < employees_array->used; j++)
+		{
+			if (spreadsheet->details[i].cod_employee == employees_array->employees[j].cod_employee)
+			{
+				printf(YELLOW("[%d] "), i);
+				printf(
+						GREEN("[%d] %s %s | %d | %d | %d | %d"),
+						spreadsheet->details[i].cod_employee,
+						employees_array->employees[j].first_name,
+						employees_array->employees[j].last_name,
+						spreadsheet->details[i].full_days,
+						spreadsheet->details[i].half_days,
+						spreadsheet->details[i].weekend_days,
+						spreadsheet->details[i].absent_days
+				);
+			}
+		}
 
 		if (spreadsheet->is_processed)
 		{
+			printf(GREEN(" | "));
 			printf(
-					" | %.2f€ | %.2f€ | %.2f€ | %.2f€ | %.2f€ | %.2f€ ",
+					BLUE("%.2f€ | %.2f€ | %.2f€ | %.2f€ | %.2f€ | %.2f€ "),
 					spreadsheet->details[i].gross_pay,
 					spreadsheet->details[i].net_pay,
 					spreadsheet->details[i].food_allowance,
@@ -235,11 +245,11 @@ void h_proc_print(s_spreadsheet* spreadsheet)
 			}
 			else if (spreadsheet->details[i].bonus == BONUS_17_DAYS)
 			{
-				printf("[17 dias]");
+				printf(GREEN("[17 dias]"));
 			}
 			else if (spreadsheet->details[i].bonus == BONUS_20_DAYS)
 			{
-				printf("[20 dias]");
+				printf(GREEN("[20 dias]"));
 			}
 		}
 

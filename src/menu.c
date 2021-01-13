@@ -140,7 +140,7 @@ void h_menu_processing(
                 h_proc_create(spreadsheet);
                 break;
             case 2:
-                h_proc_print(spreadsheet);
+                h_proc_print(spreadsheet, employees_array);
                 break;
             case 3:
                 h_proc_add(spreadsheet, employees_array);

@@ -57,7 +57,7 @@
 "* 3. Gestão de Funcionários     *\n" \
 "* 4. Processar Salarios         *\n" \
 "* 5. Relatórios                 *\n" \
-"* 8. Carregar Todas as tabelas  *\n" \
+"* 8. Carregar todas as tabelas  *\n" \
 "* 9. Guardar Tudo               *\n" \
 "* 0. Sair                       *\n" \
 "*                               *\n" \
@@ -152,6 +152,8 @@
 "* 1. Antiguidades dos funcionários *\n" \
 "* 2. Estado civil                  *\n" \
 "* 3. Bonus                         *\n" \
+"* 4.                               *\n" \
+"* 5.                               *\n" \
 "* 0. Voltar ao menu anterior       *\n" \
 "*                                  *\n" \
 "************************************\n")

@@ -100,8 +100,9 @@ void h_proc_edit(s_spreadsheet* spreadsheet);
 /**
  * Prints a spreadsheet
  * @param spreadsheet Ptr to spreadsheet
+ * @param employees_array Array of employees
  */
-void h_proc_print(s_spreadsheet* spreadsheet);
+void h_proc_print(s_spreadsheet* spreadsheet, s_arr_employees* employees_array);
 
 /**
  * Deletes details in a spreadsheet
