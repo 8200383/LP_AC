@@ -81,7 +81,6 @@ int main_menu()
         return -1;
     }
 
-
     do
     {
         printf(H_STRS_MENU);
