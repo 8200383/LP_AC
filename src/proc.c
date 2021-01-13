@@ -469,6 +469,11 @@ void h_proc_perform(
 	for (i = 0; i < spreadsheet->used; i++)
 	{
 		emp_index = h_proc_get_employee_index(employees_array, spreadsheet->details[i].cod_employee);
+		if (emp_index == 0)
+		{
+			puts(H_STRS_EMPLOYEES_NOT_FOUND);
+		}
+
 		printf("Index: %d\n", emp_index);
 
 		// Calculo dos Dias Trabalhados e o Bonus Correspondente
@@ -567,6 +572,8 @@ int h_proc_get_employee_index(s_arr_employees* employees_array, int code)
 			return i;
 		}
 	}
+
+	return 0;
 }
 
 float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, float raw_salary)
