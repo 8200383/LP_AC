@@ -283,8 +283,8 @@ void h_reports_bonus(s_spreadsheet* spreadsheet, s_arr_employees* employees_arra
 void h_reports_food_allowance(s_spreadsheet* spreadsheet, s_arr_employees* employees_array)
 {
 	int i;
-	int employee_index;
-	float max_food_allowance;
+	int j;
+	int k;
 
 	if (spreadsheet->used == 0 || employees_array->used == 0)
 	{
@@ -302,24 +302,37 @@ void h_reports_food_allowance(s_spreadsheet* spreadsheet, s_arr_employees* emplo
 		return;
 	}
 
-	max_food_allowance = employees_array->employees->base_food_allowance;
+	printf("[!] Funcionários com o subsídio de alimentação base mais elevado:\n");
 	for (i = 0; i < employees_array->used; i++)
 	{
-		if (employees_array->employees[i].base_food_allowance > max_food_allowance)
+		if (employees_array->employees[i].base_food_allowance > HIGHER_FOOD_ALLOWANCE)
 		{
-			max_food_allowance = employees_array->employees[i].base_food_allowance;
-			employee_index = i;
+			printf(
+					"[%d] %s %s %.2f€\n",
+					employees_array->employees[i].cod_employee,
+					employees_array->employees[i].first_name,
+					employees_array->employees[i].last_name,
+					employees_array->employees[i].base_food_allowance);
 		}
 	}
 
-	printf(
-			"[!] Funcionário com o subsídio de alimentação base mais elevado:\n [%d] %s %s %.2f€\n",
-			employees_array->employees[employee_index].cod_employee,
-			employees_array->employees[employee_index].first_name,
-			employees_array->employees[employee_index].last_name,
-			max_food_allowance);
-
-	// TODO: Food Allowance processado
+	printf("[!] Funcionários com o subsídio de alimentação mais elevado:\n");
+	for (j = 0; j < spreadsheet->used; j++)
+	{
+		for (k = 0; k < spreadsheet->used; k++)
+		{
+			if (spreadsheet->details[i].cod_employee == employees_array->employees[i].cod_employee &&
+				spreadsheet->details[i].food_allowance >= 25 * HIGHER_FOOD_ALLOWANCE) // Cálculo a 30 dias
+			{
+				printf(
+						"[%d] %s %s %.2f€\n",
+						employees_array->employees[i].cod_employee,
+						employees_array->employees[i].first_name,
+						employees_array->employees[i].last_name,
+						employees_array->employees[i].base_food_allowance);
+			}
+		}
+	}
 }
 
 void h_reports_percentage_per_dependent(s_arr_employees* array)
@@ -332,7 +345,8 @@ void h_reports_percentage_per_dependent(s_arr_employees* array)
 	float four_dependents = 0;
 	float five_dependents = 0;
 
-	if (array->used == 0){
+	if (array->used == 0)
+	{
 		printf(RED("[!] Tabela de funcionários não alocada.\n"));
 	}
 

@@ -11,8 +11,10 @@
 #include "employees.h"
 #include "proc.h"
 
-/** @const EMPLOYEE_SENIORITY Represents the time in years an employee_retention is considered senior */
+/** Represents the time in years an employee_retention is considered senior */
 #define EMPLOYEE_SENIORITY 5
+/** Represents the highest food allowance */
+#define HIGHER_FOOD_ALLOWANCE 2.00
 
 /*
  * TODO Percentage of employees with the largest number of dependents
