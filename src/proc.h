@@ -146,6 +146,9 @@ void h_proc_perform(
         s_arr_employees *employees_array
 );
 
+// TODO: DOXYGEN
+int h_proc_get_employee_index(s_arr_employees* employees_array, int code);
+
 /**
  * Gets the retention percentage for IRS based on the salary and number of dependents
  * @param irs_array An IRS table
