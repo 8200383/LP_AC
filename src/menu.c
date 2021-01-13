@@ -127,11 +127,12 @@ void h_menu_processing(
         s_spreadsheet *spreadsheet)
 {
     int op;
+    int month;
 
     do
     {
         fprintf(stdout, H_STRS_PROC);
-        op = h_util_get_int(0, 9, H_STRS_MENU_CHOICE);
+        op = h_util_get_int(0, 10, H_STRS_MENU_CHOICE);
 
         switch (op)
         {
@@ -171,8 +172,12 @@ void h_menu_processing(
                             h_calendar_str_from_month(spreadsheet->month));
                     h_proc_free(spreadsheet);
                 }
-                spreadsheet = h_proc_import();
+				month = h_util_get_int(1, 12, "Importar Mês? (1-12)") - 1;
+				spreadsheet = h_proc_import(month);
                 break;
+			case 10:
+				h_proc_delete_month(spreadsheet);
+				break;
             case 0:
                 break;
             default:

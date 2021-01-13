@@ -109,6 +109,12 @@ void h_proc_print(s_spreadsheet* spreadsheet);
 void h_proc_delete(s_spreadsheet* spreadsheet);
 
 /**
+ * Deletes month and its date
+ * @param spreadsheet Ptr to spreadsheet
+ */
+void h_proc_delete_month(s_spreadsheet* spreadsheet);
+
+/**
  * Free a spreadsheet
  * @param spreadsheet Ptr of spreadsheet
  */
