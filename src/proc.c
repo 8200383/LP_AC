@@ -449,7 +449,7 @@ void h_proc_perform(
 				break;
 		}
 
-        printf("IRS Percentage: %.2f%%\n", spreadsheet->details[i].irs_retention);
+        printf("IRS Percentage: %f%%\n", spreadsheet->details[i].irs_retention);
 		spreadsheet->details[i].irs_retention *= spreadsheet->details[i].gross_pay;
 
 		// Calculo da retenção pela Segurança social
@@ -493,17 +493,17 @@ float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, floa
 
 	for (i = 0; i < irs_array->used; i++)
 	{
-		if (raw_salary <= irs_array->elements[i].monthly_pay_value
+		if (raw_salary < irs_array->elements[i].monthly_pay_value
 			&& irs_array->elements[i].monthly_pay_type == H_IRS_UP_TO)
 		{
-			return irs_array->elements[i + 1].percentage_per_dependent[dependents] / 100.0f;
+		    return irs_array->elements[i].percentage_per_dependent[dependents];
 		}
 	}
 
 	if (raw_salary > irs_array->elements[irs_array->used - 1].monthly_pay_value &&
 		irs_array->elements[irs_array->used - 1].monthly_pay_type == H_IRS_BEYOND)
 	{
-		return irs_array->elements[irs_array->used - 1].percentage_per_dependent[dependents] / 100.0f;
+		return irs_array->elements[irs_array->used - 1].percentage_per_dependent[dependents];
 	}
 }
 
