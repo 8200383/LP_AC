@@ -375,7 +375,7 @@ void h_reports_percentage_per_dependent(s_arr_employees* array)
 	h_reports_percentage_per_dependent_print(array, 3);
 	printf("4 Dependentes: %.2f%%\n", (four_dependents / (float)array->used) * 100.0f);
 	h_reports_percentage_per_dependent_print(array, 4);
-	printf("5 ou mais Dependentes: %.2f%%\n", (zero_dependents / (float)array->used) * 100.0f);
+	printf("5 ou mais Dependentes: %.2f%%\n", (five_dependents / (float)array->used) * 100.0f);
 	h_reports_percentage_per_dependent_print(array, 5);
 }
 
