@@ -338,7 +338,7 @@ void h_employees_edit(s_arr_employees* array, s_arr_iss* iss_array)
 	 * linha que o utilizador quer fazer a alteração e
 	 * igualo o valor a uma variável int(num).
 	 * **************************************************/
-	num = h_util_get_int(0, array->used, "Linha a editar: ");
+	num = h_util_get_int(0, array->used, H_STRS_EDIT);
 	h_employees_get_fields(&array->employees[num], iss_array);
 }
 
@@ -597,7 +597,7 @@ void h_employees_delete(s_arr_employees* array)
 		return;
 	}
 
-	num = h_util_get_int(0, array->used, "Linha a eliminar: ");
+	num = h_util_get_int(0, array->used, H_STRS_DELETE);
 
 	array->employees[num].removed = 1;
 

@@ -66,8 +66,7 @@ char* h_util_file_read(const char* path, int* size)
 void h_util_clean_buffer()
 {
 	int ch;
-	while ((ch = getchar()) != '\n' && ch != EOF)
-	{}
+	while ((ch = getchar()) != '\n' && ch != EOF);
 }
 
 char* h_util_get_string(int length, const char* msg)
@@ -94,7 +93,7 @@ char h_util_get_alphabetical_char(const char* msg)
 
 	while (scanf("%c", &c) != 1 || !isalpha(c))
 	{
-		fprintf(stdout, H_STRS_INVALID_INPUT);
+		puts(H_STRS_INVALID_INPUT);
 		h_util_clean_buffer();
 		fprintf(stdout, RED("%s "), msg);
 	}
@@ -110,7 +109,7 @@ int h_util_get_int(int min, int max, const char* msg)
 
 	while (scanf("%d", &num) != 1 || num < min || num > max)
 	{
-		fprintf(stdout, H_STRS_INVALID_INPUT);
+		puts(H_STRS_INVALID_INPUT);
 		h_util_clean_buffer();
 		fprintf(stdout, RED("%s "), msg);
 	}
