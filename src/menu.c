@@ -249,7 +249,9 @@ void h_menu_reports(s_arr_employees *employees_array, s_spreadsheet *spreadsheet
                 break;
             case 3:
                 h_reports_bonus(spreadsheet, employees_array);
+				break;
             case 4:
+            	h_reports_food_allowance(spreadsheet, employees_array);
                 break;
             case 5:
 				h_reports_percentage_per_dependent(employees_array);
