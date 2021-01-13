@@ -42,4 +42,10 @@ void h_reports_bonus(s_spreadsheet* spreadsheet, s_arr_employees *employees_arra
  */
 void h_reports_food_allowance(s_spreadsheet* spreadsheet, s_arr_employees *employees_array);
 
+/**
+ * Gets the percentage occupied by each number of dependents
+ * @param array The array of employees
+ */
+void h_reports_percentage_per_dependent(s_arr_employees* array);
+
 #endif //REPORTS_H

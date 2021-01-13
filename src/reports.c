@@ -321,3 +321,50 @@ void h_reports_food_allowance(s_spreadsheet* spreadsheet, s_arr_employees* emplo
 
 	// TODO: Food Allowance processado
 }
+
+void h_reports_percentage_per_dependent(s_arr_employees* array)
+{
+	int i;
+	float zero_dependents = 0;
+	float one_dependents = 0;
+	float two_dependents = 0;
+	float three_dependents = 0;
+	float four_dependents = 0;
+	float five_dependents = 0;
+
+	for (i = 0; i < array->used; i++)
+	{
+		switch (array->employees[i].dependents)
+		{
+			case 0:
+				zero_dependents++;
+				break;
+			case 1:
+				one_dependents++;
+				break;
+			case 2:
+				two_dependents++;
+				break;
+			case 3:
+				three_dependents++;
+				break;
+			case 4:
+				four_dependents++;
+				break;
+			default:
+				break;
+		}
+
+		if (array->employees[i].dependents > 4)
+		{
+			five_dependents++;
+		}
+	}
+
+	printf("0 Dependentes: %.2f\n", (zero_dependents / (float)array->used) * 100.0f);
+	printf("1 Dependentes: %.2f\n", (one_dependents / (float)array->used) * 100.0f);
+	printf("2 Dependentes: %.2f\n", (two_dependents / (float)array->used) * 100.0f);
+	printf("3 Dependentes: %.2f\n", (three_dependents / (float)array->used) * 100.0f);
+	printf("4 Dependentes: %.2f\n", (four_dependents / (float)array->used) * 100.0f);
+	printf("5 ou mais Dependentes: %.2f\n", (zero_dependents / (float)array->used) * 100.0f);
+}
