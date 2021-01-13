@@ -394,8 +394,8 @@ void h_proc_perform(
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-        emp_index = h_proc_get_employee_index(employees_array, spreadsheet->details->cod_employee);
-        printf("Index: %d\n", emp_index);
+		emp_index = h_proc_get_employee_index(employees_array, spreadsheet->details[i].cod_employee);
+		printf("Index: %d\n", emp_index);
 
 	    // Calculo dos Dias Trabalhados e o Bonus Correspondente
 		days_worked = (float)spreadsheet->details[i].full_days +
