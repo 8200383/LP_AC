@@ -638,3 +638,25 @@ void h_proc_create(s_spreadsheet* spreadsheet)
 
 	fprintf(stdout, GREEN("[!] Mês de %s criado com sucesso\n"), h_calendar_str_from_month(spreadsheet->month));
 }
+
+void h_proc_delete_month(s_spreadsheet* spreadsheet)
+{
+	int i;
+
+	if (spreadsheet->used == 0)
+	{
+		puts(H_STRS_EMPLOYEES_NOT_FOUND);
+		return;
+	}
+
+	spreadsheet->used = 0;
+	spreadsheet->month_is_set = 0;
+	spreadsheet->is_processed = 0;
+
+	for (i = 0; i < spreadsheet->used - 1; i++)
+	{
+		spreadsheet->details[i] = spreadsheet->details[i + 1];
+	}
+
+	printf(GREEN("[!] Mês apagado com sucesso\n"));
+}
