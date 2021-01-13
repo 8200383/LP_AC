@@ -36,9 +36,9 @@ typedef struct
 	float net_pay; /**< Salary afeter taxes */
 	float bonus; /**< Bonus awarded */
 	float food_allowance; /**< Food allowance calculated */
-	float irs_retention; /**< IRS retention percentage */
-	float iss_retention_employer; /**< ISS retention percentage for employer_retention */
-	float iss_retention_employee; /**< ISS retention percentage for employee_retention */
+	float irs_retention; /**< IRS retention */
+	float iss_retention_employer; /**< ISS retention for employer_retention */
+	float iss_retention_employee; /**< ISS retention for employee_retention */
 	float employer_charge; /**< Total employer_retention charge */
 } s_details;
 
