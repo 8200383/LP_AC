@@ -78,7 +78,7 @@ void h_iss_parse(s_arr_iss *array, char *str)
                 if (str[i - 1] == '%')
                 {
                     str[i - 1] = '\0';
-                    array->data[array->used].employer = strtof(str + offset, NULL);
+                    array->data[array->used].employer_retention = strtof(str + offset, NULL);
                 } else
                 {
                     str[i] = '\0';
@@ -100,7 +100,7 @@ void h_iss_parse(s_arr_iss *array, char *str)
             } else if (str[i] == '\n')
             {
                 str[i - 1] = '\0';
-                array->data[array->used].employee = strtof(str + offset, NULL);
+                array->data[array->used].employee_retention = strtof(str + offset, NULL);
                 array->used++;
                 offset = -1;
             }
@@ -123,7 +123,7 @@ void h_iss_print(s_arr_iss *array)
     {
         printf(RED("[%d] "), i);
         printf(YELLOW("%s "), array->data[i].criteria);
-        printf(BLUE("| %.2f%% | %.2f%%\n"), array->data[i].employer, array->data[i].employee);
+        printf(BLUE("| %.2f%% | %.2f%%\n"), array->data[i].employer_retention, array->data[i].employee_retention);
     }
 }
 
@@ -163,8 +163,8 @@ void h_iss_add(s_arr_iss *array)
     }
 
     array->data[array->used].criteria = new_criteria;
-    array->data[array->used].employer = h_util_get_float(0.0f, 100.0f, "Empregador: ");
-    array->data[array->used].employee = h_util_get_float(0.0f, 100.0f, "Empregado: ");
+    array->data[array->used].employer_retention = h_util_get_float(0.0f, 100.0f, "Empregador: ");
+    array->data[array->used].employee_retention = h_util_get_float(0.0f, 100.0f, "Empregado: ");
     array->used++;
 }
 
@@ -225,10 +225,10 @@ void h_iss_edit(s_arr_iss *array)
     }
 
     array->data[num].criteria = new_criteria;
-    printf("Empregador - Valor atual: %.2f | ", array->data[num].employer);
-    array->data[num].employer = h_util_get_float(0.0f, 100.0f, "Novo valor: ");
-    printf("Empregado - Valor atual: %.2f | ", array->data[num].employee);
-    array->data[num].employee = h_util_get_float(0.0f, 100.0f, "Novo valor: ");
+    printf("Empregador - Valor atual: %.2f | ", array->data[num].employer_retention);
+    array->data[num].employer_retention = h_util_get_float(0.0f, 100.0f, "Novo valor: ");
+    printf("Empregado - Valor atual: %.2f | ", array->data[num].employee_retention);
+    array->data[num].employee_retention = h_util_get_float(0.0f, 100.0f, "Novo valor: ");
 }
 
 void h_iss_write(s_arr_iss *array, const char *path)
@@ -253,8 +253,8 @@ void h_iss_write(s_arr_iss *array, const char *path)
     {
         fprintf(fp, "%s,%.2f%%,%.2f%%\n",
                 array->data[i].criteria,
-                array->data[i].employer,
-                array->data[i].employee);
+                array->data[i].employer_retention,
+                array->data[i].employee_retention);
     }
 
     fclose(fp);

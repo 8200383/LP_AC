@@ -27,7 +27,7 @@
  */
 typedef struct
 {
-	int cod_employee; /**< Reprents the employee code */
+	int cod_employee; /**< Reprents the employee_retention code */
 	int full_days; /**< Represents the number of full days worked */
 	int half_days; /**< Represents the number of half days worked */
 	int weekend_days; /**< Represents number of the weekends worked */
@@ -37,9 +37,9 @@ typedef struct
 	float bonus; /**< Bonus awarded */
 	float food_allowance; /**< Food allowance calculated */
 	float irs_retention; /**< IRS retention percentage */
-	float iss_retention_employer; /**< ISS retention percentage for employer */
-	float iss_retention_employee; /**< ISS retention percentage for employee */
-	float employer_charge; /**< Total employer charge */
+	float iss_retention_employer; /**< ISS retention percentage for employer_retention */
+	float iss_retention_employee; /**< ISS retention percentage for employee_retention */
+	float employer_charge; /**< Total employer_retention charge */
 } s_details;
 
 /**
@@ -150,7 +150,7 @@ void h_proc_perform(
  * Checks if the code is one of the employees
  * @param employees_array The employees array to search
  * @param code The code to check
- * @return Returns the code of the employee, 0 if not found
+ * @return Returns the code of the employee_retention, 0 if not found
  */
 int h_proc_get_employee_index(s_arr_employees* employees_array, int code);
 

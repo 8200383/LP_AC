@@ -543,12 +543,12 @@ void h_proc_perform(
 
 		// Calculo da retenção pela Segurança social
 		spreadsheet->details[i].iss_retention_employer = spreadsheet->details[i].gross_pay *
-														 iss_array->data[employees_array->employees[emp_index].role].employer /
+														 iss_array->data[employees_array->employees[emp_index].role].employer_retention /
 														 100.0f;
 		printf("ISS R: %.2f€\n", spreadsheet->details[i].iss_retention_employer);
 
 		spreadsheet->details[i].iss_retention_employee = spreadsheet->details[i].gross_pay *
-														 iss_array->data[employees_array->employees[emp_index].role].employee /
+														 iss_array->data[employees_array->employees[emp_index].role].employee_retention /
 														 100.0f;
 		printf("ISS E: %.2f€\n", spreadsheet->details[i].iss_retention_employee);
 

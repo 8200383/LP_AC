@@ -22,8 +22,8 @@
 typedef struct
 {
 	char* criteria;
-	float employer;
-	float employee;
+	float employer_retention;
+	float employee_retention;
 } s_iss;
 
 typedef struct

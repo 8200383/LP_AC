@@ -11,7 +11,7 @@
 #include "employees.h"
 #include "proc.h"
 
-/** @const EMPLOYEE_SENIORITY Represents the time in years an employee is considered senior */
+/** @const EMPLOYEE_SENIORITY Represents the time in years an employee_retention is considered senior */
 #define EMPLOYEE_SENIORITY 5
 
 /*
