@@ -66,8 +66,7 @@ char* h_util_file_read(const char* path, int* size)
 void h_util_clean_buffer()
 {
 	int ch;
-	while ((ch = getchar()) != '\n' && ch != EOF)
-	{}
+	while ((ch = getchar()) != '\n' && ch != EOF);
 }
 
 char* h_util_get_string(int length, const char* msg)
