@@ -16,9 +16,6 @@
 /** Represents the highest food allowance */
 #define HIGHER_FOOD_ALLOWANCE 2.00
 
-/*
- * TODO Percentage of employees with the largest number of dependents
- */
 /**
  * Shows all the senior employees according to EMPLOYEE_SENIORITY
  * @param employees_array The array of employees
