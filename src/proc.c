@@ -57,7 +57,7 @@ s_spreadsheet* h_proc_import()
 
 	if (access(filename, F_OK) == -1)
 	{
-		printf(H_STRS_FILE_NOT_FOUND("%s"), filename);
+		printf("%s: %s\n", H_STRS_FILE_NOT_FOUND, filename);
 		free(filename);
 		return NULL;
 	}
@@ -440,17 +440,17 @@ void h_proc_perform(
 
 	if (single_array->used == 0)
 	{
-		puts(H_STRS_IRS_ERROR_INIT("Não Casado"));
+		printf("%s: %s\n", H_STRS_IRS_ERROR_INIT, "Não casado");
 		return;
 	}
 	else if (unique_holder_array->used == 0)
 	{
-		puts(H_STRS_IRS_ERROR_INIT("Único Titular"));
+		printf("%s: %s\n", H_STRS_IRS_ERROR_INIT, "Único titular");
 		return;
 	}
 	else if (two_holders_array->used == 0)
 	{
-		puts(H_STRS_IRS_ERROR_INIT("Dois Titular"));
+		printf("%s: %s\n", H_STRS_IRS_ERROR_INIT, "Dois titutales");
 		return;
 	}
 

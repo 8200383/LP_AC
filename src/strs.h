@@ -24,7 +24,7 @@
 #define H_STRS_SAVE_SUCCESS GREEN("[!] Guardado com Sucesso")
 #define H_STRS_SAVE_FILE_ERROR RED("[!] Não foi possível guardar o ficheiro")
 #define H_STRS_PATH_MISSING RED("[!] A localização do ficheiro não foi especificada")
-#define H_STRS_FILE_NOT_FOUND(file) RED("Ficheiro ") file RED(" não encontrado")
+#define H_STRS_FILE_NOT_FOUND RED("[!] Ficheiro não encontrado")
 
 #define H_STRS_EDIT YELLOW("Linha a editar:")
 #define H_STRS_DELETE YELLOW("Linha a eliminar:")
@@ -34,7 +34,7 @@
 #define H_STRS_EMPLOYEES_ERROR_INIT RED("Fúncionarios não inicializados")
 
 // IRS
-#define H_STRS_IRS_ERROR_INIT(table) RED("Tabela IRS ") table RED(" não inicializada")
+#define H_STRS_IRS_ERROR_INIT RED("Tabela IRS não inicializada")
 
 // ISS
 #define H_STRS_NEW_CRITERIA YELLOW("Novo critério: ")
