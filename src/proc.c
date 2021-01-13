@@ -114,7 +114,6 @@ s_spreadsheet* h_proc_read(const char* filename, e_month month)
 	return spreadsheet;
 }
 
-// TODO: não pode adicionar o mesmo employee duas vezes
 void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 {
 	int i;
@@ -153,8 +152,6 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 
 	max_days = h_calendar_days_in_month(spreadsheet->month);
 
-	spreadsheet->used++;
-
 	for (i = 0; i < arr_employees->used; i++)
 	{
 		fprintf(
@@ -167,11 +164,21 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 
 	employee_index = h_util_get_int(0, arr_employees->used - 1, "Adicionar funcionário?");
 
-	spreadsheet->details[spreadsheet->used - 1].cod_employee = arr_employees->employees[employee_index].cod_employee;
-	spreadsheet->details[spreadsheet->used - 1].full_days = h_util_get_int(0, max_days, "Dias completos?");
-	spreadsheet->details[spreadsheet->used - 1].half_days = h_util_get_int(0, max_days, "Meios dias?");
-	spreadsheet->details[spreadsheet->used - 1].weekend_days = h_util_get_int(0, 5, "Fins de semana? (0-5)");
-	spreadsheet->details[spreadsheet->used - 1].absent_days = h_util_get_int(0, max_days, "Faltas?");
+    for (i = 0; i < spreadsheet->used; i++)
+    {
+        if (arr_employees->employees[employee_index].cod_employee == spreadsheet->details[i].cod_employee)
+        {
+            printf(RED("O funcionário já foi adicionado.\n"));
+            return;
+        }
+    }
+
+	spreadsheet->details[spreadsheet->used].cod_employee = arr_employees->employees[employee_index].cod_employee;
+	spreadsheet->details[spreadsheet->used].full_days = h_util_get_int(0, max_days, "Dias completos?");
+	spreadsheet->details[spreadsheet->used].half_days = h_util_get_int(0, max_days, "Meios dias?");
+	spreadsheet->details[spreadsheet->used].weekend_days = h_util_get_int(0, 5, "Fins de semana? (0-5)");
+	spreadsheet->details[spreadsheet->used].absent_days = h_util_get_int(0, max_days, "Faltas?");
+    spreadsheet->used++;
 
 }
 

@@ -128,6 +128,4 @@ void h_irs_pair(s_element* element, char* str, int* dependent);
  */
 void h_irs_load(s_arr_irs * irs_array, char* path);
 
-// TODO: importar por cima, not working
-
 #endif //IRS_H
