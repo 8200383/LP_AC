@@ -73,9 +73,10 @@ s_spreadsheet* h_proc_read(const char* filename, e_month month);
 
 /**
  * Loads a spreadsheet into memory by asking a month to import
+ * @param month The month to import
  * @return s_spreadsheet Returns a ptr to a malloced struct of s_spreadsheet returns NULL if failure
  */
-s_spreadsheet* h_proc_import();
+s_spreadsheet* h_proc_import(e_month month);
 
 /**
  * Writes into a binary file a spreadsheet
@@ -98,13 +99,13 @@ void h_proc_edit(s_spreadsheet* spreadsheet);
 
 /**
  * Prints a spreadsheet
- * @param spreadsheet Ptr of spreadsheet
+ * @param spreadsheet Ptr to spreadsheet
  */
 void h_proc_print(s_spreadsheet* spreadsheet);
 
 /**
  * Deletes details in a spreadsheet
- * @param spreadsheet Ptr of spreadsheet
+ * @param spreadsheet Ptr to spreadsheet
  */
 void h_proc_delete(s_spreadsheet* spreadsheet);
 
@@ -116,13 +117,13 @@ void h_proc_delete_month(s_spreadsheet* spreadsheet);
 
 /**
  * Free a spreadsheet
- * @param spreadsheet Ptr of spreadsheet
+ * @param spreadsheet Ptr to spreadsheet
  */
 void h_proc_free(s_spreadsheet* spreadsheet);
 
 /**
  * Exports a spreadsheet to CSV
- * @param spreadsheet Ptr of spreadsheet
+ * @param spreadsheet Ptr to spreadsheet
  */
 void h_proc_export_csv(s_spreadsheet* spreadsheet);
 
@@ -174,7 +175,5 @@ float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, floa
  * @param spreadsheet The struct to fill
  */
 void h_proc_create(s_spreadsheet* spreadsheet);
-
-// TODO: Apagar mês e os respetivos dados
 
 #endif //PROC_H

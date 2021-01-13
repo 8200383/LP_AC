@@ -42,34 +42,32 @@ void h_proc_free(s_spreadsheet* spreadsheet)
 	free(spreadsheet);
 }
 
-s_spreadsheet* h_proc_import()
+s_spreadsheet* h_proc_import(e_month month)
 {
-	int month;
-	char* filename;
+	char* path;
 	s_spreadsheet* spreadsheet;
 
-	month = h_util_get_int(1, 12, "Importar Mês? (1-12)") - 1;
-	filename = h_proc_generate_filename(month, ".bin");
-	if (filename == NULL)
+	path = h_proc_generate_filename(month, ".bin");
+	if (path == NULL)
 	{
 		return NULL;
 	}
 
-	if (access(filename, F_OK) == -1)
+	if (access(path, F_OK) == -1)
 	{
-		printf("%s: %s\n", H_STRS_FILE_NOT_FOUND, filename);
-		free(filename);
+		printf("%s: %s\n", H_STRS_FILE_NOT_FOUND, path);
+		free(path);
 		return NULL;
 	}
 
-	spreadsheet = h_proc_read(filename, month);
+	spreadsheet = h_proc_read(path, month);
 	if (spreadsheet == NULL)
 	{
-		free(filename);
+		free(path);
 		return NULL;
 	}
 
-	free(filename);
+	free(path);
 	return spreadsheet;
 }
 
@@ -164,28 +162,28 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 
 	employee_index = h_util_get_int(0, arr_employees->used - 1, "Adicionar funcionário?");
 
-    for (i = 0; i < spreadsheet->used; i++)
-    {
-        if (arr_employees->employees[employee_index].cod_employee == spreadsheet->details[i].cod_employee)
-        {
-            printf(RED("O funcionário já foi adicionado.\n"));
-            return;
-        }
-    }
+	for (i = 0; i < spreadsheet->used; i++)
+	{
+		if (arr_employees->employees[employee_index].cod_employee == spreadsheet->details[i].cod_employee)
+		{
+			printf(RED("O funcionário já foi adicionado.\n"));
+			return;
+		}
+	}
 
 	spreadsheet->details[spreadsheet->used].cod_employee = arr_employees->employees[employee_index].cod_employee;
 	spreadsheet->details[spreadsheet->used].full_days = h_util_get_int(0, max_days, "Dias completos?");
 	spreadsheet->details[spreadsheet->used].half_days = h_util_get_int(0, max_days, "Meios dias?");
 	spreadsheet->details[spreadsheet->used].weekend_days = h_util_get_int(0, 5, "Fins de semana? (0-5)");
 	spreadsheet->details[spreadsheet->used].absent_days = h_util_get_int(0, max_days, "Faltas?");
-    spreadsheet->used++;
+	spreadsheet->used++;
 
 }
 
 void h_proc_print(s_spreadsheet* spreadsheet)
 {
 	int i;
-
+	// TODO: mostrar nome funcionario ao fzr print
 	if (spreadsheet->used == 0)
 	{
 		puts(H_STRS_EMPLOYEES_NOT_FOUND);
