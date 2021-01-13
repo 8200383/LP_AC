@@ -126,7 +126,7 @@ void h_irs_print_line(s_element element)
            element.monthly_pay_type == H_IRS_UP_TO ? "Até" : "Superior a",
            element.monthly_pay_value);
 
-    for (j = 0; j < MAX_DEPENDENT_NUMBER; j++)
+    for (j = 0; j < MAX_DEPENDENT_NUMBER+1; j++)
     {
         printf(CYAN(" | %.1f%%"), element.percentage_per_dependent[j] * 100.0f);
     }
