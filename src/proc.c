@@ -449,25 +449,29 @@ void h_proc_perform(
 				break;
 		}
 
-        printf("IRS Percentage: %f%%\n", spreadsheet->details[i].irs_retention);
 		spreadsheet->details[i].irs_retention *= spreadsheet->details[i].gross_pay;
+        printf("IRS: %.2f€\n", spreadsheet->details[i].irs_retention);
 
 		// Calculo da retenção pela Segurança social
 		spreadsheet->details[i].iss_retention_employer = spreadsheet->details[i].gross_pay *
 			iss_array->data[employees_array->employees[emp_index].role].employer / 100.0f;
+        printf("ISS R: %.2f€\n", spreadsheet->details[i].iss_retention_employer);
 
 		spreadsheet->details[i].iss_retention_employee = spreadsheet->details[i].gross_pay *
 			iss_array->data[employees_array->employees[emp_index].role].employee / 100.0f;
+        printf("ISS E: %.2f€\n", spreadsheet->details[i].iss_retention_employee);
 
 		// Calculo do Salário Liquido
 		spreadsheet->details[i].net_pay = spreadsheet->details[i].gross_pay -
 			spreadsheet->details[i].iss_retention_employee - spreadsheet->details[i].irs_retention;
+        printf("Net: %.2f€\n", spreadsheet->details[i].net_pay);
 
 		// Encargo Total do Empregador
 		spreadsheet->details[i].employer_charge = spreadsheet->details[i].gross_pay +
 			spreadsheet->details[i].iss_retention_employer +
 			spreadsheet->details[i].iss_retention_employee +
 			spreadsheet->details[i].irs_retention;
+        printf("Charge: %.2f€\n", spreadsheet->details[i].employer_charge);
 	}
 
     spreadsheet->is_processed = 1;
