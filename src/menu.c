@@ -237,7 +237,7 @@ void h_menu_reports(s_arr_employees *employees_array, s_spreadsheet *spreadsheet
     do
     {
         fprintf(stdout, H_STRS_REPORTS_MENU);
-        op = h_util_get_int(0, 3, H_STRS_MENU_CHOICE);
+        op = h_util_get_int(0, 5, H_STRS_MENU_CHOICE);
 
         switch (op)
         {
@@ -252,6 +252,7 @@ void h_menu_reports(s_arr_employees *employees_array, s_spreadsheet *spreadsheet
             case 4:
                 break;
             case 5:
+				h_reports_percentage_per_dependent(employees_array);
                 break;
             case 0:
                 break;

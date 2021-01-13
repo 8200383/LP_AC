@@ -383,25 +383,15 @@ void h_reports_percentage_per_dependent_print(s_arr_employees* array, int depend
 {
 	int i;
 
-	if (dependents == 0)
-	{
-		return;
-	}
-
 	for (i = 0; i < array->used; i++)
 	{
 		if (dependents != 5 && array->employees[i].dependents == dependents)
 		{
-			printf("%s %s", array->employees[i].first_name, array->employees[i].last_name);
+			printf("%s %s | ", array->employees[i].first_name, array->employees[i].last_name);
 		}
 		else if (dependents == 5 && array->employees[i].dependents >= dependents)
 		{
-			printf("%s %s", array->employees[i].first_name, array->employees[i].last_name);
-		}
-
-		if (i != array->used - 1)
-		{
-			printf(" | ");
+			printf("%s %s | ", array->employees[i].first_name, array->employees[i].last_name);
 		}
 	}
 	printf("\n");

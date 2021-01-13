@@ -153,7 +153,7 @@
 "* 2. Estado civil                  *\n" \
 "* 3. Bonus                         *\n" \
 "* 4.                               *\n" \
-"* 5.                               *\n" \
+"* 5. Porcentagem dos Dependentes   *\n" \
 "* 0. Voltar ao menu anterior       *\n" \
 "*                                  *\n" \
 "************************************\n")
