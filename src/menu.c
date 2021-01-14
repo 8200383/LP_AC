@@ -167,7 +167,7 @@ void h_menu_processing(
 				h_proc_write(spreadsheet, h_proc_generate_filename(spreadsheet->month, ".bin"));
 				break;
 			case 9:
-				if (spreadsheet)
+				if (spreadsheet->used > 0)
 				{
 					fprintf(
 							stdout, RED("[!] Já existia %s, este sera eliminado\n"),
