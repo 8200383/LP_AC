@@ -115,6 +115,8 @@ s_spreadsheet* h_proc_read(const char* filename, e_month month)
 void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 {
 	int i;
+	int flag;
+	int count;
 	int max_days;
 	int employee_index;
 
@@ -152,12 +154,24 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 
 	for (i = 0; i < arr_employees->used; i++)
 	{
-		fprintf(
-				stdout, "[%d] %d | %s %s\n",
-				i,
-				arr_employees->employees[i].cod_employee,
-				arr_employees->employees[i].first_name,
-				arr_employees->employees[i].last_name);
+		flag = 0;
+		for (int j = 0; j < spreadsheet->used; j++)
+		{
+			if (arr_employees->employees[i].cod_employee == spreadsheet->details[j].cod_employee)
+			{
+				flag = 1;
+				count++;
+			}
+		}
+
+		if (flag == 0)
+		{
+			printf("[%d] %d | %s %s\n",
+				   i-count,
+				   arr_employees->employees[i].cod_employee,
+				   arr_employees->employees[i].first_name,
+				   arr_employees->employees[i].last_name);
+		}
 	}
 
 	employee_index = h_util_get_int(0, arr_employees->used - 1, "Adicionar funcionário?");
