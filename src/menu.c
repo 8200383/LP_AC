@@ -161,7 +161,7 @@ void h_menu_processing(
 						employees_array);
 				break;
 			case 7:
-				h_proc_export_csv(spreadsheet);
+				h_proc_export_csv(spreadsheet, employees_array);
 				break;
 			case 8:
 				h_proc_write(spreadsheet, h_proc_generate_filename(spreadsheet->month, ".bin"));

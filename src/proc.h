@@ -125,8 +125,9 @@ void h_proc_free(s_spreadsheet* spreadsheet);
 /**
  * Exports a spreadsheet to CSV
  * @param spreadsheet Ptr to spreadsheet
+ * @param employees_array Array of employees
  */
-void h_proc_export_csv(s_spreadsheet* spreadsheet);
+void h_proc_export_csv(s_spreadsheet* spreadsheet, s_arr_employees* employees_array);
 
 /**
  * Generate a filename from a given month and an extension

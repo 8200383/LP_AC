@@ -393,9 +393,10 @@ char* h_proc_generate_filename(e_month month, const char* extension)
 	return filename;
 }
 
-void h_proc_export_csv(s_spreadsheet* spreadsheet)
+void h_proc_export_csv(s_spreadsheet* spreadsheet, s_arr_employees* employees_array)
 {
 	int i;
+	int j;
 	FILE* fp;
 	char* filename;
 
@@ -427,12 +428,21 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet)
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
-		fprintf(
-				fp, "%d,%d,%d,%d\n",
-				spreadsheet->details[i].full_days,
-				spreadsheet->details[i].half_days,
-				spreadsheet->details[i].weekend_days,
-				spreadsheet->details[i].absent_days);
+		for (j = 0; j < employees_array->used; j++)
+		{
+			if (spreadsheet->details[i].cod_employee == employees_array->employees[j].cod_employee)
+			{
+				fprintf(
+						fp, "%d,%s,%s,%d,%d,%d,%d\n",
+						spreadsheet->details[i].cod_employee,
+						employees_array->employees[j].first_name,
+						employees_array->employees[j].last_name,
+						spreadsheet->details[i].full_days,
+						spreadsheet->details[i].half_days,
+						spreadsheet->details[i].weekend_days,
+						spreadsheet->details[i].absent_days);
+			}
+		}
 	}
 
 	fclose(fp);
