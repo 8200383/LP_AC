@@ -625,33 +625,28 @@ void h_employees_write(s_arr_employees* array, const char* path)
 
 	for (i = 0; i < array->used; i++)
 	{
-		if (array->employees[i].removed == 0)
-			// I've to go through the whole array, to check if the removed field it is empty.
-			// We don't import employees removed.
-		{
-			fprintf(
-					fp, "%d,%s,%s,%d,%s,%d,%d,%d/%d/%d,%d/%d/%d,%d/%d/%d,%.2f,%.2f,%s\n",
-					array->employees[i].cod_employee,
-					array->employees[i].first_name,
-					array->employees[i].last_name,
-					array->employees[i].phone_number,
-					h_employees_str_from_marital_status(array->employees[i].marital_status, 0),
-					array->employees[i].role,
-					array->employees[i].dependents,
-					array->employees[i].birthday->day,
-					array->employees[i].birthday->month,
-					array->employees[i].birthday->year,
-					array->employees[i].entry_date->day,
-					array->employees[i].entry_date->month,
-					array->employees[i].entry_date->year,
-					array->employees[i].leaving_date->day,
-					array->employees[i].leaving_date->month,
-					array->employees[i].leaving_date->year,
-					array->employees[i].hourly_rate,
-					array->employees[i].base_food_allowance,
-					h_employees_str_from_holders(array->employees[i].holders)
-			);
-		}
+	    fprintf(
+                fp, "%d,%s,%s,%d,%s,%d,%d,%d/%d/%d,%d/%d/%d,%d/%d/%d,%.2f,%.2f,%s\n",
+                array->employees[i].cod_employee,
+                array->employees[i].first_name,
+                array->employees[i].last_name,
+                array->employees[i].phone_number,
+                h_employees_str_from_marital_status(array->employees[i].marital_status, 0),
+                array->employees[i].role,
+                array->employees[i].dependents,
+                array->employees[i].birthday->day,
+                array->employees[i].birthday->month,
+                array->employees[i].birthday->year,
+                array->employees[i].entry_date->day,
+                array->employees[i].entry_date->month,
+                array->employees[i].entry_date->year,
+                array->employees[i].leaving_date->day,
+                array->employees[i].leaving_date->month,
+                array->employees[i].leaving_date->year,
+                array->employees[i].hourly_rate,
+                array->employees[i].base_food_allowance,
+                h_employees_str_from_holders(array->employees[i].holders)
+        );
 	}
 
 	fclose(fp);
