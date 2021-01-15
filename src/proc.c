@@ -172,16 +172,16 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 
 		if (flag == 0)
 		{
-			printf(
-					"[%d] %d | %s %s\n",
-					i,
+			printf(YELLOW("[%d] "), i);
+		    printf(
+					GREEN("%d | %s %s\n"),
 					arr_employees->employees[i].cod_employee,
 					arr_employees->employees[i].first_name,
 					arr_employees->employees[i].last_name);
 		}
 	}
 
-	employee_index = h_util_get_int(0, arr_employees->used - 1, "Adicionar funcionário?");
+	employee_index = h_util_get_int(0, arr_employees->used - 1, "Adicionar funcionário: ");
 
 	for (i = 0; i < spreadsheet->used; i++)
 	{
@@ -193,10 +193,10 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 	}
 
 	spreadsheet->details[spreadsheet->used].cod_employee = arr_employees->employees[employee_index].cod_employee;
-	spreadsheet->details[spreadsheet->used].full_days = h_util_get_int(0, max_days, "Dias completos?");
-	spreadsheet->details[spreadsheet->used].half_days = h_util_get_int(0, max_days, "Meios dias?");
-	spreadsheet->details[spreadsheet->used].weekend_days = h_util_get_int(0, 5, "Fins de semana? (0-5)");
-	spreadsheet->details[spreadsheet->used].absent_days = h_util_get_int(0, max_days, "Faltas?");
+	spreadsheet->details[spreadsheet->used].full_days = h_util_get_int(0, max_days, "Dias completos: ");
+	spreadsheet->details[spreadsheet->used].half_days = h_util_get_int(0, max_days, "Meios dias: ");
+	spreadsheet->details[spreadsheet->used].weekend_days = h_util_get_int(0, 5, "Fins de semana: ");
+	spreadsheet->details[spreadsheet->used].absent_days = h_util_get_int(0, max_days, "Faltas: ");
 	spreadsheet->used++;
 
 }
@@ -317,7 +317,7 @@ void h_proc_edit(s_spreadsheet* spreadsheet)
 	op = h_util_get_int(0, 1, "Quer editar o mês correpondente?\n 1. Sim\n 0. Não");
 	if (op == 1)
 	{
-		spreadsheet->month = h_util_get_int(1, 12, "Novo mês?") - 1;
+		spreadsheet->month = h_util_get_int(1, 12, "Novo mês: ") - 1;
 	}
 
 	max_days = h_calendar_days_in_month(spreadsheet->month);

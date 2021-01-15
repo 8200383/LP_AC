@@ -194,7 +194,7 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 	}
 	else
 	{
-		employee->holders = h_util_get_int(1, 2, "Unico ou Dois Titulares (1 - 2)?");
+		employee->holders = h_util_get_int(1, 2, "Unico ou Dois Titulares (1 - 2): ");
 	}
 
 	if (employee->role)
@@ -273,7 +273,7 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 				employee->leaving_date->year);
 	}
 
-	h_calendar_get_date(employee->leaving_date, "Data de saida? ");
+	h_calendar_get_date(employee->leaving_date, "Data de saida: ");
 
 	if (employee->hourly_rate)
 	{
@@ -385,9 +385,8 @@ void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array)
 	int i;
 	for (i = 0; i < array->used; i++)
 	{
-		printf(
-				PRINT_TEMPLATE_STRING,
-				i,
+		printf(YELLOW("[%d] "), i);
+	    printf(GREEN(PRINT_TEMPLATE_STRING),
 				array->employees[i].cod_employee,
 				array->employees[i].first_name,
 				array->employees[i].last_name,
@@ -604,6 +603,8 @@ void h_employees_delete(s_arr_employees* array)
 	}
 
 	num = h_util_get_int(0, array->used, H_STRS_DELETE);
+
+    h_calendar_get_date(array->employees[num].leaving_date, "Data de saida: ");
 
 	array->employees[num].removed = 1;
 
