@@ -51,7 +51,7 @@ typedef enum
 	TWO_HOLDERS = 2
 } e_holders;
 
-/** @enum e_marital_status Represents the marital status of an employee_retention */
+/** @enum e_marital_status Represents the marital status of an employee */
 typedef enum
 {
 	SINGLE = 0,
@@ -60,7 +60,7 @@ typedef enum
 	WIDOWED = 3
 } e_marital_status;
 
-/** @struct s_employee Represents a single employee_retention */
+/** @struct s_employee Represents a single employee */
 typedef struct
 {
 	int cod_employee;
@@ -93,7 +93,7 @@ typedef struct
 s_arr_employees* h_employees_alloc(int initial_capacity);
 
 /**
- * Randomizes a employee_retention code
+ * Randomizes a employee code
  * @return Return the generated code
  */
 int h_employees_randomize();
@@ -111,14 +111,14 @@ int h_employees_get_marital_status();
 int h_employees_get_phone_number();
 
 /**
- * Get employee_retention struct field from stdin
+ * Get employee struct field from stdin
  * @param employee The struct to fill
  * @param iss_array The ISS table to add or edit the role
  */
 void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array);
 
 /**
- * Add an employee_retention to the array
+ * Add an employee to the array
  * @param array The array of employees
  */
 void h_employees_add(s_arr_employees* array, s_arr_iss* iss_array);
@@ -146,7 +146,7 @@ void h_employees_parse(s_arr_employees* array, const char* str);
 void h_employees_print(s_arr_employees* array, s_arr_iss* iss_array);
 
 /**
- * Edit an employee_retention
+ * Edit an employee
  * @param array The array of employees
  * @param iss_array The ISS table to edit the role
  */
@@ -168,7 +168,7 @@ int h_employees_verify_phone(char* str);
 char* h_employees_str_from_marital_status(e_marital_status status, int display);
 
 /**
- * Marks an employee_retention as removed, not deleting his record
+ * Marks an employee as removed, not deleting his record
  * @param array The array of employees
  */
 void h_employees_delete(s_arr_employees* array);
