@@ -509,10 +509,6 @@ void h_proc_perform(
 	for (i = 0; i < spreadsheet->used; i++)
 	{
 		emp_index = h_proc_get_employee_index(employees_array, spreadsheet->details[i].cod_employee);
-		if (emp_index == 0)
-		{
-			puts(H_STRS_EMPLOYEES_NOT_FOUND);
-		}
 
 		// Calculo dos Dias Trabalhados e o Bonus Correspondente
 		days_worked = (float)spreadsheet->details[i].full_days +

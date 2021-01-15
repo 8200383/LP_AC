@@ -7,9 +7,9 @@ void h_calendar_get_date(s_date* date, const char* msg)
 {
 	int day, month, year, error;
 
-	error = 0;
 	do
 	{
+		error = 0;
 		printf("%s (DD/MM/YYYY)\n", msg);
 		scanf("%d/%d/%d", &day, &month, &year);
 

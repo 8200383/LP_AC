@@ -118,19 +118,16 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 	char* first_name;
 	char* last_name;
 
-	printf("Aqui 2\n");
 	if (!employee->cod_employee)
 	{
 		employee->cod_employee = h_employees_randomize();
 	}
 
-	printf("Aqui 3\n");
 	if (employee->first_name)
 	{
 		printf("Primeiro nome: %s\n", employee->first_name);
 	}
 
-	printf("Aqui 4\n");
 	first_name = h_util_get_string(BUFFER_SIZE, "Primeiro Nome:");
 	if (first_name == NULL)
 	{
@@ -138,7 +135,6 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 		return;
 	}
 
-	printf("Aqui 5\n");
 	if (employee->first_name == NULL)
 	{
 		employee->first_name = malloc(strlen(first_name) * sizeof(char));
@@ -149,7 +145,6 @@ void h_employees_get_fields(s_employee* employee, s_arr_iss* iss_array)
 		}
 	}
 
-	printf("Aqui 6\n");
 	strcpy(employee->first_name, first_name);
 	free(first_name);
 
@@ -318,7 +313,6 @@ void h_employees_add(s_arr_employees* array, s_arr_iss* iss_array)
 		}
 	}
 
-	printf("Aqui 1\n");
 	h_employees_get_fields(&array->employees[array->used], iss_array);
 	array->used++;
 }
@@ -355,7 +349,6 @@ int h_employees_verify_phone(char* str)
 {
 	if (strlen(str) != PHONE_NUMBER_SIZE)
 	{
-		puts("aqui");
 		return -1;
 	}
 
