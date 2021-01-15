@@ -75,6 +75,7 @@ s_spreadsheet* h_proc_read(const char* filename, e_month month)
 {
 	FILE* fp;
 	s_spreadsheet* spreadsheet;
+	int i;
 
 	fprintf(stdout, YELLOW("[!] Importing: %s\n"), filename);
 
@@ -90,23 +91,27 @@ s_spreadsheet* h_proc_read(const char* filename, e_month month)
 		return NULL;
 	}
 
-	spreadsheet->month = month;
-	spreadsheet->month_is_set = 1;
+	fread(&spreadsheet->used, sizeof(spreadsheet->used), 1, fp);
+	fread(&spreadsheet->month, sizeof(spreadsheet->month), 1, fp);
+	fread(&spreadsheet->month_is_set, sizeof(spreadsheet->month_is_set), 1, fp);
+	fread(&spreadsheet->is_processed, sizeof(spreadsheet->is_processed), 1, fp);
+	fread(&spreadsheet->max_capacity, sizeof(spreadsheet->max_capacity), 1, fp);
 
-	while (fread(spreadsheet->details, sizeof(s_details), 1, fp))
+	for (i = 0; i < spreadsheet->used; i++)
 	{
-		if (spreadsheet->used == spreadsheet->max_capacity)
-		{
-			spreadsheet = realloc(spreadsheet->details, spreadsheet->max_capacity * 2);
-			if (spreadsheet == NULL)
-			{
-				return NULL;
-			}
-
-			spreadsheet->max_capacity *= 2;
-		}
-
-		spreadsheet->used++;
+		fread(&spreadsheet->details[i].cod_employee, sizeof(spreadsheet->details[i].cod_employee), 1, fp);
+		fread(&spreadsheet->details[i].full_days, sizeof(spreadsheet->details[i].full_days), 1, fp);
+		fread(&spreadsheet->details[i].half_days, sizeof(spreadsheet->details[i].half_days), 1, fp);
+		fread(&spreadsheet->details[i].weekend_days, sizeof(spreadsheet->details[i].weekend_days), 1, fp);
+		fread(&spreadsheet->details[i].absent_days, sizeof(spreadsheet->details[i].absent_days), 1, fp);
+		fread(&spreadsheet->details[i].employer_charge, sizeof(spreadsheet->details[i].employer_charge), 1, fp);
+		fread(&spreadsheet->details[i].iss_retention_employer, sizeof(spreadsheet->details[i].iss_retention_employer), 1, fp);
+		fread(&spreadsheet->details[i].iss_retention_employee, sizeof(spreadsheet->details[i].iss_retention_employee), 1, fp);
+		fread(&spreadsheet->details[i].irs_retention, sizeof(spreadsheet->details[i].irs_retention), 1, fp);
+		fread(&spreadsheet->details[i].food_allowance, sizeof(spreadsheet->details[i].food_allowance), 1, fp);
+		fread(&spreadsheet->details[i].bonus, sizeof(spreadsheet->details[i].bonus), 1, fp);
+		fread(&spreadsheet->details[i].net_pay, sizeof(spreadsheet->details[i].net_pay), 1, fp);
+		fread(&spreadsheet->details[i].gross_pay, sizeof(spreadsheet->details[i].gross_pay), 1, fp);
 	}
 
 	return spreadsheet;
@@ -152,6 +157,7 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 
 	max_days = h_calendar_days_in_month(spreadsheet->month);
 
+	count = 0;
 	for (i = 0; i < arr_employees->used; i++)
 	{
 		flag = 0;
@@ -625,6 +631,7 @@ float h_proc_get_retention_percentage(s_arr_irs* irs_array, int dependents, floa
 void h_proc_write(s_spreadsheet* spreadsheet, const char* path)
 {
 	FILE* fp;
+	int i;
 
 	if (spreadsheet->used == 0 || spreadsheet->month_is_set == 0)
 	{
@@ -638,7 +645,28 @@ void h_proc_write(s_spreadsheet* spreadsheet, const char* path)
 		return;
 	}
 
-	fwrite(spreadsheet->details, sizeof(s_details), 1, fp);
+	fwrite(&spreadsheet->used, sizeof(spreadsheet->used), 1, fp);
+	fwrite(&spreadsheet->month, sizeof(spreadsheet->month), 1, fp);
+	fwrite(&spreadsheet->month_is_set, sizeof(spreadsheet->month_is_set), 1, fp);
+	fwrite(&spreadsheet->is_processed, sizeof(spreadsheet->is_processed), 1, fp);
+	fwrite(&spreadsheet->max_capacity, sizeof(spreadsheet->max_capacity), 1, fp);
+
+	for (i = 0; i < spreadsheet->used; i++)
+	{
+		fwrite(&spreadsheet->details[i].cod_employee, sizeof(spreadsheet->details[i].cod_employee), 1, fp);
+		fwrite(&spreadsheet->details[i].full_days, sizeof(spreadsheet->details[i].full_days), 1, fp);
+		fwrite(&spreadsheet->details[i].half_days, sizeof(spreadsheet->details[i].half_days), 1, fp);
+		fwrite(&spreadsheet->details[i].weekend_days, sizeof(spreadsheet->details[i].weekend_days), 1, fp);
+		fwrite(&spreadsheet->details[i].absent_days, sizeof(spreadsheet->details[i].absent_days), 1, fp);
+		fwrite(&spreadsheet->details[i].employer_charge, sizeof(spreadsheet->details[i].employer_charge), 1, fp);
+		fwrite(&spreadsheet->details[i].iss_retention_employer, sizeof(spreadsheet->details[i].iss_retention_employer), 1, fp);
+		fwrite(&spreadsheet->details[i].iss_retention_employee, sizeof(spreadsheet->details[i].iss_retention_employee), 1, fp);
+		fwrite(&spreadsheet->details[i].irs_retention, sizeof(spreadsheet->details[i].irs_retention), 1, fp);
+		fwrite(&spreadsheet->details[i].food_allowance, sizeof(spreadsheet->details[i].food_allowance), 1, fp);
+		fwrite(&spreadsheet->details[i].bonus, sizeof(spreadsheet->details[i].bonus), 1, fp);
+		fwrite(&spreadsheet->details[i].net_pay, sizeof(spreadsheet->details[i].net_pay), 1, fp);
+		fwrite(&spreadsheet->details[i].gross_pay, sizeof(spreadsheet->details[i].gross_pay), 1, fp);
+	}
 
 	puts(H_STRS_SAVE_SUCCESS);
 	fclose(fp);
