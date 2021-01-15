@@ -272,6 +272,8 @@ void h_proc_print(s_spreadsheet* spreadsheet, s_arr_employees* employees_array)
 			{
 				printf(GREEN("[20 dias]"));
 			}
+
+			printf(BLUE(" %.2f€ | %.2f€"), spreadsheet->details[i].net_pay, spreadsheet->details[i].employer_charge);
 		}
 
 		printf("\n");
@@ -439,7 +441,7 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet, s_arr_employees* employees_ar
 			if (spreadsheet->details[i].cod_employee == employees_array->employees[j].cod_employee)
 			{
 				fprintf(
-						fp, "%d,%s,%s,%d,%d,%d,%d,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
+						fp, "%d,%s,%s,%d,%d,%d,%d,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
 						spreadsheet->details[i].cod_employee,
 						employees_array->employees[j].first_name,
 						employees_array->employees[j].last_name,
@@ -448,11 +450,12 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet, s_arr_employees* employees_ar
 						spreadsheet->details[i].weekend_days,
 						spreadsheet->details[i].absent_days,
 						spreadsheet->details[i].gross_pay,
-						spreadsheet->details[i].net_pay,
 						spreadsheet->details[i].food_allowance,
 						spreadsheet->details[i].irs_retention,
 						spreadsheet->details[i].iss_retention_employee,
-						spreadsheet->details[i].iss_retention_employer);
+						spreadsheet->details[i].iss_retention_employer,
+                        spreadsheet->details[i].net_pay,
+                        spreadsheet->details[i].employer_charge);
 			}
 		}
 	}
