@@ -174,7 +174,7 @@ void h_proc_add(s_spreadsheet* spreadsheet, s_arr_employees* arr_employees)
 		{
 			printf(
 					"[%d] %d | %s %s\n",
-					i - count,
+					i,
 					arr_employees->employees[i].cod_employee,
 					arr_employees->employees[i].first_name,
 					arr_employees->employees[i].last_name);
@@ -439,14 +439,20 @@ void h_proc_export_csv(s_spreadsheet* spreadsheet, s_arr_employees* employees_ar
 			if (spreadsheet->details[i].cod_employee == employees_array->employees[j].cod_employee)
 			{
 				fprintf(
-						fp, "%d,%s,%s,%d,%d,%d,%d\n",
+						fp, "%d,%s,%s,%d,%d,%d,%d,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f\n",
 						spreadsheet->details[i].cod_employee,
 						employees_array->employees[j].first_name,
 						employees_array->employees[j].last_name,
 						spreadsheet->details[i].full_days,
 						spreadsheet->details[i].half_days,
 						spreadsheet->details[i].weekend_days,
-						spreadsheet->details[i].absent_days);
+						spreadsheet->details[i].absent_days,
+						spreadsheet->details[i].gross_pay,
+						spreadsheet->details[i].net_pay,
+						spreadsheet->details[i].food_allowance,
+						spreadsheet->details[i].irs_retention,
+						spreadsheet->details[i].iss_retention_employee,
+						spreadsheet->details[i].iss_retention_employer);
 			}
 		}
 	}
